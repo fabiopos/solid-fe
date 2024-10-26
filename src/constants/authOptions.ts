@@ -1,5 +1,3 @@
-import { SolidAuth } from "@/features/auth/application/auth";
-import { LoginInput } from "@/features/auth/domain/login.schema";
 import { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -22,16 +20,30 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, _) {
-        const { email, password } = credentials as LoginInput;
+        const { email, password } = credentials as {
+          email: string;
+          password: string;
+        };
 
         console.log(email, password);
 
-        const user = await SolidAuth.login({ email, password });
+        //  const user = await SolidAuth.login({ email, password });
+        // const defaultHeaders = new Headers();
+        // defaultHeaders.append("Content-Type", "application/json");
+
+        // const response = await fetch("http://localhost:3000/auth/login", {
+        //   headers: defaultHeaders,
+        //   method: "POST",
+        //   body: JSON.stringify(credentials),
+        // });
+
+        // const result = await response.json();
+        // const user = result.user;
 
         return {
-          email: user.email,
-          name: `${user.firstName} ${user.lastName}`,
-          id: user.email,
+          email: `user.email`,
+          name: 'OK',//`${user.firstName} ${user.lastName}`,
+          id: 'user.email',
         };
       },
     }),
