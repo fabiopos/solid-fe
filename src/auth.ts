@@ -14,23 +14,39 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         let user = null;
 
-        if(!credentials?.email || !credentials?.password) throw new Error("Invalid credentials.");
+        if (!credentials?.email || !credentials?.password)
+          throw new Error("Invalid credentials.");
         // logic to salt and hash password
         user = await SolidAuth.login({
           email: credentials?.email,
           password: credentials?.password,
         });
-       
-        if (!user) throw new Error("User not found.");        
+
+        console.log(user);
+        if (!user) throw new Error("User not found.");
 
         // return user object with their profile data
-        
+
         return {
-          id: user.email,
+          id: user.subscriptionId,
           email: user.email,
-          name: `${user.firstName} ${user.lastName}`
+          name: `${user.firstName} ${user.lastName}`,
         };
       },
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      if (session && session.user) {
+        session.user.id = token.id;
+      }
+      return session;
+    },
+  },
 });
