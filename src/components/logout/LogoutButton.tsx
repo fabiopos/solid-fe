@@ -7,12 +7,12 @@ import { useSession } from "next-auth/react";
 export default function LogoutButton() {
   const { status } = useSession();
 
-  if (status === "loading") return "";
-  if (status === "unauthenticated") return null;
-
   const handleSubmit = useCallback(() => {
     SolidAuth.logout();
   }, []);
+
+  if (status === "loading") return "";
+  if (status === "unauthenticated") return null;
 
   return (
     <Button onClick={handleSubmit} type="submit">
