@@ -31,6 +31,6 @@ export class SolidAuth {
 
     const result = await response.json();
 
-    return result.user;
+    return { user: result.user, token: result.token };
   }
 }
