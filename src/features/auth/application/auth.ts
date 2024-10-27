@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 import { LoginInput } from "../domain/login.schema";
 
 export class SolidAuth {
@@ -13,6 +13,10 @@ export class SolidAuth {
       if (error instanceof Error) throw new Error(error.message);
       throw new Error("Unknown error login with credentials");
     }
+  }
+
+  static async logout() {
+    return await signOut();
   }
 
   static async login(credentials: LoginInput) {

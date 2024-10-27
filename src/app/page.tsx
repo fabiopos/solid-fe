@@ -1,15 +1,17 @@
 import { auth } from "@/auth";
+import LoginButton from "@/components/login/LoginButton/LoginButton";
+import LogoutButton from "@/components/logout/LogoutButton";
+import { H1 } from "@/components/ui/typograhpy";
+import Landing from "@/features/landing/infraestructure/Landing";
 export default async function Home() {
   const session = await auth();
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-          Home
-        </h1>
-
-        {session && <pre>{JSON.stringify(session)}</pre>}
-        <a href="/login">Login</a>
+        <H1>Home</H1>
+        <Landing />
+        <LogoutButton />
+        <LoginButton />
       </main>
     </div>
   );
