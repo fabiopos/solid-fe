@@ -1,8 +1,9 @@
 "use client";
 import { useCallback } from "react";
 import { Button } from "../ui/button";
-import { SolidAuth } from "@/features/auth/application/auth";
+import { SolidAuth } from "@/features/auth/application/SolidAuth";
 import { useSession } from "next-auth/react";
+import { navigationMenuTriggerStyle } from "../ui/navigation-menu";
 
 export default function LogoutButton() {
   const { status } = useSession();
@@ -15,7 +16,12 @@ export default function LogoutButton() {
   if (status === "unauthenticated") return null;
 
   return (
-    <Button onClick={handleSubmit} type="submit">
+    <Button
+      variant="ghost"
+      className={navigationMenuTriggerStyle()}
+      onClick={handleSubmit}
+      type="submit"
+    >
       Logout
     </Button>
   );

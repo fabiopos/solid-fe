@@ -1,7 +1,11 @@
 import { H1 } from "@/components/ui/typograhpy";
+import { PlayerGet } from "@/features/player/application/PlayerGet";
+import { ApiClient } from "@/lib/ApiClient";
 import React from "react";
 
-function PlayersPage() {
+async function PlayersPage() {
+  const playerGet = new PlayerGet(new ApiClient());
+  await playerGet.getAllPlayers();
   return (
     <div>
       <p>

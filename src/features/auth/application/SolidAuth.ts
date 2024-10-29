@@ -23,7 +23,7 @@ export class SolidAuth {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
 
-    const response = await fetch("http://localhost:3000/auth/login", {
+    const response = await fetch(`${process.env.BASE_API}/auth/login`, {
       headers: defaultHeaders,
       method: "POST",
       body: JSON.stringify(credentials),

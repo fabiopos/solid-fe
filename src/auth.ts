@@ -1,6 +1,6 @@
 import NextAuth, { type DefaultSession, type DefaultUser } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { SolidAuth } from "./features/auth/application/auth";
+import { SolidAuth } from "./features/auth/application/SolidAuth";
 
 declare module "next-auth" {
   /**
@@ -27,6 +27,9 @@ declare module "next-auth" {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  pages: {
+    signIn: "/login",
+  },
   providers: [
     Credentials({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
@@ -50,7 +53,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         if (!user) throw new Error("User not found.");
         if (!response.token) throw new Error("User not found.");
-       
+
         return {
           id: user.subscriptionId,
           subscriptionId: user.subscriptionId,
@@ -66,7 +69,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (user) {
         token.id = user.id;
       }
-      
+
       if (account?.provider === "credentials" && user) {
         return { ...token, access_token: user.access_token };
       }
