@@ -8,7 +8,6 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  navigationMenuStyle,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
@@ -16,27 +15,23 @@ import ListItem from "./ListItem";
 import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
 import { useSession } from "next-auth/react";
-import LogoutButton from "../Logout/LogoutButton";
 import { SolidAuth } from "@/features/auth/application/SolidAuth";
 
 const features: { title: string; href: string; description: string }[] = [
   {
     title: "Teams",
     href: "/teams",
-    description:
-      "Manage your teams and all data variants associated.",
+    description: "Manage your teams and all data variants associated.",
   },
   {
     title: "Players",
     href: "/players",
-    description:
-      "All your players data.",
+    description: "All your players data.",
   },
   {
     title: "Seasons",
     href: "/seasons",
-    description:
-      "Displays all the seasons.",
+    description: "Displays all the seasons.",
   },
   {
     title: "Competitions",
@@ -46,10 +41,8 @@ const features: { title: string; href: string; description: string }[] = [
   {
     title: "Lineups",
     href: "/lineups",
-    description:
-      "A tool for managers to create lineups.",
+    description: "A tool for managers to create lineups.",
   },
-  
 ];
 
 export default function NavBar() {
@@ -65,7 +58,7 @@ export default function NavBar() {
               <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                 <li className="row-span-3">
                   <NavigationMenuLink asChild>
-                    <a
+                    <Link
                       className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                       href="/"
                     >
@@ -76,10 +69,10 @@ export default function NavBar() {
                       <p className="text-sm leading-tight text-muted-foreground">
                         Your team management tool
                       </p>
-                    </a>
+                    </Link>
                   </NavigationMenuLink>
                 </li>
-                <ListItem href="/subscription/init" title="Subscribe">
+                <ListItem href="/subscription/start" title="Subscribe">
                   Create a subscription
                 </ListItem>
                 <ListItem href="/docs/subscription" title="About subscriptions">

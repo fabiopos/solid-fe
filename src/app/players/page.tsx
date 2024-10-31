@@ -1,11 +1,13 @@
+import { auth } from "@/auth";
 import { H1 } from "@/components/ui/typograhpy";
 import { PlayerGet } from "@/features/player/application/PlayerGet";
 import { ApiClient } from "@/lib/ApiClient";
 import React from "react";
 
 async function PlayersPage() {
+  const session = await auth();
   const playerGet = new PlayerGet(new ApiClient());
-  await playerGet.getAllPlayers();
+  await playerGet.getAllPlayers(session?.user.access_token);
   return (
     <div>
       <p>
