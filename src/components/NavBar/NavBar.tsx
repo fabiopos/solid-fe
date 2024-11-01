@@ -16,6 +16,7 @@ import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
 import { useSession } from "next-auth/react";
 import { SolidAuth } from "@/features/auth/application/SolidAuth";
+import { useAuthStore } from "@/context/AuthCtx";
 
 const features: { title: string; href: string; description: string }[] = [
   {
@@ -47,6 +48,14 @@ const features: { title: string; href: string; description: string }[] = [
 
 export default function NavBar() {
   const { data } = useSession();
+  const { setSession, accountData } = useAuthStore((state) => state);
+  React.useEffect(() => {
+    setSession(data);
+  }, [data]);
+  const selectedTeam = React.useMemo(() => {
+    return accountData.teams.find((x) => x.id === accountData.selectedTeamId);
+  }, [accountData]);
+
   return (
     <div className="fixed flex justify-center align-middle w-full text-center max-w-full p-8">
       <NavigationMenu>
@@ -128,6 +137,15 @@ export default function NavBar() {
                   ></ListItem>
                 </ul>
               </NavigationMenuContent>
+            </NavigationMenuItem>
+          )}
+          {accountData.selectedTeamId && (
+            <NavigationMenuItem>
+              <Link href="/team" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  {selectedTeam?.name}
+                </NavigationMenuLink>
+              </Link>
             </NavigationMenuItem>
           )}
           <NavigationMenuItem>

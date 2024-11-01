@@ -1,13 +1,14 @@
 import { createStore } from "zustand/vanilla";
+
 import { SubscriptionInput } from "./subscription.schema";
 import { SubscriptionCreate } from "../application/SubscriptionCreate";
 import { ApiClient } from "@/lib/ApiClient";
 import { SubscriptionResponse } from "./types";
-import { ErrorResponse } from "@/types/types.common";
+import { ErrorResponse, RequestStatus } from "@/types/types.common";
 
 export type SubscriptionCreateState = {
   input: SubscriptionInput;
-  status: "IDLE" | "IN_PROGRESS" | "DONE" | "ERROR";
+  status: RequestStatus;
   error: string | null;
   createdSubscription: SubscriptionResponse | null;
 };

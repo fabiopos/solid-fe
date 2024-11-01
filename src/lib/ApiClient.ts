@@ -5,18 +5,14 @@ export class ApiClient {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
     defaultHeaders.append("Authorization", `Bearer ${access_token}`);
-
-    return await fetch(`${process.env.BASE_API}${resource}`, {
+    const uri = `http://localhost:3000${resource}`;
+    return await fetch(uri, {
       headers: defaultHeaders,
       method: "GET",
     });
   };
 
-  POST = async (
-    resource: string,
-    body: any,
-    access_token?: string
-  ) => {
+  POST = async (resource: string, body: any, access_token?: string) => {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
 
