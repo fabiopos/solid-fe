@@ -1,5 +1,6 @@
 import { signIn, signOut } from "next-auth/react";
 import { LoginInput } from "../domain/login.schema";
+import { useAuthStore } from "@/context/AuthCtx";
 
 export class SolidAuth {
   static async loginWithCredentials(credentials: LoginInput) {
@@ -16,6 +17,7 @@ export class SolidAuth {
   }
 
   static async logout() {
+    sessionStorage.removeItem('auth-storage');
     return await signOut();
   }
 

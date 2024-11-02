@@ -8,12 +8,14 @@ export type AuthStoreState = {
   session: Session | null;
   accountData: AccountData;
   fetchTeamsStatus: RequestStatus;
+  persist: typeof persist
 };
 export type AuthStoreActions = {
   setTeamId(id: AuthStoreState["accountData"]["selectedTeamId"]): void;
   setTeams(teams: AuthCreateStore["accountData"]["teams"]): void;
   setSession(session: AuthStoreState["session"]): void;
   fetchTeams(access_token: string): Promise<void>;
+  
 };
 
 export type AuthCreateStore = AuthStoreState & AuthStoreActions;
@@ -22,6 +24,7 @@ const defaultInitState: AuthStoreState = {
   session: null,
   accountData: { teams: [], selectedTeamId: null },
   fetchTeamsStatus: "IDLE",
+  persist: persist
 };
 
 export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
@@ -55,9 +58,11 @@ export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
           if (token) {
             try {
               const response = await client.GET("/team", token);
-              console.log(response);
+              if (!response?.ok)
+                throw new Error(
+                  "Something went wrong trying to retrieve teams"
+                );
               const result = await response.json();
-              console.log(result);
               set((state) => ({
                 fetchTeamsStatus: "DONE",
                 accountData: {

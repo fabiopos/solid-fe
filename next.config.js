@@ -4,6 +4,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'https',
+        hostname: 'cdn.cloudflare.steamstatic.com',
+        pathname: '/steamcommunity/public/images/avatars/**',
+        port: ''
+      },
+      {
         protocol: "https",
         hostname: "tvefqfrpvwacsfdyfked.supabase.co",
         port: "",
