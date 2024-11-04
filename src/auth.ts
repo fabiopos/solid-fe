@@ -1,4 +1,4 @@
-import NextAuth, { type DefaultSession, type DefaultUser } from "next-auth";
+import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { SolidAuth } from "./features/auth/application/SolidAuth";
 
@@ -45,8 +45,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error("Invalid credentials.");
         // logic to salt and hash password
         const response = await SolidAuth.login({
-          email: credentials?.email,
-          password: credentials?.password,
+          email: credentials?.email as string,
+          password: credentials?.password as string,
         });
 
         user = response.user;
@@ -65,7 +65,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    jwt({ token, user, account, session }) {
+    authorized: async ({ auth }) => {
+      // Logged in users are authenticated, otherwise redirect to login page
+      return !!auth;
+    },
+    jwt({ token, user, account }) {
       if (user) {
         token.id = user.id;
       }

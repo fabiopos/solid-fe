@@ -36,6 +36,7 @@ export const usePlayersStore = <T,>(
   selector: (store: PlayersStore) => T
 ): T => {
   const playersStoreContext = useContext(PlayersStoreContext);
+  
 
   if (!playersStoreContext) {
     throw new Error(

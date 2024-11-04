@@ -1,21 +1,22 @@
 import { ApiClient } from "@/lib/ApiClient";
 import { AccountData, RequestStatus, Team } from "@/types/types.common";
-import { Session, User } from "next-auth";
+import { Session } from "next-auth";
 import { createStore } from "zustand/vanilla";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { signOut } from "next-auth/react";
 
 export type AuthStoreState = {
   session: Session | null;
   accountData: AccountData;
   fetchTeamsStatus: RequestStatus;
-  persist: typeof persist
+  persist: typeof persist;
+  error: string | null;
 };
 export type AuthStoreActions = {
   setTeamId(id: AuthStoreState["accountData"]["selectedTeamId"]): void;
   setTeams(teams: AuthCreateStore["accountData"]["teams"]): void;
   setSession(session: AuthStoreState["session"]): void;
   fetchTeams(access_token: string): Promise<void>;
-  
 };
 
 export type AuthCreateStore = AuthStoreState & AuthStoreActions;
@@ -24,7 +25,8 @@ const defaultInitState: AuthStoreState = {
   session: null,
   accountData: { teams: [], selectedTeamId: null },
   fetchTeamsStatus: "IDLE",
-  persist: persist
+  persist: persist,
+  error: null,
 };
 
 export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
@@ -58,10 +60,15 @@ export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
           if (token) {
             try {
               const response = await client.GET("/team", token);
-              if (!response?.ok)
+              if (!response?.ok) {
+                const error = await response.json();
+                if (response.status === 401) return await signOut();
+
                 throw new Error(
-                  "Something went wrong trying to retrieve teams"
+                  error.message() ||
+                    "Something went wrong trying to retrieve teams"
                 );
+              }
               const result = await response.json();
               set((state) => ({
                 fetchTeamsStatus: "DONE",
@@ -71,7 +78,16 @@ export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
                 },
               }));
             } catch (error) {
-              set(() => ({ fetchTeamsStatus: "ERROR" }));
+              if (error instanceof Error)
+                set(() => ({
+                  fetchTeamsStatus: "ERROR",
+                  error: error.message,
+                }));
+              else
+                set(() => ({
+                  fetchTeamsStatus: "ERROR",
+                  error: error as string,
+                }));
             }
           }
         },

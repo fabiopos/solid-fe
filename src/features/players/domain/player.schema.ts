@@ -8,9 +8,6 @@ const teamSchema = z.object({
 const fieldPositionSchema = z.object({
   id: string(),
   createdAt: string(),
-  name: string(),
-  description: string(),
-  order: number(),
 });
 
 const playerPositionSchema = z.object({
@@ -20,7 +17,10 @@ const playerPositionSchema = z.object({
 
 const favPositionSchema = z.object({
   id: string(),
-  category: string(),
+  category: string().nullable(),
+  name: string(),
+  description: string(),
+  order: number(),
 });
 
 export const playerSchema = z.object({

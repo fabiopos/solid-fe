@@ -47,14 +47,18 @@ const features: { title: string; href: string; description: string }[] = [
 ];
 
 export default function NavBar() {
-  const { data } = useSession();
+  const { data, status } = useSession();
   const { setSession, accountData } = useAuthStore((state) => state);
   React.useEffect(() => {
     setSession(data);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
   const selectedTeam = React.useMemo(() => {
     return accountData.teams.find((x) => x.id === accountData.selectedTeamId);
   }, [accountData]);
+
+  if (status === "loading") return null;
+  if (status === "unauthenticated") return null;
 
   return (
     <div className="fixed flex justify-center align-middle w-full text-center max-w-full p-8">

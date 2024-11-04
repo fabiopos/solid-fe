@@ -1,6 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { PlayerType } from "../domain/player.schema";
 import PlayerAvatar from "./PlayerAvatar";
+import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
 
 interface PlayerItemProps {
   player: PlayerType;
@@ -18,7 +19,7 @@ export default function PlayerItem({ player }: PlayerItemProps) {
             <span className="text-2xl">{player.lastName}</span>
           </div>
           <small>{player.email}</small>
-          <small>{player.favPosition?.category ?? "NO POSITION"} </small>
+          <PositionCategoryBadge category={player.favPosition?.category} />
         </div>
         <div className="flex items-center">
           <Badge variant="outline">

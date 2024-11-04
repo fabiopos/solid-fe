@@ -31,11 +31,11 @@ export const makePlayersStore = (
       const client = new PlayerGet(new ApiClient());
 
       try {
-        const response = await client.getAllPlayers(teamId, access_token);
-        if (!response.ok) throw new Error();
-
-        const result = await response.json();
-        set(() => ({ fetchPlayersStatus: "DONE", players: result }));
+        const result = await client.getAllPlayers(teamId, access_token);
+        set(() => ({
+          fetchPlayersStatus: "DONE",
+          players: result.sort((a, b) => (a.shirtNumber ?? 0) - (b.shirtNumber ?? 0)),
+        }));
 
         return;
       } catch (error) {

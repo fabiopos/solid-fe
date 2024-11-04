@@ -7,6 +7,13 @@ import PlayerItem from "./PlayerItem";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert } from "@/components/ui/alert";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { FieldPositionCategories } from "@/constants/fieldPosition";
 
 export default function PlayerList() {
   const teamId = useTeamId();
@@ -17,7 +24,7 @@ export default function PlayerList() {
 
   useEffect(() => {
     if (teamId && access_token) fetchPlayers(teamId, access_token);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teamId, access_token]);
 
   if (fetchPlayersStatus === "IN_PROGRESS")
@@ -35,9 +42,26 @@ export default function PlayerList() {
 
   return (
     <Card className="w-[500px]">
-      {players.map((player) => (
-        <PlayerItem key={player.id} player={player} />
-      ))}
+      <Accordion
+        type="multiple"
+        className="w-full p-5"
+        defaultValue={FieldPositionCategories}
+      >
+        {FieldPositionCategories.map((cat) => (
+          <AccordionItem value={cat} key={cat}>
+            <AccordionTrigger>{cat}S</AccordionTrigger>
+            <AccordionContent>
+              {players.filter((x) => x.favPosition?.category === cat).length ===
+                0 && <Alert>No players for this position</Alert>}
+              {players
+                .filter((x) => x.favPosition?.category === cat)
+                .map((player) => (
+                  <PlayerItem key={player.id} player={player} />
+                ))}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
     </Card>
   );
 }

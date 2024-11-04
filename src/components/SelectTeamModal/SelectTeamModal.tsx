@@ -12,10 +12,18 @@ import { useAuthStore } from "@/context/AuthCtx";
 import { useEffect, useMemo } from "react";
 import { Alert } from "@/components/ui/alert";
 import TeamsList from "./TeamsList";
+import { useSession } from "next-auth/react";
 
 export default function SelectTeamModal() {
-  const { accountData, setTeamId, fetchTeams, session, fetchTeamsStatus } =
-    useAuthStore((state) => state);
+  const { status } = useSession();
+  const {
+    accountData,
+    setTeamId,
+    fetchTeams,
+    session,
+    fetchTeamsStatus,
+    error,
+  } = useAuthStore((state) => state);
   const teams = useMemo(() => accountData.teams, [accountData]);
   const hasTeams = useMemo(() => teams.length > 0, [teams]);
   const modalOpen = useMemo(() => {
@@ -23,12 +31,14 @@ export default function SelectTeamModal() {
   }, [accountData.selectedTeamId, session?.user]);
 
   const showNoTeamsAlert = useMemo(() => {
-    if (fetchTeamsStatus === "IN_PROGRESS" && !hasTeams) return true;
+    if (status === "loading" || status === "unauthenticated") return false;
+    if (fetchTeamsStatus === "DONE" && !hasTeams) return true;
     return false;
-  }, [fetchTeamsStatus, hasTeams]);
+  }, [fetchTeamsStatus, hasTeams, status]);
 
   useEffect(() => {
     fetchTeams(session?.user.access_token ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user.access_token]);
 
   return (
@@ -44,8 +54,8 @@ export default function SelectTeamModal() {
           {hasTeams && <TeamsList teams={teams} onSelectTeam={setTeamId} />}
           {showNoTeamsAlert && (
             <Alert variant="destructive">
-              You don't have teams configured, please consider contact the app
-              administrator.{" "}
+              You don&apos;t have teams configured, please consider contact the
+              app administrator.
               <Button
                 variant="link"
                 onClick={() => fetchTeams(session?.user.access_token ?? "")}
