@@ -34,7 +34,7 @@ export const makePlayersStore = (
         const result = await client.getAllPlayers(teamId, access_token);
         set(() => ({
           fetchPlayersStatus: "DONE",
-          players: result.sort((a, b) => (a.shirtNumber ?? 0) - (b.shirtNumber ?? 0)),
+          players: result,
         }));
 
         return;
