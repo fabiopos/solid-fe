@@ -6,6 +6,11 @@ export class ErrorResponse extends Error {
   }
 }
 
+export enum PlayerStatus {
+  OK = 'OK',
+  INJURIED = 'INJURIED',
+}
+
 export type Team = {
   id: string;
   name: string;

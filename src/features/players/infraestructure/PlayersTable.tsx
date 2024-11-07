@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Alert } from "@/components/ui/alert";
 import { usePlayers } from "../domain/usePlayers";
 import PlayersSkeleton from "./PlayersSkeleton";
@@ -12,6 +12,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
+import { Ambulance, ArrowUp } from "lucide-react";
+import { PlayerStatus } from "@/types/types.common";
 
 export default function PlayersTable() {
   const { error, fetchPlayersStatus, players } = usePlayers();
@@ -22,7 +24,7 @@ export default function PlayersTable() {
   return (
     <div>
       <Table>
-        <TableCaption>Your squad.</TableCaption>
+        <TableCaption>Your squad has {players.length} players.</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Position</TableHead>
@@ -30,10 +32,10 @@ export default function PlayersTable() {
             <TableHead className="">Name</TableHead>
             <TableHead className="">Document Type</TableHead>
             <TableHead className="">Document Number</TableHead>
-            <TableHead className="">Status</TableHead>
             <TableHead className="">Shirt Size</TableHead>
-            <TableHead className="">Shirt Name</TableHead>            
+            <TableHead className="">Shirt Name</TableHead>
             <TableHead className="text-right">Email</TableHead>
+            <TableHead className="">Status</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -56,16 +58,17 @@ export default function PlayersTable() {
               <TableCell className="font-medium">
                 {player.documentNumber}
               </TableCell>
-              <TableCell className="font-medium">
-                {player.status}
-              </TableCell>
-              <TableCell className="font-medium">
-                {player.shirtSize}
-              </TableCell>
-              <TableCell className="font-medium">
-                {player.shirtName}
-              </TableCell>
+              <TableCell className="font-medium">{player.shirtSize}</TableCell>
+              <TableCell className="font-medium">{player.shirtName}</TableCell>
               <TableCell className="text-right">{player.email}</TableCell>
+              <TableCell className="font-medium">
+                {player.status === PlayerStatus.OK && (
+                  <ArrowUp className="text-green-600" />
+                )}
+                {player.status === PlayerStatus.INJURIED && (
+                  <Ambulance className="text-red-400" />
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

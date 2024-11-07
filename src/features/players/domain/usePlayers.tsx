@@ -25,7 +25,7 @@ export const usePlayers = () => {
         x.favPosition?.category?.toUpperCase() ===
         (position as string).toUpperCase()
     );
-  }, []);
+  }, [players, position]);
 
   return {
     players: filteredPlayers,

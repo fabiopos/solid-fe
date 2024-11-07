@@ -1,3 +1,4 @@
+import { PlayerStatus } from "@/types/types.common";
 import { z, string, boolean, number } from "zod";
 
 const teamSchema = z.object({
@@ -30,7 +31,7 @@ export const playerSchema = z.object({
   documentNumber: string(),
   documentType: string(),
   active: boolean(),
-  status: string(),
+  status: z.enum([PlayerStatus.OK, PlayerStatus.INJURIED]),
   email: string(),
   shirtSize: string().optional().nullable(),
   shirtName: string().optional().nullable(),

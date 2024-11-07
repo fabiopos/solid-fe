@@ -10,20 +10,24 @@ const items = [
     title: "Home",
   },
   {
-    href: "/players",
-    title: "Players",
+    href: "/about",
+    title: "About",
   },
   {
-    href: "/team",
-    title: "Team",
-  },  
+    href: "/pricing",
+    title: "Pricing",
+  },
   {
-    href: "/logout",
-    title: "Log out",
+    href: "/signup",
+    title: "Sign up",
+  },
+  {
+    href: "/login",
+    title: "Log in",
   },
 ];
 
-const PrivateNavBar = () => {
+const PublicNavBar = () => {
   const pathname = usePathname();
 
   return (
@@ -47,4 +51,4 @@ const PrivateNavBar = () => {
   );
 };
 
-export default PrivateNavBar;
+export default PublicNavBar;

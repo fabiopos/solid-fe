@@ -13,7 +13,7 @@ export default function PlayerList() {
   if (error) return <Alert variant="destructive">{error}</Alert>;
 
   return (
-    <Card className="w-[600px]">
+    <Card className="min-w-[600px] space-y-5 border-0">
       {players.length === 0 && <Alert>No players for this position</Alert>}
       {players.map((player) => (
         <PlayerItem key={player.id} player={player} />

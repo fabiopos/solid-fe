@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
-import { Toaster } from "@/components/ui/sonner";
-import Providers from "@/context/Providers";
-import NavBar from "@/components/NavBar/NavBar";
-import SelectTeamModal from "@/features/team-select/infraestructure/SelectTeamModal";
-
+import Image from "next/image";
+import logo from "@/app/assets/logo.svg";
+import PublicNavBar from "@/components/NavBar/PublicNavBar";
+import "../globals.css";
 
 const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
+  src: "../fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
 });
 const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
+  src: "../fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
 });
@@ -33,12 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <NavBar />
-          {children}
-          <SelectTeamModal />
-        </Providers>
-        <Toaster />
+        <nav className="w-full flex justify-between px-5">
+          <Image priority src={logo.src} alt="logo" width={45} height={45} />
+          <PublicNavBar />
+        </nav>
+        {children}
       </body>
     </html>
   );
