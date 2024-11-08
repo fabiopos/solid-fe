@@ -7,7 +7,7 @@ function PlayersPage() {
     <div className="p-5">
       <div className="flex justify-between py-2">
         <h2 className="text-3xl">All Players</h2>
-        <Button>Add Player</Button>
+        <Button variant="default">Add Player</Button>
       </div>
       <Separator className="mb-5" />
       <PlayersTable />

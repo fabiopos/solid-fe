@@ -14,7 +14,7 @@ import { usePathname } from "next/navigation";
 
 const positionsCategories = [
   {
-    title: "All",
+    title: "All Players",
     url: "/players",
     icon: undefined,
   },
@@ -44,7 +44,7 @@ const PositionCategoriesSidebarGroup = () => {
   const pathname = usePathname();
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Players</SidebarGroupLabel>
+      <SidebarGroupLabel>Players by Position</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
           {positionsCategories.map((item) => (

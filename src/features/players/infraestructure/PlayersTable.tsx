@@ -101,7 +101,7 @@ export default function PlayersTable() {
               </TableCell>
               <TableCell className="font-medium">
                 <div className="flex flex-col">
-                  <span>
+                  <span className="text-xl">
                     {player.firstName} {player.lastName}
                   </span>
                   <small className="text-neutral-500">{player.email}</small>
