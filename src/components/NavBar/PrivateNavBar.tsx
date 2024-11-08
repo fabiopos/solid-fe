@@ -1,8 +1,9 @@
-'use client'
+"use client";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import LogoutButton from "../Logout/LogoutButton";
 
 const items = [
   {
@@ -16,10 +17,6 @@ const items = [
   {
     href: "/team",
     title: "Team",
-  },  
-  {
-    href: "/logout",
-    title: "Log out",
   },
 ];
 
@@ -43,6 +40,7 @@ const PrivateNavBar = () => {
           {item.title}
         </Link>
       ))}
+      <LogoutButton />
     </ul>
   );
 };
