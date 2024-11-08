@@ -11,16 +11,27 @@ import {
 import { Alert } from "@/components/ui/alert";
 import { useTeamSelect } from "../domain/useTeamSelect";
 import TeamsList from "@/components/TeamList/TeamsList";
+import { Team } from "@/types/types.common";
+import { useEffect } from "react";
+import { useAuthStore } from "@/context/AuthCtx";
 
-export default function SelectTeamModal() {
+interface SelectTeamModalProps {
+  teams: Team[];
+}
+
+export default function SelectTeamModal({ teams }: SelectTeamModalProps) {
+  const { setTeams } = useAuthStore((state) => state);
   const {
     isModalOpen,
     hasTeams,
-    teams,
     showNoTeamsAlert,
     onTryAgainClick,
     onSelectTeam,
   } = useTeamSelect();
+  useEffect(() => {
+    setTeams(teams);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [teams]);
 
   return (
     <Dialog open={isModalOpen}>

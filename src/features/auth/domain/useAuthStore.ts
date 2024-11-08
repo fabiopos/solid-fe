@@ -53,7 +53,7 @@ export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
         setSession(session) {
           set(() => ({ session }));
         },
-        async fetchTeams(access_token: string) {
+        async fetchTeams(access_token: string) {          
           set(() => ({ fetchTeamsStatus: "IN_PROGRESS" }));
           const client = new ApiClient();
           const token = access_token;

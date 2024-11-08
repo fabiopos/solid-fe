@@ -5,8 +5,9 @@ import MainSidebarGroup from "./MainSidebarGroup";
 import HeaderSidebar from "./HeaderSidebar";
 
 const PlayersSidebar = () => {
+  
   return (
-    <Sidebar variant="floating" className="dark">
+    <Sidebar variant="floating">
       <HeaderSidebar />
       <SidebarContent>
         <MainSidebarGroup />

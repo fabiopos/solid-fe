@@ -4,6 +4,8 @@ import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import LogoutButton from "../Logout/LogoutButton";
+import { useSession } from "next-auth/react";
+import { navigationMenuStyle } from "../ui/navigation-menu";
 
 const items = [
   {
@@ -22,6 +24,7 @@ const items = [
 
 const PrivateNavBar = () => {
   const pathname = usePathname();
+  const { data } = useSession()
 
   return (
     <ul className="flex space-x-2 p-4 text-lg">
@@ -41,6 +44,7 @@ const PrivateNavBar = () => {
         </Link>
       ))}
       <LogoutButton />
+      <span className={navigationMenuStyle()}>{data?.user.name}</span>
     </ul>
   );
 };

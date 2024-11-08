@@ -13,7 +13,7 @@ export class PlayerGet {
 
     if (!response.ok) throw new Error();
 
-    const result = await response.json();
+    const result = await response.json();   
 
     const mapped = (result as PlayerType[]).map(this.mapPlayers);
     const sorted = mapped.sort(this.sortPlayers);

@@ -29,7 +29,7 @@ declare module "next-auth" {
 export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/login",
-    signOut: '/logout',
+    signOut: "/logout",
   },
   providers: [
     Credentials({
@@ -39,10 +39,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: {},
         password: {},
       },
-      authorize: async (credentials, req) => {
+      authorize: async (credentials) => {
         let user = null;
-
-        console.log(req.destination)
 
         if (!credentials?.email || !credentials?.password)
           throw new Error("Invalid credentials.");
@@ -68,8 +66,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    authorized: async ({ auth, request}) => {
-
+    authorized: async ({ auth }) => {
       // Logged in users are authenticated, otherwise redirect to login page
       return !!auth;
     },

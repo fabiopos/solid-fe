@@ -4,12 +4,12 @@ import PlayersTable from "@/features/players/infraestructure/PlayersTable";
 
 function PlayersPage() {
   return (
-    <div className="p-5">
-      <div className="flex justify-between py-2">
+    <div className="">
+      <div className="flex justify-between items-center space-y-5">
         <h2 className="text-3xl">All Players</h2>
         <Button variant="default">Add Player</Button>
       </div>
-      <Separator className="mb-5" />
+      <Separator className="my-5" />
       <PlayersTable />
     </div>
   );

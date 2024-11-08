@@ -34,9 +34,9 @@ export const useTeamSelect = () => {
   }, [teamsCount, teams, setTeamId]);
 
   useEffect(() => {
-    fetchTeams(session?.user.access_token ?? "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user.access_token]);
+    fetchTeams(session?.user.access_token ?? "");    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     isModalOpen,

@@ -1,22 +1,22 @@
 "use client";
 import { usePlayersStore } from "@/context/PlayersCtx";
-import { useAccessToken } from "@/hooks/use-access-token";
 import { useTeamId } from "@/hooks/use-team-id";
+import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useMemo } from "react";
 
 export const usePlayers = () => {
   const { position } = useParams();
   const teamId = useTeamId();
-  const access_token = useAccessToken();
+  const { data } = useSession();
   const { error, fetchPlayersStatus, fetchPlayers, players } = usePlayersStore(
     (state) => state
   );
 
-  useEffect(() => {
-    if (teamId && access_token) fetchPlayers(teamId, access_token);
+  useEffect(() => {    
+    if (!!teamId && !!data?.user.access_token) fetchPlayers(teamId, data.user.access_token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamId, access_token]);
+  }, [teamId, data]);
 
   const filteredPlayers = useMemo(() => {
     if (!position) return players;

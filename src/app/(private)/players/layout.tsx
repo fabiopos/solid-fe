@@ -8,17 +8,11 @@ interface LayoutProps {
 export default function LayoutPlayers(props: LayoutProps) {
   return (
     <PlayersStoreProvider>
-      <div className="grid grid-rows-[20px_1fr_20px] min-h-screen p-4 pb-10 gap-5 sm:p-10">
-        <main className="flex flex-col gap-2 row-start-2 sm:items-start">
-          <div className="flex gap-2 items-start">
-            <aside className="">
-              <PlayersSidebar />
-              {/* <SidebarNav items={items} /> */}
-            </aside>
-
-            {props.children}
-          </div>
-        </main>
+      <div className="flex gap-5 py-10">
+        <aside className="">
+          <PlayersSidebar />
+        </aside>
+        {props.children}
       </div>
     </PlayersStoreProvider>
   );

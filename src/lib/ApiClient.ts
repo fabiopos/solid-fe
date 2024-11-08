@@ -19,8 +19,7 @@ export class ApiClient {
     if (access_token)
       defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-    const uri = `http://localhost:3000${resource}`;
-    console.log(uri);
+    const uri = `http://localhost:3000${resource}`;    
 
     return await fetch(uri, {
       headers: defaultHeaders,
