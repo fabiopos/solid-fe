@@ -31,7 +31,7 @@ export const playerSchema = z.object({
   documentNumber: string(),
   documentType: string(),
   active: boolean(),
-  status: z.enum([PlayerStatus.OK, PlayerStatus.INJURIED]),
+  status: z.enum([PlayerStatus.OK, PlayerStatus.INJURIED, PlayerStatus.DOWN]),
   email: string(),
   shirtSize: string().optional().nullable(),
   shirtName: string().optional().nullable(),

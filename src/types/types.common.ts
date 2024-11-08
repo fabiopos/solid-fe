@@ -1,4 +1,3 @@
-import { StringValidation } from "zod";
 
 export class ErrorResponse extends Error {
   constructor(message?: string) {
@@ -7,8 +6,9 @@ export class ErrorResponse extends Error {
 }
 
 export enum PlayerStatus {
-  OK = 'OK',
-  INJURIED = 'INJURIED',
+  OK = "OK",
+  INJURIED = "INJURIED",
+  DOWN = "DOWN",
 }
 
 export type Team = {
