@@ -16,7 +16,7 @@ export type Team = {
   name: string;
   active: boolean;
   hasSubscription: boolean;
-  createdAt: Date;
+  createdAt: string;
   primaryColor: string | null;
   secondaryColor: string | null;
   logoUrl: string | null;

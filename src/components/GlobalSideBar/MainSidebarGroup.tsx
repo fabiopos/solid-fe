@@ -1,5 +1,4 @@
 "use client";
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
 import {
   SidebarGroupLabel,
   SidebarGroupContent,
@@ -7,47 +6,35 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "../../ui/sidebar";
+} from "../ui/sidebar";
 import Link from "next/link";
+import { buttonVariants } from "../ui/button";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { menuItems } from "@/constants/menu";
 
-const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Players",
-    url: "/players",
-    icon: Inbox,
-  },
-  {
-    title: "Team",
-    url: "/team",
-    icon: Calendar,
-  },
-  {
-    title: "Seasons",
-    url: "/seasons",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "/settings",
-    icon: Settings,
-  },
-];
+
 
 const MainSidebarGroup = () => {
+  const pathname = usePathname();
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
+          {menuItems.filter(x => x.sideBar).map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild>
-                <Link href={item.url}>
+                <Link
+                  href={item.url}
+                  className={cn(
+                    buttonVariants({ variant: "linkHover2" }),
+                    pathname === item.url
+                      ? "bg-neutral-600 text-slate-50 hover:bg-slate-600 after:bg-slate-50"
+                      : "hover:bg-transparent",
+                    "justify-start"
+                  )}
+                >
                   <item.icon className="text-md" size="48" />
                   <span className="text-md">{item.title}</span>
                 </Link>

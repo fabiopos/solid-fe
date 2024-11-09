@@ -3,10 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Providers from "@/context/Providers";
-import NavBar from "@/components/NavBar/PrivateNavBar";
-import SelectTeamModal from "@/features/team-select/infraestructure/SelectTeamModal";
-import Image from "next/image";
-import logo from "@/app/assets/logo.svg";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import GlobalNavBar from "@/components/NavBar/GlobalNavBar";
 

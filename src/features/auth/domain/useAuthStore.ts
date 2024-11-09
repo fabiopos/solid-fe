@@ -1,9 +1,10 @@
 import { ApiClient } from "@/lib/ApiClient";
-import { AccountData, RequestStatus, Team } from "@/types/types.common";
+import { AccountData, RequestStatus } from "@/types/types.common";
 import { Session } from "next-auth";
 import { createStore } from "zustand/vanilla";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { signOut } from "next-auth/react";
+// import { signOut } from "next-auth/react";
+import { TeamGet } from "@/features/teams/application/TeamGet";
 
 export type AuthStoreState = {
   session: Session | null;
@@ -53,27 +54,17 @@ export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
         setSession(session) {
           set(() => ({ session }));
         },
-        async fetchTeams(access_token: string) {          
+        async fetchTeams(access_token: string) {
           set(() => ({ fetchTeamsStatus: "IN_PROGRESS" }));
-          const client = new ApiClient();
+          const client = new TeamGet(new ApiClient());
           const token = access_token;
           if (token) {
             try {
-              const response = await client.GET("/team", token);
-              if (!response?.ok) {
-                const error = await response.json();
-                if (response.status === 401) return await signOut();
-
-                throw new Error(
-                  error.message() ||
-                    "Something went wrong trying to retrieve teams"
-                );
-              }
-              const result = await response.json();
+              const teams = await client.getTeams(token)
               set((state) => ({
                 fetchTeamsStatus: "DONE",
                 accountData: {
-                  teams: result as Team[],
+                  teams: teams,
                   selectedTeamId: state.accountData.selectedTeamId,
                 },
               }));
@@ -89,6 +80,8 @@ export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
                   error: error as string,
                 }));
             }
+          } else {
+            set(() => ({ fetchTeamsStatus: "DONE" }));
           }
         },
       }),
