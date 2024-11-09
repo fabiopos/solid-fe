@@ -6,7 +6,7 @@ import { useStore } from "zustand";
 import {
   type SubscriptionCreateStore,
   makeSubscriptionCreateStore,
-} from "@/features/Subscription/domain/useSubscriptionCreateStore";
+} from "@/features/subscription/domain/useSubscriptionCreateStore";
 
 export type SubscriptionCreateStoreApi = ReturnType<
   typeof makeSubscriptionCreateStore

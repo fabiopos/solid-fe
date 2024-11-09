@@ -1,3 +1,4 @@
+
 import SettingsSideBar from "@/components/Settings/SettingsSideBar";
 
 interface LayoutProps {
@@ -14,5 +15,7 @@ function SettingsLayout({ children }: LayoutProps) {
     </div>
   );
 }
+
+
 
 export default SettingsLayout;

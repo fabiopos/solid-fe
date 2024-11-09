@@ -28,7 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { SubscriptionInput } from "@/features/Subscription/domain/subscription.schema";
+import { SubscriptionInput } from "@/features/subscription/domain/subscription.schema";
 import { Loader } from "lucide-react";
 import { UseFormReturn } from "react-hook-form";
 

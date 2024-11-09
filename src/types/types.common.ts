@@ -1,4 +1,3 @@
-
 export class ErrorResponse extends Error {
   constructor(message?: string) {
     super(message);
@@ -30,3 +29,86 @@ export interface AccountData {
 }
 
 export type RequestStatus = "IDLE" | "IN_PROGRESS" | "DONE" | "ERROR";
+
+export enum RoleEnum {
+  ADMIN = "admin",
+  USER = "user",
+  COACH = "coach",
+}
+
+export enum ShirtSize {
+  S = "S",
+  M = "M",
+  L = "L",
+  XL = "XL",
+  XXL = "XXL",
+}
+
+export enum DocumentType {
+  CC = "CC",
+  CE = "CE",
+  TI = "TI",
+  PP = "PP",
+  OTHER = "OTHER",
+}
+
+export enum DominantFoot {
+  RIGHT = "right",
+  LEFT = "left",
+  BOTH = "both",
+}
+
+export type User = {
+  id: string;
+  email: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  roleId: RoleEnum;
+  documentNumber: string;
+  documentType: DocumentType;
+  active: boolean;
+  avatarUrl?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+  address?: string;
+  city?: string;
+  country?: string;
+  policy: boolean;
+  subscriptionId?: string;
+  phone?: string;
+};
+
+export type Plan = {
+  id: string;
+  createdAt: Date;
+  name: string;
+  active: boolean;
+  price: number;
+  description: string;
+  currency: string;
+  interval: string;
+  intervalCount: number;
+};
+
+export type Feature = {
+  id: string;
+  createdAt: string;
+  enabled: boolean;
+  max: number;
+};
+
+export type Subscription = {
+  id: string;
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  createdAt: Date;
+  active: boolean;
+  paymentId?: string | undefined;
+  planId?: string | undefined;
+  teams: Team[];
+  users: User[];
+  plan: Plan;
+  features: Feature[];
+};

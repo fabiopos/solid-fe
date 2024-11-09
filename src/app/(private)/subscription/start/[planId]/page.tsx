@@ -1,5 +1,5 @@
-import { SubscriptionCreateStoreProvider } from "@/features/Subscription/domain/subscription-store-provider";
-import CreateSubscription from "@/features/Subscription/infraestructure/CreateSubscription";
+import { SubscriptionCreateStoreProvider } from "@/features/subscription/domain/subscription-store-provider";
+import CreateSubscription from "@/features/subscription/infraestructure/CreateSubscription";
 
 interface StartPlanPageProps {
   params: Promise<{ planId: string }>;
