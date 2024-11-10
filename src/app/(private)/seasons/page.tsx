@@ -1,9 +1,7 @@
-import React from 'react'
+import Seasons from "@/features/seasons/infraestructure/Seasons";
 
 const SeasonsPage = () => {
-  return (
-    <div>SeasonsPage</div>
-  )
-}
+  return <Seasons />;
+};
 
-export default SeasonsPage
+export default SeasonsPage;
