@@ -27,4 +27,21 @@ export class ApiClient {
       body: JSON.stringify(body),
     });
   };
+
+
+  PATCH = async (resource: string, body: any, access_token?: string) => {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
+
+    if (access_token)
+      defaultHeaders.append("Authorization", `Bearer ${access_token}`);
+
+    const uri = `http://localhost:3000${resource}`;    
+
+    return await fetch(uri, {
+      headers: defaultHeaders,
+      method: "PATCH",
+      body: JSON.stringify(body),
+    });
+  };
 }

@@ -53,3 +53,27 @@ export const playerSchema = z.object({
 });
 
 export type PlayerType = z.infer<typeof playerSchema>;
+
+export const playerUpdateSchema = z.object({
+  active: boolean().optional(),
+  address: string().optional().nullable(),
+  avatarUrl: string().optional().nullable(),
+  arl: string().optional().nullable(),
+  city: string().optional().nullable(),
+  country: string().optional().nullable(),
+  dominantFoot: string().optional().nullable(),    
+  eps: string().optional().nullable(),
+  favPositionId: string().optional().nullable(),
+  firstName: string().optional(),
+  height: number().optional().nullable(),
+  lastName: string().optional(),
+  phone: string().optional().nullable(),
+  shirtSize: string().optional().nullable(),
+  shirtName: string().optional().nullable(),
+  shirtNumber: number().optional().nullable(),
+  status: z.enum([PlayerStatus.OK, PlayerStatus.INJURIED, PlayerStatus.DOWN]).optional(),
+  weight: number().optional().nullable(),
+  bornDate: string().optional().nullable()  
+});
+
+export type PlayerUpdateType = z.infer<typeof playerUpdateSchema>;

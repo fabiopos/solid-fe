@@ -30,9 +30,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
+import StatusCell from "./TableCells/StatusCell";
 
 export default function PlayersTable() {
-  const { error, fetchPlayersStatus, players } = usePlayers();
+  const { error, fetchPlayersStatus, players, handlers, playerStatusUpdate } =
+    usePlayers();
+
+  const { handleSetDown } = handlers;
 
   if (fetchPlayersStatus === "IN_PROGRESS") return <PlayersSkeleton />;
   if (error) return <Alert variant="destructive">{error}</Alert>;
@@ -117,13 +121,8 @@ export default function PlayersTable() {
               <TableCell className="text-center">0</TableCell>
               <TableCell className="text-center">0</TableCell>
               <TableCell className="text-center">0 %</TableCell>
-              <TableCell className="font-medium">
-                {player.status === PlayerStatus.OK && (
-                  <ArrowUp className="text-green-600" />
-                )}
-                {player.status === PlayerStatus.INJURIED && (
-                  <Ambulance className="text-red-400" />
-                )}
+              <TableCell className="font-medium">                
+                <StatusCell player={player} />
               </TableCell>
               <TableCell>
                 <DropdownMenu>
@@ -165,6 +164,7 @@ export default function PlayersTable() {
                     </DropdownMenuLabel>
                     <DropdownMenuItem
                       disabled={player.status === PlayerStatus.OK}
+                      onClick={() => handleSetDown(player.id, PlayerStatus.OK)}
                     >
                       <div className="grid grid-cols-[110px_10px] items-center gap-2">
                         <span>Set as healthy</span>
@@ -173,6 +173,9 @@ export default function PlayersTable() {
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       disabled={player.status === PlayerStatus.DOWN}
+                      onClick={() =>
+                        handleSetDown(player.id, PlayerStatus.DOWN)
+                      }
                     >
                       <div className="grid grid-cols-[110px_10px] items-center gap-2">
                         <span>Set as down</span>
@@ -181,6 +184,9 @@ export default function PlayersTable() {
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       disabled={player.status === PlayerStatus.INJURIED}
+                      onClick={() =>
+                        handleSetDown(player.id, PlayerStatus.INJURIED)
+                      }
                     >
                       <div className="grid grid-cols-[110px_10px] items-center gap-2">
                         <span>Set as injuried</span>

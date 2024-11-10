@@ -13,12 +13,9 @@ export const useSelectedTeam = () => {
   const teamId = useMemo(() => accountData.selectedTeamId, [accountData]);
 
   const selectedTeam = useMemo(() => {
-    if (fetchTeamsStatus === "IN_PROGRESS") return null;
-    console.log(accountData)
+    if (fetchTeamsStatus === "IN_PROGRESS") return null;    
     return (accountData.teams).find((x) => x.id === teamId);
   }, [accountData, teamId, fetchTeamsStatus]);
-
-  console.log(accountData, selectedTeam)
-
+  
   return selectedTeam;
 };
