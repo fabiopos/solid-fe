@@ -96,6 +96,7 @@ export type Feature = {
   createdAt: string;
   enabled: boolean;
   max: number;
+  feature: { id: string; name: string; description: string };
 };
 
 export type Subscription = {

@@ -60,9 +60,26 @@ const Settings = ({ subscription }: SettingsProps) => {
           value={subscription.active ? "Active" : "Inactive"}
         />
 
-        <SettingsItem label="Teams Count" value={subscription.teams?.length ?? 0} />
-        <SettingsItem label="Users Count" value={subscription.users?.length ?? 0} />
-        <SettingsItem label="Features Count" value={subscription.features?.length ?? 0} />
+        <SettingsItem
+          label="Teams Count"
+          value={subscription.teams?.length ?? 0}
+        />
+        <SettingsItem
+          label="Users Count"
+          value={subscription.users?.length ?? 0}
+        />
+        <SettingsItem
+          label="Features Count"
+          value={subscription.features?.length ?? 0}
+        />
+
+        {subscription.features.map((subFeature) => (
+          <SettingsItem
+            key={subFeature.id}
+            label={`Max ${subFeature.feature.name} allowed`}
+            value={subFeature.max}
+          />
+        ))}
       </div>
     </>
   );
