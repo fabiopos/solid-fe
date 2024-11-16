@@ -33,8 +33,7 @@ import {
 import StatusCell from "./TableCells/StatusCell";
 
 export default function PlayersTable() {
-  const { error, fetchPlayersStatus, players, handlers, playerStatusUpdate } =
-    usePlayers();
+  const { error, fetchPlayersStatus, players, handlers } = usePlayers();
 
   const { handleSetDown } = handlers;
 
@@ -121,7 +120,7 @@ export default function PlayersTable() {
               <TableCell className="text-center">0</TableCell>
               <TableCell className="text-center">0</TableCell>
               <TableCell className="text-center">0 %</TableCell>
-              <TableCell className="font-medium">                
+              <TableCell className="font-medium">
                 <StatusCell player={player} />
               </TableCell>
               <TableCell>

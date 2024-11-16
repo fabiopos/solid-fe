@@ -20,7 +20,7 @@ export const usePlayers = () => {
     playerStatusUpdate,
   } = usePlayersStore((state) => state);
 
-  useEffect(() => {
+  useEffect(() => {    
     if (!!teamId && !!data?.user.access_token)
       fetchPlayers(teamId, data.user.access_token);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,14 +38,14 @@ export const usePlayers = () => {
   const handleSetDown = useCallback(
     (playerId: string, newStatus: PlayerStatus) => {
       setPlayerStatus(playerId, newStatus);
-      const player = players.find((x) => x.id === playerId);      
+      const player = players.find((x) => x.id === playerId);
 
       if (!player) return;
       if (!data?.user.access_token) return;
 
       updatePlayer(playerId, { status: newStatus }, data?.user.access_token);
     },
-    [players]
+    [data?.user.access_token, players, setPlayerStatus, updatePlayer]
   );
 
   return {

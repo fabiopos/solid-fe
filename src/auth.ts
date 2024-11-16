@@ -68,7 +68,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     authorized: async ({ auth }) => {
       // Logged in users are authenticated, otherwise redirect to login page
-      return !!auth;
+      if(!auth) return false;
+
+      const isExpired = new Date(auth.expires).getTime() < Date.now();
+      return !isExpired;
     },
     jwt({ token, user, account }) {
       if (user) {

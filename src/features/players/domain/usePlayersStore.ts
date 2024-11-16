@@ -40,7 +40,7 @@ export const makePlayersStore = (
       const client = new PlayerGet(new ApiClient());
 
       try {
-        const result = await client.getAllPlayers(teamId, access_token);
+        const result = await client.getAllPlayers(teamId, access_token);        
         set(() => ({
           fetchPlayersStatus: "DONE",
           players: result,

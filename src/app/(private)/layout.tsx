@@ -11,7 +11,7 @@ export default async function RootLayout({
 }>) {
   const teams = await getData();
 
-  if (!teams) return redirect('/');
+  if (!teams) return redirect("/");  
   return (
     <div className="container">
       {children}
@@ -28,5 +28,8 @@ async function getData() {
     return teams;
   } catch (error) {
     console.log(error);
+    // if (error instanceof UnauthorizedError) {
+    //   return redirect("/logout");
+    // }
   }
 }
