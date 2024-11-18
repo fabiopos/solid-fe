@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@effect/schema": "^0.75.5",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -43,6 +44,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
+    "effect": "^3.10.15",
     "embla-carousel-react": "^8.3.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.453.0",
@@ -69,6 +71,7 @@
     "eslint-config-next": "15.0.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "zukeeper": "^1.0.2"
   }
 }

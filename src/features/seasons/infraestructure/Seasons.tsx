@@ -1,4 +1,16 @@
+"use client";
+
+import { Separator } from "@/components/ui/separator";
+import SeasonCard from "./Season/SeasonCard";
+import { Button } from "@/components/ui/button";
+import { useSeasonStore } from "@/context/SeasonCtx";
+
+// interface SeasonsProps {}
 const Seasons = () => {
+  const { seasons, fetchSeasonStatus } = useSeasonStore((state) => state);
+
+  if (fetchSeasonStatus === "IN_PROGRESS") return "Loading...";
+  if (fetchSeasonStatus === "ERROR") return "Error fetching seasons";
   return (
     <div>
       <h2 className="text-5xl my-4">Seasons</h2>
@@ -17,8 +29,17 @@ const Seasons = () => {
       </p>
 
       {/* addseason */}
-      {/* seaonslist */}
-      {/* calendar */}
+
+      <div className="flex justify-end">
+        <Button>Add Season</Button>
+      </div>
+      <Separator className="my-5" />
+
+      <div className="flex gap-3 flex-col">
+        {seasons.map((s) => (
+          <SeasonCard season={s} key={s.id} />
+        ))}
+      </div>
     </div>
   );
 };

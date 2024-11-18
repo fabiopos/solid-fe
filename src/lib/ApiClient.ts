@@ -19,7 +19,7 @@ export class ApiClient {
     if (access_token)
       defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-    const uri = `http://localhost:3000${resource}`;    
+    const uri = `http://localhost:3000${resource}`;
 
     return await fetch(uri, {
       headers: defaultHeaders,
@@ -28,7 +28,6 @@ export class ApiClient {
     });
   };
 
-
   PATCH = async (resource: string, body: any, access_token?: string) => {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
@@ -36,12 +35,27 @@ export class ApiClient {
     if (access_token)
       defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-    const uri = `http://localhost:3000${resource}`;    
+    const uri = `http://localhost:3000${resource}`;
 
     return await fetch(uri, {
       headers: defaultHeaders,
       method: "PATCH",
       body: JSON.stringify(body),
+    });
+  };
+
+  DELETE = async (resource: string, access_token?: string) => {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
+
+    if (access_token)
+      defaultHeaders.append("Authorization", `Bearer ${access_token}`);
+
+    const uri = `http://localhost:3000${resource}`;
+
+    return await fetch(uri, {
+      headers: defaultHeaders,
+      method: "DELETE",
     });
   };
 }
