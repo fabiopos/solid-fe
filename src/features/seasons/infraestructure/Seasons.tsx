@@ -9,12 +9,16 @@ import { useCallback, useState } from "react";
 
 // interface SeasonsProps {}
 const Seasons = () => {
-  const { seasons, fetchSeasonStatus } = useSeasonStore((state) => state);
+  const { seasons, fetchSeasonStatus, setEmptySeason } = useSeasonStore(
+    (state) => state
+  );
   const [open, setOpen] = useState(false);
 
   const handleClose = useCallback(() => {
+    setEmptySeason(undefined);
     setOpen(false);
-  }, []);
+  }, [setEmptySeason]);
+
   const handleOpen = useCallback(() => {
     setOpen(true);
   }, []);

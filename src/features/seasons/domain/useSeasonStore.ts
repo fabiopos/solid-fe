@@ -34,13 +34,17 @@ export type SeasonStoreActions = {
     description?: string | undefined;
   }): void;
   setSelectedSeason(seasonId: string | undefined): void;
-  setEmptySeason(emptySeason: {
-    teamId: string;
-    name?: string | undefined;
-    startDate?: Date | undefined;
-    endDate?: Date | undefined;
-    description?: string | undefined;
-  }): void;
+  setEmptySeason(
+    emptySeason:
+      | {
+          teamId: string;
+          name?: string | undefined;
+          startDate?: Date | undefined;
+          endDate?: Date | undefined;
+          description?: string | undefined;
+        }
+      | undefined
+  ): void;
   postEmptySeason(emptySeason: EmptySeason, token: string): Promise<void>;
 };
 
@@ -139,12 +143,10 @@ export const makeSeasonStore = (initProps?: Partial<SeasonStoreState>) => {
     },
     setEmptySeason(emptySeason) {
       const currentEmptySeason = get().emptySeason;
-
-      if (!currentEmptySeason) {
+      
+      if (!emptySeason) {      
         set(() => ({
-          emptySeason: EmptySeason.make({
-            ...emptySeason,
-          }),
+          emptySeason: undefined,
         }));
       } else {
         set(() => ({

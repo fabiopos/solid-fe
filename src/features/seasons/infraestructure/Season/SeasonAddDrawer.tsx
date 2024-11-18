@@ -34,11 +34,10 @@ function SeasonAddDrawer({ open, onClose }: SeasonAddDrawerProps) {
   } = useSeasonStore((state) => state);
 
   const isDisabled = useMemo(() => {
-    return !name && !season?.startDate && !season?.endDate;
+    return !name || !season?.startDate || !season?.endDate;
   }, [name, season?.endDate, season?.startDate]);
 
-  const handleSubmit = useCallback(async () => {
-    console.log(season);
+  const handleSubmit = useCallback(async () => {    
     if (!season) return;
     onClose();
     await postEmptySeason(
@@ -51,6 +50,9 @@ function SeasonAddDrawer({ open, onClose }: SeasonAddDrawerProps) {
       }),
       data?.user.access_token ?? ""
     );
+    setEmptySeason(undefined);
+    setName("");
+    setDescription("");
   }, [
     data?.user.access_token,
     onClose,
@@ -58,6 +60,7 @@ function SeasonAddDrawer({ open, onClose }: SeasonAddDrawerProps) {
     season,
     name,
     description,
+    setEmptySeason,
   ]);
 
   const handleDateRangeChange = (date: DateRange | undefined) => {
@@ -65,7 +68,7 @@ function SeasonAddDrawer({ open, onClose }: SeasonAddDrawerProps) {
     setEmptySeason({ teamId, endDate: date?.to, startDate: date?.from });
   };
 
-  console.log(teamId);
+  
   return (
     <Drawer open={open} direction="right" onClose={onClose}>
       <DrawerContent>
