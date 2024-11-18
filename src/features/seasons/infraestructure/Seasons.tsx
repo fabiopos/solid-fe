@@ -4,10 +4,20 @@ import { Separator } from "@/components/ui/separator";
 import SeasonCard from "./Season/SeasonCard";
 import { Button } from "@/components/ui/button";
 import { useSeasonStore } from "@/context/SeasonCtx";
+import SeasonAddDrawer from "./Season/SeasonAddDrawer";
+import { useCallback, useState } from "react";
 
 // interface SeasonsProps {}
 const Seasons = () => {
   const { seasons, fetchSeasonStatus } = useSeasonStore((state) => state);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = useCallback(() => {
+    setOpen(false);
+  }, []);
+  const handleOpen = useCallback(() => {
+    setOpen(true);
+  }, []);
 
   if (fetchSeasonStatus === "IN_PROGRESS") return "Loading...";
   if (fetchSeasonStatus === "ERROR") return "Error fetching seasons";
@@ -31,7 +41,8 @@ const Seasons = () => {
       {/* addseason */}
 
       <div className="flex justify-end">
-        <Button>Add Season</Button>
+        <Button onClick={handleOpen}>Add Season</Button>
+        <SeasonAddDrawer onClose={handleClose} open={open} />
       </div>
       <Separator className="my-5" />
 

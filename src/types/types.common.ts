@@ -4,6 +4,14 @@ export class ErrorResponse extends Error {
   }
 }
 
+export interface CustomJWT {
+  email: string;
+  name: string;
+  subscriptionId: string;
+  iat: number;
+  exp: number;
+}
+
 export enum PlayerStatus {
   OK = "OK",
   INJURIED = "INJURIED",

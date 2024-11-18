@@ -13,11 +13,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useSeasonStore } from "@/context/SeasonCtx";
 
 interface SeasonDateRangePickerProps {
   from?: Date | undefined;
   to?: Date | undefined;
+  onDateRangeChange: (dateRange: DateRange | undefined) => void;
 }
 
 const DEFAULT_FROM = new Date();
@@ -27,19 +27,22 @@ export function SeasonDateRangePicker({
   from,
   to,
   className,
+  onDateRangeChange
 }: SeasonDateRangePickerProps & React.HTMLAttributes<HTMLDivElement>) {
-  const { selectedSeason, updateSelectedSeason } = useSeasonStore(
-    (state) => state
-  );
+  
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: from ?? DEFAULT_FROM,
     to: to ?? DEFAULT_TO,
   });
 
-  const handleChangeRange = React.useCallback((date: DateRange | undefined) => {
-    setDate(date);
-    updateSelectedSeason({ endDate: date?.to, startDate: date?.from });
-  }, []);
+  const handleChangeRange = React.useCallback(
+    (date: DateRange | undefined) => {
+      setDate(date);
+      onDateRangeChange(date)
+      // updateSelectedSeason({ endDate: date?.to, startDate: date?.from });
+    },
+    [onDateRangeChange]
+  );
 
   return (
     <div className={cn("grid gap-2", className)}>

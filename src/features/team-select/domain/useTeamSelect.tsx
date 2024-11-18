@@ -1,8 +1,10 @@
 import { useAuthStore } from "@/context/AuthCtx";
 import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 
 export const useTeamSelect = () => {
+  const pathName = usePathname()
   const { status } = useSession();
   const { accountData, setTeamId, fetchTeams, session, fetchTeamsStatus } =
     useAuthStore((state) => state);
@@ -11,10 +13,13 @@ export const useTeamSelect = () => {
   const teamsCount = useMemo(() => (teams ?? []).length, [teams]);
 
   const isModalOpen = useMemo(() => {
+    if(pathName === '/login') return false;
     if (status === "loading") return false;
     if (fetchTeamsStatus === "IN_PROGRESS") return false;
-    return !accountData.selectedTeamId && !!session?.user;
-  }, [accountData.selectedTeamId, session?.user, status, fetchTeamsStatus]);
+    return !accountData.selectedTeamId || !!session?.user;
+  }, [accountData.selectedTeamId, session?.user, status, fetchTeamsStatus, pathName]);
+
+  // console.log(isModalOpen, { selectedTeamId: accountData.selectedTeamId, user: !!session?.user })
 
   const showNoTeamsAlert = useMemo(() => {
     if (status === "loading" || status === "unauthenticated") return false;
@@ -36,7 +41,7 @@ export const useTeamSelect = () => {
   useEffect(() => {
     fetchTeams(session?.user.access_token ?? "");    
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [session?.user.access_token]);
 
   return {
     isModalOpen,

@@ -11,63 +11,94 @@ import {
 import { Input } from "@/components/ui/input";
 import { SeasonDateRangePicker } from "./SeasonDateRangePicker";
 import { useSeasonStore } from "@/context/SeasonCtx";
-import { useCallback, useMemo } from "react";
-import { PartialSeason } from "../../domain/season.schema";
+import { useCallback, useMemo, useState } from "react";
+import { EmptySeason } from "../../domain/season.schema";
 import { toDate } from "date-fns";
 import { useSession } from "next-auth/react";
+import { useTeamId } from "@/hooks/use-team-id";
+import { DateRange } from "react-day-picker";
 
-interface SeasonDrawerProps {
+interface SeasonAddDrawerProps {
   open: boolean;
   onClose: () => void;
 }
-function SeasonDrawer({ open, onClose }: SeasonDrawerProps) {
+function SeasonAddDrawer({ open, onClose }: SeasonAddDrawerProps) {
+  const teamId = useTeamId();
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const { data } = useSession();
   const {
-    selectedSeason: season,
-    updateSelectedSeason,
-    updateSeason,
+    emptySeason: season,
+    setEmptySeason,
+    postEmptySeason,
   } = useSeasonStore((state) => state);
 
   const isDisabled = useMemo(() => {
-    return !season?.name && !season?.startDate && !season?.endDate;
-  }, [season]);
+    return !name && !season?.startDate && !season?.endDate;
+  }, [name, season?.endDate, season?.startDate]);
 
   const handleSubmit = useCallback(async () => {
-    if (!season?.id) return;
+    console.log(season);
+    if (!season) return;
     onClose();
-    await updateSeason(
-      season.id,
-      PartialSeason.make({
+    await postEmptySeason(
+      EmptySeason.make({
         ...season,
+        name: name,
+        description: description,
         startDate: season.startDate ? toDate(season.startDate) : null,
         endDate: season.endDate ? toDate(season.endDate) : null,
       }),
       data?.user.access_token ?? ""
     );
-  }, [season]);
+  }, [
+    data?.user.access_token,
+    onClose,
+    postEmptySeason,
+    season,
+    name,
+    description,
+  ]);
 
+  const handleDateRangeChange = (date: DateRange | undefined) => {
+    if (!teamId) return null;
+    setEmptySeason({ teamId, endDate: date?.to, startDate: date?.from });
+  };
+
+  console.log(teamId);
   return (
     <Drawer open={open} direction="right" onClose={onClose}>
       <DrawerContent>
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Edit Season Details</DrawerTitle>
-            <DrawerDescription>This action cannot be undone.</DrawerDescription>
+            <DrawerTitle>Add New Season</DrawerTitle>
+            <DrawerDescription>
+              Write season details to create a new one.
+            </DrawerDescription>
           </DrawerHeader>
           <div className="p-5 space-y-2">
             <Input
               placeholder="Season name"
               defaultValue={season?.name}
-              onChange={(e) => updateSelectedSeason({ name: e.target.value })}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             <SeasonDateRangePicker
               from={season?.startDate ?? undefined}
               to={season?.endDate ?? undefined}
+              onDateRangeChange={handleDateRangeChange}
+            />
+
+            <Input
+              placeholder="Season description"
+              defaultValue={season?.description}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
           <DrawerFooter>
             <Button disabled={isDisabled} onClick={handleSubmit}>
-              Update Season
+              Create Season
             </Button>
             <DrawerClose onClick={onClose}>
               {/* <Button variant="outline" onClick={onClose}>
@@ -81,4 +112,4 @@ function SeasonDrawer({ open, onClose }: SeasonDrawerProps) {
   );
 }
 
-export default SeasonDrawer;
+export default SeasonAddDrawer;

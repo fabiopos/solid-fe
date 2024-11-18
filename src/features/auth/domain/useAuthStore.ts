@@ -30,11 +30,12 @@ const defaultInitState: AuthStoreState = {
   error: null,
 };
 
-export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
+export const makeAuthStore = (initProps?: Partial<AuthStoreState>) => {
   return createStore<AuthCreateStore>()(
     persist(
       (set) => ({
-        ...initState,
+        ...defaultInitState,
+        ...initProps,
         setTeamId(id) {
           set((state) => ({
             accountData: {
@@ -60,7 +61,7 @@ export const makeAuthStore = (initState: AuthStoreState = defaultInitState) => {
           const token = access_token;
           if (token) {
             try {
-              const teams = await client.getTeams(token)
+              const teams = await client.getTeams(token);
               set((state) => ({
                 fetchTeamsStatus: "DONE",
                 accountData: {

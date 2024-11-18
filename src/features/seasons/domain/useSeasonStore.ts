@@ -6,6 +6,7 @@ import { SeasonStatusEnum } from "@/shared/enums/seasonStatusEnum";
 import { SeasonGet } from "../application/SeasonGet";
 import { SeasonUpdate } from "../application/SeasonUpdate";
 import { SeasonDelete } from "../application/SeasonDelete";
+import { SeasonCreate } from "../application/SeasonCreate";
 
 export type SeasonStoreState = {
   fetchSeasonStatus: RequestStatus;
@@ -14,6 +15,7 @@ export type SeasonStoreState = {
   error: string | null;
   seasons: FulfilledSeason[];
   selectedSeason: FulfilledSeason | undefined;
+  emptySeason: EmptySeason | undefined;
 };
 
 export type SeasonStoreActions = {
@@ -29,9 +31,17 @@ export type SeasonStoreActions = {
     name?: string | undefined;
     startDate?: Date | undefined;
     endDate?: Date | undefined;
+    description?: string | undefined;
   }): void;
   setSelectedSeason(seasonId: string | undefined): void;
-  
+  setEmptySeason(emptySeason: {
+    teamId: string;
+    name?: string | undefined;
+    startDate?: Date | undefined;
+    endDate?: Date | undefined;
+    description?: string | undefined;
+  }): void;
+  postEmptySeason(emptySeason: EmptySeason, token: string): Promise<void>;
 };
 
 export type SeasonStore = SeasonStoreState & SeasonStoreActions;
@@ -43,6 +53,7 @@ const defaultInitState: SeasonStoreState = {
   seasonStatusUpdate: { id: null, status: "IDLE" },
   seasonStatusDelete: { id: null, status: "IDLE" },
   selectedSeason: undefined,
+  emptySeason: undefined,
 };
 export const makeSeasonStore = (initProps?: Partial<SeasonStoreState>) => {
   return createStore<SeasonStore>()((set, get) => ({
@@ -125,6 +136,35 @@ export const makeSeasonStore = (initProps?: Partial<SeasonStoreState>) => {
     setSelectedSeason: (seasonId) => {
       const selectedSeason = get().seasons.find((x) => x.id === seasonId);
       set(() => ({ selectedSeason: selectedSeason }));
+    },
+    setEmptySeason(emptySeason) {
+      const currentEmptySeason = get().emptySeason;
+
+      if (!currentEmptySeason) {
+        set(() => ({
+          emptySeason: EmptySeason.make({
+            ...emptySeason,
+          }),
+        }));
+      } else {
+        set(() => ({
+          emptySeason: EmptySeason.make({
+            ...currentEmptySeason,
+            teamId: emptySeason.teamId,
+            name: emptySeason.name,
+            description: emptySeason.description,
+            startDate: emptySeason.startDate,
+            endDate: emptySeason.endDate,
+            active: true,
+          }),
+        }));
+      }
+    },
+    postEmptySeason: async (emptySeason, token) => {
+      const client = new SeasonCreate(new ApiClient());
+      const newSeason = await client.addSeason(emptySeason, token);
+      const currentSeasons = get().seasons;
+      if (newSeason) set(() => ({ seasons: [...currentSeasons, newSeason] }));
     },
   }));
 };

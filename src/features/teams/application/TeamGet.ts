@@ -8,6 +8,7 @@ export class TeamGet {
     const endpoint = `/team`;
     const response = await this.client.GET(endpoint, token);
 
+    // console.log(response, token)
     if (!response.ok) return [];
     const teams = await response.json();
     return teams as Team[];

@@ -7,6 +7,7 @@ import {
   type AuthCreateStore,
 } from "@/features/auth/domain/useAuthStore";
 
+
 export type AuthStoreApi = ReturnType<typeof makeAuthStore>;
 
 export const AuthStoreStoreContext = createContext<AuthStoreApi | undefined>(
@@ -17,12 +18,13 @@ export interface AuthStoreProviderProps {
   children: ReactNode;
 }
 
-export const AuthStoreProvider = ({
-  children,
-}: AuthStoreProviderProps) => {
-  const storeRef = useRef<AuthStoreApi>();
+export const AuthStoreProvider = ({ children }: AuthStoreProviderProps) => {
+  const storeRef = useRef<AuthStoreApi>(); 
+
   if (!storeRef.current) {
-    storeRef.current = makeAuthStore();
+    storeRef.current = makeAuthStore({
+      accountData: { teams: [], selectedTeamId: null },
+    });
   }
 
   return (

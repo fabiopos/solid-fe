@@ -21,14 +21,14 @@ import { useCallback, useState } from "react";
 import { useSeasonStore } from "@/context/SeasonCtx";
 import { useSession } from "next-auth/react";
 import { toDate } from "date-fns";
-import SeasonDrawer from "./SeasonDrawer";
+import SeasonEditDrawer from "./SeasonEditDrawer";
 
 interface SeasonActionTriggerIconProps {
   season: FulfilledSeason;
 }
 function SeasonActionTriggerIcon(props: SeasonActionTriggerIconProps) {
   const { data } = useSession();
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const {
     setSeasonStatus,
@@ -37,7 +37,6 @@ function SeasonActionTriggerIcon(props: SeasonActionTriggerIconProps) {
     deleteSeason,
     seasonStatusDelete,
     setSelectedSeason,
-    selectedSeason,
   } = useSeasonStore((state) => state);
   const { season } = props;
 
@@ -55,22 +54,22 @@ function SeasonActionTriggerIcon(props: SeasonActionTriggerIconProps) {
         data?.user.access_token ?? ""
       );
     },
-    []
+    [data?.user.access_token, season, setSeasonStatus, updateSeason]
   );
 
   const handleDelete = useCallback((seasonId: string) => {
     deleteSeason(seasonId, data?.user.access_token ?? "");
-  }, []);
+  }, [data?.user.access_token, deleteSeason]);
 
   const handleOpenDrawer = useCallback(() => {
     setSelectedSeason(season.id);
-    setOpen(true)
-  }, []);
+    setOpen(true);
+  }, [season.id, setSelectedSeason]);
 
   const handleCloseDrawer = useCallback(() => {
     setSelectedSeason(undefined);
-    setOpen(false)
-  }, []);
+    setOpen(false);
+  }, [setSelectedSeason]);
 
   if (
     seasonStatusUpdate.id === season.id &&
@@ -158,7 +157,7 @@ function SeasonActionTriggerIcon(props: SeasonActionTriggerIconProps) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <SeasonDrawer open={open} onClose={handleCloseDrawer} />
+      <SeasonEditDrawer open={open} onClose={handleCloseDrawer} />
     </>
   );
 }
