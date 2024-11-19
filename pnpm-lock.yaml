@@ -199,9 +199,6 @@ devDependencies:
   typescript:
     specifier: ^5
     version: 5.6.3
-  zukeeper:
-    specifier: ^1.0.2
-    version: 1.0.2
 
 packages:
 
@@ -6710,10 +6707,6 @@ packages:
   /zod@3.23.8:
     resolution: {integrity: sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==}
     dev: false
-
-  /zukeeper@1.0.2:
-    resolution: {integrity: sha512-mffz8JpzC96B3Gpoixklfl2/wY4KsYxZvgPRLFMIqAvEQeMPTjLYG8oUWXm9eoItU/nQ5Lt0G2b0GcZRDGzVgA==}
-    dev: true
 
   /zustand@5.0.0(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021):
     resolution: {integrity: sha512-LE+VcmbartOPM+auOjCCLQOsQ05zUTp8RkgwRzefUk+2jISdMMFnxvyTjA4YNWr5ZGXYbVsEMZosttuxUBkojQ==}

@@ -11,11 +11,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
+        // background: "hsl(var(--background))",
+        background: "rgb(22,22,24)",
         foreground: "hsl(var(--foreground))",
         card: {
-          DEFAULT: "hsl(var(--card))",
+          // DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "rgb(34,34,39)",
+          // foreground: "rgb(58,57,61)",
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -93,6 +96,16 @@ const config: Config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shine: "shine 8s ease-in-out infinite",
+      },
+      screens: {
+        tablet: "640px",
+        // => @media (min-width: 640px) { ... }
+
+        laptop: "1024px",
+        // => @media (min-width: 1024px) { ... }
+
+        desktop: "1280px",
+        // => @media (min-width: 1280px) { ... }
       },
     },
   },

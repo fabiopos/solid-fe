@@ -22,6 +22,7 @@ import { useSeasonStore } from "@/context/SeasonCtx";
 import { useSession } from "next-auth/react";
 import { toDate } from "date-fns";
 import SeasonEditDrawer from "./SeasonEditDrawer";
+import { useRouter } from "next/navigation";
 
 interface SeasonActionTriggerIconProps {
   season: FulfilledSeason;
@@ -29,6 +30,7 @@ interface SeasonActionTriggerIconProps {
 function SeasonActionTriggerIcon(props: SeasonActionTriggerIconProps) {
   const { data } = useSession();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
 
   const {
     setSeasonStatus,
@@ -57,9 +59,12 @@ function SeasonActionTriggerIcon(props: SeasonActionTriggerIconProps) {
     [data?.user.access_token, season, setSeasonStatus, updateSeason]
   );
 
-  const handleDelete = useCallback((seasonId: string) => {
-    deleteSeason(seasonId, data?.user.access_token ?? "");
-  }, [data?.user.access_token, deleteSeason]);
+  const handleDelete = useCallback(
+    (seasonId: string) => {
+      deleteSeason(seasonId, data?.user.access_token ?? "");
+    },
+    [data?.user.access_token, deleteSeason]
+  );
 
   const handleOpenDrawer = useCallback(() => {
     setSelectedSeason(season.id);
@@ -96,7 +101,9 @@ function SeasonActionTriggerIcon(props: SeasonActionTriggerIconProps) {
             Actions
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => router.push(`/seasons/${season.id}`)}
+          >
             <div className="grid grid-cols-[120px_10px] items-center gap-2">
               <span>View Competitions</span>
             </div>

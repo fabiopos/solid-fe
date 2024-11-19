@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { CardTitle } from "@/components/ui/card";
 import React from "react";
 import SeasonActionTriggerIcon from "./SeasonActionTriggerIcon";

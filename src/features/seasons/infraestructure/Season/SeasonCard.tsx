@@ -1,16 +1,14 @@
-import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { FulfilledSeason } from "../../domain/season.schema";
-import { format } from "date-fns";
+
 import SeasonCardFooterItem from "./SeasonCardFooterItem";
 import { useMemo } from "react";
-import SeasonActionTriggerIcon from "./SeasonActionTriggerIcon";
+
 import SeasonCardHeader from "./SeasonCardHeader";
 
 interface SeasonCardProps {

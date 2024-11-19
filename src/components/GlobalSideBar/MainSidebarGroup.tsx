@@ -18,7 +18,7 @@ import { menuItems } from "@/constants/menu";
 const MainSidebarGroup = () => {
   const pathname = usePathname();
   return (
-    <SidebarGroup>
+    <SidebarGroup className="">
       <SidebarGroupLabel>Menu</SidebarGroupLabel>
       <SidebarGroupContent>
         <SidebarMenu>
@@ -28,14 +28,14 @@ const MainSidebarGroup = () => {
                 <Link
                   href={item.url}
                   className={cn(
-                    buttonVariants({ variant: "linkHover2" }),
+                    buttonVariants({ variant: "linkHover2" }),                    
                     pathname === item.url
-                      ? "bg-neutral-600 text-slate-50 hover:bg-slate-600 after:bg-slate-50"
+                      ? "bg-neutral-600 dark:text-white hover:bg-slate-600 after:bg-slate-50"
                       : "hover:bg-transparent",
                     "justify-start"
                   )}
                 >
-                  <item.icon className="text-md" size="48" />
+                  <item.icon className="text-lg" size="64" />
                   <span className="text-md">{item.title}</span>
                 </Link>
               </SidebarMenuButton>

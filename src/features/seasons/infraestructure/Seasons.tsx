@@ -27,29 +27,41 @@ const Seasons = () => {
   if (fetchSeasonStatus === "ERROR") return "Error fetching seasons";
   return (
     <div>
-      <h2 className="text-5xl my-4">Seasons</h2>
+      <h2 className="text-5xl my-4">Welcome to the Seasons Section! ⚽️</h2>
       <p className="tracking-wide text-lg">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus
-        suscipit sed magni ea id nam temporibus, quod tempora obcaecati facilis
-        perferendis corrupti esse quos molestias provident beatae harum velit
-        expedita. Velit fuga adipisci enim ratione quam! Saepe quibusdam
-        laboriosam vitae beatae! Commodi nemo aperiam quibusdam iste,
-        necessitatibus ab dolores praesentium? Molestiae, est asperiores, in
-        distinctio et eligendi obcaecati atque harum tempore voluptas nam ex
-        architecto perferendis explicabo temporibus dolorem optio, iure non odit
-        deleniti. Amet unde vel velit iure nemo sed veritatis quibusdam
-        repudiandae esse impedit, in cum optio quis exercitationem animi harum!
-        Officiis ea unde quia! Dolorem, sunt assumenda!
+        Here, you can take full control of your football team's seasons. From
+        initial planning to final achievements, Seasons lets you organize and
+        track every key aspect of your campaign. Easily create, edit, and manage
+        seasons by setting goals, scheduling matches, recording results, and
+        much more.
+      </p>
+      <p className="tracking-wide text-lg my-5">
+        With intuitive and customizable tools, you can:
+      </p>
+      <ul className="my-3 ml-6 list-disc [&>li]:mt-2">
+        <li>
+          <strong>Plan the season:</strong> organize friendlies and competitions.
+        </li>       
+        <li>
+          <strong> Track stats:</strong> keep detailed records of team and
+          individual player performance.
+        </li>
+        <li>
+          <strong>Monitor progress:</strong> review charts and reports to
+          evaluate performance and results.
+        </li>
+      </ul>
+      <p className="tracking-wide text-lg my-4">
+        {" "}
+        Start now and take your team to the next level! 🚀
       </p>
 
       {/* addseason */}
-
       <div className="flex justify-end">
         <Button onClick={handleOpen}>Add Season</Button>
         <SeasonAddDrawer onClose={handleClose} open={open} />
       </div>
       <Separator className="my-5" />
-
       <div className="flex gap-3 flex-col">
         {seasons.map((s) => (
           <SeasonCard season={s} key={s.id} />
