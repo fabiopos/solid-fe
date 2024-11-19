@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { Separator } from "@/components/ui/separator";
 import { SeasonDetailStoreProvider } from "@/context/SeasonDetailsCtx";
+import { MatchGet } from "@/features/match/application/MatchGet";
 import { SeasonGet } from "@/features/seasons/application/SeasonGet";
 import SeasonDetails from "@/features/seasons/infraestructure/Details/SeasonDetails";
 import { ApiClient } from "@/lib/ApiClient";
@@ -12,29 +13,27 @@ export default async function SeasonDetailsPage({
 }) {
   const { seasonId } = await params;
   const season = await getSeasonDetails(seasonId);
+  const matches = await getSeasonMatches(seasonId);
   return (
-    <SeasonDetailStoreProvider season={season}>
+    <SeasonDetailStoreProvider season={season} matches={matches}>
       <div>
         <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl w-full">
-          Seasons
+          Season Details
         </h1>
         <Separator className="my-5" />
         <p className="tracking-wide text-lg">
-          Aquí podrás llevar el control total de las temporadas de tu equipo de
-          fútbol. Desde la planificación inicial hasta los logros finales,
-          Seasons te permite organizar y visualizar todos los aspectos clave de
-          cada campaña. Crea, edita y administra fácilmente temporadas,
-          definiendo objetivos, programando partidos, registrando resultados y
-          mucho más.
-        </p>
-        <p>
-          Con herramientas intuitivas y personalizables, podrás: Planificar la
-          temporada: organiza entrenamientos, amistosos y competiciones.
-          Gestionar plantillas: asigna jugadores y cuerpo técnico a cada
-          temporada. Registrar estadísticas: lleva un seguimiento detallado del
-          desempeño del equipo y de cada jugador. Visualizar el progreso:
-          consulta gráficos y reportes para evaluar el rendimiento y los
-          resultados. ¡Empieza ahora y lleva tu equipo al siguiente nivel! 🚀
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. At quos,
+          ullam dignissimos magnam numquam consectetur consequatur veniam ut
+          praesentium perferendis tenetur ea, fugit culpa aspernatur et
+          blanditiis? Ipsa, laborum quisquam corrupti dolores deserunt,
+          voluptatem dignissimos minima libero voluptas natus, iste vero.
+          Facilis nam autem omnis accusamus architecto nesciunt voluptatibus et
+          quidem? Quo, veritatis delectus modi unde enim accusantium quam
+          praesentium laborum minima doloremque quod, minus quibusdam, autem hic
+          eligendi est nobis! Maxime voluptate eaque culpa alias, impedit,
+          tempora quo delectus magnam ad numquam, quam aut fugiat? Numquam
+          perferendis, perspiciatis illum possimus odio eaque reprehenderit quis
+          ipsum itaque ad? Ipsum, hic?
         </p>
         <SeasonDetails />
       </div>
@@ -49,4 +48,13 @@ async function getSeasonDetails(seasonId: string) {
   if (!token) return null;
   const seasonDetails = await client.findSeason(seasonId, token);
   return seasonDetails;
+}
+
+async function getSeasonMatches(seasonId: string) {
+  const session = await auth();
+  const token = session?.user.access_token;
+  const client = new MatchGet(new ApiClient());
+  if (!token) return null;
+  const matches = await client.getBySeason(seasonId, token);
+  return matches;
 }

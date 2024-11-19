@@ -4,10 +4,12 @@ import { ApiClient } from "@/lib/ApiClient";
 import { RequestStatus } from "@/types/types.common";
 
 import { SeasonGet } from "../application/SeasonGet";
+import { FulfilledMatch } from "@/features/match/domain/match.schema";
 
 export type SeasonDetailsStoreState = {
   season: FulfilledSeason | null;
   fetchSeasonDetailsStatus: RequestStatus;
+  matches: FulfilledMatch[] | null
 };
 
 export type SeasonDetailsStoreActions = {
@@ -20,6 +22,7 @@ export type SeasonDetailsStore = SeasonDetailsStoreState &
 const defaultInitState: SeasonDetailsStoreState = {
   fetchSeasonDetailsStatus: "IDLE",
   season: null,
+  matches: null
 };
 export const makeSeasonDetailsStore = (
   initProps?: Partial<SeasonDetailsStoreState>
