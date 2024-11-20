@@ -7,14 +7,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { CompetitionType } from "@/features/competition/domain/competition.schema";
+import { FulfilledCompetition } from "@/features/competition/domain/competition.schema";
 import { format } from "date-fns";
 import { ArrowRight, Trophy } from "lucide-react";
 import CompetitionTriggerIcon from "./CompetitionTriggerIcon";
 import { DEFAULT_DATE_FORMAT } from "@/constants/date";
 
 interface SeasonCompetitionCardProps {
-  competition: CompetitionType;
+  competition: FulfilledCompetition;
 }
 
 function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {

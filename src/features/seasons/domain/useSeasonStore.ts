@@ -7,6 +7,7 @@ import { SeasonGet } from "../application/SeasonGet";
 import { SeasonUpdate } from "../application/SeasonUpdate";
 import { SeasonDelete } from "../application/SeasonDelete";
 import { SeasonCreate } from "../application/SeasonCreate";
+import { CompetitionType } from "@/features/competition/domain/competition.schema";
 
 export type SeasonStoreState = {
   fetchSeasonStatus: RequestStatus;
@@ -16,6 +17,7 @@ export type SeasonStoreState = {
   seasons: FulfilledSeason[];
   selectedSeason: FulfilledSeason | undefined;
   emptySeason: EmptySeason | undefined;
+  selectedCompetition: CompetitionType | null;
 };
 
 export type SeasonStoreActions = {
@@ -46,6 +48,7 @@ export type SeasonStoreActions = {
       | undefined
   ): void;
   postEmptySeason(emptySeason: EmptySeason, token: string): Promise<void>;
+  setSelectedCompetition(competition: CompetitionType | null): void;
 };
 
 export type SeasonStore = SeasonStoreState & SeasonStoreActions;
@@ -58,6 +61,7 @@ const defaultInitState: SeasonStoreState = {
   seasonStatusDelete: { id: null, status: "IDLE" },
   selectedSeason: undefined,
   emptySeason: undefined,
+  selectedCompetition: null,
 };
 export const makeSeasonStore = (initProps?: Partial<SeasonStoreState>) => {
   return createStore<SeasonStore>()((set, get) => ({
@@ -143,8 +147,8 @@ export const makeSeasonStore = (initProps?: Partial<SeasonStoreState>) => {
     },
     setEmptySeason(emptySeason) {
       const currentEmptySeason = get().emptySeason;
-      
-      if (!emptySeason) {      
+
+      if (!emptySeason) {
         set(() => ({
           emptySeason: undefined,
         }));
@@ -167,6 +171,9 @@ export const makeSeasonStore = (initProps?: Partial<SeasonStoreState>) => {
       const newSeason = await client.addSeason(emptySeason, token);
       const currentSeasons = get().seasons;
       if (newSeason) set(() => ({ seasons: [...currentSeasons, newSeason] }));
+    },
+    setSelectedCompetition(competition) {
+      set(() => ({ selectedCompetition: competition }));
     },
   }));
 };

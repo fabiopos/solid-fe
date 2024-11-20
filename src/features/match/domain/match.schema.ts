@@ -21,19 +21,19 @@ export const matchSchema = S.Struct({
   homeTeamId: S.optional(S.String),
   awayTeamId: S.optional(S.String),
   competitionId: S.optional(S.String),
-  createdAt: S.optional(S.Date),
+  createdAt: S.optional(S.Union(S.Date, S.String)),
   title: S.optional(S.String),
   homeTeam: S.optional(matchTeam),
   awayTeam: S.optional(matchTeam),
   awayScore: S.optional(S.NullishOr(S.Number)),
   homeScore: S.optional(S.NullishOr(S.Number)),
-  matchDay: S.optional(S.NullishOr(S.Date)),
-  matchHour: S.optional(S.NullishOr(S.Date)),
+  matchDay: S.optional(S.NullishOr(S.Union(S.Date, S.String))),
+  matchHour: S.optional(S.NullishOr(S.Union(S.Date, S.String))),
   wo: S.optional(S.Boolean),
   location: S.optional(S.NullishOr(S.String)),
   completed: S.optional(S.Boolean),
   competition: S.optional(matchCompetition),
-  matchAparitions: S.optional(S.Array(matchAparition)),
+  matchAparitions: S.optional(S.NullishOr(S.Array(matchAparition))),
 });
 
 export type MatchType = S.Schema.Type<typeof matchSchema>;
