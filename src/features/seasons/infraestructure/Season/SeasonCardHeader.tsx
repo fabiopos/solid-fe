@@ -4,6 +4,7 @@ import SeasonActionTriggerIcon from "./SeasonActionTriggerIcon";
 import { format } from "date-fns";
 import { FulfilledSeason } from "../../domain/season.schema";
 import SeasonStatusBadge from "@/components/Season/SeasonStatusBadge";
+import Link from "next/link";
 
 interface SeasonCardHeaderProps {
   season: FulfilledSeason;
@@ -14,7 +15,9 @@ function SeasonCardHeader(props: SeasonCardHeaderProps) {
     <>
       <div className="flex justify-between">
         <div className="flex items-center gap-5">
-          <CardTitle>{s.name}</CardTitle>
+          <CardTitle>
+            <Link href={`/seasons/${s.id}`}>{s.name}</Link>
+          </CardTitle>
           <SeasonStatusBadge status={s.status} />
         </div>
 

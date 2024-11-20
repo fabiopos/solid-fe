@@ -10,18 +10,20 @@ import {
 import SeasonStatusBadge from "@/components/Season/SeasonStatusBadge";
 import { Separator } from "@/components/ui/separator";
 import { ReactNode } from "react";
+import { DEFAULT_DATE_FORMAT } from "@/constants/date";
 
 interface SeasonInfoProps {
   season: FulfilledSeason | null;
   children: ReactNode;
 }
 
-const DATE_FORMAT = "dd MMMM, yyyy";
-
 function SeasonInfo({ season, children }: SeasonInfoProps) {
   return (
     <>
-      <Card className="">
+      <Card className="relative">
+        {/* <div className="w-[80px] h-[40px] bg-transparent absolute -top-4 left-[95%] rounded-full flex justify-center items-center ">
+          <SeasonStatusBadge status={season?.status} />
+        </div> */}
         <CardHeader>
           <div className="flex justify-between">
             <div>
@@ -50,14 +52,16 @@ function SeasonInfo({ season, children }: SeasonInfoProps) {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold">
-                {season?.startDate && format(season?.startDate, DATE_FORMAT)}
+                {season?.startDate &&
+                  format(season?.startDate, DEFAULT_DATE_FORMAT)}
               </span>
               <span className="text-sm font-extralight">Starts on</span>
             </div>
 
             <div className="flex flex-col">
               <span className="text-xl font-extrabold">
-                {season?.endDate && format(season?.endDate, DATE_FORMAT)}
+                {season?.endDate &&
+                  format(season?.endDate, DEFAULT_DATE_FORMAT)}
               </span>
               <span className="text-sm font-extralight">Ends on</span>
             </div>

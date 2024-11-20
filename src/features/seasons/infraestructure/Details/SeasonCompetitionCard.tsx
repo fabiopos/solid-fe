@@ -9,19 +9,13 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { CompetitionType } from "@/features/competition/domain/competition.schema";
 import { format } from "date-fns";
-import {
-  ArrowRight,
-  Ellipsis,
-  GitPullRequest,
-  PencilIcon,
-  Trophy,
-} from "lucide-react";
+import { ArrowRight, Trophy } from "lucide-react";
 import CompetitionTriggerIcon from "./CompetitionTriggerIcon";
+import { DEFAULT_DATE_FORMAT } from "@/constants/date";
 
 interface SeasonCompetitionCardProps {
   competition: CompetitionType;
 }
-const DATE_FORMAT = "dd MMMM, yyyy";
 
 function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {
   return (
@@ -55,7 +49,7 @@ function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {
           <div className="flex flex-col">
             <span className="text-lg font-extrabold">
               {competition?.startDate &&
-                format(competition?.startDate, DATE_FORMAT)}
+                format(competition?.startDate, DEFAULT_DATE_FORMAT)}
             </span>
             <span className="text-sm font-extralight">Starts on</span>
           </div>
@@ -67,7 +61,7 @@ function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {
           <div className="flex flex-col">
             <span className="text-lg font-extrabold">
               {competition?.endDate &&
-                format(competition?.endDate, DATE_FORMAT)}
+                format(competition?.endDate, DEFAULT_DATE_FORMAT)}
             </span>
             <span className="text-sm font-extralight">Ends on</span>
           </div>

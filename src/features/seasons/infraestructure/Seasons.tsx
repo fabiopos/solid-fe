@@ -29,7 +29,7 @@ const Seasons = () => {
     <div>
       <h2 className="text-5xl my-4">Welcome to the Seasons Section! ⚽️</h2>
       <p className="tracking-wide text-lg">
-        Here, you can take full control of your football team's seasons. From
+        Here, you can take full control of your football team&apos;s seasons. From
         initial planning to final achievements, Seasons lets you organize and
         track every key aspect of your campaign. Easily create, edit, and manage
         seasons by setting goals, scheduling matches, recording results, and

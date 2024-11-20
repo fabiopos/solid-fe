@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useSeasonDetailsStore } from "@/context/SeasonDetailsCtx";
-import { ExternalLink, Star } from "lucide-react";
+import { ExternalLink, Shield } from "lucide-react";
 import React from "react";
 
 function LastSeasonMatches() {
@@ -18,27 +18,28 @@ function LastSeasonMatches() {
           ?.filter((x) => x.homeTeam && x.awayTeam)
           .map((m) => (
             <React.Fragment key={`match-${m.id}`}>
-              <div className="rounded-xl pb-2">
-                <div className="grid grid-cols-[50px_50px_2fr_2fr_2fr_2fr] gap-2 justify-center items-center">
-                  <div className="">
-                    <Star
-                      size="18"
-                      fill="currentColor"
-                      className="text-yellow-400"
-                    />
-                  </div>
+              <div className="rounded-xl pb-1">
+                <div className="grid grid-cols-[150px_50px_200px_85px_200px_2fr] gap-2 justify-center items-center">
+                  <div className="">{m.competition?.name}</div>
                   <div className="">
                     <span className="text-green-500 font-extrabold">W</span>
                   </div>
-                  <div className="grid grid-cols-[auto_100px] justify-center items-center gap-5 ">
+                  <div className="flex items-center gap-5 justify-end">
+                    <div className="flex flex-col justify-center items-center">
+                      <span className="font-extrabold tracking-wide leading-4">
+                        {m.homeTeam?.name}
+                      </span>
+                      <small className="text-gray-500">Home</small>
+                    </div>
                     <Avatar>
                       <AvatarImage
                         src="/torino_shield.png"
                         className="object-scale-down"
                       />
-                      <AvatarFallback>TOR</AvatarFallback>
+                      <AvatarFallback>
+                        <Shield />
+                      </AvatarFallback>
                     </Avatar>
-                    <span>{m.homeTeam?.name}</span>
                   </div>
                   <div className="flex justify-center">
                     <Badge
@@ -58,15 +59,22 @@ function LastSeasonMatches() {
                       </span>
                     </Badge>
                   </div>
-                  <div className="grid grid-cols-[100px_auto] justify-center items-center gap-5">
-                    <span>{m.awayTeam?.name}</span>
+                  <div className="flex items-center gap-5 justify-start">
                     <Avatar>
                       <AvatarImage
                         src="/generic_shield.png"
                         className="object-scale-down"
                       />
-                      <AvatarFallback>TOR</AvatarFallback>
+                      <AvatarFallback>
+                        <Shield />
+                      </AvatarFallback>
                     </Avatar>
+                    <div className="flex flex-col justify-center items-center">
+                      <span className="font-extrabold tracking-wide leading-4">
+                        {m.awayTeam?.name}
+                      </span>
+                      <small className="text-gray-500">Away</small>
+                    </div>
                   </div>
                   <div className="">
                     <ExternalLink size="18" />
