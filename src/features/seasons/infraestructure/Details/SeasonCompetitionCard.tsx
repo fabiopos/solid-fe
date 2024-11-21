@@ -12,14 +12,19 @@ import { format } from "date-fns";
 import { ArrowRight, Trophy } from "lucide-react";
 import CompetitionTriggerIcon from "./CompetitionTriggerIcon";
 import { DEFAULT_DATE_FORMAT } from "@/constants/date";
+import { useCompetitionStore } from "@/context/CompetitionCtx";
+import { cn } from "@/lib/utils";
 
 interface SeasonCompetitionCardProps {
   competition: FulfilledCompetition;
 }
 
-function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {  
+function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {
+  const status = useCompetitionStore((state) => state.deletingStatus);
   return (
-    <Card className="bg-slate-950/20">
+    <Card className={cn("bg-slate-950/20",
+      status.id === competition.id && status.status === 'IN_PROGRESS' && 'bg-slate-950/5'
+    )}>
       <CardHeader>
         <div className="flex justify-between">
           <div>

@@ -61,8 +61,7 @@ function getCompetitions(
   season: FulfilledSeason | null
 ): FulfilledCompetition[] {
   const competitions = season?.competitions ?? ([] as CompetitionType[]);
-  const fcompetitions = competitions.map(mapToDomain);
-  console.log(fcompetitions);
+  const fcompetitions = competitions.map(mapToDomain);  
   return fcompetitions;
 }
 
