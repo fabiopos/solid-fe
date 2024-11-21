@@ -7,7 +7,6 @@ import { SeasonGet } from "@/features/seasons/application/SeasonGet";
 import SeasonDetails from "@/features/seasons/infraestructure/Details/SeasonDetails";
 import { ApiClient } from "@/lib/ApiClient";
 
-
 export default async function SeasonDetailsPage({
   params,
 }: {
@@ -15,7 +14,7 @@ export default async function SeasonDetailsPage({
 }) {
   const { seasonId } = await params;
   const season = await getSeasonDetails(seasonId);
-  const matches = await getSeasonMatches(seasonId);  
+  const matches = await getSeasonMatches(seasonId);
   return (
     <SeasonDetailStoreProvider season={season} matches={matches}>
       <CompetitionStoreProvider season={season}>
@@ -50,7 +49,7 @@ async function getSeasonDetails(seasonId: string) {
   const token = session?.user.access_token;
   const client = new SeasonGet(new ApiClient());
   if (!token) return null;
-  const seasonDetails = await client.findSeason(seasonId, token);
+  const seasonDetails = await client.findSeason(seasonId, token);  
   return seasonDetails;
 }
 
@@ -62,5 +61,3 @@ async function getSeasonMatches(seasonId: string) {
   const matches = await client.getBySeason(seasonId, token);
   return matches;
 }
-
-

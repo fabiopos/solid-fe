@@ -18,6 +18,7 @@ export type CompetitionStoreState = {
 export type CompetitionStoreActions = {
   postCompetition: (
     emptyCompetition: EmptyCompetition,
+    seasonId: string,
     token: string
   ) => Promise<void>;
   patchCompetition: (
@@ -52,6 +53,7 @@ export const makeCompetitionStore = (
     ...defaultInitState,
     ...initProps,
     deleteCompetition: async (competitionId: string, token: string) => {
+      const curr = get().allCompetitions;
       const client = new CompetitionDelete(new ApiClient());
       set(() => ({
         deletingStatus: { id: competitionId, status: "IN_PROGRESS" },
@@ -59,11 +61,13 @@ export const makeCompetitionStore = (
       await client.deleteCompetition(competitionId, token);
 
       set(() => ({
+        allCompetitions: curr.filter((x) => x.id !== competitionId),
         deletingStatus: { id: competitionId, status: "ERROR" },
       }));
     },
     postCompetition: async (
       emptyCompetition: EmptyCompetition,
+      seasonId: string,
       token: string
     ) => {
       const client = new CompetitionCreate(new ApiClient());
@@ -71,6 +75,7 @@ export const makeCompetitionStore = (
       set(() => ({ postingStatus: "IN_PROGRESS" }));
       const createdCompetition = await client.createCompetition(
         emptyCompetition,
+        seasonId,
         token
       );
       set(() => ({

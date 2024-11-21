@@ -17,7 +17,7 @@ interface SeasonCompetitionCardProps {
   competition: FulfilledCompetition;
 }
 
-function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {
+function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {  
   return (
     <Card className="bg-slate-950/20">
       <CardHeader>
