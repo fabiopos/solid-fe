@@ -1,9 +1,10 @@
 import MatchRow from "@/components/Match/MatchRow";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useSeasonDetailsStore } from "@/context/SeasonDetailsCtx";
+import { useMatchStore } from "@/context/MatchCtx";
+
 
 function LastSeasonMatches() {
-  const { matches } = useSeasonDetailsStore((state) => state);
+  const { allMatches: matches } = useMatchStore((state) => state);
   return (
     <Card className="my-5">
       <CardHeader>

@@ -13,7 +13,7 @@ export default async function RootLayout({
 
   if (!teams) return redirect("/");  
   return (
-    <div className="container">
+    <div className="w-full p-5">
       {children}
       <SelectTeamModal teams={teams} />
     </div>
