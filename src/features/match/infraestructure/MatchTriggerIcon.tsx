@@ -21,7 +21,7 @@ interface MatchTriggerIconProps {
 function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
   const { competitionId } = useParams();
   const { data } = useSession();
-  const { patchingStatus, patchMatch, deleteMatch } = useMatchStore(
+  const { patchingStatus, deletingStatus, patchMatch, deleteMatch } = useMatchStore(
     (state) => state
   );
   const router = useRouter();
@@ -54,11 +54,17 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
     );
   }, [patchingStatus, match]);
 
+  const isDeleting = useMemo(() => {
+    return (
+      deletingStatus.id === match.id && deletingStatus.status === "IN_PROGRESS"
+    );
+  }, [deletingStatus, match]);
+
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          {isLoading ? <Loader className="animate-spin" /> : <Ellipsis />}
+          {isLoading || isDeleting ? <Loader className="animate-spin" /> : <Ellipsis />}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel className="text-neutral-400 text-xs">
