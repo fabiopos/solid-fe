@@ -140,7 +140,7 @@ function MatchEditDrawer({
             />
 
             {/* <CustomDatePicker date={matchDay} onChange={handleDateChange} /> */}
-            <DateTimePicker value={matchDay} onChange={handleDateChange} />
+            <DateTimePicker granularity="minute" value={matchDay} onChange={handleDateChange} />
 
             <Textarea
               defaultValue={description}
