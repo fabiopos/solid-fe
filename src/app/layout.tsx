@@ -34,9 +34,7 @@ export default function RootLayout({
       >
         <Providers>
           <GlobalNavBar />
-          <SidebarProvider>
-            <main>{children}</main>
-          </SidebarProvider>
+          <SidebarProvider>{children}</SidebarProvider>
         </Providers>
         <Toaster />
       </body>

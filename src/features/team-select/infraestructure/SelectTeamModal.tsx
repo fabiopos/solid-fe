@@ -14,6 +14,8 @@ import TeamsList from "@/components/TeamList/TeamsList";
 import { Team } from "@/types/types.common";
 import { useEffect } from "react";
 import { useAuthStore } from "@/context/AuthCtx";
+import { signOut } from "@/auth";
+import { SolidAuth } from "@/features/auth/application/SolidAuth";
 
 interface SelectTeamModalProps {
   teams: Team[];
@@ -48,8 +50,8 @@ export default function SelectTeamModal({ teams }: SelectTeamModalProps) {
             <Alert variant="destructive">
               You don&apos;t have teams configured, please consider contact the
               app administrator.
-              <Button variant="link" onClick={onTryAgainClick}>
-                Try again
+              <Button variant="link" onClick={()=> SolidAuth.logout()}>
+                Log out
               </Button>
             </Alert>
           )}

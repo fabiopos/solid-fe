@@ -27,4 +27,13 @@ export class MatchGet {
 
     return (await result.json()) as FulfilledMatch[];
   }
+
+  async find(matchId: string, token: string) {
+    const client = new ApiClient();
+    const result = await client.GET(`/match/${matchId}`, token);
+
+    if (!result.ok) return null;
+
+    return (await result.json()) as FulfilledMatch;
+  }
 }

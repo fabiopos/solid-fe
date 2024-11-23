@@ -71,7 +71,7 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
             Actions
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push(`/match/${match.id}`)}>
+          <DropdownMenuItem onClick={() => router.push(`/matches/${match.id}`)}>
             <div className="grid grid-cols-[150px_10px] items-center gap-2">
               <span>View Match Details</span>
             </div>

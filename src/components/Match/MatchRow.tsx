@@ -6,10 +6,11 @@ import TeamShieldAvatar from "../Team/TeamShield";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { MapPin } from "lucide-react";
+import MatchDayTime from "./MatchDayTime";
 
 interface MatchRowProps {
   match: FulfilledMatch | null;
-  actionsColumn: ReactNode;
+  actionsColumn?: ReactNode;
 }
 
 function MatchRow({ match, actionsColumn }: MatchRowProps) {
@@ -19,16 +20,7 @@ function MatchRow({ match, actionsColumn }: MatchRowProps) {
     <div className="border rounded-xl my-2">
       <div className="grid grid-rows-2 grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] lg:grid-rows-1 justify-center items-center py-5">
         <div className="flex flex-col  row-start-1 col-start-1 lg:row-start-auto lg:col-start-auto justify-center items-center">
-          {!match.matchDay && <small>no date specified</small>}
-          <span className="text-4xl">
-            {match.matchDay && format(match.matchDay, "dd")}
-          </span>
-          <span className="text-sm">
-            {match.matchDay && format(match.matchDay, "MMM")}
-          </span>
-          <span className="text-sm">
-            {match.matchHour && format(match.matchHour, "HH:mm")}
-          </span>
+          <MatchDayTime matchDay={match.matchDay} matchHour={match.matchHour} />
 
           {/* <span className="text-center text-xs">{match.competition?.name}</span> */}
         </div>
@@ -72,7 +64,7 @@ function MatchRow({ match, actionsColumn }: MatchRowProps) {
         <div className="flex gap-2">
           <MapPin size={15} className="text-blue-200/40" />
           <small className="text-blue-200/40">{match.location}</small>
-        </div>       
+        </div>
         <div>
           <small className="text-blue-200/40">{match.title}</small>
         </div>
