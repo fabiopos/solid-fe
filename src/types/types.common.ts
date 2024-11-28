@@ -1,3 +1,5 @@
+import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+
 export class ErrorResponse extends Error {
   constructor(message?: string) {
     super(message);
@@ -28,6 +30,7 @@ export type Team = {
   secondaryColor: string | null;
   logoUrl: string | null;
   shieldUrl: string | null;
+  players: FulfilledPlayer[];
   _tag: "FulfilledTeam";
 };
 

@@ -2,14 +2,14 @@
 import MatchRow from "@/components/Match/MatchRow";
 import { Separator } from "@/components/ui/separator";
 import { H1 } from "@/components/ui/typograhpy";
-import { useMatchDetailsStore } from "@/context/MatchDetails";
+import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 import { useMemo } from "react";
-import { useTeamId } from "@/hooks/use-team-id";
 import AparitionsEditTable from "@/features/aparition/infraestructure/AparitionsEditTable";
 import ReadOnlyAlert from "./ReadOnlyAlert";
+import { useAuthStore } from "@/context/AuthCtx";
 
 function MatchDetails() {
-  const teamId = useTeamId();  
+  const teamId = useAuthStore(state => state.accountData.selectedTeamId);  
   const { match } = useMatchDetailsStore((state) => state);
 
   if (!match) return <>Match not found</>;
@@ -17,7 +17,7 @@ function MatchDetails() {
   const teamIds = useMemo(() => [match.homeTeamId, match.awayTeamId], [match]);
   const isReadonly = useMemo(() => {
     return !teamIds.includes(teamId ?? "");
-  }, []);
+  }, [teamIds, teamId]);
 
   return (
     <div className="container">

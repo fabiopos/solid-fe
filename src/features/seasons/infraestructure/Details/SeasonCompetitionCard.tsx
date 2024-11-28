@@ -1,3 +1,4 @@
+'use client'
 import CompetitionStatusBadge from "@/components/Competition/CompetitionStatusBadge";
 import {
   Card,
@@ -22,7 +23,7 @@ interface SeasonCompetitionCardProps {
 function SeasonCompetitionCard({ competition }: SeasonCompetitionCardProps) {
   const status = useCompetitionStore((state) => state.deletingStatus);
   return (
-    <Card className={cn("bg-slate-950/20",
+    <Card className={cn("",
       status.id === competition.id && status.status === 'IN_PROGRESS' && 'bg-slate-950/5'
     )}>
       <CardHeader>

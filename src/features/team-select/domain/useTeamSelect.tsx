@@ -1,10 +1,11 @@
+import { setCookieTeamId } from "@/app/actions";
 import { useAuthStore } from "@/context/AuthCtx";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 
 export const useTeamSelect = () => {
-  const pathName = usePathname()
+  const pathName = usePathname();
   const { status } = useSession();
   const { accountData, setTeamId, fetchTeams, session, fetchTeamsStatus } =
     useAuthStore((state) => state);
@@ -13,11 +14,17 @@ export const useTeamSelect = () => {
   const teamsCount = useMemo(() => (teams ?? []).length, [teams]);
 
   const isModalOpen = useMemo(() => {
-    if(pathName === '/login') return false;
+    if (pathName === "/login") return false;
     if (status === "loading") return false;
     if (fetchTeamsStatus === "IN_PROGRESS") return false;
     return !accountData.selectedTeamId || !!session?.user;
-  }, [accountData.selectedTeamId, session?.user, status, fetchTeamsStatus, pathName]);
+  }, [
+    accountData.selectedTeamId,
+    session?.user,
+    status,
+    fetchTeamsStatus,
+    pathName,
+  ]);
 
   // console.log(isModalOpen, { selectedTeamId: accountData.selectedTeamId, user: !!session?.user })
 
@@ -33,14 +40,19 @@ export const useTeamSelect = () => {
 
   const onSelectTeam = useCallback((id: string) => setTeamId(id), [setTeamId]);
 
+  const handleSelectTeam = useCallback((teamId: string) => {
+    setCookieTeamId(teamId);
+    setTeamId(teamId);
+  }, []);
+
   // if one team - then autoselect this team
   useEffect(() => {
-    if (teamsCount === 1) setTeamId(teams[0].id);
-  }, [teamsCount, teams, setTeamId]);
+    if (teamsCount === 1) handleSelectTeam(teams[0].id);
+  }, [teamsCount]);
 
   useEffect(() => {
-    fetchTeams(session?.user.access_token ?? "");    
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetchTeams(session?.user.access_token ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user.access_token]);
 
   return {

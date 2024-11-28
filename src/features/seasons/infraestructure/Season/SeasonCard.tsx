@@ -29,15 +29,17 @@ function SeasonCard(props: SeasonCardProps) {
       </CardHeader>
 
       <CardContent>
-        <p>{s.description}</p>
+        <div className="flex gap-2">          
+          <div className="flex justify-start gap-20">
+            <SeasonCardFooterItem label="competitions" value={countComp} />
+            <SeasonCardFooterItem label="matches" value={0} />
+            <SeasonCardFooterItem label="won" value={0} />
+            <SeasonCardFooterItem label="drawn" value={0} />
+            <SeasonCardFooterItem label="lost" value={0} />
+          </div>
+        </div>
       </CardContent>
-      <CardFooter className="flex justify-center gap-20">
-        <SeasonCardFooterItem label="competitions" value={countComp} />
-        <SeasonCardFooterItem label="matches" value={0} />
-        <SeasonCardFooterItem label="won" value={0} />
-        <SeasonCardFooterItem label="drawn" value={0} />
-        <SeasonCardFooterItem label="lost" value={0} />
-      </CardFooter>
+      <CardFooter></CardFooter>
     </Card>
   );
 }

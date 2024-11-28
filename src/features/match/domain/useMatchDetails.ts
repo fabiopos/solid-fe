@@ -8,6 +8,8 @@ import {
 import { AparitionUpsert } from "@/features/aparition/application/AparitionUpsert";
 import { ApiClient } from "@/lib/ApiClient";
 import { AparitionGet } from "@/features/aparition/application/AparitionGet";
+import { RequestStatus } from "@/types/types.common";
+import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 
 export type MatchDetailsStoreState = {
   match: FulfilledMatch | null;
@@ -17,6 +19,7 @@ export type MatchDetailsStoreState = {
     homeScore: number | null;
     awayScore: number | null;
   };
+  upsertStatus: RequestStatus;
 };
 
 export type MatchDetailsStoreActions = {
@@ -25,6 +28,13 @@ export type MatchDetailsStoreActions = {
   setAparition: (playerId: string, aparition: FulfilledMatchAparition) => void;
   upsertAparitions: (token: string) => Promise<void>;
   fetchAparitions: (token: string) => Promise<void>;
+  setConfirmed: (playerId: string, confirmed: boolean) => void;
+  setPlayed: (playerId: string, played: boolean) => void;
+  setYellowCards: (playerId: string, value: number) => void;
+  setRedCards: (playerId: string, value: number) => void;
+  setMinutes: (playerId: string, value: number) => void;
+  setGoals: (playerId: string, value: number) => void;
+  setRating: (playerId: string, value: number) => void;
 };
 
 export type MatchDetailsStore = MatchDetailsStoreState &
@@ -38,6 +48,7 @@ const defaultInitialState: MatchDetailsStoreState = {
     awayScore: null,
     homeScore: null,
   },
+  upsertStatus: "IDLE",
 };
 
 export const makeMatchDetailsStore = (
@@ -64,16 +75,79 @@ export const makeMatchDetailsStore = (
       set(() => ({ aparitions: updatedAp }));
     },
     upsertAparitions: async (token: string) => {
+      const fetchAp = get().fetchAparitions;
+      set(() => ({ upsertStatus: "IN_PROGRESS" }));
       const curr = get().aparitions;
       const upsertClient = new AparitionUpsert(new ApiClient());
       await upsertClient.upsertAparitions(curr, token);
+      await fetchAp(token);
+      set(() => ({ upsertStatus: "DONE" }));
+      // set aparitions ids after upsert
     },
     fetchAparitions: async (token) => {
       const matchId = get().match?.id;
       if (!matchId) return;
       const getClient = new AparitionGet(new ApiClient());
       const apars = await getClient.getAparitions(matchId, token);
+      console.log(apars);
+
       set(() => ({ aparitions: apars }));
+    },
+    setConfirmed: (playerId, confirmed) => {
+      const curr = get().aparitions;
+      const updatedAp = curr.map((x) => {
+        if (x.playerId === playerId) return { ...x, confirmed };
+        return x;
+      });
+      set(() => ({ aparitions: updatedAp }));
+    },
+    setPlayed: (playerId, played) => {
+      const curr = get().aparitions;
+      const updatedAp = curr.map((x) => {
+        if (x.playerId === playerId) return { ...x, played };
+        return x;
+      });
+      set(() => ({ aparitions: updatedAp }));
+    },
+    setGoals: (playerId, goals) => {
+      const curr = get().aparitions;
+      const updatedAp = curr.map((x) => {
+        if (x.playerId === playerId) return { ...x, goals };
+        return x;
+      });
+      set(() => ({ aparitions: updatedAp }));
+    },
+    setMinutes: (playerId, minutes) => {
+      const curr = get().aparitions;
+      const updatedAp = curr.map((x) => {
+        if (x.playerId === playerId) return { ...x, minutes };
+        return x;
+      });
+      set(() => ({ aparitions: updatedAp }));
+    },
+    setRating: (playerId, rating) => {
+      const curr = get().aparitions;
+      const updatedAp = curr.map((x) => {
+        if (x.playerId === playerId) return { ...x, rating };
+        return x;
+      });
+      set(() => ({ aparitions: updatedAp }));
+    },
+    setRedCards: (playerId, redCards) => {
+      const curr = get().aparitions;
+      const updatedAp = curr.map((x) => {
+        if (x.playerId === playerId) return { ...x, redCards };
+        return x;
+      });
+      set(() => ({ aparitions: updatedAp }));
+    },
+    setYellowCards: (playerId, yellowCards) => {
+      const curr = get().aparitions;
+      const updatedAp = curr.map((x) => {
+        if (x.playerId === playerId) return { ...x, yellowCards };
+        return x;
+      });
+      set(() => ({ aparitions: updatedAp }));
     },
   }));
 };

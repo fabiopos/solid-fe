@@ -1,4 +1,4 @@
-import { Calendar, Home, Settings, Shield, Users } from "lucide-react";
+import { Calendar, Home, Settings, Shield, Trophy, Users } from "lucide-react";
 
 export const menuItems = [
   {
@@ -26,6 +26,13 @@ export const menuItems = [
     title: "Seasons",
     url: "/seasons",
     icon: Calendar,
+    sideBar: true,
+    navBar: true,
+  },
+  {
+    title: "Competitions",
+    url: "/competitions",
+    icon: Trophy,
     sideBar: true,
     navBar: true,
   },

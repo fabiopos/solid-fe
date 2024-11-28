@@ -1,21 +1,30 @@
 import { auth } from "@/auth";
 import { H1 } from "@/components/ui/typograhpy";
-import { MatchDetailsStoreProvider } from "@/context/MatchDetails";
+import { MatchDetailsStoreProvider } from "@/context/MatchDetailsCtx";
 import { PlayersStoreProvider } from "@/context/PlayersCtx";
 import { AparitionGet } from "@/features/aparition/application/AparitionGet";
+import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
 import { MatchGet } from "@/features/match/application/MatchGet";
 import MatchDetails from "@/features/match/infraestructure/MatchDetails/MatchDetails";
+import { PlayerGet } from "@/features/players/application/PlayerGet";
+import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import { PlayerType } from "@/features/players/domain/player.schema";
+import { SubscriptionGet } from "@/features/subscription/application/SubscriptionGet";
 import { ApiClient } from "@/lib/ApiClient";
 
 async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
   const { matchId } = await params;
-  const { match, aparitions } = await getMatchDetails(matchId);
+  const { match, aparitions, players } = await getMatchDetails(matchId);
 
   if (match === null) return null;
 
   return (
     <PlayersStoreProvider>
-      <MatchDetailsStoreProvider aparitions={aparitions} match={match}>
+      <MatchDetailsStoreProvider
+        players={players}
+        aparitions={aparitions}
+        match={match}
+      >
         <MatchDetails />
       </MatchDetailsStoreProvider>
     </PlayersStoreProvider>
@@ -27,6 +36,7 @@ async function getMatchDetails(matchId: string) {
   if (!session) return { match: null };
 
   const token = session.user.access_token;
+
   const apiClient = new ApiClient();
   const matchGet = new MatchGet(apiClient);
   const match = await matchGet.find(matchId, token);
@@ -34,6 +44,18 @@ async function getMatchDetails(matchId: string) {
   const aparitionGet = new AparitionGet(apiClient);
   const aparitions = await aparitionGet.getAparitions(matchId, token);
 
-  return { match, aparitions };
+  let homeTeamPlayers: PlayerType[] = [];
+  let awayTeamPlayers: PlayerType[] = [];
+
+  const playerGet = new PlayerGet(apiClient);
+
+  if (match?.homeTeamId) {
+    homeTeamPlayers = await playerGet.getAllPlayers(match?.homeTeamId, token);
+  }
+  if (match?.awayTeamId) {
+    awayTeamPlayers = await playerGet.getAllPlayers(match?.awayTeamId, token);
+  }
+
+  return { match, aparitions, players: { homeTeamPlayers, awayTeamPlayers } };
 }
 export default MatchDetailsPage;

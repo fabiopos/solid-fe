@@ -1,25 +1,26 @@
 import React from "react";
 import AparitionTableLayout from "../AparitionTableLayout";
-import { usePlayers } from "@/features/players/domain/usePlayers";
-import AparitionBodyCell from "./AparitionBodyCell";
+import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
+import AparitionBodyRow from "./AparitionBodyRow";
+import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 
 function AparitionBody() {
-  const { players } = usePlayers();
+  const { aparitions } = useMatchDetailsStore((state) => state);
+  console.table(aparitions)
   return (
     <AparitionTableLayout>
-      {players.map((p) => (
-        <React.Fragment key={`player-${p.id}`}>
-          <AparitionBodyCell>
-            {p.firstName} {p.lastName}
-          </AparitionBodyCell>
-          <AparitionBodyCell>0</AparitionBodyCell>
-          <AparitionBodyCell>0</AparitionBodyCell>
-          <AparitionBodyCell>0</AparitionBodyCell>
-          <AparitionBodyCell>0</AparitionBodyCell>
-          <AparitionBodyCell>0</AparitionBodyCell>
-          <AparitionBodyCell>0</AparitionBodyCell>
-          <AparitionBodyCell>6.0</AparitionBodyCell>
-        </React.Fragment>
+      {aparitions.map((ap) => (
+        <AparitionBodyRow
+          confirmed={ap.confirmed}
+          goals={ap.goals}
+          minutes={ap.minutes}
+          played={ap.played}
+          rating={ap.minutes}
+          redCards={ap.redCards}
+          yellowCards={ap.yellowCards}
+          player={ap.player as FulfilledPlayer}
+          key={`aparition-${ap.player?.id}`}
+        />
       ))}
     </AparitionTableLayout>
   );

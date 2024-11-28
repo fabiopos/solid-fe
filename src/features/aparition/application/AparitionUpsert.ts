@@ -5,9 +5,9 @@ export class AparitionUpsert {
   constructor(private readonly client: ApiClient) {}
 
   async upsertAparitions(aparitions: FulfilledMatchAparition[], token: string) {
-    const resource = `/match-aparitions`;
+    const resource = `/match-aparition`;
     const toAdd = aparitions.filter((x) => !x.id);
-    const toUpdate = aparitions.filter((x) => !x.id);
+    const toUpdate = aparitions.filter((x) => x.id);
 
     // Insert
     const promAdd = toAdd.map((x) => this.client.POST(resource, x, token));
