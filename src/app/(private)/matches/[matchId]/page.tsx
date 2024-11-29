@@ -1,3 +1,4 @@
+import { getCookieTeamId } from "@/app/actions";
 import { auth } from "@/auth";
 import { MatchDetailsStoreProvider } from "@/context/MatchDetailsCtx";
 import { PlayersStoreProvider } from "@/context/PlayersCtx";
@@ -7,10 +8,11 @@ import MatchDetails from "@/features/match/infraestructure/MatchDetails/MatchDet
 import { PlayerGet } from "@/features/players/application/PlayerGet";
 import { PlayerType } from "@/features/players/domain/player.schema";
 import { ApiClient } from "@/lib/ApiClient";
+import { cookies } from "next/headers";
 
 async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
   const { matchId } = await params;
-  const { match, aparitions, players } = await getMatchDetails(matchId);
+  const { match, aparitions, players, selectedTeamId } = await getMatchDetails(matchId);
 
   if (match === null) return null;
 
@@ -20,6 +22,7 @@ async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
         players={players}
         aparitions={aparitions}
         match={match}
+        teamId={selectedTeamId}
       >
         <MatchDetails />
       </MatchDetailsStoreProvider>
@@ -28,6 +31,7 @@ async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
 }
 
 async function getMatchDetails(matchId: string) {
+  const selectedTeamId = await getCookieTeamId()
   const session = await auth();
   if (!session) return { match: null };
 
@@ -54,6 +58,6 @@ async function getMatchDetails(matchId: string) {
     awayTeamPlayers = await playerGet.getAllPlayers(match?.awayTeamId, token);
   }
 
-  return { match, aparitions, players: { homeTeamPlayers, awayTeamPlayers } };
+  return { match, aparitions, players: { homeTeamPlayers, awayTeamPlayers }, selectedTeamId };
 }
 export default MatchDetailsPage;

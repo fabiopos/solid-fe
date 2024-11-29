@@ -27,12 +27,11 @@ export default function SelectTeamModal({ teams }: SelectTeamModalProps) {
     isModalOpen,
     hasTeams,
     showNoTeamsAlert,
-    onTryAgainClick,
     onSelectTeam,
   } = useTeamSelect();
   useEffect(() => {
     setTeams(teams);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teams]);
 
   return (
@@ -50,7 +49,7 @@ export default function SelectTeamModal({ teams }: SelectTeamModalProps) {
             <Alert variant="destructive">
               You don&apos;t have teams configured, please consider contact the
               app administrator.
-              <Button variant="link" onClick={()=> SolidAuth.logout()}>
+              <Button variant="link" onClick={() => SolidAuth.logout()}>
                 Log out
               </Button>
             </Alert>

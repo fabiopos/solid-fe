@@ -12,6 +12,7 @@ import { RequestStatus } from "@/types/types.common";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 
 export type MatchDetailsStoreState = {
+  players: FulfilledPlayer[];
   match: FulfilledMatch | null;
   competition: FulfilledCompetition | null;
   aparitions: FulfilledMatchAparition[];
@@ -42,6 +43,7 @@ export type MatchDetailsStore = MatchDetailsStoreState &
 
 const defaultInitialState: MatchDetailsStoreState = {
   competition: null,
+  players: [],
   match: null,
   aparitions: [],
   score: {
