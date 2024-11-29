@@ -30,8 +30,10 @@ function AparitionHeader() {
           <span>Played</span>
         </div>
       </AparitionHeaderCell>
-      <AparitionHeaderCell>Yellow Cards</AparitionHeaderCell>
-      <AparitionHeaderCell>Red Cards</AparitionHeaderCell>
+      <AparitionHeaderCell>
+        <span className="text-yellow-400">Yellow Cards</span>
+      </AparitionHeaderCell>
+      <AparitionHeaderCell><span className="text-red-400">Red Cards</span></AparitionHeaderCell>
       <AparitionHeaderCell>
         <div className="flex gap-2 justify-center items-center">
           <Clock size={18} />

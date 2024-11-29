@@ -38,7 +38,7 @@ function AparitionBodyRow({
   }, [player]);
 
   if (player?.id === undefined) return null;
-
+  
   return (
     <React.Fragment>
       <AparitionBodyCell>{playerName}</AparitionBodyCell>

@@ -98,8 +98,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 });
 
 async function verifyToken(token: string): Promise<CustomJWT | null> {
-  try {
-    console.log(process.env.NEXT_JWT_AUTH_SECRET);
+  try {    
     const secret = new TextEncoder().encode(
       process.env.NEXT_JWT_AUTH_SECRET ?? ""
     );

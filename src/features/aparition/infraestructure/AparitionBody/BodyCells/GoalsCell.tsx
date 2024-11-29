@@ -21,7 +21,7 @@ function GoalsCell({ playerId, goals }: GoalsCellProps) {
     <AparitionBodyCell>
       <Input
         type="number"
-        max={2}
+        max={20}
         step={1}
         min={0}
         defaultValue={goals ?? 0}

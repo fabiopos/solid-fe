@@ -7,13 +7,13 @@ interface SeasonStatusBadgeProps {
 function SeasonStatusBadge(props: SeasonStatusBadgeProps) {
   switch (props.status) {
     case SeasonStatusEnum.IN_PROGRESS:
-      return <Badge className="bg-orange-200">In Progress</Badge>;
+      return <Badge className="bg-orange-500">In Progress</Badge>;
 
     case SeasonStatusEnum.COMPLETED:
-      return <Badge className="bg-green-200">Completed</Badge>;
+      return <Badge className="bg-green-500">Completed</Badge>;
 
     case SeasonStatusEnum.CANCELLED:
-      return <Badge className="bg-red-200">Cancelled</Badge>;
+      return <Badge className="bg-red-500">Cancelled</Badge>;
 
     default:
       return null;

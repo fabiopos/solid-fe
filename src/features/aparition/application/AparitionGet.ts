@@ -6,7 +6,7 @@ export class AparitionGet {
 
   async getAparitions(matchId: string, token: string) {
     const result = await this.client.GET(`/match-aparition/${matchId}`, token);
-    if (result.ok) return [];
+    if (!result.ok) return [];
     return (await result.json()) as FulfilledMatchAparition[];
   }
 }

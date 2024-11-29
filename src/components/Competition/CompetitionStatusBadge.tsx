@@ -7,16 +7,16 @@ interface CompetitionStatusBadgeProps {
 function CompetitionStatusBadge({ status }: CompetitionStatusBadgeProps) {
   switch (status) {
     case CompetitionStatusEnum.IN_PROGRESS:
-      return <Badge className="dark:bg-orange-200 bg-orange-500">In Progress</Badge>;
+      return <Badge className="dark:bg-orange-500 bg-orange-500">In Progress</Badge>;
 
     case CompetitionStatusEnum.CANCELLED:
-      return <Badge className="dark:bg-red-200 bg-red-500">Cancelled</Badge>;
+      return <Badge className="dark:bg-red-500 bg-red-500">Cancelled</Badge>;
 
     case CompetitionStatusEnum.COMPLETED:
-      return <Badge className="dark:bg-green-200 bg-green-500">Completed</Badge>;
+      return <Badge className="dark:bg-green-500 bg-green-500">Completed</Badge>;
 
     case CompetitionStatusEnum.DELAYED:
-      return <Badge className="dark:bg-red-300 bg-red-600">Delayed</Badge>;
+      return <Badge className="dark:bg-red-500 bg-red-600">Delayed</Badge>;
 
     default:
       return null;

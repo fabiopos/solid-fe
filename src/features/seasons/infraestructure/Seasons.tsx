@@ -62,7 +62,7 @@ const Seasons = () => {
         <SeasonAddDrawer onClose={handleClose} open={open} />
       </div>
       <Separator className="my-5" />
-      <div className="grid grid-cols-3 gap-3 flex-col">
+      <div className="grid grid-cols-2 gap-3 flex-col">
         {seasons.map((s) => (
           <SeasonCard season={s} key={s.id} />
         ))}

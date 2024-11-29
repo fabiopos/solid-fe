@@ -12,8 +12,7 @@ export class CompetitionGet {
   }
 
   async getAllByTeam(teamId: string, token: string) {
-    const resource = `/competition/${teamId}/team`;
-    console.log(resource)
+    const resource = `/competition/${teamId}/team`;    
     const result = await this.client.GET(resource, token);
     const competitions = await result.json();
     return competitions as FulfilledCompetition[];

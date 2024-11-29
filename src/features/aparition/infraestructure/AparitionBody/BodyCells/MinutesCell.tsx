@@ -21,7 +21,7 @@ function MinutesCell({ playerId, minutes }: MinutesCellProps) {
     <AparitionBodyCell>
       <Input
         type="number"
-        max={2}
+        max={120}
         step={1}
         min={0}
         defaultValue={minutes ?? 0}

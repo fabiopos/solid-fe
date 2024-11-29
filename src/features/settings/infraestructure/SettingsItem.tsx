@@ -6,12 +6,10 @@ interface SettingsItemProps {
 }
 const SettingsItem = ({ label, value }: SettingsItemProps) => {
   return (
-    <>
-      <div className="border-r pr-5">{label}</div>
-      <div>
-        <div className="flex items-center space-x-2">{value}</div>
-      </div>
-    </>
+    <li className="flex justify-between my-5">
+      <div className="pr-5 font-bold text-right w-full">{label}:</div>
+      <div className="flex items-center space-x-2 w-full">{value}</div>
+    </li>
   );
 };
 

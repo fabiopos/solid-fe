@@ -2,20 +2,21 @@
 import { Switch } from "@/components/ui/switch";
 import { useTheme } from "../domain/useSettings";
 import { Label } from "@/components/ui/label";
-import { Subscription } from "@/types/types.common";
 import { format } from "date-fns";
 import SettingsItem from "./SettingsItem";
+import { FulfilledSubscription } from "@/features/subscription/domain/subscription.effect.schema";
+import ActiveText from "@/components/ui/active-text";
 
 interface SettingsProps {
-  subscription: Subscription;
+  subscription: FulfilledSubscription;
 }
 const Settings = ({ subscription }: SettingsProps) => {
   const { darkMode, toggleDarkMode, isDarkModeEnabled } = useTheme();
   return (
     <>
-      <div className="grid grid-cols-[200px_auto] gap-5 justify-between">
+      <ul className="">
         <SettingsItem
-          label="Theme"
+          label={darkMode ? "Light Mode" : "Dark Mode"}
           value={
             <>
               <Switch
@@ -23,9 +24,6 @@ const Settings = ({ subscription }: SettingsProps) => {
                 onCheckedChange={toggleDarkMode}
                 defaultChecked={isDarkModeEnabled}
               />
-              <Label htmlFor="theme-mode">
-                {darkMode ? "Light mode" : "Dark Mode"}
-              </Label>
             </>
           }
         />
@@ -42,22 +40,30 @@ const Settings = ({ subscription }: SettingsProps) => {
 
         <SettingsItem
           label="Subscription Plan"
-          value={subscription.plan.name}
+          value={subscription.plan?.name}
         />
 
         <SettingsItem
           label="Subscription Starts on"
-          value={format(subscription.startDate, "dd MMMM yyyy")}
+          value={
+            subscription.startDate
+              ? format(subscription.startDate, "dd MMMM yyyy")
+              : "--"
+          }
         />
 
         <SettingsItem
           label="Subscription Ends on"
-          value={format(subscription.endDate, "dd MMMM yyyy")}
+          value={
+            subscription.endDate
+              ? format(subscription.endDate, "dd MMMM yyyy")
+              : "--"
+          }
         />
 
         <SettingsItem
           label="Status"
-          value={subscription.active ? "Active" : "Inactive"}
+          value={<ActiveText isActive={subscription.active} />}
         />
 
         <SettingsItem
@@ -73,14 +79,14 @@ const Settings = ({ subscription }: SettingsProps) => {
           value={subscription.features?.length ?? 0}
         />
 
-        {subscription.features.map((subFeature) => (
+        {subscription.features?.map((subFeature) => (
           <SettingsItem
             key={subFeature.id}
-            label={`Max ${subFeature.feature.name} allowed`}
+            label={`Max ${subFeature.feature?.name} allowed`}
             value={subFeature.max}
           />
         ))}
-      </div>
+      </ul>
     </>
   );
 };

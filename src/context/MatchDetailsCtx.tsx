@@ -50,30 +50,32 @@ function buildAparitions(
   aparitions: FulfilledMatchAparition[],
   matchId?: string | null
 ) {
-  const { homeTeamPlayers } = players;
+  const { homeTeamPlayers, awayTeamPlayers } = players;
 
   if (aparitions.length > 0) return aparitions;
   if (!matchId) return aparitions;
 
-  const builtAparitions: FulfilledMatchAparition[] = homeTeamPlayers.map(
-    (player) =>
-      FulfilledMatchAparition.make({
-        confirmed: false,
-        played: false,
-        minutes: 0,
-        goals: 0,
-        playerId: player.id,
-        yellowCards: 0,
-        redCards: 0,
-        rating: 6,
-        player: {
-          id: player.id,
-          firstName: player.firstName,
-          lastName: player.lastName,
-        },
-        match: { id: matchId },
-        matchId: matchId,
-      })
+  const builtAparitions: FulfilledMatchAparition[] = [
+    ...homeTeamPlayers,
+    ...awayTeamPlayers,
+  ].map((player) =>
+    FulfilledMatchAparition.make({
+      confirmed: false,
+      played: false,
+      minutes: 0,
+      goals: 0,
+      playerId: player.id,
+      yellowCards: 0,
+      redCards: 0,
+      rating: 6,
+      player: {
+        id: player.id,
+        firstName: player.firstName,
+        lastName: player.lastName,
+      },
+      match: { id: matchId },
+      matchId: matchId,
+    })
   );
 
   return builtAparitions;

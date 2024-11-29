@@ -12,7 +12,7 @@ async function MatchesPage() {
     <CompetitionStoreProvider season={null} allCompetitions={allCompetitions}>
       <div>
         <H1>All Competitions</H1>        
-        <div className="grid grid-cols-3 gap-2 p-5">
+        <div className="grid grid-cols-2 gap-2 p-5">
           {allCompetitions?.map((c) => (
             <div key={c.id}>
               <SeasonCompetitionCard competition={c} />
@@ -34,8 +34,7 @@ async function getAllCompetitionsByTeam() {
   if (!session) return;
   const token = session.user.access_token;
   const compClient = new CompetitionGet(new ApiClient());
-  const competitions = await compClient.getAllByTeam(teamId, token);
-  console.log(competitions);
+  const competitions = await compClient.getAllByTeam(teamId, token);  
   return competitions;
 }
 

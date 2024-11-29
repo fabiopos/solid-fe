@@ -9,7 +9,7 @@ import ReadOnlyAlert from "./ReadOnlyAlert";
 import { useAuthStore } from "@/context/AuthCtx";
 
 function MatchDetails() {
-  const teamId = useAuthStore(state => state.accountData.selectedTeamId);  
+  const teamId = useAuthStore((state) => state.accountData.selectedTeamId);
   const { match } = useMatchDetailsStore((state) => state);
 
   if (!match) return <>Match not found</>;
@@ -19,6 +19,7 @@ function MatchDetails() {
     return !teamIds.includes(teamId ?? "");
   }, [teamIds, teamId]);
 
+  // console.log(teamIds, teamId, isReadonly);
   return (
     <div className="container">
       <H1>

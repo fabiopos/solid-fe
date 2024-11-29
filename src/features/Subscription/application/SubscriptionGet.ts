@@ -1,5 +1,5 @@
 import { ApiClient } from "@/lib/ApiClient";
-import { Subscription } from "@/types/types.common";
+import { FulfilledSubscription } from "../domain/subscription.effect.schema";
 
 export class SubscriptionGet {
   constructor(private client: ApiClient) {}
@@ -13,6 +13,6 @@ export class SubscriptionGet {
     if (!response.ok) return null;
     const result = await response.json();
 
-    return result as Subscription;
+    return result as FulfilledSubscription;
   }
 }

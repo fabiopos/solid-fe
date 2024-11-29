@@ -89,14 +89,13 @@ export const makeMatchDetailsStore = (
       if (!matchId) return;
       const getClient = new AparitionGet(new ApiClient());
       const apars = await getClient.getAparitions(matchId, token);
-      console.log(apars);
 
       set(() => ({ aparitions: apars }));
     },
     setConfirmed: (playerId, confirmed) => {
       const curr = get().aparitions;
       const updatedAp = curr.map((x) => {
-        if (x.playerId === playerId) return { ...x, confirmed };
+        if (x.player?.id === playerId) return { ...x, confirmed };
         return x;
       });
       set(() => ({ aparitions: updatedAp }));
@@ -104,7 +103,7 @@ export const makeMatchDetailsStore = (
     setPlayed: (playerId, played) => {
       const curr = get().aparitions;
       const updatedAp = curr.map((x) => {
-        if (x.playerId === playerId) return { ...x, played };
+        if (x.player?.id === playerId) return { ...x, played };
         return x;
       });
       set(() => ({ aparitions: updatedAp }));
@@ -112,7 +111,7 @@ export const makeMatchDetailsStore = (
     setGoals: (playerId, goals) => {
       const curr = get().aparitions;
       const updatedAp = curr.map((x) => {
-        if (x.playerId === playerId) return { ...x, goals };
+        if (x.player?.id === playerId) return { ...x, goals };
         return x;
       });
       set(() => ({ aparitions: updatedAp }));
@@ -120,7 +119,7 @@ export const makeMatchDetailsStore = (
     setMinutes: (playerId, minutes) => {
       const curr = get().aparitions;
       const updatedAp = curr.map((x) => {
-        if (x.playerId === playerId) return { ...x, minutes };
+        if (x.player?.id === playerId) return { ...x, minutes };
         return x;
       });
       set(() => ({ aparitions: updatedAp }));
@@ -128,7 +127,7 @@ export const makeMatchDetailsStore = (
     setRating: (playerId, rating) => {
       const curr = get().aparitions;
       const updatedAp = curr.map((x) => {
-        if (x.playerId === playerId) return { ...x, rating };
+        if (x.player?.id === playerId) return { ...x, rating };
         return x;
       });
       set(() => ({ aparitions: updatedAp }));
@@ -136,7 +135,7 @@ export const makeMatchDetailsStore = (
     setRedCards: (playerId, redCards) => {
       const curr = get().aparitions;
       const updatedAp = curr.map((x) => {
-        if (x.playerId === playerId) return { ...x, redCards };
+        if (x.player?.id === playerId) return { ...x, redCards };
         return x;
       });
       set(() => ({ aparitions: updatedAp }));
@@ -144,7 +143,7 @@ export const makeMatchDetailsStore = (
     setYellowCards: (playerId, yellowCards) => {
       const curr = get().aparitions;
       const updatedAp = curr.map((x) => {
-        if (x.playerId === playerId) return { ...x, yellowCards };
+        if (x.player?.id === playerId) return { ...x, yellowCards };
         return x;
       });
       set(() => ({ aparitions: updatedAp }));

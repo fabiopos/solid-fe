@@ -1,17 +1,41 @@
 import { auth } from "@/auth";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import MyRivals from "@/features/settings/infraestructure/MyRivals";
+import MyTeams from "@/features/settings/infraestructure/MyTeams";
 import Settings from "@/features/settings/infraestructure/Settings";
 import { SubscriptionGet } from "@/features/subscription/application/SubscriptionGet";
+import { FulfilledTeam } from "@/features/teams/domain/team.schema";
 import { ApiClient } from "@/lib/ApiClient";
 import { redirect } from "next/navigation";
 
 const SettingsPage = async () => {
   const subscription = await getData();
 
-  if (!subscription) return redirect("/");  
+  const myTeams = subscription?.teams?.filter((x) => x.hasSubscription) ?? [];
+  const myRivals = subscription?.teams?.filter((x) => !x.hasSubscription) ?? [];
+
+  if (!subscription) return redirect("/");
   return (
     <div className="">
       <h1 className="text-3xl font-extrabold my-5">Settings</h1>
-      <Settings subscription={subscription} />
+      <Tabs defaultValue="account" className="w-[600px]">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="my-teams">My Teams</TabsTrigger>
+          <TabsTrigger value="my-rivals">My Rivals</TabsTrigger>
+        </TabsList>
+        <TabsContent value="general">
+          <Settings subscription={subscription} />
+        </TabsContent>
+
+        <TabsContent value="my-teams">
+          <MyTeams teams={myTeams as FulfilledTeam[]} />
+        </TabsContent>
+
+        <TabsContent value="my-rivals">
+          <MyRivals teams={myRivals as FulfilledTeam[]} />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

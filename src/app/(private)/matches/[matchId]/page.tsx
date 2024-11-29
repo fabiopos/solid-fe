@@ -1,15 +1,11 @@
 import { auth } from "@/auth";
-import { H1 } from "@/components/ui/typograhpy";
 import { MatchDetailsStoreProvider } from "@/context/MatchDetailsCtx";
 import { PlayersStoreProvider } from "@/context/PlayersCtx";
 import { AparitionGet } from "@/features/aparition/application/AparitionGet";
-import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
 import { MatchGet } from "@/features/match/application/MatchGet";
 import MatchDetails from "@/features/match/infraestructure/MatchDetails/MatchDetails";
 import { PlayerGet } from "@/features/players/application/PlayerGet";
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 import { PlayerType } from "@/features/players/domain/player.schema";
-import { SubscriptionGet } from "@/features/subscription/application/SubscriptionGet";
 import { ApiClient } from "@/lib/ApiClient";
 
 async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
@@ -42,7 +38,9 @@ async function getMatchDetails(matchId: string) {
   const match = await matchGet.find(matchId, token);
 
   const aparitionGet = new AparitionGet(apiClient);
+
   const aparitions = await aparitionGet.getAparitions(matchId, token);
+  // console.log(matchId, aparitions);
 
   let homeTeamPlayers: PlayerType[] = [];
   let awayTeamPlayers: PlayerType[] = [];

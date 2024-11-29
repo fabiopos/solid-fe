@@ -17,7 +17,7 @@ function RedCardCell({ playerId, redCards }: RedCardCellProps) {
     <AparitionBodyCell>
       <Input
         type="number"
-        max={2}
+        max={1}
         step={1}
         min={0}
         defaultValue={redCards ?? 0}
