@@ -29,6 +29,11 @@ export type MatchDetailsStoreActions = {
   setAparition: (playerId: string, aparition: FulfilledMatchAparition) => void;
   upsertAparitions: (token: string) => Promise<void>;
   fetchAparitions: (token: string) => Promise<void>;
+  addAparition: (
+    player: FulfilledPlayer,
+    matchId: string,
+    token: string
+  ) => Promise<void>;
   setConfirmed: (playerId: string, confirmed: boolean) => void;
   setPlayed: (playerId: string, played: boolean) => void;
   setYellowCards: (playerId: string, value: number) => void;
@@ -75,6 +80,14 @@ export const makeMatchDetailsStore = (
       });
 
       set(() => ({ aparitions: updatedAp }));
+    },
+    addAparition: async (player, matchId, token) => {
+      const fetchAp = get().fetchAparitions;
+      set(() => ({ upsertStatus: "IN_PROGRESS" }));
+      const addApp = new AparitionUpsert(new ApiClient());
+      await addApp.addAparition(player, matchId, token)
+      await fetchAp(token);
+      set(() => ({ upsertStatus: "DONE" }));
     },
     upsertAparitions: async (token: string) => {
       const fetchAp = get().fetchAparitions;

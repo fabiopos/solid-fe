@@ -11,6 +11,8 @@ import RedCardCell from "./BodyCells/RedCardCell";
 import MinutesCell from "./BodyCells/MinutesCell";
 import GoalsCell from "./BodyCells/GoalsCell";
 import RatingCell from "./BodyCells/Rating";
+import FieldPositionBodyCell from "./BodyCells/FieldPositionCell";
+import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
 
 interface AparitionBodyRowProps {
   player: FulfilledPlayer;
@@ -38,9 +40,12 @@ function AparitionBodyRow({
   }, [player]);
 
   if (player?.id === undefined) return null;
-  
+
   return (
     <React.Fragment>
+      <FieldPositionBodyCell>
+        <PositionCategoryBadge category={player.favPosition?.category} />
+      </FieldPositionBodyCell>
       <AparitionBodyCell>{playerName}</AparitionBodyCell>
       <ConfirmedCell playerId={player.id} confirmed={confirmed} />
       <PlayedCell playerId={player.id} played={played} />

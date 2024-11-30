@@ -4,6 +4,7 @@ import {
   Check,
   CheckCheck,
   Clock,
+  GitPullRequest,
   Goal,
   SquareActivity,
   User,
@@ -12,6 +13,12 @@ import {
 function AparitionHeader() {
   return (
     <AparitionTableLayout>
+        <AparitionHeaderCell>
+        <div className="flex gap-2 justify-center items-center">
+          <GitPullRequest size={18} />
+          <span>Position</span>
+        </div>
+      </AparitionHeaderCell>
       <AparitionHeaderCell>
         <div className="flex gap-2 justify-center items-center">
           <User size={18} />
