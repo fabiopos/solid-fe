@@ -4,5 +4,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <main className="w-full p-5">{children}</main>;
 }
