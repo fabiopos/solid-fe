@@ -69,8 +69,18 @@ function Dashboard() {
                   Calendar 1
                 </h3>
               </div>
-              <div className="px-5">
-                <Calendar mode="multiple" numberOfMonths={12} />
+              <div className="px-5 relative">
+                <Calendar
+                  mode="multiple"
+                  numberOfMonths={12}
+                  classNames={{
+                    cell: "h-9 w-9",
+                    caption_label: "p-2",
+                    day_today: "outline outline-neutral-500",
+                    months: "grid grid-cols-4 gap-4",
+                    month: "border p-2",
+                  }}
+                />
               </div>
             </div>
           </div>
