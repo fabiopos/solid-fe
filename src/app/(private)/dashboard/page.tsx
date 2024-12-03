@@ -1,11 +1,12 @@
+import LastMatches from "@/components/Dashboard/LastMatches/LastMatches";
 import LastPlayersAdded from "@/components/Dashboard/LastPlayersAdded/LastPlayersAdded";
+import NextMatch from "@/components/Dashboard/NextMatch/NextMatch";
 import { PieChartWinRate } from "@/components/Dashboard/TeamStats/PieChartWinRate";
 import TeamStatBoxes from "@/components/Dashboard/TeamStats/TeamStatBoxes";
+import TopAsists from "@/components/Dashboard/TopAsists/TopAsists";
 import TopScorers from "@/components/Dashboard/TopScorers/TopScorers";
-import MatchRow from "@/components/Match/MatchRow";
+import { Calendar } from "@/components/ui/calendar";
 import { Separator } from "@/components/ui/separator";
-import { FulfilledMatch } from "@/features/match/domain/match.schema";
-import { FastCheck as fc } from "effect";
 
 function Dashboard() {
   return (
@@ -33,7 +34,7 @@ function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="bg-slate-800/40 border rounded-lg">
+          <div className="bg-slate-800/40 border">
             <div className="p-2">
               <div className="px-5 my-5">
                 <h3 className="text-lg font-bold tracking-wide text-white max-lg:text-center">
@@ -46,16 +47,8 @@ function Dashboard() {
             </div>
           </div>
           <div className="bg-slate-800/40 border rounded-lg">
-            <div className="p-2">
-              <div className="px-5 my-5">
-                <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
-                  Next Match
-                </h3>
-              </div>
-              <div className="px-5">
-                <MatchRow match={FulfilledMatch.make({})} />
-              </div>
-            </div>
+            <LastMatches />
+            <NextMatch />
           </div>
           <div className="bg-slate-800/40 border rounded-lg">
             <div className="p-2">
@@ -73,33 +66,23 @@ function Dashboard() {
             <div className="p-2">
               <div className="px-5">
                 <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
-                  Calendar
+                  Calendar 1
                 </h3>
               </div>
               <div className="px-5">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis,
-                iure?
+                <Calendar mode="multiple" numberOfMonths={12} />
               </div>
             </div>
           </div>
           <div className="bg-slate-800/40 border rounded-lg">
-            {" "}
             <div className="p-2">
               <div className="px-5">
                 <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
                   Top Asists
                 </h3>
               </div>
-              <div className="px-5">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus
-                  debitis dignissimos in recusandae modi voluptate a laborum,
-                  commodi ea numquam quisquam magnam blanditiis iste unde et
-                  dolore consequatur vero nisi est dolor, necessitatibus sed ut.
-                  Consectetur adipisci exercitationem mollitia suscipit odio
-                  soluta reprehenderit, eos doloremque hic modi doloribus ea
-                  blanditiis?
-                </p>
+              <div className="px-5 mt-5">
+                <TopAsists />
               </div>
             </div>
           </div>

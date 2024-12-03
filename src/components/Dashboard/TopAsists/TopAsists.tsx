@@ -1,7 +1,7 @@
 import { Avatar } from "@/components/ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
-function TopScorers() {
+function TopAsists() {
   return (
     <div className="space-y-5">
     <div className="flex justify-between items-center">
@@ -29,4 +29,4 @@ function TopScorers() {
   );
 }
 
-export default TopScorers;
+export default TopAsists;
