@@ -5,6 +5,11 @@ import {
   isValidShirtNumber,
   isValidWeight,
 } from "./player.schema";
+import { EmptyPlayer } from "./player.effect.schema";
+import { DocumentType } from "@/shared/enums/playerEnums";
+import { DominantFoot, ShirtSize } from "@/types/types.common";
+import { PlayerCreate } from "../application/PlayerCreate";
+import { ApiClient } from "@/lib/ApiClient";
 
 type NewPlayerStep = 1 | 2 | 3;
 
@@ -25,7 +30,14 @@ export type NewPlayerStoreState = {
   height: string;
   weight: string;
   healthProvider: string;
-  riskInsurance: string;  
+  riskInsurance: string;
+  teamId: string;
+  dominantFoot: DominantFoot;
+  address: string;
+  avatarUrl: string;
+  phone: string;
+  city: string;
+  country: string;
   isValidEmail: boolean;
   isValidNumberOnShirt: boolean;
   isValidHeight: boolean;
@@ -49,6 +61,7 @@ export type NewPlayerStoreActions = {
   setFavFieldPosition: (value: string) => void;
   setShirtSize: (value: string) => void;
   reset: () => void;
+  postPlayer: (token: string) => Promise<void>;
 };
 
 export type NewPlayerStore = NewPlayerStoreState & NewPlayerStoreActions;
@@ -61,7 +74,7 @@ const defaultInitState: NewPlayerStoreState = {
   email: "",
   firstName: "",
   lastName: "",
-  nameOnShirt: "",  
+  nameOnShirt: "",
   healthProvider: "",
   height: "",
   numberOnShirt: undefined,
@@ -73,6 +86,13 @@ const defaultInitState: NewPlayerStoreState = {
   isValidNumberOnShirt: false,
   isValidHeight: false,
   isValidWeight: false,
+  teamId: "",
+  dominantFoot: DominantFoot.RIGHT,
+  address: "",
+  avatarUrl: "",
+  phone: "",
+  city: "",
+  country: "",
 };
 
 export const makeNewPlayerStore = (
@@ -142,6 +162,56 @@ export const makeNewPlayerStore = (
     },
     reset: () => {
       set(() => ({ ...defaultInitState }));
+    },
+    postPlayer: async (token) => {
+      const documentNumber = get().documentNumber;
+      const documentType = get().documentType as unknown as DocumentType;
+      const teamId = get().teamId;
+      const firstName = get().firstName;
+      const lastName = get().lastName;
+      const email = get().email;
+      const shirtSize = get().shirtSize as unknown as ShirtSize;
+      const shirtNumber = Number(get().numberOnShirt);
+      const shirtName = get().nameOnShirt;
+      const dominantFoot = get().dominantFoot as unknown as DominantFoot;
+      const favPositionId = get().favPosition;
+      const favPosition = get().favPosition;
+      const address = get().address;
+      const avatarUrl = get().avatarUrl;
+      const phone = get().phone;
+      const city = get().city;
+      const country = get().country;
+      const eps = get().healthProvider;
+      const arl = get().riskInsurance;
+      const weight = Number(get().weight);
+      const height = Number(get().height);
+
+      const emptyPlayer = EmptyPlayer.make({
+        documentNumber,
+        documentType,
+        teamId,
+        firstName,
+        lastName,
+        email,
+        shirtSize,
+        shirtNumber,
+        shirtName,
+        dominantFoot,
+        favPositionId,
+        favPosition: { id: favPosition },
+        address,
+        avatarUrl,
+        phone,
+        city,
+        country,
+        eps,
+        arl,
+        weight,
+        height,
+      });
+
+      const clientCreate = new PlayerCreate(new ApiClient())
+      await clientCreate.createNewPlayer(emptyPlayer, token)
     },
   }));
 };

@@ -20,13 +20,13 @@ function StepThree() {
     favPosition
   } = useNewPlayerStore((state) => state);
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 border border-slate-300 rounded-md p-5">
       <div className="flex flex-col">
         <h2 className="text-xl font-bold uppercase">{favPosition} - {`${firstName} ${lastName}`}</h2>
         <span className="text-sm text-slate-400 lowercase">{email}</span>
       </div>
 
-      <div className="grid grid-cols-[repeat(2,_minmax(100px,_1fr))] items-center mt-5">
+      <div className="grid grid-cols-[repeat(2,_minmax(100px,_1fr))] items-center justify-start mt-5">
         <Label className="dark:text-slate-400 text-right text-lg pr-2">
           ID
         </Label>

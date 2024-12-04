@@ -11,12 +11,14 @@ import EmailInput from "../Inputs/EmailInput";
 function StepOne() {
   return (
     <div className="space-y-2">
-      <FirstNameInput />
-      <LastNameInput />
-      <DocumentTypeInput />
-      <DocumentNumberInput />
-      <BirthDateInput />
-      <EmailInput />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <FirstNameInput />
+        <LastNameInput />
+        <DocumentTypeInput />
+        <DocumentNumberInput />
+        <EmailInput />
+        <BirthDateInput />
+      </div>      
     </div>
   );
 }

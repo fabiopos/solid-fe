@@ -20,14 +20,20 @@ import ShizeShirt from "../Inputs/SizeShirtInput";
 function StepTwo() {
   return (
     <div className="space-y-2">
-      <NameShirtInput />
-      <NumberOnShirtInput />
-      <ShizeShirt />
-      <HeightInput />
-      <WeightInput />
-      <HealthProviderInput />
-      <RiskInsuranceInput />
-      <FavPositionSelect />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <NameShirtInput />
+        <NumberOnShirtInput />
+        <ShizeShirt />
+        <FavPositionSelect />
+        <HeightInput />
+        <WeightInput />
+        <HealthProviderInput />
+        <RiskInsuranceInput />
+      </div>
+
+      <br />
+
+      <br />
     </div>
   );
 }

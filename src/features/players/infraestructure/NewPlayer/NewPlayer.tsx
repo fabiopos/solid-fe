@@ -13,11 +13,19 @@ import { cn } from "@/lib/utils";
 import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
-import { usePlayers } from "../../domain/usePlayers";
+import { useCallback } from "react";
+import { useSession } from "next-auth/react";
 
-function NewPlayer() {  
-  const { prevStep, nextStep, step } = useNewPlayerStore((state) => state);
-  
+function NewPlayer() {
+  const { data } = useSession();
+  const { prevStep, nextStep, postPlayer, step } = useNewPlayerStore(
+    (state) => state
+  );
+
+  const handleCreatePlayer = useCallback(() => {
+    postPlayer(data?.user.access_token ?? "");
+  }, [data?.user.access_token]);
+
   return (
     <Card className="bg-[#E2E8F0] text-slate-800 w-full">
       <CardHeader>
@@ -77,12 +85,17 @@ function NewPlayer() {
           />
         </div>
         <div className="flex gap-5 justify-end">
-          <Button onClick={prevStep} disabled={step === 1}>
+          <Button variant="outline" onClick={prevStep} disabled={step === 1}>
             Back
           </Button>
-          <Button onClick={nextStep} disabled={step === 3}>
-            Continue
-          </Button>
+
+          {step !== 3 && <Button onClick={nextStep}>Continue</Button>}
+
+          {step === 3 && (
+            <Button onClick={handleCreatePlayer} disabled={step !== 3}>
+              Add this player to my team
+            </Button>
+          )}
         </div>
       </CardFooter>
     </Card>

@@ -18,7 +18,7 @@ function BirthDateInput() {
   const { birthDate, setBirthDate } = useNewPlayerStore((state) => state);
   return (
     <div className="flex flex-col gap-2">
-      <Label className="dark:text-slate-800 font-bold mt-2">Birth Date</Label>
+      <Label className="dark:text-slate-800 font-bold">Birth Date</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
