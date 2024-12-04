@@ -91,11 +91,34 @@ const config: Config = {
           from: { backgroundPosition: "200% 0" },
           to: { backgroundPosition: "-200% 0" },
         },
+        "slide-in-left": {
+          "0%": {
+            visibility: "visible",
+            transform: "translate3d(-100%, 0, 0)",
+          },
+          "100%": {
+            transform: "translate3d(0, 0, 0)",
+          },
+        },
+        "slide-in-right": {
+          "0%": {
+            visibility: "hidden",
+            opacity: "0%",
+            transform: "translate3d(100%, 0, 0)",
+          },
+          "100%": {
+            transform: "translate3d(0, 0, 0)",
+            opacity: "100%",
+            visibility: "visible",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         shine: "shine 8s ease-in-out infinite",
+        slideinleft: "slide-in-left 2s ease-in-out 0.25s 1",
+        slideinright: "slide-in-right 1s ease-in-out 0.25s 1",
       },
       screens: {
         tablet: "640px",

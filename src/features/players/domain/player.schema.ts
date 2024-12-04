@@ -1,6 +1,23 @@
 import { PlayerStatus } from "@/types/types.common";
 import { z, string, boolean, number } from "zod";
 
+export const isValidEmail = z.string().email();
+
+export const isValidShirtNumber = z
+  .number()
+  .max(99, "Max number allowed is 99")
+  .min(1, "Min number allowed is 1");
+
+export const isValidHeight = z
+  .number()
+  .min(100, "Min number allowed is 100")
+  .max(220, "Max number allowed is 220");
+
+export const isValidWeight = z
+  .number()
+  .min(10, "Min number allowed is 10")
+  .max(200, "Max number allowed is 200");
+
 const teamSchema = z.object({
   id: string(),
   name: string(),
@@ -61,7 +78,7 @@ export const playerUpdateSchema = z.object({
   arl: string().optional().nullable(),
   city: string().optional().nullable(),
   country: string().optional().nullable(),
-  dominantFoot: string().optional().nullable(),    
+  dominantFoot: string().optional().nullable(),
   eps: string().optional().nullable(),
   favPositionId: string().optional().nullable(),
   firstName: string().optional(),
@@ -71,9 +88,11 @@ export const playerUpdateSchema = z.object({
   shirtSize: string().optional().nullable(),
   shirtName: string().optional().nullable(),
   shirtNumber: number().optional().nullable(),
-  status: z.enum([PlayerStatus.OK, PlayerStatus.INJURIED, PlayerStatus.DOWN]).optional(),
+  status: z
+    .enum([PlayerStatus.OK, PlayerStatus.INJURIED, PlayerStatus.DOWN])
+    .optional(),
   weight: number().optional().nullable(),
-  bornDate: string().optional().nullable()  
+  bornDate: string().optional().nullable(),
 });
 
 export type PlayerUpdateType = z.infer<typeof playerUpdateSchema>;

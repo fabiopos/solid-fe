@@ -18,7 +18,7 @@ const SettingsPage = async () => {
   return (
     <div className="">
       <h1 className="text-3xl font-extrabold my-5">Settings</h1>
-      <Tabs defaultValue="account" className="w-[600px]">
+      <Tabs defaultValue="general" className="w-[600px]">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="my-teams">My Teams</TabsTrigger>
