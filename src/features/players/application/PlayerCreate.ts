@@ -7,7 +7,7 @@ export class PlayerCreate {
   async createNewPlayer(player: EmptyPlayer, token: string) {
     const response = await this.client.POST(`/player`, player, token);
 
-    if (!response.ok) return null;
+    if (!response.ok) return await response.text();
 
     return (await response.json()) as FulfilledPlayer;
   }

@@ -60,8 +60,13 @@ export type NewPlayerStoreActions = {
   setRiskInsurance: (value: string) => void;
   setFavFieldPosition: (value: string) => void;
   setShirtSize: (value: string) => void;
+  setCountry: (value: string) => void;
+  setCity: (value: string) => void;
+  setPhone: (value: string) => void;
+  setAddress: (value: string) => void;
+  setAvatarUrl: (value: string) => void;
   reset: () => void;
-  postPlayer: (token: string) => Promise<void>;
+  postPlayer: (teamId: string, token: string) => Promise<void>;
 };
 
 export type NewPlayerStore = NewPlayerStoreState & NewPlayerStoreActions;
@@ -116,6 +121,21 @@ export const makeNewPlayerStore = (
     setDocumentNumber: (documentNumber) => {
       set(() => ({ documentNumber }));
     },
+    setCountry: (country) => {
+      set(() => ({ country }));
+    },
+    setCity: (city) => {
+      set(() => ({ city }));
+    },
+    setAddress: (address) => {
+      set(() => ({ address }));
+    },
+    setPhone: (phone) => {
+      set(() => ({ phone }));
+    },
+    setAvatarUrl: (avatarUrl) => {
+      set(() => ({ avatarUrl }));
+    },
     setDocumentType: (documentType) => {
       set(() => ({ documentType }));
     },
@@ -163,10 +183,10 @@ export const makeNewPlayerStore = (
     reset: () => {
       set(() => ({ ...defaultInitState }));
     },
-    postPlayer: async (token) => {
+    postPlayer: async (teamIdentifier, token) => {
       const documentNumber = get().documentNumber;
       const documentType = get().documentType as unknown as DocumentType;
-      const teamId = get().teamId;
+      const teamId = teamIdentifier;
       const firstName = get().firstName;
       const lastName = get().lastName;
       const email = get().email;
@@ -208,10 +228,11 @@ export const makeNewPlayerStore = (
         arl,
         weight,
         height,
+        fieldPositions: ['PO'],
       });
 
-      const clientCreate = new PlayerCreate(new ApiClient())
-      await clientCreate.createNewPlayer(emptyPlayer, token)
+      const clientCreate = new PlayerCreate(new ApiClient());
+      await clientCreate.createNewPlayer(emptyPlayer, token);
     },
   }));
 };

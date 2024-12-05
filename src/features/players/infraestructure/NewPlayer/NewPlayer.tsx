@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,18 +12,10 @@ import { cn } from "@/lib/utils";
 import StepOne from "./Steps/StepOne";
 import StepTwo from "./Steps/StepTwo";
 import StepThree from "./Steps/StepThree";
-import { useCallback } from "react";
-import { useSession } from "next-auth/react";
+import CATButtons from "./Actions/CATButtons";
 
 function NewPlayer() {
-  const { data } = useSession();
-  const { prevStep, nextStep, postPlayer, step } = useNewPlayerStore(
-    (state) => state
-  );
-
-  const handleCreatePlayer = useCallback(() => {
-    postPlayer(data?.user.access_token ?? "");
-  }, [data?.user.access_token]);
+  const { step } = useNewPlayerStore((state) => state);
 
   return (
     <Card className="bg-[#E2E8F0] text-slate-800 w-full">
@@ -85,17 +76,7 @@ function NewPlayer() {
           />
         </div>
         <div className="flex gap-5 justify-end">
-          <Button variant="outline" onClick={prevStep} disabled={step === 1}>
-            Back
-          </Button>
-
-          {step !== 3 && <Button onClick={nextStep}>Continue</Button>}
-
-          {step === 3 && (
-            <Button onClick={handleCreatePlayer} disabled={step !== 3}>
-              Add this player to my team
-            </Button>
-          )}
+          <CATButtons />
         </div>
       </CardFooter>
     </Card>

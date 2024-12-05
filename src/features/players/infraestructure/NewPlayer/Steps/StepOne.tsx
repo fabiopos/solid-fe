@@ -7,6 +7,9 @@ import DocumentTypeInput from "../Inputs/DocumentTypeInput";
 import DocumentNumberInput from "../Inputs/DocumentNumberInput";
 import BirthDateInput from "../Inputs/BirthDateInput";
 import EmailInput from "../Inputs/EmailInput";
+import CountryInput from "../Inputs/CountryInput";
+import RegionInput from "../Inputs/RegionInput";
+import PhoneNumberInput from "../Inputs/PhoneNumberInput";
 
 function StepOne() {
   return (
@@ -18,7 +21,10 @@ function StepOne() {
         <DocumentNumberInput />
         <EmailInput />
         <BirthDateInput />
-      </div>      
+        <CountryInput />
+        <RegionInput />
+        <PhoneNumberInput />
+      </div>
     </div>
   );
 }

@@ -107,6 +107,9 @@ dependencies:
   cmdk:
     specifier: 1.0.0
     version: 1.0.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@19.0.0-rc-69d4b800-20241021)(react@19.0.0-rc-69d4b800-20241021)
+  country-region-data:
+    specifier: ^3.1.0
+    version: 3.1.0
   date-fns:
     specifier: ^4.1.0
     version: 4.1.0
@@ -152,6 +155,9 @@ dependencies:
   react-hook-form:
     specifier: ^7.53.1
     version: 7.53.1(react@19.0.0-rc-69d4b800-20241021)
+  react-phone-number-input:
+    specifier: ^3.4.10
+    version: 3.4.10(react-dom@19.0.0-rc-69d4b800-20241021)(react@19.0.0-rc-69d4b800-20241021)
   recharts:
     specifier: ^2.13.0
     version: 2.13.0(react-dom@19.0.0-rc-69d4b800-20241021)(react@19.0.0-rc-69d4b800-20241021)
@@ -3908,6 +3914,10 @@ packages:
       clsx: 2.0.0
     dev: false
 
+  /classnames@2.5.1:
+    resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+    dev: false
+
   /client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
     dev: false
@@ -3998,6 +4008,14 @@ packages:
   /cookie@0.7.1:
     resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /country-flag-icons@1.5.13:
+    resolution: {integrity: sha512-4JwHNqaKZ19doQoNcBjsoYA+I7NqCH/mC/6f5cBWvdKzcK5TMmzLpq3Z/syVHMHJuDGFwJ+rPpGizvrqJybJow==}
+    dev: false
+
+  /country-region-data@3.1.0:
+    resolution: {integrity: sha512-Xy5HoXk2byCS45+88ErCor/a0q6r22ur/Os69p71kfmescu3od4B1lpe7dQdAa0T9HYqqKX04QsrnZ5FmIWh9g==}
     dev: false
 
   /cross-spawn@7.0.3:
@@ -5054,6 +5072,22 @@ packages:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
     dev: true
 
+  /input-format@0.3.11(react-dom@19.0.0-rc-69d4b800-20241021)(react@19.0.0-rc-69d4b800-20241021):
+    resolution: {integrity: sha512-q24+iW10ZMb7KIRDlVUl3GvFcadf1ttE/QA2waINkDMdjsPXStQSOvdTyHwO8p+4Mq433ILQJZRL8YKtPjNk4g==}
+    peerDependencies:
+      react: ^18.1.0
+      react-dom: ^18.1.0
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      prop-types: 15.8.1
+      react: 19.0.0-rc-69d4b800-20241021
+      react-dom: 19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021)
+    dev: false
+
   /input-otp@1.2.4(react-dom@19.0.0-rc-69d4b800-20241021)(react@19.0.0-rc-69d4b800-20241021):
     resolution: {integrity: sha512-md6rhmD+zmMnUh5crQNSQxq3keBRYvE3odbr4Qb9g2NWzQv9azi+t1a3X4TBTbh98fsGHgEEJlzbe1q860uGCA==}
     peerDependencies:
@@ -5426,6 +5460,10 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
     dev: true
+
+  /libphonenumber-js@1.11.16:
+    resolution: {integrity: sha512-Noyazmt0yOvnG0OeRY45Cd1ur8G7Z0HWVkuCuKe+yysGNxPQwBAODBQQ40j0AIagi9ZWurfmmZWNlpg4h4W+XQ==}
+    dev: false
 
   /lilconfig@2.1.0:
     resolution: {integrity: sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==}
@@ -6063,6 +6101,21 @@ packages:
 
   /react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
+    dev: false
+
+  /react-phone-number-input@3.4.10(react-dom@19.0.0-rc-69d4b800-20241021)(react@19.0.0-rc-69d4b800-20241021):
+    resolution: {integrity: sha512-9kwr6R1PwvW9YGant3VqEY+CMBjqSr8v3wjEIXSPxDw7KLvHMDDFDglEpCjDy20/54PFY6RTKgN73WCvvFByCA==}
+    peerDependencies:
+      react: '>=16.8'
+      react-dom: '>=16.8'
+    dependencies:
+      classnames: 2.5.1
+      country-flag-icons: 1.5.13
+      input-format: 0.3.11(react-dom@19.0.0-rc-69d4b800-20241021)(react@19.0.0-rc-69d4b800-20241021)
+      libphonenumber-js: 1.11.16
+      prop-types: 15.8.1
+      react: 19.0.0-rc-69d4b800-20241021
+      react-dom: 19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021)
     dev: false
 
   /react-remove-scroll-bar@2.3.6(@types/react@18.3.12)(react@19.0.0-rc-69d4b800-20241021):
