@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import { useNewPlayerStore } from "@/context/NewPlayerCtx";
 import { useTeamId } from "@/hooks/use-team-id";
 import { useToast } from "@/hooks/use-toast";
+import { format } from "date-fns";
+import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 
 function CATButtons() {
   const teamId = useTeamId();
@@ -35,6 +37,7 @@ function CATButtons() {
     weight,
     healthProvider,
     riskInsurance,
+    createPlayerStatus,
   } = useNewPlayerStore((state) => state);
 
   const handleCreatePlayer = useCallback(async () => {
@@ -42,9 +45,13 @@ function CATButtons() {
     await postPlayer(teamId, data?.user.access_token ?? "");
     toast({
       title: `Player successfuly created: ${firstName} ${lastName} `,
-      description: "Friday, February 10, 2023 at 5:57 PM",
+      description: format(new Date(), "PPP"),
     });
-    router.push("/players");
+
+    setTimeout(() => {
+      router.push("/players");
+    }, 1500);
+    //
   }, [data?.user.access_token, teamId]);
 
   const firstStepData = useMemo(() => {
@@ -148,7 +155,13 @@ function CATButtons() {
       )}
 
       {step === 3 && (
-        <Button onClick={handleCreatePlayer} disabled={!canContinue}>
+        <Button
+          onClick={handleCreatePlayer}
+          disabled={!canContinue || createPlayerStatus === "IN_PROGRESS"}
+        >
+          {createPlayerStatus === "IN_PROGRESS" && (
+            <Loader className="animate-spin" size={18} />
+          )}
           Add this player to my team
         </Button>
       )}

@@ -5,11 +5,12 @@ import {
   isValidShirtNumber,
   isValidWeight,
 } from "./player.schema";
-import { EmptyPlayer } from "./player.effect.schema";
+import { EmptyPlayer, FulfilledPlayer } from "./player.effect.schema";
 import { DocumentType } from "@/shared/enums/playerEnums";
-import { DominantFoot, ShirtSize } from "@/types/types.common";
+import { DominantFoot, RequestStatus, ShirtSize } from "@/types/types.common";
 import { PlayerCreate } from "../application/PlayerCreate";
 import { ApiClient } from "@/lib/ApiClient";
+import { RequestError } from "@/shared/errors/RequestError";
 
 type NewPlayerStep = 1 | 2 | 3;
 
@@ -42,6 +43,8 @@ export type NewPlayerStoreState = {
   isValidNumberOnShirt: boolean;
   isValidHeight: boolean;
   isValidWeight: boolean;
+  createPlayerStatus: RequestStatus;
+  error: RequestError | null
 };
 export type NewPlayerStoreActions = {
   nextStep: () => void;
@@ -98,6 +101,8 @@ const defaultInitState: NewPlayerStoreState = {
   phone: "",
   city: "",
   country: "",
+  createPlayerStatus: "IDLE",
+  error: null
 };
 
 export const makeNewPlayerStore = (
@@ -184,6 +189,7 @@ export const makeNewPlayerStore = (
       set(() => ({ ...defaultInitState }));
     },
     postPlayer: async (teamIdentifier, token) => {
+      set(() => ({ createPlayerStatus: "IN_PROGRESS", error: null }));
       const documentNumber = get().documentNumber;
       const documentType = get().documentType as unknown as DocumentType;
       const teamId = teamIdentifier;
@@ -228,11 +234,19 @@ export const makeNewPlayerStore = (
         arl,
         weight,
         height,
-        fieldPositions: ['PO'],
+        fieldPositions: [],
       });
 
       const clientCreate = new PlayerCreate(new ApiClient());
-      await clientCreate.createNewPlayer(emptyPlayer, token);
+      const response = await clientCreate.createNewPlayer(emptyPlayer, token);
+
+      if (response instanceof FulfilledPlayer) {
+        set(() => ({ createPlayerStatus: "DONE" }));
+      } else {
+        
+        set(() => ({ createPlayerStatus: "ERROR", error: response }));
+      }
+      console.log(response);
     },
   }));
 };

@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Toaster } from "@/components/ui/toaster";
 import SelectTeamModal from "@/features/team-select/infraestructure/SelectTeamModal";
 import { TeamGet } from "@/features/teams/application/TeamGet";
 import { ApiClient } from "@/lib/ApiClient";
@@ -16,6 +17,7 @@ export default async function RootLayout({
     <main className="w-full p-5">
       {children}
       <SelectTeamModal teams={teams} />
+      <Toaster />
     </main>
   );
 }

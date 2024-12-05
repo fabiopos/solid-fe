@@ -23,6 +23,7 @@ function ValidationAlert() {
     numberOnShirt,
     phone,
     shirtSize,
+    error,
   } = useNewPlayerStore((state) => state);
 
   const isValid = useMemo(() => {
@@ -65,6 +66,7 @@ function ValidationAlert() {
     shirtSize,
   ]);
 
+  if (error) return <Alert variant="destructive">{error.message}</Alert>;
   if (isValid) return null;
   return (
     <Alert variant="destructive">
