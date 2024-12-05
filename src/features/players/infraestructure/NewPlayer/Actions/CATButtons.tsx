@@ -50,7 +50,7 @@ function CATButtons() {
 
     setTimeout(() => {
       router.push("/players");
-    }, 1500);
+    }, 2000);
     //
   }, [data?.user.access_token, teamId]);
 

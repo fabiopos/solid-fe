@@ -4,10 +4,12 @@ import { PlayerGet } from "../application/PlayerGet";
 import { ApiClient } from "@/lib/ApiClient";
 import { PlayerStatus, RequestStatus } from "@/types/types.common";
 import { PlayerUpdate } from "../application/PlayerUpdate";
+import { PlayerDelete } from "../application/PlayerDelete";
 
 export type PlayersStoreState = {
   fetchPlayersStatus: RequestStatus;
   playerStatusUpdate: { id: string | null; status: RequestStatus };
+  playerStatusDelete: { id: string | null; status: RequestStatus };
   error: string | null;
   players: PlayerType[];
 };
@@ -19,6 +21,8 @@ export type PlayersStoreActions = {
     access_token: string
   ): Promise<void>;
   setPlayerStatus(playerId: string, playerStatus: PlayerStatus): void;
+  setPlayerInactive(playerId: string, active: boolean): void;
+  deletePlayer(playerId: string, token: string): Promise<void>;
 };
 
 export type PlayersStore = PlayersStoreState & PlayersStoreActions;
@@ -28,6 +32,7 @@ const defaultInitState: PlayersStoreState = {
   fetchPlayersStatus: "IDLE",
   error: null,
   playerStatusUpdate: { id: null, status: "IDLE" },
+  playerStatusDelete: { id: null, status: "IDLE" },
 };
 export const makePlayersStore = (
   initState: PlayersStoreState = defaultInitState
@@ -40,7 +45,7 @@ export const makePlayersStore = (
       const client = new PlayerGet(new ApiClient());
 
       try {
-        const result = await client.getAllPlayers(teamId, access_token);        
+        const result = await client.getAllPlayers(teamId, access_token);
         set(() => ({
           fetchPlayersStatus: "DONE",
           players: result,
@@ -67,6 +72,16 @@ export const makePlayersStore = (
         }),
       }));
     },
+    setPlayerInactive(playerId: string, active: boolean) {
+      const players = get().players;
+
+      set(() => ({
+        players: players.map((p) => {
+          if (p.id === playerId) return { ...p, active };
+          return p;
+        }),
+      }));
+    },
     async updatePlayer(
       playerId: string,
       player: PlayerUpdateType,
@@ -79,6 +94,16 @@ export const makePlayersStore = (
       await client.editPlayer(playerId, player, token);
       set(() => ({
         playerStatusUpdate: { id: playerId, status: "DONE" },
+      }));
+    },
+    async deletePlayer(pid, token) {
+      set(() => ({ playerStatusDelete: { id: pid, status: "IN_PROGRESS" } }));
+      const api = new PlayerDelete(new ApiClient());
+      const result = await api.deletePlayer(pid, token);
+
+      console.log(result);
+      set(() => ({
+        playerStatusDelete: { id: pid, status: result ? "DONE" : "ERROR" },
       }));
     },
   }));

@@ -1,30 +1,27 @@
 "use client";
 import { usePlayersStore } from "@/context/PlayersCtx";
-import { useTeamId } from "@/hooks/use-team-id";
+import { useToast } from "@/hooks/use-toast";
 import { PlayerStatus } from "@/types/types.common";
 import { useSession } from "next-auth/react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo } from "react";
 
 export const usePlayers = () => {
+  const router = useRouter();
+  const { toast } = useToast();
   const { position } = useParams();
-  const teamId = useTeamId();
   const { data } = useSession();
   const {
     error,
     fetchPlayersStatus,
-    fetchPlayers,
     players,
     setPlayerStatus,
+    setPlayerInactive,
     updatePlayer,
+    deletePlayer,
     playerStatusUpdate,
+    playerStatusDelete,
   } = usePlayersStore((state) => state);
-
-  useEffect(() => {    
-    if (!!teamId && !!data?.user.access_token)
-      fetchPlayers(teamId, data.user.access_token);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [teamId, data]);
 
   const filteredPlayers = useMemo(() => {
     if (!position) return players;
@@ -48,13 +45,57 @@ export const usePlayers = () => {
     [data?.user.access_token, players, setPlayerStatus, updatePlayer]
   );
 
+  const handleSetInactive = useCallback(
+    (playerId: string, active: boolean) => {
+      setPlayerInactive(playerId, active);
+
+      const player = players.find((x) => x.id === playerId);
+
+      if (!player) return;
+      if (!data?.user.access_token) return;
+
+      updatePlayer(playerId, { active }, data?.user.access_token);
+    },
+    [data?.user.access_token, players, setPlayerInactive, updatePlayer]
+  );
+
+  const handleDelete = useCallback(
+    (playerId: string) => {
+      deletePlayer(playerId, data?.user.access_token ?? "");
+      router.refresh();
+    },
+    [data]
+  );
+
+  useEffect(() => {
+    if (playerStatusDelete.status === "ERROR") {
+      toast({
+        title: "Cannot delete the player",
+        description: "Make sure player has not apartitions in matches",
+        variant: "destructive",
+      });
+    }
+  }, [playerStatusDelete]);
+
+  useEffect(() => {
+    if (playerStatusDelete.status === "DONE") {
+      toast({
+        title: "The player has been deleted successfuly",
+        description: "This operation cannot be undone",
+      });
+    }
+  }, [playerStatusDelete]);
+
   return {
     players: filteredPlayers,
     fetchPlayersStatus,
     playerStatusUpdate,
+    playerStatusDelete,
     error,
     handlers: {
       handleSetDown,
+      handleDelete,
+      handleSetInactive,
     },
   };
 };
