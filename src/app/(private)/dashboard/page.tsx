@@ -7,6 +7,7 @@ import TopAsists from "@/components/Dashboard/TopAsists/TopAsists";
 import TopScorers from "@/components/Dashboard/TopScorers/TopScorers";
 import { Calendar } from "@/components/ui/calendar";
 import { Separator } from "@/components/ui/separator";
+import TeamStats from "@/features/dashboard/infraestructure/TeamStats";
 
 function Dashboard() {
   return (
@@ -21,18 +22,7 @@ function Dashboard() {
         {/* <PieChartWinRate /> */}
         <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] lg:grid-rows-4">
           <div className="bg-slate-800/40 border rounded-md p-2 flex justify-center">
-            <div>
-              <div className="mt-5">
-                <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
-                  My Team Stats
-                </h3>
-              </div>
-              <div className="flex flex-col mt-5">
-                <PieChartWinRate />
-                <Separator className="my-2" />
-                <TeamStatBoxes />
-              </div>
-            </div>
+            <TeamStats />
           </div>
           <div className="bg-slate-800/40 border">
             <div className="p-2">

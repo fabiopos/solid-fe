@@ -1,38 +1,41 @@
 "use client";
 
-import { Pie, PieChart } from "recharts";
-import { ChartConfig, ChartContainer } from "@/components/ui/chart";
+import { LabelList, Pie, PieChart } from "recharts";
+import {
+  ChartConfig,
+  ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import { FulfilledTeamStats } from "@/features/dashboard/domain/teamStats.schema";
 
-export function PieChartWinRate() {
+interface PieChartWinRateProps {
+  stats: FulfilledTeamStats;
+}
+export function PieChartWinRate({ stats }: PieChartWinRateProps) {
   const chartData = [
-    { browser: "chrome", value: 100, fill: "#c8c8c8" },
-    { browser: "safari", value: 200, fill: "#c8f655" },
-    { browser: "firefox", value: 187, fill: "#3455FF" },
+    { result: "won", value: stats.won, fill: "hsl(var(--chart-1))" },
+    { result: "drawn", value: stats.drawn, fill: "hsl(var(--chart-2))" },
+    { result: "lost", value: stats.lost, fill: "hsl(var(--chart-3))" },
   ];
 
   const chartConfig = {
     value: {
-      label: "Value",
+      label: "Matches",
     },
-    chrome: {
-      label: "Chrome",
+    won: {
+      label: "Won",
       color: "hsl(var(--chart-1))",
     },
-    safari: {
-      label: "Safari",
+    drawn: {
+      label: "Drawn",
       color: "hsl(var(--chart-2))",
     },
-    firefox: {
-      label: "Firefox",
+    lost: {
+      label: "Lost",
       color: "hsl(var(--chart-3))",
-    },
-    edge: {
-      label: "Edge",
-      color: "hsl(var(--chart-4))",
-    },
-    other: {
-      label: "Other",
-      color: "hsl(var(--chart-5))",
     },
   } satisfies ChartConfig;
 
@@ -40,9 +43,10 @@ export function PieChartWinRate() {
     <div>
       <ChartContainer
         config={chartConfig}
-        className="max-h-[250px] [&_.recharts-text]:fill-white"
+        className="max-h-[250px] "
       >
         <PieChart width={300} height={300}>
+          <ChartTooltip content={<ChartTooltipContent nameKey="result" />} />
           <Pie
             dataKey="value"
             startAngle={180}
@@ -53,7 +57,21 @@ export function PieChartWinRate() {
             outerRadius={80}
             fill="var(--color-win)"
             label
-          />
+          >
+            <LabelList
+              dataKey="result"
+              className="fill-white font-bold"
+              stroke="none"              
+              fontSize={11}
+              formatter={(value: keyof typeof chartConfig) =>
+                chartConfig[value]?.label
+              }
+            />
+          </Pie>
+          {/* <ChartLegend
+            content={<ChartLegendContent nameKey="browser" />}
+            className="-translate-y-2 flex-wrap gap-2 [&>*]:basis-1/4 [&>*]:justify-center"
+          /> */}
         </PieChart>
       </ChartContainer>
     </div>
