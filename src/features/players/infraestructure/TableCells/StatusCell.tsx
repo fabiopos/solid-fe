@@ -3,14 +3,30 @@ import { PlayerType } from "../../domain/player.schema";
 import { PlayerStatus } from "@/types/types.common";
 import { Ambulance, ArrowDown, ArrowUp, Loader } from "lucide-react";
 import { usePlayersStore } from "@/context/PlayersCtx";
+import { useNewPlayerStore } from "@/context/NewPlayerCtx";
 
 interface StatusCellProps {
   player: PlayerType;
 }
 const StatusCell = ({ player }: StatusCellProps) => {
-  const { id, status } = usePlayersStore((state) => state.playerStatusUpdate);
+  const { playerStatusUpdate, playerStatusDelete } = usePlayersStore(
+    (state) => state
+  );
 
-  if (id === player.id && status === "IN_PROGRESS")
+  if (
+    playerStatusUpdate.id === player.id &&
+    playerStatusUpdate.status === "IN_PROGRESS"
+  )
+    return (
+      <>
+        <Loader className="animate-spin" />
+      </>
+    );
+
+  if (
+    playerStatusDelete.id === player.id &&
+    playerStatusDelete.status === "IN_PROGRESS"
+  )
     return (
       <>
         <Loader className="animate-spin" />

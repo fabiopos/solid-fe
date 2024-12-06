@@ -10,11 +10,14 @@ import EmailInput from "../Inputs/EmailInput";
 import CountryInput from "../Inputs/CountryInput";
 import RegionInput from "../Inputs/RegionInput";
 import PhoneNumberInput from "../Inputs/PhoneNumberInput";
+import PlayerAvatarInput from "../Inputs/PlayerAvatarInput";
 
 function StepOne() {
   return (
     <div className="space-y-2">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <PlayerAvatarInput />
+        <div />
         <FirstNameInput />
         <LastNameInput />
         <DocumentTypeInput />

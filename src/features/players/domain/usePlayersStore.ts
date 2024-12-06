@@ -97,11 +97,15 @@ export const makePlayersStore = (
       }));
     },
     async deletePlayer(pid, token) {
+      const allPlayers = get().players;
       set(() => ({ playerStatusDelete: { id: pid, status: "IN_PROGRESS" } }));
       const api = new PlayerDelete(new ApiClient());
       const result = await api.deletePlayer(pid, token);
 
-      console.log(result);
+      if (result) {
+        set(() => ({ players: allPlayers.filter((x) => x.id !== pid) }));        
+      }
+      
       set(() => ({
         playerStatusDelete: { id: pid, status: result ? "DONE" : "ERROR" },
       }));

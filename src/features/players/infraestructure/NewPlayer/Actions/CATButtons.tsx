@@ -43,16 +43,19 @@ function CATButtons() {
   const handleCreatePlayer = useCallback(async () => {
     if (!teamId) return;
     await postPlayer(teamId, data?.user.access_token ?? "");
-    toast({
-      title: `Player successfuly created: ${firstName} ${lastName} `,
-      description: format(new Date(), "PPP"),
-    });
-
-    setTimeout(() => {
-      router.push("/players");
-    }, 2000);
-    //
   }, [data?.user.access_token, teamId]);
+
+  useEffect(() => {
+    if (createPlayerStatus === "DONE") {
+      toast({
+        title: `Player successfuly created: ${firstName} ${lastName} `,
+        description: format(new Date(), "PPP"),
+      });
+      setTimeout(() => {
+        window.location.replace(window.location.origin + "/players");
+      }, 2000);
+    }
+  }, [createPlayerStatus]);
 
   const firstStepData = useMemo(() => {
     return {

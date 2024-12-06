@@ -11,6 +11,7 @@ import { DominantFoot, RequestStatus, ShirtSize } from "@/types/types.common";
 import { PlayerCreate } from "../application/PlayerCreate";
 import { ApiClient } from "@/lib/ApiClient";
 import { RequestError } from "@/shared/errors/RequestError";
+import { PlayerUpdate } from "../application/PlayerUpdate";
 
 type NewPlayerStep = 1 | 2 | 3;
 
@@ -36,6 +37,7 @@ export type NewPlayerStoreState = {
   dominantFoot: DominantFoot;
   address: string;
   avatarUrl: string;
+  avatarFile: File | null;
   phone: string;
   city: string;
   country: string;
@@ -44,7 +46,7 @@ export type NewPlayerStoreState = {
   isValidHeight: boolean;
   isValidWeight: boolean;
   createPlayerStatus: RequestStatus;
-  error: RequestError | null
+  error: RequestError | null;
 };
 export type NewPlayerStoreActions = {
   nextStep: () => void;
@@ -68,6 +70,8 @@ export type NewPlayerStoreActions = {
   setPhone: (value: string) => void;
   setAddress: (value: string) => void;
   setAvatarUrl: (value: string) => void;
+  setAvatarFile: (value: File) => void;
+
   reset: () => void;
   postPlayer: (teamId: string, token: string) => Promise<void>;
 };
@@ -102,7 +106,8 @@ const defaultInitState: NewPlayerStoreState = {
   city: "",
   country: "",
   createPlayerStatus: "IDLE",
-  error: null
+  error: null,
+  avatarFile: null,
 };
 
 export const makeNewPlayerStore = (
@@ -140,6 +145,9 @@ export const makeNewPlayerStore = (
     },
     setAvatarUrl: (avatarUrl) => {
       set(() => ({ avatarUrl }));
+    },
+    setAvatarFile: (file) => {
+      set(() => ({ avatarFile: file }));
     },
     setDocumentType: (documentType) => {
       set(() => ({ documentType }));
@@ -203,7 +211,7 @@ export const makeNewPlayerStore = (
       const favPositionId = get().favPosition;
       const favPosition = get().favPosition;
       const address = get().address;
-      const avatarUrl = get().avatarUrl;
+      const avatarFile = get().avatarFile;
       const phone = get().phone;
       const city = get().city;
       const country = get().country;
@@ -226,7 +234,6 @@ export const makeNewPlayerStore = (
         favPositionId,
         favPosition: { id: favPosition },
         address,
-        avatarUrl,
         phone,
         city,
         country,
@@ -237,14 +244,33 @@ export const makeNewPlayerStore = (
         fieldPositions: [],
       });
 
-      const clientCreate = new PlayerCreate(new ApiClient());
+      const apiClient = new ApiClient();
+      const clientCreate = new PlayerCreate(apiClient);
       const response = await clientCreate.createNewPlayer(emptyPlayer, token);
 
-      if (response instanceof FulfilledPlayer) {
+      if (response.success && response.createdPlayer) {
         set(() => ({ createPlayerStatus: "DONE" }));
+
+        const createdPlayer = response.createdPlayer;
+        /// upload image
+
+        if (createdPlayer.id && avatarFile) {
+          const resultImage = await clientCreate.updateAvatar(
+            createdPlayer.id,
+            avatarFile
+          );
+
+          if (resultImage) {
+            const updatePl = new PlayerUpdate(apiClient);
+            await updatePl.editPlayer(
+              createdPlayer.id,
+              { avatarUrl: resultImage },
+              token
+            );
+          }
+        }
       } else {
-        
-        set(() => ({ createPlayerStatus: "ERROR", error: response }));
+        set(() => ({ createPlayerStatus: "ERROR", error: response.error }));
       }
       console.log(response);
     },

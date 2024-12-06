@@ -24,6 +24,7 @@ export default function PlayersTable() {
         <TableCaption>Your squad has {players.length} players.</TableCaption>
         <TableHeader>
           <TableRow>
+          <TableHead></TableHead>
             <TableHead>Position</TableHead>
             <TableHead className="text-center">Number</TableHead>
             <TableHead className="">Name</TableHead>

@@ -83,6 +83,7 @@ export const usePlayers = () => {
         title: "The player has been deleted successfuly",
         description: "This operation cannot be undone",
       });
+      router.refresh()
     }
   }, [playerStatusDelete]);
 

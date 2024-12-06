@@ -25,6 +25,7 @@ import StatusCell from "../TableCells/StatusCell";
 import { PlayerType } from "../../domain/player.schema";
 import { usePlayers } from "../../domain/usePlayers";
 import { useMemo } from "react";
+import PlayerAvatar from "../PlayerAvatar";
 
 interface PlayerTableRowProps {
   player: PlayerType;
@@ -51,6 +52,12 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
   return (
     <TableRow key={player.id} className="bg-background/90">
       <TableCell>
+        <PlayerAvatar
+          imageUrl={player.avatarUrl}
+          fallback={player.shirtNumber?.toString() ?? "PP"}
+        />
+      </TableCell>
+      <TableCell>
         <PositionCategoryBadge category={player.favPosition?.category} />
       </TableCell>
       <TableCell className="text-center">{player.shirtNumber}</TableCell>
@@ -65,7 +72,7 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
       <TableCell className="font-medium text-center">
         {player.shirtSize}
       </TableCell>
-      <TableCell className="font-medium">{player.shirtName}</TableCell>
+      <TableCell className="font-medium uppercase">{player.shirtName}</TableCell>
       <TableCell className="text-center">0</TableCell>
       <TableCell className="text-center">0 %</TableCell>
       <TableCell className="text-center">0</TableCell>

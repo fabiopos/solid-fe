@@ -14,6 +14,14 @@ export interface CustomJWT {
   exp: number;
 }
 
+export type Variant =
+  | "default"
+  | "primary"
+  | "success"
+  | "danger"
+  | "warning"
+  | "secondary";
+
 export enum PlayerStatus {
   OK = "OK",
   INJURIED = "INJURIED",
