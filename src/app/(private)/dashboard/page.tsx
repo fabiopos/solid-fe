@@ -9,6 +9,8 @@ import { Calendar } from "@/components/ui/calendar";
 import { Separator } from "@/components/ui/separator";
 import LastPlayersAddedFt from "@/features/dashboard/infraestructure/LastPlayersAdded";
 import TeamStats from "@/features/dashboard/infraestructure/TeamStats";
+import TopAssistsFt from "@/features/dashboard/infraestructure/TopAssitsFt";
+import TopScorersFt from "@/features/dashboard/infraestructure/TopScorersFt";
 
 function Dashboard() {
   return (
@@ -33,16 +35,7 @@ function Dashboard() {
             <NextMatch />
           </div>
           <div className="bg-slate-800/40 border rounded-lg">
-            <div className="p-2">
-              <div className="px-5 my-5">
-                <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
-                  Top Scorers
-                </h3>
-              </div>
-              <div className="px-5">
-                <TopScorers />
-              </div>
-            </div>
+            <TopScorersFt />
           </div>
           <div className="bg-slate-800/40 col-span-3 row-span-3 border rounded-lg">
             <div className="p-2">
@@ -67,16 +60,7 @@ function Dashboard() {
             </div>
           </div>
           <div className="bg-slate-800/40 border rounded-lg">
-            <div className="p-2">
-              <div className="px-5">
-                <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
-                  Top Asists
-                </h3>
-              </div>
-              <div className="px-5 mt-5">
-                <TopAsists />
-              </div>
-            </div>
+            <TopAssistsFt />
           </div>
           <div className="bg-slate-800/40 col-start-4 row-span-2 border rounded-lg">
             <div className="p-2">

@@ -10,7 +10,8 @@ const playerItem = playerSchema.pick(
   "lastName",
   "shirtNumber",
   "shirtName",
-  "favPosition"
+  "favPosition",
+  'avatarUrl'
 );
 export const matchAparitionSchema = S.Struct({
   id: S.optional(S.NullishOr(S.String)),
