@@ -7,6 +7,7 @@ import TopAsists from "@/components/Dashboard/TopAsists/TopAsists";
 import TopScorers from "@/components/Dashboard/TopScorers/TopScorers";
 import { Calendar } from "@/components/ui/calendar";
 import { Separator } from "@/components/ui/separator";
+import LastPlayersAddedFt from "@/features/dashboard/infraestructure/LastPlayersAdded";
 import TeamStats from "@/features/dashboard/infraestructure/TeamStats";
 
 function Dashboard() {
@@ -25,16 +26,7 @@ function Dashboard() {
             <TeamStats />
           </div>
           <div className="bg-slate-800/40 border">
-            <div className="p-2">
-              <div className="px-5 my-5">
-                <h3 className="text-lg font-bold tracking-wide text-white max-lg:text-center">
-                  Last Players Added
-                </h3>
-              </div>
-              <div className="px-5 mt-5">
-                <LastPlayersAdded />
-              </div>
-            </div>
+            <LastPlayersAddedFt />
           </div>
           <div className="bg-slate-800/40 border rounded-lg">
             <LastMatches />

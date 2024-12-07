@@ -1,30 +1,37 @@
+import ActiveText from "@/components/ui/active-text";
 import { Avatar } from "@/components/ui/avatar";
+import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import PlayerAvatar from "@/features/players/infraestructure/PlayerAvatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { format, formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
 
-function LastPlayersAdded() {
+interface LastPlayersAddedProps {
+  players: FulfilledPlayer[];
+}
+
+function LastPlayersAdded({ players }: LastPlayersAddedProps) {
   return (
     <div className="space-y-5">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-5">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback> FP </AvatarFallback>
-          </Avatar>
-          <span>Fabio Posada</span>
+      {players.map((p) => (
+        <div
+          className="flex justify-between items-center"
+          key={`last-player-added-${p.id}`}
+        >
+          <div className="flex items-center gap-5">
+            <PlayerAvatar
+              fallback={p.shirtNumber?.toString() ?? "X"}
+              imageUrl={p.avatarUrl}
+            />
+            <div className="flex flex-col">
+              <span className="uppercase">{p.shirtName}</span>
+              <ActiveText isActive={p.active} />
+            </div>
+          </div>
+          <span className="text-slate-500 text-sm">
+            {p.createdAt && `${formatDistanceToNowStrict(p.createdAt)} ago`}
+          </span>
         </div>
-        <span className="text-slate-500">28 jun, 2005</span>
-      </div>
-
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-5">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback> FP </AvatarFallback>
-          </Avatar>
-          <span>Fabio Posada</span>
-        </div>
-        <span className="text-slate-500">28 jun, 2005</span>
-      </div>
+      ))}
     </div>
   );
 }
