@@ -22,37 +22,39 @@ export default function TeamPage() {
     <div className="p-8">
       <h2 className="text-3xl">Your Teams</h2>
       <Separator className="my-5" />
-      {teams.map((team) => (
-        <Card key={team.id}>
-          <CardHeader>
-            <CardTitle>{team.name}</CardTitle>
-            <CardDescription className="text-right text-white">
-              since {format(team.createdAt, "yyyy")}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-2">
-            <div>
-              <Label>Primary Color</Label>
-              <Input placeholder="Primary Color" />
-            </div>
+      <div className="grid grid-cols-4 gap-5">
+        {teams.filter(x => x.hasSubscription).map((team) => (
+          <Card key={team.id}>
+            <CardHeader>
+              <CardTitle>{team.name}</CardTitle>
+              <CardDescription className="text-right text-white">
+                since {format(team.createdAt, "yyyy")}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-2">
+              <div>
+                <Label>Primary Color</Label>
+                <Input placeholder="Primary Color" />
+              </div>
 
-            <div>
-              <Label>Secondary Color</Label>
-              <Input placeholder="Secondary Color" />
-            </div>
+              <div>
+                <Label>Secondary Color</Label>
+                <Input placeholder="Secondary Color" />
+              </div>
 
-            <div>
-              <Button>Update</Button>
-            </div>
-          </CardContent>
-          <CardFooter>
-            {team.id === selectedTeamId && (
-              <small>This team is currently selected</small>
-            )}
-          </CardFooter>
-          <span></span>
-        </Card>
-      ))}
+              <div>
+                <Button disabled={!team.hasSubscription}>Update</Button>
+              </div>
+            </CardContent>
+            <CardFooter>
+              {team.id === selectedTeamId && (
+                <small>This team is currently selected</small>
+              )}
+            </CardFooter>
+            <span></span>
+          </Card>
+        ))}
+      </div>
     </div>
   );
 }
