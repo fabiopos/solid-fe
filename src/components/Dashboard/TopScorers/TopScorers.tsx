@@ -10,7 +10,7 @@ interface TopScorersProps {
 function TopScorers({ aparitions }: TopScorersProps) {
   return (
     <div className="space-y-5">
-      {aparitions.map((ap) => (
+      {(aparitions ?? []).map((ap) => (
         <div
           className="flex justify-between items-center"
           key={`aparition-${ap.id}`}

@@ -12,7 +12,7 @@ async function TopAssistsFt() {
     <div className="p-2">
       <div className="px-5 my-5">
         <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
-          Top {LIMIT} Scorers
+          Top {LIMIT} Assists
         </h3>
       </div>
       <div className="px-5">

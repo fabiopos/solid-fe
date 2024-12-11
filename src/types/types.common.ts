@@ -14,13 +14,26 @@ export interface CustomJWT {
   exp: number;
 }
 
+export interface CalendarEvent {
+  day: Date;
+  competitionId: string;
+  title: string;
+  location: string | null | undefined;
+  matchHour: Date | undefined | null;
+  awayTeamName: string | undefined | null;
+  awayScore: number | undefined | null;
+  homeScore: number | undefined | null;
+  homeName: string | undefined | null;
+}
+
 export type Variant =
   | "default"
-  | "primary"
   | "success"
-  | "danger"
+  | "destructive"
   | "warning"
-  | "secondary";
+  | "secondary"
+  | null
+  | undefined;
 
 export enum PlayerStatus {
   OK = "OK",

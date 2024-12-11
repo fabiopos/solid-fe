@@ -71,6 +71,8 @@ body {
     --accent-foreground: 210 20% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 20% 98%;
+
+    
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 263.4 70% 50.4%;
@@ -90,6 +92,10 @@ body {
     --color-win: 217.2 91.2% 59.8%;
     --color-draw: 240 3.7% 15.9%;
     --color-lost: 340 75% 55%;
+
+    --success: 149 70% 50.4%;
+    --success-destructive-foreground: 210 20% 98%;
+    
   }
   /* :root {
     --background: 29 0% 100%;
