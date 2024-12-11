@@ -45,7 +45,7 @@ export function PieChartWinRate({ stats }: PieChartWinRateProps) {
         config={chartConfig}
         className="max-h-[250px] "
       >
-        <PieChart width={300} height={300}>
+        <PieChart width={350} height={300}>
           <ChartTooltip content={<ChartTooltipContent nameKey="result" />} />
           <Pie
             dataKey="value"

@@ -30,10 +30,10 @@ function TeamCalendarComp({ minDate, modifiers, modifiersClassNames, range }:Tea
       pagedNavigation
       classNames={{
         cell: "h-9 w-9",
-        caption_label: "p-2",
+        caption_label: "p-1",
         day_today: "outline outline-neutral-500",
         months: "grid grid-cols-4 gap-4",
-        month: "border p-2",
+        month: "border border-neutral-50/10 rounded-xl",
       }}
     />
   );

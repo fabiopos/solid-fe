@@ -11,7 +11,7 @@ async function NextMatch() {
   return (
     <div className="p-2">
       <div className="px-5 my-5">
-        <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
+        <h3 className="text-lg font-bold tracking-tight text-amber-600 max-lg:text-center">
           Next Match
         </h3>
       </div>

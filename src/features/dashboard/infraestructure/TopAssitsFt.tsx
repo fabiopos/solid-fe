@@ -10,7 +10,7 @@ async function TopAssistsFt() {
     const { players } = await getData()
   return (
     <div className="p-2">
-      <div className="px-5 my-5">
+      <div className="px-5 my-2">
         <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
           Top {LIMIT} Assists
         </h3>

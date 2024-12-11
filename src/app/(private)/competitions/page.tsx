@@ -12,7 +12,7 @@ async function MatchesPage() {
     <CompetitionStoreProvider season={null} allCompetitions={allCompetitions}>
       <div>
         <H1>All Competitions</H1>        
-        <div className="grid grid-cols-2 gap-2 p-5">
+        <div className="grid grid-cols-2 gap-2 my-2">
           {allCompetitions?.map((c) => (
             <div key={c.id}>
               <SeasonCompetitionCard competition={c} />

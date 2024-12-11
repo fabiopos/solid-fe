@@ -16,7 +16,7 @@ export default async function LayoutPlayers(props: LayoutProps) {
     <PlayersStoreProvider players={players as PlayerType[]}>
       <div className="flex gap-5 py-10">
         <aside className="">
-          <PlayersSidebar />
+          {/* <PlayersSidebar /> */}
         </aside>
         {props.children}
       </div>

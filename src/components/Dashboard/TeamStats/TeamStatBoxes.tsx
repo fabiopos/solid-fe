@@ -8,7 +8,7 @@ function TeamStatBoxes({ stats }: TeamStatBoxesProps) {
   const { competitionsCount, drawn, lost, matchesCount, seasonsCount, won } =
     stats;
   return (
-    <div className="flex flex-col gap-2 justify-between mt-2">
+    <div className="flex flex-col gap-2 justify-between px-5 my-2">
       <div className="flex justify-between gap-2">
         <div className="font-bold">Won</div>
         <div>{won}</div>

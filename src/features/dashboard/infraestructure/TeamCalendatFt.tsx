@@ -18,16 +18,16 @@ async function TeamCalendatFt() {
     await getData();
 
   return (
-    <div className="p-2">
-      <div className="px-5">
-        <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
-          Calendar
+    <div className="">
+      <div className="p-5">
+        <h3 className="text-2xl font-bold tracking-tight text-amber-500 max-lg:text-center">
+          Team Calendar
         </h3>
       </div>
 
       <CompetitionBadges competitions={competitions} />
 
-      <div className="px-5 relative">
+      <div className="px-1">
         <TeamCalendarComp
           minDate={minDate}
           range={range}

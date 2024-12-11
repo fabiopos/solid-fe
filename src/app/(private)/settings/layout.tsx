@@ -7,10 +7,7 @@ interface LayoutProps {
 
 function SettingsLayout({ children }: LayoutProps) {
   return (
-    <div className="flex gap-5 py-10">
-      <aside>
-        <SettingsSideBar />
-      </aside>
+    <div className="flex gap-5 p-5">     
       {children}
     </div>
   );

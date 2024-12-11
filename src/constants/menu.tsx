@@ -2,8 +2,8 @@ import { Calendar, Home, Settings, Shield, Trophy, Users } from "lucide-react";
 
 export const menuItems = [
   {
-    title: "Home",
-    url: "/",
+    title: "Dashboard",
+    url: "/dashboard",
     icon: Home,
     sideBar: true,
     navBar: true,

@@ -21,8 +21,8 @@ async function TeamStats() {
   );
 
   return (
-    <div>
-      <div className="mt-5">
+    <div className="">
+      <div className="px-5 my-2">
         <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
           My Team Stats
         </h3>

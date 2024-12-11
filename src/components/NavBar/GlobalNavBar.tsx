@@ -9,6 +9,7 @@ const GlobalNavBar = () => {
   const { status } = useSession();  
   switch (status) {
     case "authenticated":
+      return null;
       return (
         <nav className="w-full flex justify-between px-5">
           <Image priority src={logo.src} alt="logo" width={45} height={45} />

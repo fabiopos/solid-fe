@@ -5,14 +5,7 @@ interface LayoutProps {
 }
 
 function CompetitionsLayout({ children }: LayoutProps) {
-  return (
-    <div className="flex gap-5 py-10">
-      <aside>
-        <SettingsSideBar />
-      </aside>
-      {children}
-    </div>
-  );
+  return <div className="flex gap-5 p-5">{children}</div>;
 }
 
 export default CompetitionsLayout;
