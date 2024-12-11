@@ -1,12 +1,5 @@
 import LastMatches from "@/components/Dashboard/LastMatches/LastMatches";
-import LastPlayersAdded from "@/components/Dashboard/LastPlayersAdded/LastPlayersAdded";
 import NextMatch from "@/components/Dashboard/NextMatch/NextMatch";
-import { PieChartWinRate } from "@/components/Dashboard/TeamStats/PieChartWinRate";
-import TeamStatBoxes from "@/components/Dashboard/TeamStats/TeamStatBoxes";
-import TopAsists from "@/components/Dashboard/TopAsists/TopAsists";
-import TopScorers from "@/components/Dashboard/TopScorers/TopScorers";
-import { Calendar } from "@/components/ui/calendar";
-import { Separator } from "@/components/ui/separator";
 import LastPlayersAddedFt from "@/features/dashboard/infraestructure/LastPlayersAdded";
 import TeamCalendatFt from "@/features/dashboard/infraestructure/TeamCalendatFt";
 import TeamStats from "@/features/dashboard/infraestructure/TeamStats";

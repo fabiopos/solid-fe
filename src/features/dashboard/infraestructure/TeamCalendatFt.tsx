@@ -4,25 +4,19 @@ import { ApiClient } from "@/lib/ApiClient";
 import { DashboardGet } from "../application/DashboardGet";
 import { add, max, min, toDate } from "date-fns";
 import { CompetitionGet } from "@/features/competition/application/CompetitionGet";
-import { Variant } from "@/types/types.common";
-import { twMerge } from "tailwind-merge";
 import TeamCalendarComp from "@/components/Team/TeamCalendarComp";
 
 import CompetitionBadges from "./CompetitionBadges";
-
-const variantSelector: Variant[] = [
-  "default" as Variant,
-  "warning" as Variant,
-  "success" as Variant,
-  "destructive" as Variant,
-  "success" as Variant,
-];
+import { formatRawDate } from "@/lib/date.util";
+import {
+  modifiersClassNames,
+  variantSelector,
+} from "../domain/modifiers.helper";
 
 async function TeamCalendatFt() {
   const { minDate, range, modifiers, modifiersClassNames, competitions } =
     await getData();
 
-  console.log(modifiers, modifiersClassNames);
   return (
     <div className="p-2">
       <div className="px-5">
@@ -44,28 +38,6 @@ async function TeamCalendatFt() {
     </div>
   );
 }
-
-const modifierCss = (variant: Variant) =>
-  twMerge(
-    "text-red rounded-full",
-    variant === "default" && "bg-primary",
-    variant === "destructive" && "bg-destructive hover:bg-destructive/50",
-    variant === "secondary" && "bg-secondary",
-    variant === "success" && "bg-success hover:bg-green-500/50",
-    variant === "warning" && "bg-orange-500 hover:bg-orange-500/50"
-  );
-
-const modifiersClassNames = (records: { key: string; variant: Variant }[]) => {
-  const modifiers = records.reduce(
-    (prev, curr) => ({
-      ...prev,
-      [curr.key]: modifierCss(curr.variant),
-    }),
-    {}
-  );
-
-  return modifiers;
-};
 
 async function getData() {
   const session = await auth();
@@ -100,32 +72,26 @@ async function getData() {
   const minDate: Date = min(dates);
   const maxDate: Date = max(dates);
 
-  const competitions = await competitionGet.getAllByTeam(
+  const allCompetitions = await competitionGet.getAllByTeam(
     teamId,
     session.user.access_token
   );
 
-  const competitionIds = competitions
-    .filter((x) => !!x.id)    
-    .map((x) => x.id!);
+  const competitions = allCompetitions
+    .filter((x) => !!x.id)
+    .filter((x) => (x.matches ?? []).length > 0);
+
+  const competitionIds = competitions.map((x) => x.id!);
 
   const range = {
     from: minDate,
     to: maxDate,
   };
 
-  const cDate = (date: Date | string): Date => {
-    const dDate = toDate(date);
-    const mth = dDate.getMonth();
-    const day = dDate.getDate();
-    const year = dDate.getFullYear();
-    return new Date(year, mth, day);
-  };
-
   const matchEvents = matches
     .filter((x) => !!x.matchDay)
     .map((x) => ({
-      day: cDate(x.matchDay!),
+      day: formatRawDate(x.matchDay!),
       title: x.title,
       competitionId: x.competition?.id,
       awayTeamName: x.awayTeam?.name,
