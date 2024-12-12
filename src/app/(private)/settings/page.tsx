@@ -1,6 +1,5 @@
 import { auth } from "@/auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Bulk from "@/features/settings/infraestructure/Bulk";
 import MyRivals from "@/features/settings/infraestructure/MyRivals";
 import MyTeams from "@/features/settings/infraestructure/MyTeams";
 import Settings from "@/features/settings/infraestructure/Settings";
@@ -24,7 +23,7 @@ const SettingsPage = async () => {
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="my-teams">My Teams</TabsTrigger>
           <TabsTrigger value="my-rivals">My Rivals</TabsTrigger>
-          <TabsTrigger value="bulk">Bulk</TabsTrigger>
+          
         </TabsList>
         <TabsContent value="general">
           <Settings subscription={subscription} />
@@ -38,9 +37,7 @@ const SettingsPage = async () => {
           <MyRivals teams={myRivals as FulfilledTeam[]} />
         </TabsContent>
 
-        <TabsContent value="bulk">
-          <Bulk />
-        </TabsContent>
+       
       </Tabs>
     </div>
   );
