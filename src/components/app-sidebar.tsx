@@ -25,6 +25,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "./ui/button";
 import { usePathname } from "next/navigation";
+import { FulfilledCompetition } from "@/features/competition/domain/competition.schema";
 
 // This is sample data.
 const data = {
@@ -74,15 +75,28 @@ const data = {
   ],
   tree: [
     ["Season 2021", ["Competition 1", "Match 1", "Match 2", "Match 3"]],
-    ["Season 2022", ["ui", "button.tsx", "card.tsx"], "header.tsx", "footer.tsx"],
+    [
+      "Season 2022",
+      ["ui", "button.tsx", "card.tsx"],
+      "header.tsx",
+      "footer.tsx",
+    ],
     ["Season 2023", ["util.ts"]],
     ["Season 2024", "favicon.ico", "vercel.svg"],
     "Logout",
   ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  tree: any;
+}
+
+export function AppSidebar({ tree, ...props }: AppSidebarProps) {
   const pathname = usePathname();
+
+  const buildTree = React.useMemo(() => {
+    console.log(tree);
+  }, [tree]);
   return (
     <Sidebar {...props}>
       <SidebarContent>
@@ -116,7 +130,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarGroupLabel>Seasons, Competitions & Matches</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {data.tree.map((item, index) => (
+              {tree.map((item: any, index: number) => (
                 <Tree key={index} item={item} />
               ))}
             </SidebarMenu>
@@ -128,17 +142,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   );
 }
 
-function Tree({ item }: { item: string | any[] }) {
-  const [name, ...items] = Array.isArray(item) ? item : [item];
+function Tree({ item }: { item: { id: string; name: string } | any[] }) {
+  const [i, ...items] = Array.isArray(item) ? item : [item];
 
+  if (!i) return null;
   if (!items.length) {
     return (
       <SidebarMenuButton
-        isActive={name === "button.tsx"}
+        isActive={i.name === "Copa Compensar"}
         className="data-[active=true]:bg-transparent"
       >
-        <File />
-        {name}
+        <Link href={`/matches/${i.id}`} className="flex gap-2 items-center">
+          <File size={14} />
+          <span className="text-ellipsis max-w-20 overflow-hidden text-nowrap">{i.name}</span>
+        </Link>
       </SidebarMenuButton>
     );
   }
@@ -147,13 +164,13 @@ function Tree({ item }: { item: string | any[] }) {
     <SidebarMenuItem>
       <Collapsible
         className="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90"
-        defaultOpen={name === "components" || name === "ui"}
+        defaultOpen={i.name === "components" || i.name === "ui"}
       >
         <CollapsibleTrigger asChild>
           <SidebarMenuButton>
             <ChevronRight className="transition-transform" />
             <Folder />
-            {name}
+            <span> {i.name}</span>
           </SidebarMenuButton>
         </CollapsibleTrigger>
         <CollapsibleContent>

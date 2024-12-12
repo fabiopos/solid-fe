@@ -14,10 +14,20 @@ export class SeasonGet {
     return (await result.json()) as FulfilledSeason[];
   }
 
-  async findSeason(seasonId: string, access_token: string): Promise<FulfilledSeason | null>{
+  async findSeason(
+    seasonId: string,
+    access_token: string
+  ): Promise<FulfilledSeason | null> {
     const resource = `/season/${seasonId}/details`;
     const result = await this.client.GET(resource, access_token);
     if (!result.ok) return null;
     return (await result.json()) as FulfilledSeason;
+  }
+
+  async getSeasonTree(teamId: string, token: string): Promise<any> {
+    const resource = `/season/${teamId}/tree`;
+    const result = await this.client.GET(resource, token);
+    if (!result.ok) return null;
+    return await result.json();
   }
 }
