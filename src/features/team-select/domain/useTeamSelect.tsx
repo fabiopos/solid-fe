@@ -9,9 +9,14 @@ export const useTeamSelect = () => {
   const { status } = useSession();
   const { accountData, setTeamId, fetchTeams, session, fetchTeamsStatus } =
     useAuthStore((state) => state);
-  const teams = useMemo(() => accountData.teams, [accountData]);
-  const hasTeams = useMemo(() => teams.length > 0, [teams]);
-  const teamsCount = useMemo(() => (teams ?? []).length, [teams]);
+  const allTeams = useMemo(() => accountData.teams ?? [], [accountData]);
+
+  const myTeams = useMemo(() => {
+    return allTeams.filter((x) => x.hasSubscription);
+  }, [allTeams]);
+
+  const hasTeams = useMemo(() => myTeams.length > 0, [myTeams]);
+  const teamsCount = useMemo(() => (myTeams ?? []).length, [myTeams]);
 
   const isModalOpen = useMemo(() => {
     if (pathName === "/login") return false;
@@ -38,27 +43,29 @@ export const useTeamSelect = () => {
     fetchTeams(session?.user.access_token ?? "");
   }, [fetchTeams, session?.user.access_token]);
 
-  const onSelectTeam = useCallback((id: string) => setTeamId(id), [setTeamId]);
-
-  const handleSelectTeam = useCallback((teamId: string) => {
-    setCookieTeamId(teamId);
-    setTeamId(teamId);
-  }, []);
+  const onSelectTeam = useCallback(
+    (id: string) => {
+      setTeamId(id);
+      setCookieTeamId(id);
+    },
+    [setTeamId]
+  );
 
   // if one team - then autoselect this team
-  useEffect(() => {
-    if (teamsCount === 1) handleSelectTeam(teams[0].id);
-  }, [teamsCount]);
+  // useEffect(() => {
+  //   if (myTeams.length === 1) handleSelectTeam(myTeams[0].id);
+  // }, [myTeams]);
 
-  useEffect(() => {
-    fetchTeams(session?.user.access_token ?? "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user.access_token]);
+  // useEffect(() => {
+  //   fetchTeams(session?.user.access_token ?? "");
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [session?.user.access_token]);
 
   return {
     isModalOpen,
     showNoTeamsAlert,
-    teams,
+    allTeams,
+    myTeams,
     teamsCount,
     onTryAgainClick,
     onSelectTeam,

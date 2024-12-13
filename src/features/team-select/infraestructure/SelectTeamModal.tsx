@@ -12,7 +12,7 @@ import { Alert } from "@/components/ui/alert";
 import { useTeamSelect } from "../domain/useTeamSelect";
 import TeamsList from "@/components/TeamList/TeamsList";
 import { Team } from "@/types/types.common";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useAuthStore } from "@/context/AuthCtx";
 import { signOut } from "@/auth";
 import { SolidAuth } from "@/features/auth/application/SolidAuth";
@@ -23,12 +23,8 @@ interface SelectTeamModalProps {
 
 export default function SelectTeamModal({ teams }: SelectTeamModalProps) {
   const { setTeams } = useAuthStore((state) => state);
-  const {
-    isModalOpen,
-    hasTeams,
-    showNoTeamsAlert,
-    onSelectTeam,
-  } = useTeamSelect();
+  const { isModalOpen, hasTeams, showNoTeamsAlert, onSelectTeam, myTeams } =
+    useTeamSelect();
   useEffect(() => {
     setTeams(teams);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,7 +40,9 @@ export default function SelectTeamModal({ teams }: SelectTeamModalProps) {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          {hasTeams && <TeamsList teams={teams} onSelectTeam={onSelectTeam} />}
+          {hasTeams && (
+            <TeamsList teams={myTeams} onSelectTeam={onSelectTeam} />
+          )}
           {showNoTeamsAlert && (
             <Alert variant="destructive">
               You don&apos;t have teams configured, please consider contact the

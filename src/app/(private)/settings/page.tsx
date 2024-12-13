@@ -10,7 +10,6 @@ import { redirect } from "next/navigation";
 
 const SettingsPage = async () => {
   const subscription = await getData();
-
   const myTeams = subscription?.teams?.filter((x) => x.hasSubscription) ?? [];
   const myRivals = subscription?.teams?.filter((x) => !x.hasSubscription) ?? [];
 
@@ -22,9 +21,9 @@ const SettingsPage = async () => {
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="my-teams">My Teams</TabsTrigger>
-          <TabsTrigger value="my-rivals">My Rivals</TabsTrigger>
-          
+          <TabsTrigger value="my-rivals">My Rivals</TabsTrigger>          
         </TabsList>
+        
         <TabsContent value="general">
           <Settings subscription={subscription} />
         </TabsContent>

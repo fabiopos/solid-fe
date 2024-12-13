@@ -7,13 +7,15 @@ export class CompetitionGet {
   async getAllBySeason(seasonId: string, token: string) {
     const resource = `/competition/${seasonId}/season`;
     const result = await this.client.GET(resource, token);
+    if (!result.ok) return [];
     const competitions = await result.json();
     return competitions as FulfilledCompetition[];
   }
 
   async getAllByTeam(teamId: string, token: string) {
-    const resource = `/competition/${teamId}/team`;    
+    const resource = `/competition/${teamId}/team`;
     const result = await this.client.GET(resource, token);
+    if (!result.ok) return [];
     const competitions = await result.json();
     return competitions as FulfilledCompetition[];
   }

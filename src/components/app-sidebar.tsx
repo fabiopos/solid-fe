@@ -13,6 +13,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuBadge,
   SidebarMenuButton,
@@ -23,9 +24,9 @@ import {
 import { Calendar, Home, Settings, Shield, Trophy, Users } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "./ui/button";
 import { usePathname } from "next/navigation";
-import { FulfilledCompetition } from "@/features/competition/domain/competition.schema";
+import { TeamSwitcher } from "./Team/TeamSwitcher";
+import { useTeamSelect } from "@/features/team-select/domain/useTeamSelect";
 
 // This is sample data.
 const data = {
@@ -93,12 +94,13 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
 
 export function AppSidebar({ tree, ...props }: AppSidebarProps) {
   const pathname = usePathname();
+  const { myTeams } = useTeamSelect();
 
-  const buildTree = React.useMemo(() => {
-    console.log(tree);
-  }, [tree]);
   return (
     <Sidebar {...props}>
+      <SidebarHeader>
+        <TeamSwitcher myTeams={myTeams} />
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Menu</SidebarGroupLabel>
@@ -154,7 +156,9 @@ function Tree({ item }: { item: { id: string; name: string } | any[] }) {
       >
         <Link href={`/matches/${i.id}`} className="flex gap-2 items-center">
           <File size={14} />
-          <span className="text-ellipsis max-w-20 overflow-hidden text-nowrap">{i.name}</span>
+          <span className="text-ellipsis max-w-20 overflow-hidden text-nowrap">
+            {i.name}
+          </span>
         </Link>
       </SidebarMenuButton>
     );
