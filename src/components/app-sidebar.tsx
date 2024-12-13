@@ -27,6 +27,7 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { TeamSwitcher } from "./Team/TeamSwitcher";
 import { useTeamSelect } from "@/features/team-select/domain/useTeamSelect";
+import { Team } from "@/types/types.common";
 
 // This is sample data.
 const data = {
@@ -74,27 +75,16 @@ const data = {
       navBar: true,
     },
   ],
-  tree: [
-    ["Season 2021", ["Competition 1", "Match 1", "Match 2", "Match 3"]],
-    [
-      "Season 2022",
-      ["ui", "button.tsx", "card.tsx"],
-      "header.tsx",
-      "footer.tsx",
-    ],
-    ["Season 2023", ["util.ts"]],
-    ["Season 2024", "favicon.ico", "vercel.svg"],
-    "Logout",
-  ],
 };
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   tree: any;
+  teams: Team[]
 }
 
-export function AppSidebar({ tree, ...props }: AppSidebarProps) {
+export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
   const pathname = usePathname();
-  const { myTeams } = useTeamSelect();
+  const myTeams = React.useMemo(()=> teams.filter(x => x.hasSubscription), [teams])
 
   return (
     <Sidebar {...props}>

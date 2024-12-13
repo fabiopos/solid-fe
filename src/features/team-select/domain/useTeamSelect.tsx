@@ -9,7 +9,7 @@ export const useTeamSelect = () => {
   const { status } = useSession();
   const { accountData, setTeamId, fetchTeams, session, fetchTeamsStatus } =
     useAuthStore((state) => state);
-  const allTeams = useMemo(() => accountData.teams ?? [], [accountData]);
+  const allTeams = useMemo(() => accountData.teams ?? [], [accountData.teams]);
 
   const myTeams = useMemo(() => {
     return allTeams.filter((x) => x.hasSubscription);
@@ -31,6 +31,7 @@ export const useTeamSelect = () => {
     pathName,
   ]);
 
+  console.log(fetchTeamsStatus, allTeams, accountData);
   // console.log(isModalOpen, { selectedTeamId: accountData.selectedTeamId, user: !!session?.user })
 
   const showNoTeamsAlert = useMemo(() => {
@@ -48,7 +49,7 @@ export const useTeamSelect = () => {
       setTeamId(id);
       setCookieTeamId(id);
     },
-    [setTeamId]
+    [setTeamId, setCookieTeamId]
   );
 
   // if one team - then autoselect this team
@@ -56,10 +57,10 @@ export const useTeamSelect = () => {
   //   if (myTeams.length === 1) handleSelectTeam(myTeams[0].id);
   // }, [myTeams]);
 
-  // useEffect(() => {
-  //   fetchTeams(session?.user.access_token ?? "");
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [session?.user.access_token]);
+  useEffect(() => {
+    fetchTeams(session?.user.access_token ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user.access_token]);
 
   return {
     isModalOpen,

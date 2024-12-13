@@ -59,9 +59,11 @@ export const makeAuthStore = (initProps?: Partial<AuthStoreState>) => {
           set(() => ({ fetchTeamsStatus: "IN_PROGRESS" }));
           const client = new TeamGet(new ApiClient());
           const token = access_token;
+          
           if (token) {
             try {
               const teams = await client.getTeams(token);
+              console.log('acc', teams)
               set((state) => ({
                 fetchTeamsStatus: "DONE",
                 accountData: {
@@ -82,6 +84,7 @@ export const makeAuthStore = (initProps?: Partial<AuthStoreState>) => {
                 }));
             }
           } else {
+            console.log('no token')
             set(() => ({ fetchTeamsStatus: "DONE" }));
           }
         },

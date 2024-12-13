@@ -26,7 +26,7 @@ export default async function RootLayout({
   if (!teams) return redirect("/");
   return (
     <SidebarProvider>
-      <AppSidebar tree={tree} />
+      <AppSidebar teams={teams} tree={tree} />
       <SidebarInset>
         <main className="w-full p-5">
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -35,7 +35,7 @@ export default async function RootLayout({
             <AppBreadcumbs />
           </header>
           {children}
-          <SelectTeamModal teams={teams} />
+          {/* <SelectTeamModal teams={teams} /> */}
           <Toaster />
         </main>
       </SidebarInset>

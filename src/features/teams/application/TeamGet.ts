@@ -8,8 +8,9 @@ export class TeamGet {
   async getTeams(token: string): Promise<Team[]> {
     const endpoint = `/team`;
     const response = await this.client.GET(endpoint, token);
+    console.log('Team OK:',response.ok)
     if (!response.ok) return [];
-    const teams = await response.json();
+    const teams = await response.json();    
     return teams as Team[];
   }
 

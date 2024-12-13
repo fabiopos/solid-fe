@@ -20,15 +20,21 @@ import {
 } from "@/components/ui/sidebar";
 import { Team } from "@/types/types.common";
 import Image from "next/image";
+import { useTeamSelect } from "@/features/team-select/domain/useTeamSelect";
 
 interface TeamSwitcherProps {
   myTeams: Team[];
 }
 export function TeamSwitcher({ myTeams }: TeamSwitcherProps) {
   const { isMobile } = useSidebar();
+  const { onSelectTeam } = useTeamSelect();
 
   const [activeTeam, setActiveTeam] = React.useState(myTeams[0]);
 
+  const handleSelectTeam = React.useCallback((team: Team) => {
+    setActiveTeam(team);
+    onSelectTeam(team.id);
+  }, []);
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -41,7 +47,12 @@ export function TeamSwitcher({ myTeams }: TeamSwitcherProps) {
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-transparent text-sidebar-primary-foreground">
                 {/* <activeTeam.logo className="size-4" /> */}
                 {activeTeam?.logoUrl && (
-                  <Image src={activeTeam.logoUrl} alt="logo" width={80} height={100} />
+                  <Image
+                    src={activeTeam.logoUrl}
+                    alt="logo"
+                    width={80}
+                    height={100}
+                  />
                 )}
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -67,12 +78,17 @@ export function TeamSwitcher({ myTeams }: TeamSwitcherProps) {
             {myTeams.map((team, index) => (
               <DropdownMenuItem
                 key={team.name}
-                onClick={() => setActiveTeam(team)}
+                onClick={() => handleSelectTeam(team)}
                 className="gap-2 p-2"
               >
                 <div className="flex size-6 items-center justify-center rounded-sm border">
                   {activeTeam?.logoUrl && (
-                    <Image src={activeTeam.logoUrl} alt="logo" width={100} height={100} />
+                    <Image
+                      src={activeTeam.logoUrl}
+                      alt="logo"
+                      width={100}
+                      height={100}
+                    />
                   )}
                   {/* <team.logo className="size-4 shrink-0" /> */}
                 </div>
