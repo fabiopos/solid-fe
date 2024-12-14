@@ -2,8 +2,7 @@ import { ApiClient } from "@/lib/ApiClient";
 import { AccountData, RequestStatus } from "@/types/types.common";
 import { Session } from "next-auth";
 import { createStore } from "zustand/vanilla";
-import { persist, createJSONStorage } from "zustand/middleware";
-// import { signOut } from "next-auth/react";
+import { persist } from "zustand/middleware";
 import { TeamGet } from "@/features/teams/application/TeamGet";
 
 export type AuthStoreState = {
@@ -30,69 +29,64 @@ const defaultInitState: AuthStoreState = {
   error: null,
 };
 
-export const makeAuthStore = (initProps?: Partial<AuthStoreState>) => {
-  return createStore<AuthCreateStore>()(
-    persist(
-      (set) => ({
-        ...defaultInitState,
-        ...initProps,
-        setTeamId(id) {
-          set((state) => ({
-            accountData: {
-              teams: state.accountData?.teams ?? [],
-              selectedTeamId: id,
-            },
-          }));
+export const makeAuthStore = (initProps: AccountData) => {
+  return createStore<AuthCreateStore>()((set) => ({
+    session: defaultInitState.session,
+    fetchTeamsStatus: "IDLE",
+    persist,
+    error: null,
+    accountData: initProps,
+    setTeamId(id) {
+      set((state) => ({
+        accountData: {
+          teams: state.accountData?.teams ?? [],
+          selectedTeamId: id,
         },
-        setTeams(teams) {
+      }));
+    },
+    setTeams(teams) {
+      set((state) => ({
+        accountData: {
+          teams: teams,
+          selectedTeamId: state.accountData.selectedTeamId,
+        },
+      }));
+    },
+    setSession(session) {
+      set(() => ({ session }));
+    },
+    async fetchTeams(access_token: string) {
+      set(() => ({ fetchTeamsStatus: "IN_PROGRESS" }));
+      const client = new TeamGet(new ApiClient());
+      const token = access_token;
+
+      if (token) {
+        try {
+          const teams = await client.getTeams(token);
+          console.log("acc", teams);
           set((state) => ({
+            fetchTeamsStatus: "DONE",
             accountData: {
               teams: teams,
               selectedTeamId: state.accountData.selectedTeamId,
             },
           }));
-        },
-        setSession(session) {
-          set(() => ({ session }));
-        },
-        async fetchTeams(access_token: string) {
-          set(() => ({ fetchTeamsStatus: "IN_PROGRESS" }));
-          const client = new TeamGet(new ApiClient());
-          const token = access_token;
-          
-          if (token) {
-            try {
-              const teams = await client.getTeams(token);
-              console.log('acc', teams)
-              set((state) => ({
-                fetchTeamsStatus: "DONE",
-                accountData: {
-                  teams: teams,
-                  selectedTeamId: state.accountData.selectedTeamId,
-                },
-              }));
-            } catch (error) {
-              if (error instanceof Error)
-                set(() => ({
-                  fetchTeamsStatus: "ERROR",
-                  error: error.message,
-                }));
-              else
-                set(() => ({
-                  fetchTeamsStatus: "ERROR",
-                  error: error as string,
-                }));
-            }
-          } else {
-            console.log('no token')
-            set(() => ({ fetchTeamsStatus: "DONE" }));
-          }
-        },
-      }),
-      {
-        name: "auth-storage",
-        storage: createJSONStorage(() => sessionStorage),
+        } catch (error) {
+          if (error instanceof Error)
+            set(() => ({
+              fetchTeamsStatus: "ERROR",
+              error: error.message,
+            }));
+          else
+            set(() => ({
+              fetchTeamsStatus: "ERROR",
+              error: error as string,
+            }));
+        }
+      } else {
+        console.log("no token");
+        set(() => ({ fetchTeamsStatus: "DONE" }));
       }
-    )
-  );
+    },
+  }));
 };

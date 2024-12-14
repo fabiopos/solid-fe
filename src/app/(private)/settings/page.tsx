@@ -21,9 +21,9 @@ const SettingsPage = async () => {
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="my-teams">My Teams</TabsTrigger>
-          <TabsTrigger value="my-rivals">My Rivals</TabsTrigger>          
+          <TabsTrigger value="my-rivals">My Rivals</TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="general">
           <Settings subscription={subscription} />
         </TabsContent>
@@ -35,8 +35,6 @@ const SettingsPage = async () => {
         <TabsContent value="my-rivals">
           <MyRivals teams={myRivals as FulfilledTeam[]} />
         </TabsContent>
-
-       
       </Tabs>
     </div>
   );

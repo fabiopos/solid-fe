@@ -31,7 +31,7 @@ export const useTeamSelect = () => {
     pathName,
   ]);
 
-  console.log(fetchTeamsStatus, allTeams, accountData);
+  // console.log(fetchTeamsStatus, allTeams, accountData);
   // console.log(isModalOpen, { selectedTeamId: accountData.selectedTeamId, user: !!session?.user })
 
   const showNoTeamsAlert = useMemo(() => {
@@ -57,10 +57,10 @@ export const useTeamSelect = () => {
   //   if (myTeams.length === 1) handleSelectTeam(myTeams[0].id);
   // }, [myTeams]);
 
-  useEffect(() => {
-    fetchTeams(session?.user.access_token ?? "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user.access_token]);
+  // useEffect(() => {
+  //   fetchTeams(session?.user.access_token ?? "");
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [session?.user.access_token]);
 
   return {
     isModalOpen,

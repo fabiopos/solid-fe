@@ -8,16 +8,17 @@ import MatchDetails from "@/features/match/infraestructure/MatchDetails/MatchDet
 import { PlayerGet } from "@/features/players/application/PlayerGet";
 import { PlayerType } from "@/features/players/domain/player.schema";
 import { ApiClient } from "@/lib/ApiClient";
-import { cookies } from "next/headers";
 
 async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
   const { matchId } = await params;
-  const { match, aparitions, players, selectedTeamId } = await getMatchDetails(matchId);
+  const { match, aparitions, players, selectedTeamId, allPlayers } = await getMatchDetails(
+    matchId
+  );
 
   if (match === null) return null;
 
   return (
-    <PlayersStoreProvider>
+    <PlayersStoreProvider players={allPlayers}>
       <MatchDetailsStoreProvider
         players={players}
         aparitions={aparitions}
@@ -31,7 +32,7 @@ async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
 }
 
 async function getMatchDetails(matchId: string) {
-  const selectedTeamId = await getCookieTeamId()
+  const selectedTeamId = await getCookieTeamId();
   const session = await auth();
   if (!session) return { match: null };
 
@@ -41,10 +42,20 @@ async function getMatchDetails(matchId: string) {
   const matchGet = new MatchGet(apiClient);
   const match = await matchGet.find(matchId, token);
 
+  /// all players
+  let allPlayers: PlayerType[] = [];
+  const client = new PlayerGet(apiClient);
+
+  if (selectedTeamId) {
+    allPlayers = await client.getAllPlayers(
+      selectedTeamId,
+      session?.user.access_token
+    );
+  }
+
   const aparitionGet = new AparitionGet(apiClient);
 
   const aparitions = await aparitionGet.getAparitions(matchId, token);
-  // console.log(matchId, aparitions);
 
   let homeTeamPlayers: PlayerType[] = [];
   let awayTeamPlayers: PlayerType[] = [];
@@ -58,6 +69,12 @@ async function getMatchDetails(matchId: string) {
     awayTeamPlayers = await playerGet.getAllPlayers(match?.awayTeamId, token);
   }
 
-  return { match, aparitions, players: { homeTeamPlayers, awayTeamPlayers }, selectedTeamId };
+  return {
+    match,
+    aparitions,
+    players: { homeTeamPlayers, awayTeamPlayers },
+    selectedTeamId,
+    allPlayers,
+  };
 }
 export default MatchDetailsPage;

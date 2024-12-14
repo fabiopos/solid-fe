@@ -14,8 +14,7 @@ import {
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,
-  SidebarMenuBadge,
+  SidebarMenu,  
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -26,7 +25,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { TeamSwitcher } from "./Team/TeamSwitcher";
-import { useTeamSelect } from "@/features/team-select/domain/useTeamSelect";
 import { Team } from "@/types/types.common";
 
 // This is sample data.

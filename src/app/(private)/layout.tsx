@@ -9,12 +9,12 @@ import {
 import { Toaster } from "@/components/ui/toaster";
 import AppBreadcumbs from "@/features/appBreadcumbs/AppBreadcumbs";
 import { SeasonGet } from "@/features/seasons/application/SeasonGet";
-import SelectTeamModal from "@/features/team-select/infraestructure/SelectTeamModal";
 import { TeamGet } from "@/features/teams/application/TeamGet";
 import { ApiClient } from "@/lib/ApiClient";
 import { redirect } from "next/navigation";
 import { getCookieTeamId } from "../actions";
-
+import { ReactNode } from "react";
+import { AuthStoreProvider } from "@/context/AuthCtx";
 
 export default async function RootLayout({
   children,
@@ -25,23 +25,47 @@ export default async function RootLayout({
 
   if (!teams) return redirect("/");
   return (
-    <SidebarProvider>
-      <AppSidebar teams={teams} tree={tree} />
-      <SidebarInset>
-        <main className="w-full p-5">
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            <SidebarTrigger className="-ml-1" />
-            <Separator orientation="vertical" className="mr-2 h-4" />
-            <AppBreadcumbs />
-          </header>
-          {children}
-          {/* <SelectTeamModal teams={teams} /> */}
-          <Toaster />
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+    <AuthWrapper>
+      <SidebarProvider>
+        <AppSidebar teams={teams} tree={tree} />
+        <SidebarInset>
+          <main className="w-full p-5">
+            <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <AppBreadcumbs />
+            </header>
+            {children}
+            {/* <SelectTeamModal teams={teams} /> */}
+            <Toaster />
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    </AuthWrapper>
   );
 }
+
+async function AuthWrapper({ children }: { children: ReactNode }) {
+  const { selectedTeamId, teams } = await getAuthData();
+  console.log(selectedTeamId, teams);
+  return (
+    <AuthStoreProvider selectedTeamId={selectedTeamId} teams={teams}>
+      {children}
+    </AuthStoreProvider>
+  );
+}
+
+const getAuthData = async () => {
+  const session = await auth();
+  const selectedTeamId = await getCookieTeamId();
+
+  if (!session?.user.access_token) return { teams: [], selectedTeamId: null };
+
+  const teamGet = new TeamGet(new ApiClient());
+  const subscriptionTeams = await teamGet.getTeams(session.user.access_token);
+
+  return { teams: subscriptionTeams, selectedTeamId: selectedTeamId ?? null };
+};
 
 async function getData() {
   const emptyState = {
