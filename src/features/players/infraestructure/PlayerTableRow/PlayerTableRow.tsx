@@ -26,6 +26,7 @@ import { PlayerType } from "../../domain/player.schema";
 import { usePlayers } from "../../domain/usePlayers";
 import { useMemo } from "react";
 import PlayerAvatar from "../PlayerAvatar";
+import Link from "next/link";
 
 interface PlayerTableRowProps {
   player: PlayerType;
@@ -72,7 +73,9 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
       <TableCell className="font-medium text-center">
         {player.shirtSize}
       </TableCell>
-      <TableCell className="font-medium uppercase">{player.shirtName}</TableCell>
+      <TableCell className="font-medium uppercase">
+        {player.shirtName}
+      </TableCell>
       <TableCell className="text-center">0</TableCell>
       <TableCell className="text-center">0 %</TableCell>
       <TableCell className="text-center">0</TableCell>
@@ -93,10 +96,12 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <div className="grid grid-cols-[110px_10px] items-center gap-2">
-                <span>View Profile</span>
-                <User2 className="" />
-              </div>
+              <Link href={`/players/details/${player.id}`}>
+                <div className="grid grid-cols-[110px_10px] items-center gap-2">
+                  <span>View Profile</span>
+                  <User2 className="" />
+                </div>
+              </Link>
             </DropdownMenuItem>
 
             {player.favPosition?.category === undefined && (

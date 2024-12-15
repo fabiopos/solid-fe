@@ -1,5 +1,5 @@
 import { PlayerStatus } from "@/types/types.common";
-import { z, string, boolean, number } from "zod";
+import { z, string, boolean, number, date } from "zod";
 
 export const isValidEmail = z.string().email();
 
@@ -65,7 +65,7 @@ export const playerSchema = z.object({
   height: number().optional().nullable(),
   playerPositions: z.array(playerPositionSchema).optional().nullable(),
   favPosition: favPositionSchema.nullable(),
-  team: teamSchema.optional().nullable(),
+  team: teamSchema.optional().nullable(),  
   _tag: string(),
 });
 
@@ -92,7 +92,7 @@ export const playerUpdateSchema = z.object({
     .enum([PlayerStatus.OK, PlayerStatus.INJURIED, PlayerStatus.DOWN])
     .optional(),
   weight: number().optional().nullable(),
-  bornDate: string().optional().nullable(),
+  bornDate: date().optional().nullable(),
 });
 
 export type PlayerUpdateType = z.infer<typeof playerUpdateSchema>;

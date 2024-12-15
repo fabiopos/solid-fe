@@ -15,7 +15,7 @@ import { format } from "date-fns";
 
 function Teams() {
   const { teams, selectedTeamId } = useAuthStore((state) => state.accountData);
-  
+
   return (
     <>
       <div className="grid grid-cols-4 gap-5">
@@ -31,13 +31,26 @@ function Teams() {
               </CardHeader>
               <CardContent className="flex flex-col gap-2">
                 <div>
+                  <Label>Name</Label>
+                  <Input placeholder="Team Name" value={team.name} />
+                </div>
+
+                <div>
                   <Label>Primary Color</Label>
-                  <Input placeholder="Primary Color" />
+                  <Input
+                    placeholder="Primary Color"
+                     type="color"
+                    value={team.primaryColor ?? ""}
+                  />
                 </div>
 
                 <div>
                   <Label>Secondary Color</Label>
-                  <Input placeholder="Secondary Color" />
+                  <Input
+                    placeholder="Secondary Color"
+                    type="color"
+                    value={team.secondaryColor ?? ""}
+                  />
                 </div>
 
                 <div>

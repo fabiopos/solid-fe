@@ -1,5 +1,6 @@
 import { ApiClient } from "@/lib/ApiClient";
 import { PlayerType } from "../domain/player.schema";
+import { FulfilledPlayer } from "../domain/player.effect.schema";
 
 export class PlayerGet {
   constructor(private apiClient: ApiClient) {}
@@ -13,12 +14,20 @@ export class PlayerGet {
 
     if (!response.ok) throw new Error();
 
-    const result = await response.json();   
+    const result = await response.json();
 
     const mapped = (result as PlayerType[]).map(this.mapPlayers);
     const sorted = mapped.sort(this.sortPlayers);
 
     return sorted;
+  }
+
+  async find(pid: string, token: string) {
+    const result = await this.apiClient.GET(`/player/${pid}/details`, token);
+
+    if (!result.ok) return null;
+
+    return (await result.json()) as FulfilledPlayer;
   }
 
   private mapPlayers = (player: PlayerType) =>
