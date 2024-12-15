@@ -26,7 +26,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { usePlayerDetailsStore } from "@/context/PlayerDetailsCtx";
 import { useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import DateInput from "@/components/ui/date-input";
 import { PhoneInput } from "@/components/ui/phone-input";
 import RegionSelect from "@/components/ui/region-select";
@@ -35,6 +35,8 @@ import { Slider } from "@/components/ui/slider";
 import DominantFootInput from "@/components/ui/dominant-foot-input";
 import { DominantFoot, ShirtSize } from "@/shared/enums/playerEnums";
 import ShirtSizeInput from "@/components/ui/shirt-size-input";
+import ShirtNumberInput from "@/components/ui/shirt-number-input";
+import { usePlayers } from "@/features/players/domain/usePlayers";
 
 const FormSchema = playerUpdateSchema;
 
@@ -42,6 +44,7 @@ interface PlayerDetailsFormProps {
   player: FulfilledPlayer;
 }
 export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
+  const { players } = usePlayers();
   const { data } = useSession();
   const { updateRequestStatus, putPlayer } = usePlayerDetailsStore(
     (state) => state
@@ -68,6 +71,15 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
       bornDate: player.bornDate,
     },
   });
+
+  const playersNumbers: number[] = useMemo(
+    () =>
+      players
+        .filter((x) => x.shirtNumber)
+        .map((x) => x.shirtNumber!)
+        .filter((x) => x),
+    [players]
+  );
 
   async function onSubmit(partialPlayer: z.infer<typeof FormSchema>) {
     console.log(data);
@@ -345,10 +357,14 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">Shirt Number</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Shirt Number"
-                          {...field}
-                          value={field.value ?? ""}
+                        <ShirtNumberInput
+                          numberOnShirt={field.value?.toString() ?? ""}
+                          playersNumbers={[
+                            Number(player.shirtNumber),
+                            ...playersNumbers,
+                          ]}
+                          setNumberOnShirt={field.onChange}
+                          className="bg-background border-none"
                         />
                       </FormControl>
                       <FormMessage />

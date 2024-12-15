@@ -40,7 +40,7 @@ function PlayerDetailsFt() {
             <span>{player?.address ?? "no address"}</span>
           </div>
           <span>{player?.arl ?? "no arl"}</span>
-          <span>{player?.bornDate?.toDateString() ?? "no born date"}</span>
+          <span>{player?.bornDate?.toString() ?? "no born date"}</span>
           <span>{player?.city ?? "no city"}</span>
           <span>{player?.country ?? "no country"}</span>
           <span>{player?.createdAt?.toLocaleString() ?? "no created at"}</span>
