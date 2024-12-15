@@ -398,7 +398,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
             <AccordionTrigger>
               <strong>Health & Insurance</strong>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="px-2">
               <div className="space-y-2">
                 <FormField
                   control={form.control}
