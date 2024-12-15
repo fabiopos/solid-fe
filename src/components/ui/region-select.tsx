@@ -30,6 +30,7 @@ interface RegionSelectProps {
   onChange?: (value: string) => void;
   className?: string;
   placeholder?: string;
+  value?: string;
 }
 
 function RegionSelect({
@@ -40,6 +41,7 @@ function RegionSelect({
   onChange = () => {},
   className,
   placeholder = "Region",
+  value,
 }: RegionSelectProps) {
   const [regions, setRegions] = useState<Region[]>([]);
 
@@ -60,6 +62,7 @@ function RegionSelect({
       onValueChange={(value: string) => {
         onChange(value);
       }}
+      value={value}
     >
       <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />

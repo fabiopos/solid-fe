@@ -28,6 +28,7 @@ interface CountrySelectProps {
   onChange?: (value: string) => void;
   className?: string;
   placeholder?: string;
+  value?: string
 }
 
 function CountrySelect({
@@ -37,6 +38,7 @@ function CountrySelect({
   onChange = () => {},
   className,
   placeholder = "Country",
+  value,
 }: CountrySelectProps) {
   const [countries, setCountries] = useState<CountryRegion[]>([]);
 
@@ -51,6 +53,7 @@ function CountrySelect({
       onValueChange={(value: string) => {
         onChange(value);
       }}
+      value={value}
     >
       <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />

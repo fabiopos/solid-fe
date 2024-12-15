@@ -17,7 +17,7 @@ function DocumentTypeInput() {
       <Label className="dark:text-slate-800 font-bold mb-2">
         Document Type
       </Label>
-      <Select onValueChange={setDocumentType}>
+      <Select onValueChange={setDocumentType} value={documentType}>
         <SelectTrigger className="bg-white border border-slate-300 px-4">
           <SelectValue placeholder="Select a document type" />
         </SelectTrigger>

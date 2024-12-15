@@ -32,6 +32,13 @@ import { usePlayerDetailsStore } from "@/context/PlayerDetailsCtx";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import DateInput from "@/components/ui/date-input";
+import { PhoneInput } from "@/components/ui/phone-input";
+import RegionSelect from "@/components/ui/region-select";
+import CountrySelect from "@/components/ui/country-select";
+import { Slider } from "@/components/ui/slider";
+import DominantFootInput from "@/components/ui/dominant-foot-input";
+import { DominantFoot, PlayerStatus, ShirtSize } from "@/shared/enums/playerEnums";
+import ShirtSizeInput from "@/components/ui/shirt-size-input";
 
 const FormSchema = playerUpdateSchema;
 
@@ -62,7 +69,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
       shirtSize: player.shirtSize,
       status: player.status,
       weight: player.weight,
-      bornDate: player.bornDate,
+      bornDate: player.bornDate,     
     },
   });
 
@@ -142,10 +149,10 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">Phone</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Phone"
-                          {...field}
+                        <PhoneInput
                           value={field.value ?? ""}
+                          onChange={field.onChange}
+                          className="text-slate-800"
                         />
                       </FormControl>
                       <FormMessage />
@@ -157,7 +164,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                   control={form.control}
                   name="bornDate"
                   render={({ field }) => (
-                    <FormItem>                      
+                    <FormItem>
                       <FormControl>
                         <DateInput
                           label="Born Date"
@@ -176,7 +183,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
             <AccordionTrigger>
               <strong>Location</strong>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="px-2">
               <div className="space-y-2">
                 <FormField
                   control={form.control}
@@ -202,10 +209,11 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">City</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="City"
-                          {...field}
-                          value={field.value ?? ""}
+                        <RegionSelect
+                          className="bg-background border-none px-4"
+                          countryCode={form.getValues().country ?? ""}
+                          onChange={field.onChange}
+                          value={field.value ?? undefined}
                         />
                       </FormControl>
                       <FormMessage />
@@ -219,10 +227,11 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">Country</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Country"
-                          {...field}
-                          value={field.value ?? ""}
+                        <CountrySelect
+                          className="bg-background border-none px-4"
+                          onChange={field.onChange}
+                          priorityOptions={["CO", "BR", "AR", "VE", "US"]}
+                          value={field.value ?? undefined}
                         />
                       </FormControl>
                       <FormMessage />
@@ -236,7 +245,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
             <AccordionTrigger>
               <strong>Body</strong>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="px-2">
               <div className="space-y-2">
                 <FormField
                   control={form.control}
@@ -245,12 +254,18 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">Height (cm)</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Height"
-                          {...field}
-                          value={field.value ?? ""}
+                        <Slider
+                          defaultValue={[33]}
+                          min={100}
+                          max={220}
+                          step={1}
+                          onValueChange={(value) =>
+                            field.onChange(value[0].toString())
+                          }
+                          value={[Number(field.value)]}
                         />
                       </FormControl>
+                      <small>{field.value}cm</small>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -263,12 +278,18 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">Weight (kg)</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Weight"
-                          {...field}
-                          value={field.value ?? ""}
+                        <Slider
+                          defaultValue={[33]}
+                          min={10}
+                          max={200}
+                          step={1}
+                          onValueChange={(value) =>
+                            field.onChange(value[0].toString())
+                          }
+                          value={[Number(field.value)]}
                         />
                       </FormControl>
+                      <small>{field.value}kg</small>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -281,10 +302,11 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">Dominant Foot</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Dominant Foot"
-                          {...field}
-                          value={field.value ?? ""}
+                        <DominantFootInput
+                          dominantFoot={
+                            (field.value as DominantFoot) ?? DominantFoot.RIGHT
+                          }
+                          setDominantFoot={field.onChange}
                         />
                       </FormControl>
                       <FormMessage />
@@ -299,7 +321,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
             <AccordionTrigger>
               <strong>Shirt</strong>
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="px-2">
               <div className="space-y-2">
                 <FormField
                   control={form.control}
@@ -344,10 +366,11 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     <FormItem>
                       <FormLabel className="font-bold">Shirt Size</FormLabel>
                       <FormControl>
-                        <Input
-                          placeholder="Shirt Size"
-                          {...field}
-                          value={field.value ?? ""}
+                        <ShirtSizeInput
+                          setShirtSize={field.onChange}
+                          shirtSize={
+                            (field.value as ShirtSize.M) ?? ShirtSize.M
+                          }
                         />
                       </FormControl>
                       <FormMessage />
