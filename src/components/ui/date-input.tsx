@@ -11,8 +11,9 @@ interface DateInputProps {
   value: Date | null | undefined;
   setDate: (date: Date | null) => void;
   label: string;
+  className?: string
 }
-function DateInput({ setDate, value, label }: DateInputProps) {
+function DateInput({ setDate, value, label, className }: DateInputProps) {
   return (
     <div className="flex flex-col gap-2">
       <Label className="text-slate-800 font-bold">{label}</Label>
@@ -22,7 +23,8 @@ function DateInput({ setDate, value, label }: DateInputProps) {
             variant={"ghost"}
             className={cn(
               "w-[240px] justify-start text-left font-normal gap-2 border border-slate-300 bg-white text-background",
-              !value && "text-muted-foreground"
+              !value && "text-muted-foreground",
+              className
             )}
           >
             <CalendarIcon size={18} />

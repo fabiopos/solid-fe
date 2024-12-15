@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,10 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import {
-  playerSchema,
-  playerUpdateSchema,
-} from "@/features/players/domain/player.schema";
+import { playerUpdateSchema } from "@/features/players/domain/player.schema";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 import {
   Accordion,
@@ -37,7 +33,7 @@ import RegionSelect from "@/components/ui/region-select";
 import CountrySelect from "@/components/ui/country-select";
 import { Slider } from "@/components/ui/slider";
 import DominantFootInput from "@/components/ui/dominant-foot-input";
-import { DominantFoot, PlayerStatus, ShirtSize } from "@/shared/enums/playerEnums";
+import { DominantFoot, ShirtSize } from "@/shared/enums/playerEnums";
 import ShirtSizeInput from "@/components/ui/shirt-size-input";
 
 const FormSchema = playerUpdateSchema;
@@ -69,7 +65,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
       shirtSize: player.shirtSize,
       status: player.status,
       weight: player.weight,
-      bornDate: player.bornDate,     
+      bornDate: player.bornDate,
     },
   });
 
@@ -152,7 +148,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                         <PhoneInput
                           value={field.value ?? ""}
                           onChange={field.onChange}
-                          className="text-slate-800"
+                          className="text-slate-800 bg-background"
                         />
                       </FormControl>
                       <FormMessage />
@@ -170,6 +166,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                           label="Born Date"
                           setDate={(date) => field.onChange(date)}
                           value={field.value}
+                          className="bg-background border-none text-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -428,7 +425,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
 
         <br />
         <Button type="submit" disabled={updateRequestStatus === "IN_PROGRESS"}>
-          {updateRequestStatus === "IN_PROGRESS" ? "Wait..." : "Submit"}
+          {updateRequestStatus === "IN_PROGRESS" ? "Wait..." : "Save Changes"}
         </Button>
       </form>
     </Form>
