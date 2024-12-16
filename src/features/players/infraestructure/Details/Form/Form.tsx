@@ -37,6 +37,7 @@ import { DominantFoot, ShirtSize } from "@/shared/enums/playerEnums";
 import ShirtSizeInput from "@/components/ui/shirt-size-input";
 import ShirtNumberInput from "@/components/ui/shirt-number-input";
 import { usePlayers } from "@/features/players/domain/usePlayers";
+import { toDate } from "date-fns";
 
 const FormSchema = playerUpdateSchema;
 
@@ -177,7 +178,13 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                         <DateInput
                           label="Born Date"
                           setDate={(date) => field.onChange(date)}
-                          value={field.value}
+                          value={
+                            typeof field.value === "string"
+                              ? toDate(field.value)
+                              : !field.value
+                              ? new Date()
+                              : field.value
+                          }
                           className="bg-background border-none text-white"
                         />
                       </FormControl>

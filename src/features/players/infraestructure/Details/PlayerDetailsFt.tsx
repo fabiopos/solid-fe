@@ -1,28 +1,19 @@
 "use client";
 import { H2 } from "@/components/ui/typograhpy";
 import { usePlayerDetailsStore } from "@/context/PlayerDetailsCtx";
-import PlayerAvatar from "../PlayerAvatar";
 import ActiveText from "@/components/ui/active-text";
-import Image from "next/image";
 import { PlayerDetailsForm } from "./Form/Form";
+import EditPlayerAvatarInput from "./Form/EditPlayerAvatarInput";
 
 function PlayerDetailsFt() {
   const player = usePlayerDetailsStore((state) => state.player);
   if (!player) return null;
+  if (!player.id) return null;
 
-  console.log(player);
   return (
     <div className="p-2">
       <div className="flex gap-5 items-center">
-        {player?.avatarUrl && (
-          <Image
-            src={player?.avatarUrl}
-            width={80}
-            height={100}
-            alt=""
-            className="rounded-lg"
-          />
-        )}
+        <EditPlayerAvatarInput avatarUrl={player?.avatarUrl} pid={player.id} />
         <div className="">
           <H2>
             {player?.firstName} {player?.lastName}

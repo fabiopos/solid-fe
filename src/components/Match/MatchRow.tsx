@@ -11,9 +11,10 @@ import MatchDayTime from "./MatchDayTime";
 interface MatchRowProps {
   match: FulfilledMatch | null;
   actionsColumn?: ReactNode;
+  onClickScore?: () => void;
 }
 
-function MatchRow({ match, actionsColumn }: MatchRowProps) {
+function MatchRow({ match, actionsColumn, onClickScore }: MatchRowProps) {
   if (!match) return null;
   // grid grid-cols-[150px_50px_210px_85px_210px_2fr]
   return (
@@ -44,7 +45,7 @@ function MatchRow({ match, actionsColumn }: MatchRowProps) {
           <TeamShieldAvatar src={match.homeTeam?.id} />
         </div>
         <div className="flex col-start-2 items-center h-full row-start-1 lg:col-start-auto lg:row-start-auto justify-center">
-          <MatchScoreBadge match={match} />
+          <MatchScoreBadge match={match} onClick={onClickScore} />
         </div>
         <div className="flex row-start-2 h-full justify-center items-center lg:row-start-auto gap-5">
           <TeamShieldAvatar src={match.awayTeam?.id} />

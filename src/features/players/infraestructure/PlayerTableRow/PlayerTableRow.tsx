@@ -64,9 +64,9 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
       <TableCell className="text-center">{player.shirtNumber}</TableCell>
       <TableCell className="font-medium">
         <div className="flex flex-col">
-          <span className="text-xl">
+          <Link href={`/players/details/${player.id}`} className="text-xl">
             {player.firstName} {player.lastName}
-          </span>
+          </Link>
           <small className="text-neutral-500">{player.email}</small>
         </div>
       </TableCell>

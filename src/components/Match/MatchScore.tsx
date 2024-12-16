@@ -5,8 +5,9 @@ import { Badge } from "../ui/badge";
 
 interface MatchScoreBadgeProps {
   match: FulfilledMatch;
+  onClick?: () => void;
 }
-function MatchScoreBadge({ match }: MatchScoreBadgeProps) {
+function MatchScoreBadge({ match, onClick }: MatchScoreBadgeProps) {
   const hasHomeScore = useMemo(() => {
     return match.homeScore === null || match.homeScore === undefined;
   }, [match]);
@@ -20,7 +21,7 @@ function MatchScoreBadge({ match }: MatchScoreBadgeProps) {
   }, [hasAwayScore, hasHomeScore]);
 
   return (
-    <Badge variant="outline" className="flex gap-1 text-xl bg-background px-5">
+    <Badge variant="outline" className="flex gap-1 text-xl bg-background px-5" onClick={onClick}>
       {hasBothScores ? (
         <>
           <span>{hasHomeScore ? "0" : match.homeScore}</span>

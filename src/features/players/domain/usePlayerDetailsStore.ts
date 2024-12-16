@@ -1,30 +1,22 @@
 import { createStore } from "zustand/vanilla";
-import {
-  isValidEmail,
-  isValidHeight,
-  isValidShirtNumber,
-  isValidWeight,
-  PlayerUpdateType,
-} from "./player.schema";
-import {
-  EmptyPlayer,
-  FulfilledPlayer,
-  PartialPlayer,
-} from "./player.effect.schema";
-import { DocumentType } from "@/shared/enums/playerEnums";
-import { DominantFoot, RequestStatus, ShirtSize } from "@/types/types.common";
-import { PlayerCreate } from "../application/PlayerCreate";
+import { PlayerUpdateType } from "./player.schema";
+import { FulfilledPlayer } from "./player.effect.schema";
+import { RequestStatus } from "@/types/types.common";
 import { ApiClient } from "@/lib/ApiClient";
 import { RequestError } from "@/shared/errors/RequestError";
 import { PlayerUpdate } from "../application/PlayerUpdate";
+import { PlayerCreate } from "../application/PlayerCreate";
 
 export type PlayerDetailStoreState = {
   player: FulfilledPlayer | null;
   updateRequestStatus: RequestStatus;
+  uploadAvatarStatus: RequestStatus;
   error: RequestError | null;
 };
 export type PlayerDetailStoreActions = {
   setFulfiledPlayer: (player: FulfilledPlayer) => void;
+  setAvatarUrl: (avatarUrl: string) => void;
+  putAvatar: (pid: string, file: File, token: string) => Promise<void>;
   reset: () => void;
   putPlayer: (
     pid: string,
@@ -40,6 +32,7 @@ const defaultInitState: PlayerDetailStoreState = {
   error: null,
   player: null,
   updateRequestStatus: "IDLE",
+  uploadAvatarStatus: "IDLE",
 };
 
 export const makePlayerDeailsStore = (
@@ -63,6 +56,20 @@ export const makePlayerDeailsStore = (
       const response = await result.json();
       console.log("RESPONSE PATCH PLAYER:", response);
       set(() => ({ error: null, updateRequestStatus: "DONE" }));
+    },
+    setAvatarUrl: (avatarUrl: string) => {
+      const currentPlayer = get().player;
+      if (currentPlayer) {
+        set(() => ({ player: { ...currentPlayer, avatarUrl } }));
+      }
+    },
+    putAvatar: async (pid: string, file: File, token: string) => {
+      const put = get().putPlayer;
+      const apiClient = new ApiClient();
+      const pCreate = new PlayerCreate(apiClient);
+      const result = await pCreate.updateAvatar(pid, file);
+      console.log("toUpdate", result);
+      await put(pid, { avatarUrl: result }, token);
     },
     setFulfiledPlayer: (p) => {},
     reset: () => {
