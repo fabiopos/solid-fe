@@ -4,9 +4,9 @@ import { useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { useMatchStore } from "@/context/MatchCtx";
 
-interface MatchesHeadProps {}
 
-function MatchesHead({}: MatchesHeadProps) {
+
+function MatchesHead() {
   const { competitionId } = useParams<{ competitionId: string }>();
   const { allMatches: matches } = useMatchStore((state) => state);
   const [open, setOpen] = useState(false);
@@ -24,7 +24,7 @@ function MatchesHead({}: MatchesHeadProps) {
           <strong>
             {completedMatches.length} / {matches.length}
           </strong>{" "}
-          completed matches on this competition
+          completed matches
         </span>
       </div>
       <div>

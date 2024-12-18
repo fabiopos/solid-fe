@@ -4,7 +4,7 @@ import MatchesBody from "./MatchesBody/MatchesBody";
 
 function Matches() {
   return (
-    <div>
+    <div className="w-full">
       <MatchesHead />
       <MatchesBody />
     </div>
