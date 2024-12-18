@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,41 +7,71 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dialog";
+import { FulfilledMatch } from "../../domain/match.schema";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { useCallback, useEffect, useMemo } from "react";
+import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
+import { useSession } from "next-auth/react";
+interface EditScoreDialogProps {
+  match: FulfilledMatch;
+  open: boolean;
+  onOpenChange: (state: boolean) => void;
+}
+export function EditScoreDialog({
+  match,
+  open,
+  onOpenChange,
+}: EditScoreDialogProps) {
+  const { data } = useSession();
+  const { setScore, formattedScore, putScore, scoreRequestStatus } =
+    useMatchDetailsStore((state) => state);
+  const handleSaveChanges = useCallback(() => {
+    if (!data) return;
+    putScore(data.user.access_token).then(() => onOpenChange(false));
+  }, [putScore, data]);
 
-export function EditScoreDialog() {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {/* <DialogTrigger asChild>
+        <Button variant="outline">Edit Score</Button>
+      </DialogTrigger> */}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you're done.
-          </DialogDescription>
+          <DialogTitle>Edit Score</DialogTitle>
+          <DialogDescription>Make changes to match score.</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+        <div className="grid grid-rows-2 gap-4 py-4 justify-center">
+          <div className="flex gap-2">
+            <span>{match.homeTeam?.name}</span>
+            <span>vs</span>
+            <span>{match.awayTeam?.name}</span>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div>
+          <InputOTP maxLength={2} value={formattedScore} onChange={setScore}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup>
+              <InputOTPSlot index={1} />
+            </InputOTPGroup>
+          </InputOTP>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Button
+            type="button"
+            disabled={scoreRequestStatus === "IN_PROGRESS"}
+            onClick={handleSaveChanges}
+          >
+            {scoreRequestStatus === "IN_PROGRESS" ? "Wait..." : "Save changes"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

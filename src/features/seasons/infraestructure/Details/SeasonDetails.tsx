@@ -8,6 +8,8 @@ import { useCompetitionStore } from "@/context/CompetitionCtx";
 import { Button } from "@/components/ui/button";
 import CompetitionAddDrawer from "@/features/competition/infraestructure/CompetitionAddDrawer";
 import { useState } from "react";
+import CompetitionList from "../List/CompetitionList";
+import { H2 } from "@/components/ui/typograhpy";
 
 export default function SeasonDetails() {
   const { season } = useSeasonDetailsStore((state) => state);
@@ -30,16 +32,11 @@ export default function SeasonDetails() {
         )}
       </div>
       <SeasonInfo season={season}>
-        <Separator className="my-5" />
-        <div className="grid grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] gap-2 mt-5">
-          {(competitions ?? []).map((c) => (
-            <SeasonCompetitionCard
-              competition={c}
-              key={`competition-${c.id}`}
-            />
-          ))}
-        </div>
+        <></>
       </SeasonInfo>
+      
+      <H2 className="my-5">Competitions</H2>
+      <CompetitionList competitions={competitions} />
 
       <LastSeasonMatches />
     </div>

@@ -5,7 +5,7 @@ interface LayoutProps {
 }
 
 function CompetitionsLayout({ children }: LayoutProps) {
-  return <div className="flex gap-5 p-5">{children}</div>;
+  return <main className="p-5">{children}</main>;
 }
 
 export default CompetitionsLayout;

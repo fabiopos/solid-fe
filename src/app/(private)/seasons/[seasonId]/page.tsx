@@ -28,16 +28,7 @@ export default async function SeasonDetailsPage({
             <p className="tracking-wide text-lg">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. At quos,
               ullam dignissimos magnam numquam consectetur consequatur veniam ut
-              praesentium perferendis tenetur ea, fugit culpa aspernatur et
-              blanditiis? Ipsa, laborum quisquam corrupti dolores deserunt,
-              voluptatem dignissimos minima libero voluptas natus, iste vero.
-              Facilis nam autem omnis accusamus architecto nesciunt voluptatibus
-              et quidem? Quo, veritatis delectus modi unde enim accusantium quam
-              praesentium laborum minima doloremque quod, minus quibusdam, autem
-              hic eligendi est nobis! Maxime voluptate eaque culpa alias,
-              impedit, tempora quo delectus magnam ad numquam, quam aut fugiat?
-              Numquam perferendis, perspiciatis illum possimus odio eaque
-              reprehenderit quis ipsum itaque ad? Ipsum, hic?
+              praesentium perferendis tenetur ea, fugit culpa aspernatur et             
             </p>
             <SeasonDetails />
           </div>

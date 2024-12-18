@@ -4,6 +4,13 @@ import { FulfilledSeason } from "../domain/season.schema";
 export class SeasonGet {
   constructor(private readonly client: ApiClient) {}
 
+  async getAllByTeam(teamId: string, token: string){
+    const resource = `/season/${teamId}`;
+    const result = await this.client.GET(resource, token);
+    if (!result.ok) return [];
+    return (await result.json()) as FulfilledSeason[];
+
+  }
   async getAllSeasonsBySubscription(
     subscriptionId: string,
     access_token: string

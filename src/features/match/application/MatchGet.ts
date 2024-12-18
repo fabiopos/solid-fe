@@ -28,6 +28,15 @@ export class MatchGet {
     return (await result.json()) as FulfilledMatch[];
   }
 
+  async getByTeam(teamId: string, token: string) {
+    const client = new ApiClient();
+    const result = await client.GET(`/match/${teamId}/team`, token);
+
+    if (!result.ok) return [];
+
+    return (await result.json()) as FulfilledMatch[];
+  }
+
   async find(matchId: string, token: string) {
     const client = new ApiClient();
     const result = await client.GET(`/match/${matchId}`, token);

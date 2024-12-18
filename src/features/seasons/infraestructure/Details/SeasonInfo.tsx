@@ -20,14 +20,16 @@ interface SeasonInfoProps {
 function SeasonInfo({ season, children }: SeasonInfoProps) {
   return (
     <>
-      <Card className="relative">
+      <Card className="relative bg-slate-800">
         {/* <div className="w-[80px] h-[40px] bg-transparent absolute -top-4 left-[95%] rounded-full flex justify-center items-center ">
           <SeasonStatusBadge status={season?.status} />
         </div> */}
         <CardHeader>
           <div className="flex justify-between">
             <div>
-              <CardTitle>{season?.name}</CardTitle>
+              <CardTitle className="flex gap-2">
+                <span>Season Details</span>
+                {season?.name}</CardTitle>
               <small>{season?.description}</small>
             </div>
             <div>

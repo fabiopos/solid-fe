@@ -28,11 +28,17 @@ export interface CompetitionStoreProviderProps {
 export const CompetitionStoreProvider = ({
   children,
   season,
+  allCompetitions: payloadComps,
 }: CompetitionStoreProviderProps) => {
   const storeRef = useRef<CompetitionStoreApi>();
   if (!storeRef.current) {
+    const allCompetitions = payloadComps ?? getCompetitions(season);
+    const selectedCompetition =
+      allCompetitions?.length > 0 ? allCompetitions[0] : undefined;
+    console.log(selectedCompetition, allCompetitions);
     storeRef.current = makeCompetitionStore({
-      allCompetitions: getCompetitions(season),
+      allCompetitions,
+      selectedCompetition,
     });
   }
 
@@ -61,7 +67,7 @@ function getCompetitions(
   season: FulfilledSeason | null
 ): FulfilledCompetition[] {
   const competitions = season?.competitions ?? ([] as CompetitionType[]);
-  const fcompetitions = competitions.map(mapToDomain);  
+  const fcompetitions = competitions.map(mapToDomain);
   return fcompetitions;
 }
 

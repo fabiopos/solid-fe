@@ -25,7 +25,8 @@ export const SeasonStoreProvider = ({
 }: SeasonStoreProviderProps) => {
   const storeRef = useRef<SeasonStoreApi>();
   if (!storeRef.current) {
-    storeRef.current = makeSeasonStore({ seasons: seasons });    
+    const selectedSeason = seasons.length > 0 ? seasons[0] : undefined;
+    storeRef.current = makeSeasonStore({ seasons: seasons, selectedSeason });
   }
 
   return (

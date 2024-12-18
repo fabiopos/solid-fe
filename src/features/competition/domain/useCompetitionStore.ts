@@ -105,6 +105,7 @@ export const makeCompetitionStore = (
           return x;
         }),
         patchingStatus: { id: competitionId, status: "DONE" },
+        selectedCompetition: updatedCompetition,
       }));
     },
     setSelectedCompetition: (

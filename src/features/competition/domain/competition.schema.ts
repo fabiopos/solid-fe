@@ -1,5 +1,5 @@
 
-import { matchSchema } from '@/features/match/domain/match.schema';
+import { FulfilledMatch, matchSchema } from '@/features/match/domain/match.schema';
 import { seasonSchema } from '@/features/seasons/domain/season.schema';
 import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
 import { Schema as S } from '@effect/schema';
@@ -14,7 +14,7 @@ export const competitionSchema = S.Struct({
   description: S.optional(S.NullishOr(S.String)),
   season: S.optional(seasonSchema),
   seasonId: S.optional(S.NullishOr(S.String)),
-  matches: S.optional(S.NullishOr(S.Array(matchSchema))),
+  matches: S.optional(S.NullishOr(S.Array(FulfilledMatch))),
 });
 
 export type CompetitionType = S.Schema.Type<typeof competitionSchema>;

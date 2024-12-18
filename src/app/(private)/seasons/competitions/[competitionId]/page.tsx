@@ -25,13 +25,7 @@ async function CompetitionDetailsPage({
         adipisci harum nemo minima, et facere eaque tempore numquam ad quos
         magnam, quam iure sequi quod sed nostrum commodi cumque modi id ratione
         culpa magni. Consequatur modi quidem corporis laboriosam maxime eaque
-        iusto alias facere, facilis, dolorem fugit ex similique voluptatum
-        eveniet dignissimos ratione neque praesentium inventore laudantium
-        impedit? Quam ad, vero ipsam iusto ducimus quasi aliquid voluptatum
-        tempore dicta accusantium aliquam ipsum sed deleniti quos fugit ullam
-        officia doloremque, architecto consequatur maxime quis. Architecto,
-        maiores exercitationem. Nesciunt id, laborum iste suscipit sint aperiam
-        doloribus veniam ex ducimus voluptas tempora!
+        iusto alias facere.
       </p>
 
       <MatchStoreProvider allMatches={result.matches}>

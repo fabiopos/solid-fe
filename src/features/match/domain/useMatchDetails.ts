@@ -1,5 +1,5 @@
 import { FulfilledCompetition } from "@/features/competition/domain/competition.schema";
-import { FulfilledMatch } from "./match.schema";
+import { EmptyMatch, FulfilledMatch } from "./match.schema";
 import { createStore } from "zustand";
 import {
   EmptyMatchAparition,
@@ -10,6 +10,7 @@ import { ApiClient } from "@/lib/ApiClient";
 import { AparitionGet } from "@/features/aparition/application/AparitionGet";
 import { RequestStatus } from "@/types/types.common";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import { MatchUpdate } from "../application/MatchUpdate";
 
 export type MatchDetailsStoreState = {
   players: FulfilledPlayer[];
@@ -21,11 +22,14 @@ export type MatchDetailsStoreState = {
     awayScore: number | null;
   };
   upsertStatus: RequestStatus;
+  scoreRequestStatus: RequestStatus;
+  formattedScore: string;
 };
 
 export type MatchDetailsStoreActions = {
   setHomeScore: (score: number) => void;
   setAwayScore: (score: number) => void;
+  setScore: (score: string) => void;
   setAparition: (playerId: string, aparition: FulfilledMatchAparition) => void;
   upsertAparitions: (token: string) => Promise<void>;
   fetchAparitions: (token: string) => Promise<void>;
@@ -41,6 +45,7 @@ export type MatchDetailsStoreActions = {
   setMinutes: (playerId: string, value: number) => void;
   setGoals: (playerId: string, value: number) => void;
   setRating: (playerId: string, value: number) => void;
+  putScore: (token: string) => Promise<void>;
 };
 
 export type MatchDetailsStore = MatchDetailsStoreState &
@@ -55,7 +60,10 @@ const defaultInitialState: MatchDetailsStoreState = {
     awayScore: null,
     homeScore: null,
   },
+
   upsertStatus: "IDLE",
+  formattedScore: "00",
+  scoreRequestStatus: "IDLE",
 };
 
 export const makeMatchDetailsStore = (
@@ -64,6 +72,35 @@ export const makeMatchDetailsStore = (
   return createStore<MatchDetailsStore>()((set, get) => ({
     ...defaultInitialState,
     ...initProps,
+    formattedScore: `${initProps?.match?.homeScore ?? 0}${
+      initProps?.match?.awayScore ?? 0
+    }`,
+    putScore: async (token: string) => {
+      const fScore = get().formattedScore;
+      const matchId = get().match?.id;
+      set(() => ({ scoreRequestStatus: "IN_PROGRESS" }));
+      if (!matchId) return;
+
+      const [homeScore, awayScore] = fScore.split("");
+      const client = new ApiClient();
+      const mClient = new MatchUpdate(client);
+      try {
+        await mClient.updateMatch(
+          matchId,
+          EmptyMatch.make({
+            homeScore: Number(homeScore),
+            awayScore: Number(awayScore),
+          }),
+          token
+        );
+        set(() => ({ scoreRequestStatus: "DONE" }));
+      } catch (error) {
+        set(() => ({ scoreRequestStatus: "ERROR" }));
+      }
+    },
+    setScore: (score: string) => {
+      set(() => ({ formattedScore: score }));
+    },
     setAwayScore: (score) => {
       const curr = get().score;
       set(() => ({ score: { ...curr, awayScore: score } }));
@@ -85,7 +122,7 @@ export const makeMatchDetailsStore = (
       const fetchAp = get().fetchAparitions;
       set(() => ({ upsertStatus: "IN_PROGRESS" }));
       const addApp = new AparitionUpsert(new ApiClient());
-      await addApp.addAparition(player, matchId, token)
+      await addApp.addAparition(player, matchId, token);
       await fetchAp(token);
       set(() => ({ upsertStatus: "DONE" }));
     },

@@ -28,7 +28,7 @@ async function LastMatches() {
               
               {/* Saturday October 22, 2024, Compensar Stadium */}
             </span>
-            <span className="text-sm text-slate-300">{ m.createdAt && formatDistanceToNowStrict(m.createdAt)} ago</span>
+            <span className="text-sm text-slate-300">{ m.matchDay && formatDistanceToNowStrict(m.matchDay)} ago</span>
           </div>
         ))}
       </div>

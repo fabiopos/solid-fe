@@ -12,7 +12,7 @@ export class PlayerGet {
     const endpoint = `/player/${teamId}`;
     const response = await this.apiClient.GET(endpoint, access_token ?? "");
 
-    if (!response.ok) throw new Error();
+    if (!response.ok) return [];
 
     const result = await response.json();
 

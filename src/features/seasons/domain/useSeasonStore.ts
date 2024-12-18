@@ -18,6 +18,7 @@ export type SeasonStoreState = {
   selectedSeason: FulfilledSeason | undefined;
   emptySeason: EmptySeason | undefined;
   selectedCompetition: CompetitionType | null;
+  
 };
 
 export type SeasonStoreActions = {

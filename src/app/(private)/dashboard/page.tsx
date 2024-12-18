@@ -1,5 +1,6 @@
 import LastMatches from "@/components/Dashboard/LastMatches/LastMatches";
 import NextMatch from "@/components/Dashboard/NextMatch/NextMatch";
+import { Separator } from "@/components/ui/separator";
 import LastPlayersAddedFt from "@/features/dashboard/infraestructure/LastPlayersAdded";
 import TeamCalendatFt from "@/features/dashboard/infraestructure/TeamCalendatFt";
 import TeamStats from "@/features/dashboard/infraestructure/TeamStats";
@@ -22,23 +23,24 @@ function Dashboard() {
             <div className="bg-slate-800/40 border rounded-md p-2 flex justify-center">
               <TeamStats />
             </div>
-            <div className="bg-slate-800/40 border">
+            {/* <div className="bg-slate-800/40 border">
               <LastPlayersAddedFt />
-            </div>
+            </div> */}
             <div className="bg-slate-800/40 border rounded-lg">
               <LastMatches />
               <NextMatch />
             </div>
             <div className="bg-slate-800/40 border rounded-lg">
               <TopScorersFt />
+              <Separator className="my-2" />
+              <TopAssistsFt />
             </div>
             <div className="bg-slate-800/40 col-span-3 row-span-3 border rounded-lg">
               <TeamCalendatFt />
             </div>
-            <div className="bg-slate-800/40 border rounded-lg">
-              <TopAssistsFt />
-            </div>
-            <div className="bg-slate-800/40 col-start-4 row-span-2 border rounded-lg">
+            {/* <div className="bg-slate-800/40 border rounded-lg">
+            </div> */}
+            {/* <div className="bg-slate-800/40 col-start-4 row-span-2 border rounded-lg">
               <div className="p-2">
                 <div className="px-5">
                   <h3 className="text-lg tracking-tight text-white font-bold max-lg:text-center">
@@ -57,7 +59,7 @@ function Dashboard() {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

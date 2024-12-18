@@ -3,16 +3,15 @@ import MatchRow from "@/components/Match/MatchRow";
 import { Separator } from "@/components/ui/separator";
 import { H1 } from "@/components/ui/typograhpy";
 import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
-import { useCallback, useMemo } from "react";
+import { useMemo, useState } from "react";
 import AparitionsEditTable from "@/features/aparition/infraestructure/AparitionsEditTable";
 import ReadOnlyAlert from "./ReadOnlyAlert";
 import { useAuthStore } from "@/context/AuthCtx";
-import { Alert } from "@/components/ui/alert";
 import AparitionDiffAlert from "@/features/aparition/infraestructure/AparitionDiffAlert";
 import { EditScoreDialog } from "./EditScoreDialog";
-import { FulfilledMatch } from "../../domain/match.schema";
 
 function MatchDetails() {
+  const [open, setOpen] = useState(false);
   const teamId = useAuthStore((state) => state.accountData.selectedTeamId);
   const { match } = useMatchDetailsStore((state) => state);
 
@@ -23,8 +22,6 @@ function MatchDetails() {
     return !teamIds.includes(teamId ?? "");
   }, [teamIds, teamId]);
 
-  const handleOpenDialog = useCallback((match: FulfilledMatch) => {}, []);
-
   return (
     <div className="container">
       <H1>
@@ -32,14 +29,13 @@ function MatchDetails() {
       </H1>
       <Separator className="my-5" />
       <div className="flex flex-col min-w-[550px]">
-        <MatchRow match={match} onClickScore={() => handleOpenDialog(match)} />
-        <EditScoreDialog />
+        <MatchRow match={match} onClickScore={() => setOpen(true)} />
+        <EditScoreDialog open={open} onOpenChange={setOpen} match={match} />
       </div>
       <Separator className="my-5" />
       {isReadonly && <ReadOnlyAlert />}
       {!isReadonly && <AparitionsEditTable />}
       <AparitionDiffAlert />
-      
     </div>
   );
 }

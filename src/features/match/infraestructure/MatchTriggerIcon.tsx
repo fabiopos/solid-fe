@@ -14,16 +14,16 @@ import { useMemo, useState } from "react";
 import { EmptyMatch, FulfilledMatch } from "../domain/match.schema";
 import { useMatchStore } from "@/context/MatchCtx";
 import MatchEditDrawer from "./MatchEditDrawer";
+import { revalidatePath } from "next/cache";
 
 interface MatchTriggerIconProps {
-  match: FulfilledMatch;  
+  match: FulfilledMatch;
 }
 function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
   const { competitionId } = useParams();
   const { data } = useSession();
-  const { patchingStatus, deletingStatus, patchMatch, deleteMatch } = useMatchStore(
-    (state) => state
-  );
+  const { patchingStatus, deletingStatus, patchMatch, deleteMatch } =
+    useMatchStore((state) => state);
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const handleOpenDrawer = () => {
@@ -42,10 +42,14 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
         completed,
       }),
       data?.user.access_token ?? ""
-    );
+    ).then(() => {
+      // revalidatePath('/seasons/[seasonId]')
+    });
   };
   const handleDelete = (id: string) => {
-    deleteMatch(id, data?.user.access_token ?? "");
+    deleteMatch(id, data?.user.access_token ?? "").then(() => {
+      router.refresh();
+    });
   };
 
   const isLoading = useMemo(() => {
@@ -64,7 +68,11 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          {isLoading || isDeleting ? <Loader className="animate-spin" /> : <Ellipsis />}
+          {isLoading || isDeleting ? (
+            <Loader className="animate-spin" />
+          ) : (
+            <Ellipsis />
+          )}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel className="text-neutral-400 text-xs">
@@ -77,11 +85,13 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
             </div>
           </DropdownMenuItem>
 
-          <DropdownMenuItem onClick={() => handleOpenDrawer()}>
-            <div className="grid grid-cols-[150px_10px] items-center gap-2">
-              <span>Edit match details</span>
-            </div>
-          </DropdownMenuItem>
+          {match.homeTeam && match.awayTeam && (
+            <DropdownMenuItem onClick={() => handleOpenDrawer()}>
+              <div className="grid grid-cols-[150px_10px] items-center gap-2">
+                <span>Edit match details</span>
+              </div>
+            </DropdownMenuItem>
+          )}
 
           <DropdownMenuLabel className="text-neutral-400 text-xs">
             Competition Status
