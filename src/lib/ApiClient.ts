@@ -12,7 +12,11 @@ export class ApiClient {
     });
   };
 
-  POST = async (resource: string, body: any, access_token?: string) => {
+  POST = async <T>(
+    resource: string,
+    body: T,
+    access_token?: string
+  ): Promise<Response> => {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
 
@@ -28,7 +32,11 @@ export class ApiClient {
     });
   };
 
-  PATCH = async (resource: string, body: any, access_token?: string) => {
+  PATCH = async <T>(
+    resource: string,
+    body: T,
+    access_token?: string
+  ): Promise<Response> => {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
 

@@ -15,7 +15,7 @@ export const filterCountries = (
   whitelist: string[],
   blacklist: string[]
 ): CountryRegion[] => {
-  let countriesListedFirst: any[] = [];
+  const countriesListedFirst: CountryRegion[] = [];
   let filteredCountries = countries;
 
   if (whitelist.length > 0) {
@@ -55,8 +55,8 @@ export const filterRegions = (
   priorityRegions: string[],
   whitelist: string[],
   blacklist: string[]
-) => {
-  let regionsListedFirst: any[] = [];
+): Region[] => {
+  const regionsListedFirst: Region[] = [];
   let filteredRegions = regions;
 
   if (whitelist.length > 0) {
@@ -70,7 +70,7 @@ export const filterRegions = (
   }
 
   if (priorityRegions.length > 0) {
-    // ensure the Regions are added in the order in which they are specified by the user
+    // ensure the regions are added in the order in which they are specified by the user
     priorityRegions.forEach((slug) => {
       const result = filteredRegions.find(
         ({ shortCode }) => shortCode === slug
