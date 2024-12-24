@@ -2,7 +2,7 @@ import { setCookieTeamId } from "@/app/actions";
 import { useAuthStore } from "@/context/AuthCtx";
 import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 export const useTeamSelect = () => {
   const pathName = usePathname();
@@ -31,9 +31,7 @@ export const useTeamSelect = () => {
     pathName,
   ]);
 
-  // console.log(fetchTeamsStatus, allTeams, accountData);
-  // console.log(isModalOpen, { selectedTeamId: accountData.selectedTeamId, user: !!session?.user })
-
+  
   const showNoTeamsAlert = useMemo(() => {
     if (status === "loading" || status === "unauthenticated") return false;
     if (fetchTeamsStatus === "DONE" && !hasTeams) return true;
@@ -49,7 +47,7 @@ export const useTeamSelect = () => {
       setTeamId(id);
       setCookieTeamId(id);
     },
-    [setTeamId, setCookieTeamId]
+    [setTeamId]
   );
 
   // if one team - then autoselect this team

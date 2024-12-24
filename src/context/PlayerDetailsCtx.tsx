@@ -27,6 +27,7 @@ export const PlayerDetailsStoreProvider = ({
       error: null,
       player,
       updateRequestStatus: "IDLE",
+      uploadAvatarStatus: "IDLE",
     });
   }
 

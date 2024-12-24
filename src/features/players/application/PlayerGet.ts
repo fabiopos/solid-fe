@@ -8,16 +8,16 @@ export class PlayerGet {
   async getAllPlayers(
     teamId: string,
     access_token?: string
-  ): Promise<PlayerType[]> {
+  ): Promise<FulfilledPlayer[]> {
     const endpoint = `/player/${teamId}`;
     const response = await this.apiClient.GET(endpoint, access_token ?? "");
 
     if (!response.ok) return [];
 
-    const result = await response.json();
+    const result = await response.json() as FulfilledPlayer[];
 
-    const mapped = (result as PlayerType[]).map(this.mapPlayers);
-    const sorted = mapped.sort(this.sortPlayers);
+    // const mapped = (result as PlayerType[]).map(this.mapPlayers);
+    const sorted = result;
 
     return sorted;
   }
@@ -44,6 +44,6 @@ export class PlayerGet {
           },
         };
 
-  private sortPlayers = (a: PlayerType, b: PlayerType) =>
-    a.favPosition!.order > b.favPosition!.order ? 1 : -1;
+  private sortPlayers = (a: FulfilledPlayer, b: FulfilledPlayer) =>
+    a.favPosition!.order! > b.favPosition!.order! ? 1 : -1;
 }

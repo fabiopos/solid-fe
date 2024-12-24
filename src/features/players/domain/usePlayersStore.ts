@@ -1,17 +1,21 @@
 import { createStore } from "zustand/vanilla";
-import { PlayerType, PlayerUpdateType } from "./player.schema";
+import { PlayerUpdateType } from "./player.schema";
 import { PlayerGet } from "../application/PlayerGet";
 import { ApiClient } from "@/lib/ApiClient";
 import { PlayerStatus, RequestStatus } from "@/types/types.common";
 import { PlayerUpdate } from "../application/PlayerUpdate";
 import { PlayerDelete } from "../application/PlayerDelete";
+import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
+import { FulfilledPlayer } from "./player.effect.schema";
 
 export type PlayersStoreState = {
   fetchPlayersStatus: RequestStatus;
   playerStatusUpdate: { id: string | null; status: RequestStatus };
   playerStatusDelete: { id: string | null; status: RequestStatus };
   error: string | null;
-  players: PlayerType[];
+  players: FulfilledPlayer[];
+  allFieldPositions: FulfilledFieldPosition[];
+  selectedPlayer: FulfilledPlayer | null;
 };
 export type PlayersStoreActions = {
   fetchPlayers(teamId: string, access_token: string): Promise<void>;
@@ -22,7 +26,11 @@ export type PlayersStoreActions = {
   ): Promise<void>;
   setPlayerStatus(playerId: string, playerStatus: PlayerStatus): void;
   setPlayerInactive(playerId: string, active: boolean): void;
+  setSelectedPlayer(player: FulfilledPlayer | null): void;
+  updateSelectedPlayer(player: FulfilledPlayer): void;
+  updateSelectedPlayerPositions(newPositions: string[]): void;
   deletePlayer(playerId: string, token: string): Promise<void>;
+  patchPlayerFieldPositions(token: string): Promise<void>;
 };
 
 export type PlayersStore = PlayersStoreState & PlayersStoreActions;
@@ -33,6 +41,8 @@ const defaultInitState: PlayersStoreState = {
   error: null,
   playerStatusUpdate: { id: null, status: "IDLE" },
   playerStatusDelete: { id: null, status: "IDLE" },
+  allFieldPositions: [],
+  selectedPlayer: null,
 };
 export const makePlayersStore = (
   initState: PlayersStoreState = defaultInitState
@@ -103,11 +113,61 @@ export const makePlayersStore = (
       const result = await api.deletePlayer(pid, token);
 
       if (result) {
-        set(() => ({ players: allPlayers.filter((x) => x.id !== pid) }));        
+        set(() => ({ players: allPlayers.filter((x) => x.id !== pid) }));
       }
-      
+
       set(() => ({
         playerStatusDelete: { id: pid, status: result ? "DONE" : "ERROR" },
+      }));
+    },
+    setSelectedPlayer(player) {
+      set(() => ({ selectedPlayer: player }));
+    },
+    updateSelectedPlayer(player) {
+      const players = get().players;
+      set(() => ({
+        players: players.map((p) => {
+          if (p.id === player.id) return player;
+          return p;
+        }),
+      }));
+    },
+    updateSelectedPlayerPositions(newPositions) {
+      const player = get().selectedPlayer;
+      if (!player) return;
+      set(() => ({
+        selectedPlayer: {
+          ...player,
+          playerPositions: newPositions.map((x) => ({
+            fieldPosition: { id: FulfilledFieldPosition.make({ id: x }).id },
+          })),
+        },
+      }));
+    },
+    async patchPlayerFieldPositions(token) {
+      const player = get().selectedPlayer;
+      if (!player || !player.id) return;
+      const client = new PlayerUpdate(new ApiClient());
+
+      set(() => ({
+        playerStatusUpdate: { id: player.id!, status: "IN_PROGRESS" },
+      }));
+
+      await client.updatePlayerPositions(
+        player.id!,
+        player.favPosition?.id ?? "",
+        (player.playerPositions ?? []).map((x) => x.fieldPosition?.id ?? ""),
+        token
+      );
+      get().setSelectedPlayer(null);
+
+      // if (player.team?.id) get().fetchPlayers(player.team.id, token);
+      set(() => ({
+        players: get().players.map((p) => {
+          if (p.id === player.id) return player;
+          return p;
+        }, {}),
+        playerStatusUpdate: { id: player.id!, status: "DONE" },
       }));
     },
   }));

@@ -21,8 +21,7 @@ function SeasonList() {
     if (!selectedSeason) return [];
     return allCompetitions.filter((x) => x.season?.id === selectedSeason.id);
   }, [selectedSeason, allCompetitions]);
-
-  console.log(allCompetitions)
+  
   return (
     <div className="flex gap-5 p-5 justify-between">
       <div className="space-y-2 flex-1">

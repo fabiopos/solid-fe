@@ -1,12 +1,11 @@
 import React from "react";
-import { PlayerType } from "../../domain/player.schema";
 import { PlayerStatus } from "@/types/types.common";
 import { Ambulance, ArrowDown, ArrowUp, Loader } from "lucide-react";
 import { usePlayersStore } from "@/context/PlayersCtx";
-import { useNewPlayerStore } from "@/context/NewPlayerCtx";
+import { FulfilledPlayer } from "../../domain/player.effect.schema";
 
 interface StatusCellProps {
-  player: PlayerType;
+  player: FulfilledPlayer;
 }
 const StatusCell = ({ player }: StatusCellProps) => {
   const { playerStatusUpdate, playerStatusDelete } = usePlayersStore(

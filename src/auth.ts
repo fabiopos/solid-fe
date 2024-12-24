@@ -73,7 +73,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!auth) return false;
 
       const token = auth.user.access_token;
-      const isValidToken = await verifyToken(token);     
+      const isValidToken = await verifyToken(token); 
+      console.log(isValidToken);    
       return !!isValidToken;
     },
     jwt({ token, user, account }) {

@@ -35,7 +35,7 @@ export const CompetitionStoreProvider = ({
     const allCompetitions = payloadComps ?? getCompetitions(season);
     const selectedCompetition =
       allCompetitions?.length > 0 ? allCompetitions[0] : undefined;
-    console.log(selectedCompetition, allCompetitions);
+
     storeRef.current = makeCompetitionStore({
       allCompetitions,
       selectedCompetition,
@@ -66,7 +66,7 @@ export const useCompetitionStore = <T,>(
 function getCompetitions(
   season: FulfilledSeason | null
 ): FulfilledCompetition[] {
-  const competitions = season?.competitions ?? ([] as CompetitionType[]);
+  const competitions = (season?.competitions ?? []) as CompetitionType[];
   const fcompetitions = competitions.map(mapToDomain);
   return fcompetitions;
 }

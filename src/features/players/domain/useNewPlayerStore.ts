@@ -5,7 +5,7 @@ import {
   isValidShirtNumber,
   isValidWeight,
 } from "./player.schema";
-import { EmptyPlayer, FulfilledPlayer } from "./player.effect.schema";
+import { EmptyPlayer } from "./player.effect.schema";
 import { DocumentType } from "@/shared/enums/playerEnums";
 import { DominantFoot, RequestStatus, ShirtSize } from "@/types/types.common";
 import { PlayerCreate } from "../application/PlayerCreate";
@@ -271,8 +271,7 @@ export const makeNewPlayerStore = (
         }
       } else {
         set(() => ({ createPlayerStatus: "ERROR", error: response.error }));
-      }
-      console.log(response);
+      }      
     },
   }));
 };

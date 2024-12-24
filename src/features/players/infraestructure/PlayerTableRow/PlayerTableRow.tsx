@@ -4,7 +4,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import {
   Ambulance,
   ArrowDown,
-  ArrowUp,
+  ArrowUp,  
   Ellipsis,
   GitPullRequestArrow,
   ToggleLeft,
@@ -22,14 +22,15 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import StatusCell from "../TableCells/StatusCell";
-import { PlayerType } from "../../domain/player.schema";
 import { usePlayers } from "../../domain/usePlayers";
 import { useMemo } from "react";
 import PlayerAvatar from "../PlayerAvatar";
 import Link from "next/link";
+import { FulfilledPlayer } from "../../domain/player.effect.schema";
+import EditPlayerPosition from "./RowActions/EditPlayerPosition";
 
 interface PlayerTableRowProps {
-  player: PlayerType;
+  player: FulfilledPlayer;
 }
 
 function PlayerTableRow({ player }: PlayerTableRowProps) {
@@ -113,14 +114,7 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
               </DropdownMenuItem>
             )}
 
-            {player.favPosition?.category !== undefined && (
-              <DropdownMenuItem>
-                <div className="grid grid-cols-[110px_10px] items-center gap-2">
-                  <span>Edit field position</span>
-                  <GitPullRequestArrow className="text-purple-500" />
-                </div>
-              </DropdownMenuItem>
-            )}
+            <EditPlayerPosition player={player} />
 
             <DropdownMenuLabel className="text-neutral-400 text-xs">
               Player Health

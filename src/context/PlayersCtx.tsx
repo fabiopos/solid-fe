@@ -6,7 +6,8 @@ import {
   makePlayersStore,
   type PlayersStore,
 } from "@/features/players/domain/usePlayersStore";
-import { PlayerType } from "@/features/players/domain/player.schema";
+import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
 
 export type PlayersStoreApi = ReturnType<typeof makePlayersStore>;
 
@@ -16,11 +17,13 @@ export const PlayersStoreContext = createContext<PlayersStoreApi | undefined>(
 
 export interface PlayersStoreProviderProps {
   children: ReactNode;
-  players: PlayerType[];
+  players: FulfilledPlayer[];
+  fieldPositions: FulfilledFieldPosition[];
 }
 
 export const PlayersStoreProvider = ({
   players,
+  fieldPositions,
   children,
 }: PlayersStoreProviderProps) => {
   const storeRef = useRef<PlayersStoreApi>();
@@ -31,6 +34,8 @@ export const PlayersStoreProvider = ({
       fetchPlayersStatus: "IDLE",
       playerStatusDelete: { id: null, status: "IDLE" },
       playerStatusUpdate: { id: null, status: "IDLE" },
+      allFieldPositions: fieldPositions,
+      selectedPlayer: null,
     });
   }
 

@@ -82,8 +82,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
     [players]
   );
 
-  async function onSubmit(partialPlayer: z.infer<typeof FormSchema>) {
-    console.log(data);
+  async function onSubmit(partialPlayer: z.infer<typeof FormSchema>) {    
     if (!player.id) return;
     if (!data) return;
     await putPlayer(player.id, partialPlayer, data?.user.access_token);

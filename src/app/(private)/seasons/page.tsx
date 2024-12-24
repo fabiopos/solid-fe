@@ -29,11 +29,13 @@ interface SeasonPageDataProps {
   seasons: FulfilledSeason[];
   competitions: FulfilledCompetition[];
   matches: FulfilledMatch[];
+  
 }
 const emptyState: SeasonPageDataProps = {
   seasons: [],
   competitions: [],
   matches: [],
+  
 };
 async function getData(): Promise<SeasonPageDataProps> {
   const session = await auth();
@@ -43,6 +45,7 @@ async function getData(): Promise<SeasonPageDataProps> {
   const client = new SeasonGet(apiClient);
   const competitionsGet = new CompetitionGet(apiClient);
   const matchesGet = new MatchGet(apiClient);
+  
 
   if (!session?.user.access_token) return emptyState;
   if (!teamId) return emptyState;
@@ -54,10 +57,13 @@ async function getData(): Promise<SeasonPageDataProps> {
   const competitions = await competitionsGet.getAllByTeam(teamId, access_token);
   const matches = await matchesGet.getByTeam(teamId, access_token);
 
+  
+
   return {
     seasons,
     competitions,
     matches,
+  
   };
 }
 export default SeasonsPage;

@@ -33,7 +33,8 @@ export const usePlayers = () => {
   }, [players, position]);
 
   const handleSetDown = useCallback(
-    (playerId: string, newStatus: PlayerStatus) => {
+    (playerId: string | undefined, newStatus: PlayerStatus) => {
+      if (!playerId) return;
       setPlayerStatus(playerId, newStatus);
       const player = players.find((x) => x.id === playerId);
 
@@ -46,7 +47,8 @@ export const usePlayers = () => {
   );
 
   const handleSetInactive = useCallback(
-    (playerId: string, active: boolean) => {
+    (playerId: string | undefined, active: boolean) => {
+      if (!playerId) return;
       setPlayerInactive(playerId, active);
 
       const player = players.find((x) => x.id === playerId);
@@ -60,11 +62,12 @@ export const usePlayers = () => {
   );
 
   const handleDelete = useCallback(
-    (playerId: string) => {
+    (playerId: string | undefined) => {
+      if (!playerId) return;
       deletePlayer(playerId, data?.user.access_token ?? "");
       router.refresh();
     },
-    [data]
+    [data?.user.access_token, deletePlayer, router]
   );
 
   useEffect(() => {
@@ -75,6 +78,7 @@ export const usePlayers = () => {
         variant: "destructive",
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerStatusDelete]);
 
   useEffect(() => {
@@ -83,8 +87,9 @@ export const usePlayers = () => {
         title: "The player has been deleted successfuly",
         description: "This operation cannot be undone",
       });
-      router.refresh()
+      router.refresh();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerStatusDelete]);
 
   return {

@@ -53,8 +53,7 @@ export const makePlayerDeailsStore = (
         const error = await result.json();
         set(() => ({ error: error, updateRequestStatus: "ERROR" }));
       }
-      const response = await result.json();
-      console.log("RESPONSE PATCH PLAYER:", response);
+      await result.json();
       set(() => ({ error: null, updateRequestStatus: "DONE" }));
     },
     setAvatarUrl: (avatarUrl: string) => {
@@ -67,11 +66,12 @@ export const makePlayerDeailsStore = (
       const put = get().putPlayer;
       const apiClient = new ApiClient();
       const pCreate = new PlayerCreate(apiClient);
-      const result = await pCreate.updateAvatar(pid, file);
-      console.log("toUpdate", result);
+      const result = await pCreate.updateAvatar(pid, file);      
       await put(pid, { avatarUrl: result }, token);
     },
-    setFulfiledPlayer: (p) => {},
+    setFulfiledPlayer: (p) => {
+      set(() => ({ player: p }));
+    },
     reset: () => {
       set(() => ({ ...initState }));
     },

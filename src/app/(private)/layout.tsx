@@ -47,7 +47,6 @@ export default async function RootLayout({
 
 async function AuthWrapper({ children }: { children: ReactNode }) {
   const { selectedTeamId, teams } = await getAuthData();
-  console.log(selectedTeamId, teams);
   return (
     <AuthStoreProvider selectedTeamId={selectedTeamId} teams={teams}>
       {children}
@@ -91,7 +90,7 @@ async function getData() {
 
     return { teams, tree };
   } catch (error) {
-    console.log(error);
+    console.error('getData', error);
     return emptyState;
     // if (error instanceof UnauthorizedError) {
     //   return redirect("/logout");

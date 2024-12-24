@@ -11,20 +11,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PlayerTableRow from "./PlayerTableRow/PlayerTableRow";
+import FieldPositionModal from "@/features/fieldPosition/infraestructure/FieldPositionModal/FieldPositionModal";
 
 export default function PlayersTable() {
   const { error, fetchPlayersStatus, players } = usePlayers();
-
   if (fetchPlayersStatus === "IN_PROGRESS") return <PlayersSkeleton />;
   if (error) return <Alert variant="destructive">{error}</Alert>;
-
   return (
     <div>
       <Table>
         <TableCaption>Your squad has {players.length} players.</TableCaption>
         <TableHeader>
           <TableRow>
-          <TableHead></TableHead>
+            <TableHead></TableHead>
             <TableHead>Position</TableHead>
             <TableHead className="text-center">Number</TableHead>
             <TableHead className="">Name</TableHead>
@@ -76,6 +75,8 @@ export default function PlayersTable() {
           ))}
         </TableBody>
       </Table>
+
+      <FieldPositionModal />
     </div>
   );
 }

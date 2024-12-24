@@ -24,6 +24,7 @@ const getData = async (pid: string) => {
 
   const player = await pGet.find(pid, session.user.access_token);
 
+
   return { player };
 };
 

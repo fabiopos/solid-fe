@@ -62,8 +62,7 @@ export const makeAuthStore = (initProps: AccountData) => {
 
       if (token) {
         try {
-          const teams = await client.getTeams(token);
-          console.log("acc", teams);
+          const teams = await client.getTeams(token);          
           set((state) => ({
             fetchTeamsStatus: "DONE",
             accountData: {
@@ -84,7 +83,7 @@ export const makeAuthStore = (initProps: AccountData) => {
             }));
         }
       } else {
-        console.log("no token");
+        console.error("no token");
         set(() => ({ fetchTeamsStatus: "DONE" }));
       }
     },
