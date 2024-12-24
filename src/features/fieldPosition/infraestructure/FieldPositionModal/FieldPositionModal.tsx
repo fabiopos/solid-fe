@@ -21,8 +21,7 @@ function FieldPositionModal() {
     if (!open) setSelectedPlayer(null);
   };
 
-  const onSaveChanges = () => {
-    console.log(selectedPlayer);
+  const onSaveChanges = () => {    
     if (!data) return;
     patchPlayerFieldPositions(data.user.access_token);
   };
@@ -49,7 +48,7 @@ function FieldPositionModal() {
             <div className="flex gap-2 items-center">
               <Label>Primary Position</Label>
               <FieldPositionCombo
-                defaultValue={selectedPlayer?.favPosition?.id ?? ""}
+                defaultValue={selectedPlayer?.favPositionId ?? ""}
               />
             </div>
             <div>

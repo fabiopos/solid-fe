@@ -15,7 +15,7 @@ export class PlayerUpdate {
     positions: string[],
     token: string
   ) {
-    const body = { favPosition, fieldPositions: positions };
+    const body = { favPositionId: favPosition, fieldPositions: positions };
     const response = await this.client.PATCH(`/player/${id}/field-positions`, body, token);
     return response;
   }

@@ -26,6 +26,7 @@ export type PlayersStoreActions = {
   ): Promise<void>;
   setPlayerStatus(playerId: string, playerStatus: PlayerStatus): void;
   setPlayerInactive(playerId: string, active: boolean): void;
+  setFavPosition(favPositionId: string): void;
   setSelectedPlayer(player: FulfilledPlayer | null): void;
   updateSelectedPlayer(player: FulfilledPlayer): void;
   updateSelectedPlayerPositions(newPositions: string[]): void;
@@ -92,6 +93,22 @@ export const makePlayersStore = (
         }),
       }));
     },
+    setFavPosition(favPositionId: string) {
+      const player = get().selectedPlayer;
+      const allFieldPositions = get().allFieldPositions;
+      const selectedFieldPosition = allFieldPositions.find(
+        (x) => x.id === favPositionId
+      );
+      console.log(selectedFieldPosition)
+      if (!player) return;
+      set(() => ({
+        selectedPlayer: {
+          ...player,
+          favPositionId,
+          favPosition: selectedFieldPosition,
+        },
+      }));
+    },
     async updatePlayer(
       playerId: string,
       player: PlayerUpdateType,
@@ -155,7 +172,7 @@ export const makePlayersStore = (
 
       await client.updatePlayerPositions(
         player.id!,
-        player.favPosition?.id ?? "",
+        player.favPositionId ?? "",
         (player.playerPositions ?? []).map((x) => x.fieldPosition?.id ?? ""),
         token
       );

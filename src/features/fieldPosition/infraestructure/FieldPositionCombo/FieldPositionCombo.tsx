@@ -28,9 +28,9 @@ interface FieldPositionComboProps {
 
 
 function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
-  const fieldPositions = usePlayersStore((state) => state.allFieldPositions);
+  const { allFieldPositions, setFavPosition, selectedPlayer } = usePlayersStore((state) => state);
   const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState(defaultValue);
+  
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -41,8 +41,8 @@ function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
           aria-expanded={open}
           className="w-[400px] justify-between"
         >
-          {value
-            ? fieldPositions.find((f) => f.id === value)?.id
+          {selectedPlayer?.favPositionId
+            ? allFieldPositions.find((f) => f.id === selectedPlayer?.favPositionId)?.id
             : "Select field position..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
@@ -53,12 +53,12 @@ function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
           <CommandList>
             <CommandEmpty>No field position found.</CommandEmpty>
             <CommandGroup>
-              {fieldPositions.map((fp) => (
+              {allFieldPositions.map((fp) => (
                 <CommandItem
                   key={fp.id}
                   value={fp.id}
                   onSelect={(currentValue) => {
-                    setValue(currentValue === value ? "" : currentValue);
+                    setFavPosition(currentValue === selectedPlayer?.favPositionId ? "" : currentValue);
                     setOpen(false);
                   }}
                 >
@@ -66,7 +66,7 @@ function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === fp.id ? "opacity-100" : "opacity-0"
+                      selectedPlayer?.favPositionId === fp.id ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>

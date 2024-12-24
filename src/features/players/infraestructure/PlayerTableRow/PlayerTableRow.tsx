@@ -4,7 +4,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import {
   Ambulance,
   ArrowDown,
-  ArrowUp,  
+  ArrowUp,
   Ellipsis,
   GitPullRequestArrow,
   ToggleLeft,
@@ -104,15 +104,6 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
                 </div>
               </Link>
             </DropdownMenuItem>
-
-            {player.favPosition?.category === undefined && (
-              <DropdownMenuItem>
-                <div className="grid grid-cols-[110px_10px] items-center gap-2">
-                  <span>Add field position</span>
-                  <GitPullRequestArrow className="text-purple-500" />
-                </div>
-              </DropdownMenuItem>
-            )}
 
             <EditPlayerPosition player={player} />
 
