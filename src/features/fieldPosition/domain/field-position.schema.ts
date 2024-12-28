@@ -6,6 +6,7 @@ export const fieldPositionSchema = S.Struct({
   name: S.optional(S.String),
   description: S.optional(S.NullishOr(S.String)),
   order: S.optional(S.Number),
+  category: S.optional(S.NullishOr(S.String)),
 });
 
 export type FieldPositionType = S.Schema.Type<typeof fieldPositionSchema>;

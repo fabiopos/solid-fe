@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { SolidAuth } from "./features/auth/application/SolidAuth";
 import { jwtVerify } from "jose";
 import { CustomJWT } from "./types/types.common";
+import { toDate } from "date-fns";
 
 declare module "next-auth" {
   /**
@@ -69,12 +70,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     authorized: async ({ auth }) => {
-      // Logged in users are authenticated, otherwise redirect to login page      
+      // Logged in users are authenticated, otherwise redirect to login page
       if (!auth) return false;
 
       const token = auth.user.access_token;
-      const isValidToken = await verifyToken(token); 
-      console.log(isValidToken);    
+      const isValidToken = await verifyToken(token);      
       return !!isValidToken;
     },
     jwt({ token, user, account }) {
@@ -88,10 +88,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token;
     },
-    session({ session, token }) {
+    session: async ({ session, token }) => {      
       if (session && session.user) {
         session.user.subscriptionId = token.id as string;
         session.user.access_token = token?.access_token as string;
+        session.expires = toDate(token.exp as number);
       }
       return session;
     },
@@ -99,7 +100,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 });
 
 async function verifyToken(token: string): Promise<CustomJWT | null> {
-  try {    
+  try {
     const secret = new TextEncoder().encode(
       process.env.NEXT_JWT_AUTH_SECRET ?? ""
     );

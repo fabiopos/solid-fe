@@ -12,19 +12,35 @@ import { Label } from "@/components/ui/label";
 import FieldPositionSelect from "../FieldPositionSelect/FieldPositionSelect";
 import { usePlayersStore } from "@/context/PlayersCtx";
 import { useSession } from "next-auth/react";
+import { useMemo } from "react";
 
 function FieldPositionModal() {
   const { data } = useSession();
-  const { selectedPlayer, setSelectedPlayer, patchPlayerFieldPositions } =
-    usePlayersStore((state) => state);
+  const {
+    teamId,
+    selectedPlayer,
+    setSelectedPlayer,
+    patchPlayerFieldPositions,
+    fetchPlayers,
+    playerStatusUpdate,
+  } = usePlayersStore((state) => state);
   const handleOpenChange = (open: boolean) => {
     if (!open) setSelectedPlayer(null);
   };
 
-  const onSaveChanges = () => {    
+  const onSaveChanges = () => {
     if (!data) return;
-    patchPlayerFieldPositions(data.user.access_token);
+    patchPlayerFieldPositions(data.user.access_token).then(() =>
+      fetchPlayers(teamId ?? "", data.user.access_token)
+    );
   };
+
+  const isLoading = useMemo(
+    () =>
+      playerStatusUpdate.id === selectedPlayer?.id &&
+      playerStatusUpdate.status === "IN_PROGRESS",
+    [playerStatusUpdate, selectedPlayer]
+  );
 
   if (!selectedPlayer) return null;
   return (
@@ -40,7 +56,7 @@ function FieldPositionModal() {
             {selectedPlayer?.lastName}
           </DialogTitle>
           <DialogDescription>
-            Change your field position to improve your performance
+            Change your field positions for this player
           </DialogDescription>
         </DialogHeader>
         <div className="min-h-[400px]">
@@ -58,8 +74,8 @@ function FieldPositionModal() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="button" onClick={onSaveChanges}>
-            Save changes
+          <Button type="button" onClick={onSaveChanges} disabled={isLoading}>
+            {isLoading ? "Wait..." : "Save changes"}
           </Button>
         </DialogFooter>
       </DialogContent>

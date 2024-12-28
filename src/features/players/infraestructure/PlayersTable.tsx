@@ -1,7 +1,4 @@
 "use client";
-import { Alert } from "@/components/ui/alert";
-import { usePlayers } from "../domain/usePlayers";
-import PlayersSkeleton from "./PlayersSkeleton";
 import {
   Table,
   TableCaption,
@@ -11,14 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PlayerTableRow from "./PlayerTableRow/PlayerTableRow";
-import FieldPositionModal from "@/features/fieldPosition/infraestructure/FieldPositionModal/FieldPositionModal";
+import { FulfilledPlayer } from "../domain/player.effect.schema";
 
-export default function PlayersTable() {
-  const { error, fetchPlayersStatus, players } = usePlayers();
-  if (fetchPlayersStatus === "IN_PROGRESS") return <PlayersSkeleton />;
-  if (error) return <Alert variant="destructive">{error}</Alert>;
+interface PlayersTableProps {
+  players: FulfilledPlayer[];
+}
+
+export default function PlayersTable({ players = [] }: PlayersTableProps) {
   return (
-    <div>
+    <>
       <Table>
         <TableCaption>Your squad has {players.length} players.</TableCaption>
         <TableHeader>
@@ -75,8 +73,6 @@ export default function PlayersTable() {
           ))}
         </TableBody>
       </Table>
-
-      <FieldPositionModal />
-    </div>
+    </>
   );
 }

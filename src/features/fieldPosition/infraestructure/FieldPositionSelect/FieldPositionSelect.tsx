@@ -1,6 +1,7 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { usePlayersStore } from "@/context/PlayersCtx";
+import { cn } from "@/lib/utils";
 import { useMemo } from "react";
 
 function FieldPositionSelect() {
@@ -14,10 +15,7 @@ function FieldPositionSelect() {
     );
   }, [selectedPlayer?.playerPositions]);
 
-  const onCheckedChange = (
-    checked: boolean | string,
-    pos: string
-  ) => {
+  const onCheckedChange = (checked: boolean | string, pos: string) => {
     if (checked === true) {
       updateSelectedPlayerPositions([...playerPositions, pos]);
     }
@@ -36,8 +34,15 @@ function FieldPositionSelect() {
             name={`field-position-${selectedPlayer?.id}`}
             checked={playerPositions.includes(item.id ?? "")}
             onCheckedChange={(checked) => onCheckedChange(checked, item.id!)}
+            disabled={selectedPlayer.favPositionId === item.id}
           />
-          <label htmlFor={`field-position-${item.id}`}>
+          <label
+            htmlFor={`field-position-${item.id}`}
+            className={cn(
+              "flex gap-2",
+              selectedPlayer.favPositionId === item.id && "line-through"
+            )}
+          >
             <span>{item.name}</span>
             <span className="text-slate-400">({item.id})</span>
           </label>

@@ -13,7 +13,7 @@ export default function PlayerAvatar({
 }: PlayerAvatarProps) {
   return (
     <Avatar>
-      <AvatarImage src={imageUrl ?? ''} />
+      <AvatarImage src={imageUrl ?? ''} className="object-cover" />
       <AvatarFallback>{fallback}</AvatarFallback>
     </Avatar>
   );

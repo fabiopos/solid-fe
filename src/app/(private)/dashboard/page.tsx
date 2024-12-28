@@ -1,7 +1,6 @@
 import LastMatches from "@/components/Dashboard/LastMatches/LastMatches";
 import NextMatch from "@/components/Dashboard/NextMatch/NextMatch";
 import { Separator } from "@/components/ui/separator";
-import LastPlayersAddedFt from "@/features/dashboard/infraestructure/LastPlayersAdded";
 import TeamCalendatFt from "@/features/dashboard/infraestructure/TeamCalendatFt";
 import TeamStats from "@/features/dashboard/infraestructure/TeamStats";
 import TopAssistsFt from "@/features/dashboard/infraestructure/TopAssitsFt";

@@ -19,15 +19,37 @@ export interface PlayersStoreProviderProps {
   children: ReactNode;
   players: FulfilledPlayer[];
   fieldPositions: FulfilledFieldPosition[];
+  teamId: string;
 }
 
 export const PlayersStoreProvider = ({
   players,
   fieldPositions,
+  teamId,
   children,
 }: PlayersStoreProviderProps) => {
   const storeRef = useRef<PlayersStoreApi>();
   if (!storeRef.current) {
+    const categories = fieldPositions
+      .map((x) => x.category)
+      .filter((x) => x)
+      .map((x) => String(x));
+    const uniqueCategories = [...new Set(categories)];
+
+    const playersByCategory = uniqueCategories.reduce(
+      (acc, category) => ({
+        ...acc,
+        [category ?? ""]: players.filter(
+          (player) =>
+            player.favPosition?.category === category ||
+            (player.playerPositions ?? []).some(
+              (pos) => pos.fieldPosition?.category === category
+            )
+        ),
+      }),
+      {}
+    );
+
     storeRef.current = makePlayersStore({
       players,
       error: null,
@@ -36,6 +58,10 @@ export const PlayersStoreProvider = ({
       playerStatusUpdate: { id: null, status: "IDLE" },
       allFieldPositions: fieldPositions,
       selectedPlayer: null,
+      filteredPlayers: playersByCategory,
+      tab: "all",
+      categories: uniqueCategories,
+      teamId,
     });
   }
 

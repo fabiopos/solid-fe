@@ -9,6 +9,7 @@ import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-po
 import { FulfilledPlayer } from "./player.effect.schema";
 
 export type PlayersStoreState = {
+  teamId: string;
   fetchPlayersStatus: RequestStatus;
   playerStatusUpdate: { id: string | null; status: RequestStatus };
   playerStatusDelete: { id: string | null; status: RequestStatus };
@@ -16,6 +17,9 @@ export type PlayersStoreState = {
   players: FulfilledPlayer[];
   allFieldPositions: FulfilledFieldPosition[];
   selectedPlayer: FulfilledPlayer | null;
+  tab: string;
+  filteredPlayers: Record<string, FulfilledPlayer[]>;
+  categories: string[];
 };
 export type PlayersStoreActions = {
   fetchPlayers(teamId: string, access_token: string): Promise<void>;
@@ -32,11 +36,14 @@ export type PlayersStoreActions = {
   updateSelectedPlayerPositions(newPositions: string[]): void;
   deletePlayer(playerId: string, token: string): Promise<void>;
   patchPlayerFieldPositions(token: string): Promise<void>;
+  setTab(tab: string): void;
+  refreshFilteredPlayers(players: FulfilledPlayer[]): Promise<void>;
 };
 
 export type PlayersStore = PlayersStoreState & PlayersStoreActions;
 
 const defaultInitState: PlayersStoreState = {
+  teamId: "",
   players: [],
   fetchPlayersStatus: "IDLE",
   error: null,
@@ -44,12 +51,18 @@ const defaultInitState: PlayersStoreState = {
   playerStatusDelete: { id: null, status: "IDLE" },
   allFieldPositions: [],
   selectedPlayer: null,
+  tab: "all",
+  filteredPlayers: { all: [] },
+  categories: [],
 };
 export const makePlayersStore = (
   initState: PlayersStoreState = defaultInitState
 ) => {
   return createStore<PlayersStore>()((set, get) => ({
     ...initState,
+    setTab(tab: string) {
+      set(() => ({ tab }));
+    },
     async fetchPlayers(teamId, access_token) {
       set(() => ({ fetchPlayersStatus: "IN_PROGRESS" }));
 
@@ -62,6 +75,7 @@ export const makePlayersStore = (
           players: result,
         }));
 
+        get().refreshFilteredPlayers(result);
         return;
       } catch (error) {
         if (error instanceof Error)
@@ -99,13 +113,13 @@ export const makePlayersStore = (
       const selectedFieldPosition = allFieldPositions.find(
         (x) => x.id === favPositionId
       );
-      console.log(selectedFieldPosition)
+      console.log(selectedFieldPosition);
       if (!player) return;
       set(() => ({
         selectedPlayer: {
           ...player,
           favPositionId,
-          favPosition: selectedFieldPosition,
+          // favPosition: selectedFieldPosition,
         },
       }));
     },
@@ -130,7 +144,9 @@ export const makePlayersStore = (
       const result = await api.deletePlayer(pid, token);
 
       if (result) {
-        set(() => ({ players: allPlayers.filter((x) => x.id !== pid) }));
+        set(() => ({
+          players: (allPlayers ?? []).filter((x) => x.id !== pid),
+        }));
       }
 
       set(() => ({
@@ -177,15 +193,34 @@ export const makePlayersStore = (
         token
       );
       get().setSelectedPlayer(null);
-
       // if (player.team?.id) get().fetchPlayers(player.team.id, token);
+      const updatedPlayers = get().players.map((p) => {
+        if (p.id === player.id) return player;
+        return p;
+      }, {});
+
       set(() => ({
-        players: get().players.map((p) => {
-          if (p.id === player.id) return player;
-          return p;
-        }, {}),
+        players: updatedPlayers,
         playerStatusUpdate: { id: player.id!, status: "DONE" },
       }));
+    },
+    refreshFilteredPlayers: async (players) => {
+      // const players = get().players;
+      const categories = get().categories;
+      const filteredPlayers = categories.reduce(
+        (acc, category) => ({
+          ...acc,
+          [category]: players.filter(
+            (player) =>
+              player.favPosition?.category === category ||
+              (player.playerPositions ?? []).some(
+                (pos) => pos.fieldPosition?.category === category
+              )
+          ),
+        }),
+        {}
+      );
+      set(() => ({ filteredPlayers }));
     },
   }));
 };

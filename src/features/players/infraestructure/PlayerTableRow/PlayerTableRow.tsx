@@ -6,7 +6,6 @@ import {
   ArrowDown,
   ArrowUp,
   Ellipsis,
-  GitPullRequestArrow,
   ToggleLeft,
   ToggleRight,
   Trash,
