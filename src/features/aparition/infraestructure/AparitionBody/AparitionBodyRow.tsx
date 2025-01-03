@@ -14,6 +14,7 @@ import RatingCell from "./BodyCells/Rating";
 import FieldPositionBodyCell from "./BodyCells/FieldPositionCell";
 import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
 import PositionCategoryShortBadge from "@/components/Player/PositionCategoryShortBadge";
+import { getFirstName, getLastName } from "@/lib/player.util";
 
 interface AparitionBodyRowProps {
   player: FulfilledPlayer;
@@ -36,8 +37,12 @@ function AparitionBodyRow({
   minutes,
   rating,
 }: AparitionBodyRowProps) {
+
+  
+
+
   const playerName = useMemo(() => {
-    return `${player.firstName} ${player.lastName}`;
+    return `${getFirstName(player)} ${getLastName(player)}`;
   }, [player]);
 
   if (player?.id === undefined) return null;
@@ -47,7 +52,7 @@ function AparitionBodyRow({
       <FieldPositionBodyCell>
         <PositionCategoryShortBadge category={player.favPosition?.category} />
       </FieldPositionBodyCell>
-      <AparitionBodyCell>{playerName}</AparitionBodyCell>
+      <AparitionBodyCell className="text-left">{playerName}</AparitionBodyCell>
       <ConfirmedCell playerId={player.id} confirmed={confirmed} />
       <PlayedCell playerId={player.id} played={played} />
       <YellowCardCell playerId={player.id} yellowCards={yellowCards} />
@@ -58,5 +63,8 @@ function AparitionBodyRow({
     </React.Fragment>
   );
 }
+
+
+
 
 export default AparitionBodyRow;

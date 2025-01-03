@@ -14,13 +14,13 @@ function AparitionHeader() {
   return (
     <AparitionTableLayout>
         <AparitionHeaderCell>
-        <div className="flex gap-2 justify-center items-center">
+        <div className="flex gap-2 items-center">
           <GitPullRequest size={18} />
-          <span>Position</span>
+          <span>Pos.</span>
         </div>
       </AparitionHeaderCell>
       <AparitionHeaderCell>
-        <div className="flex gap-2 justify-center items-center">
+        <div className="flex gap-2 items-center">
           <User size={18} />
           <span>Player</span>
         </div>
