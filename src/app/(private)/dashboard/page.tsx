@@ -9,32 +9,34 @@ import TopScorersFt from "@/features/dashboard/infraestructure/TopScorersFt";
 function Dashboard() {
   return (
     <>
-      <div className="bg-slate-800/40 py-14 sm:py-14">
+      <div className="py-14 sm:py-14">
         <div className="mx-auto max-w-full px-2 lg:max-w-full lg:px-8">
           <h2 className="text-center text-base/7 font-semibold text-primary">
             Solid Manager
           </h2>
-          <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-semibold tracking-tight text-slate-100 sm:text-5xl">
+          <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl dark:font-semibold tracking-tight dark:text-slate-100 sm:text-5xl">
             Everything you need to manage your team
           </p>
           {/* <PieChartWinRate /> */}
           <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] lg:grid-rows-4">
-            <div className="bg-slate-800/40 border rounded-md p-2 flex justify-center">
+
+            <div className="dark:bg-slate-800/40 border rounded-md p-2 flex justify-center">
               <TeamStats />
             </div>
-            {/* <div className="bg-slate-800/40 border">
-              <LastPlayersAddedFt />
-            </div> */}
-            <div className="bg-slate-800/40 border rounded-lg">
+            <div className="dark:bg-slate-800/40 border rounded-lg p-2">
               <LastMatches />
               <NextMatch />
             </div>
-            <div className="bg-slate-800/40 border rounded-lg">
+
+            {/* <div className="bg-slate-800/40 border">
+              <LastPlayersAddedFt />
+            </div> */}
+            <div className="dark:dark:bg-slate-800/40 border rounded-lg p-2">
               <TopScorersFt />
               <Separator className="my-2" />
               <TopAssistsFt />
             </div>
-            <div className="bg-slate-800/40 col-span-3 row-span-3 border rounded-lg">
+            <div className="dark:bg-slate-800/40 col-span-3 row-span-3 border rounded-lg">
               <TeamCalendatFt />
             </div>
             {/* <div className="bg-slate-800/40 border rounded-lg">

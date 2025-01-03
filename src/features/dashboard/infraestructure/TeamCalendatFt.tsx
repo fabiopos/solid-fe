@@ -20,7 +20,7 @@ async function TeamCalendatFt() {
   return (
     <div className="">
       <div className="p-5">
-        <h3 className="text-2xl font-bold tracking-tight text-amber-500 max-lg:text-center">
+        <h3 className="text-2xl font-bold tracking-tight max-lg:text-center">
           Team Calendar
         </h3>
       </div>

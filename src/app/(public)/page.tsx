@@ -2,12 +2,12 @@ import { H1 } from "@/components/ui/typograhpy";
 import Landing from "@/features/landing/infraestructure/Landing";
 export default async function Home() {
   return (
-    <div className="bg-slate-800/40 py-24 sm:py-32">
+    <div className="dark:bg-slate-800/40 py-24 sm:py-32 flex flex-1">
       <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
         <h2 className="text-center text-base/7 font-semibold text-primary">
           Solid Manager
         </h2>
-        <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-semibold tracking-tight text-slate-100 sm:text-5xl">
+        <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-semibold tracking-tight dark:text-slate-100 sm:text-5xl">
           Everything you need to manage your team
         </p>
         <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">

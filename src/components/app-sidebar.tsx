@@ -101,7 +101,7 @@ export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
                       href={item.url}
                       className={cn(
                         pathname === item.url
-                          ? "bg-neutral-600 dark:text-white hover:bg-slate-600 after:bg-slate-50"
+                          ? "bg-neutral-300 dark:bg-neutral-600 dark:text-white dark:hover:bg-slate-600 after:bg-slate-50"
                           : "hover:bg-primary",
                         "justify-start"
                       )}

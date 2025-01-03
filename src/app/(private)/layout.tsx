@@ -13,8 +13,7 @@ import { TeamGet } from "@/features/teams/application/TeamGet";
 import { ApiClient } from "@/lib/ApiClient";
 import { redirect } from "next/navigation";
 import { getCookieTeamId } from "../actions";
-import { ReactNode } from "react";
-import { AuthStoreProvider } from "@/context/AuthCtx";
+import { AuthWrapper } from "@/context/AuthWrapper";
 
 export default async function RootLayout({
   children,
@@ -45,27 +44,6 @@ export default async function RootLayout({
   );
 }
 
-async function AuthWrapper({ children }: { children: ReactNode }) {
-  const { selectedTeamId, teams } = await getAuthData();
-  return (
-    <AuthStoreProvider selectedTeamId={selectedTeamId} teams={teams}>
-      {children}
-    </AuthStoreProvider>
-  );
-}
-
-const getAuthData = async () => {
-  const session = await auth();
-  const selectedTeamId = await getCookieTeamId();
-
-  if (!session?.user.access_token) return { teams: [], selectedTeamId: null };
-
-  const teamGet = new TeamGet(new ApiClient());
-  const subscriptionTeams = await teamGet.getTeams(session.user.access_token);
-
-  return { teams: subscriptionTeams, selectedTeamId: selectedTeamId ?? null };
-};
-
 async function getData() {
   const emptyState = {
     teams: [],
@@ -90,10 +68,7 @@ async function getData() {
 
     return { teams, tree };
   } catch (error) {
-    console.error('getData', error);
+    console.error("getData", error);
     return emptyState;
-    // if (error instanceof UnauthorizedError) {
-    //   return redirect("/logout");
-    // }
   }
 }

@@ -5,7 +5,6 @@ import {
   BreadcrumbLink,
   BreadcrumbItem,
   BreadcrumbSeparator,
-  BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -14,7 +13,7 @@ import React, { useMemo } from "react";
 
 const capitalizeLinks = true;
 const listClasses = "hover:underline mx-2 font-bold";
-const activeClasses = "text-amber-500";
+const activeClasses = "text-primary";
 
 function AppBreadcumbs() {
   const paths = usePathname();
@@ -34,10 +33,10 @@ function AppBreadcumbs() {
           </BreadcrumbItem>
           <BreadcrumbSeparator className="hidden md:block" />
           {pathNames.map((link, index) => {
-            let href = `/${pathNames.slice(0, index + 1).join("/")}`;
-            let itemClasses =
+            const href = `/${pathNames.slice(0, index + 1).join("/")}`;
+            const itemClasses =
               paths === href ? `${listClasses} ${activeClasses}` : listClasses;
-            let itemLink = capitalizeLinks
+            const itemLink = capitalizeLinks
               ? link[0].toUpperCase() + link.slice(1, link.length)
               : link;
 

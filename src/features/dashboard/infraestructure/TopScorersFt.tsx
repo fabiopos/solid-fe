@@ -8,13 +8,13 @@ const LIMIT = 5;
 async function TopScorersFt() {
     const { players } = await getData()
   return (
-    <div className="p-2">
-      <div className="px-5 my-5">
-        <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
+    <div className="">
+      <div className="px-5 my-2">
+        <h3 className="text-xl font-bold tracking-tight dark:text-white max-lg:text-center">
           Top {LIMIT} Scorers
         </h3>
       </div>
-      <div className="px-5">
+      <div className="p-5">
         <TopScorers aparitions={players} />
       </div>
     </div>

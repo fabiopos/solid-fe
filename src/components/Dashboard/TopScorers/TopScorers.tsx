@@ -1,8 +1,6 @@
-import ActiveText from "@/components/ui/active-text";
 import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 import PlayerAvatar from "@/features/players/infraestructure/PlayerAvatar";
-import { formatDistanceToNowStrict } from "date-fns";
+
 
 interface TopScorersProps {
   aparitions: FulfilledMatchAparition[];
@@ -24,7 +22,7 @@ function TopScorers({ aparitions }: TopScorersProps) {
               <span className="uppercase">{ap.player?.shirtName}</span>
             </div>
           </div>
-          <span className="text-slate-500 text-sm">{`${ap.goals} goals`}</span>
+          <span className="text-muted-foreground text-xs">{`${ap.goals} goals`}</span>
         </div>
       ))}
     </div>

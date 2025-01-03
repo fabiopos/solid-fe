@@ -4,8 +4,6 @@ import { LabelList, Pie, PieChart } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -41,10 +39,7 @@ export function PieChartWinRate({ stats }: PieChartWinRateProps) {
 
   return (
     <div>
-      <ChartContainer
-        config={chartConfig}
-        className="max-h-[250px] "
-      >
+      <ChartContainer config={chartConfig} className="max-h-[250px] ">
         <PieChart width={350} height={300}>
           <ChartTooltip content={<ChartTooltipContent nameKey="result" />} />
           <Pie
@@ -61,7 +56,7 @@ export function PieChartWinRate({ stats }: PieChartWinRateProps) {
             <LabelList
               dataKey="result"
               className="fill-white font-bold"
-              stroke="none"              
+              stroke="none"
               fontSize={11}
               formatter={(value: keyof typeof chartConfig) =>
                 chartConfig[value]?.label

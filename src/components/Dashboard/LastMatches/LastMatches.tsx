@@ -10,25 +10,23 @@ const LIMIT = 3;
 async function LastMatches() {
   const { lastMatches } = await getData();
   return (
-    <div className="p-2">
-      <div className="px-5 my-5">
-        <h3 className="text-lg font-bold tracking-tight text-white max-lg:text-center">
+    <div className="">
+      <div className="px-5 my-2">
+        <h3 className="text-xl font-bold tracking-tight dark:text-white max-lg:text-center">
           Last {LIMIT} Matches
         </h3>
       </div>
 
-      <div className="px-5 space-y-5">
+      <div className="p-5 space-y-5">
         {lastMatches.map((m) => (
           <div className="flex flex-col" key={`last-match-${m.id}`}>
-            <span className="font-bold text-lg">
+            <span className="font-bold text-foreground/80">
               {m.homeTeam?.name} vs {m.awayTeam?.name}
             </span>
-            <span className="text-sm text-slate-300">
+            <span className="text-xs dark:text-slate-300 text-muted-foreground">
               {m.matchDay && format(m.matchDay, 'PPP')} - {m.location}
-              
-              {/* Saturday October 22, 2024, Compensar Stadium */}
             </span>
-            <span className="text-sm text-slate-300">{ m.matchDay && formatDistanceToNowStrict(m.matchDay)} ago</span>
+            <span className="text-xs dark:text-slate-300 text-muted-foreground">{ m.matchDay && formatDistanceToNowStrict(m.matchDay)} ago</span>
           </div>
         ))}
       </div>
