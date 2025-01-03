@@ -13,10 +13,10 @@ async function MatchesPage() {
   return (
     <CompetitionStoreProvider allCompetitions={competitions} season={null}>
       <MatchStoreProvider allMatches={matches}>
-        <>
+        <div className="w-full">
           <H1>All Competitions</H1>
           <CompetitionList />
-        </>
+        </div>
       </MatchStoreProvider>
     </CompetitionStoreProvider>
   );

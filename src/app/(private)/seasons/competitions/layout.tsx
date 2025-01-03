@@ -4,7 +4,7 @@ interface LayoutProps {
 }
 
 function CompetitionsLayout({ children }: LayoutProps) {
-  return <main className="flex flex-1 p-5">{children}</main>;
+  return <>{children}</>;
 }
 
 export default CompetitionsLayout;

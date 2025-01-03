@@ -29,7 +29,7 @@ function CompetitionList() {
             key={c.id}
             className={cn(
               "border p-2 flex gap-2 justify-between items-center",
-              c.id === selected?.id && "bg-slate-800"
+              c.id === selected?.id && "dark:bg-slate-800"
             )}
           >
             <div className="flex flex-col">
