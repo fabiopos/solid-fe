@@ -6,8 +6,9 @@ import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 interface RedCardCellProps {
   playerId: string;
   redCards?: number | null;
+  disabled?: boolean;
 }
-function RedCardCell({ playerId, redCards }: RedCardCellProps) {
+function RedCardCell({ playerId, redCards, disabled }: RedCardCellProps) {
   const setRedCards = useMatchDetailsStore((state) => state.setRedCards);
 
   const handleChange = useCallback((value: string) => {
@@ -22,6 +23,7 @@ function RedCardCell({ playerId, redCards }: RedCardCellProps) {
         min={0}
         defaultValue={redCards ?? 0}
         onChange={(e) => handleChange(e.target.value)}
+        disabled={disabled}
       />
     </AparitionBodyCell>
   );

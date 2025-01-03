@@ -54,7 +54,7 @@ function MyRivals({ teams }: MyRivalsProps) {
         {teams.map((t) => (
           <li
             key={t.id}
-            className="flex justify-between items-center gap-5 bg-slate-800/90 p-5"
+            className="flex justify-between items-center gap-5 dark:bg-slate-800/90 bg-slate-100 rounded-lg p-5"
           >
             <div className="flex flex-col">
               <span>{t.name}</span>

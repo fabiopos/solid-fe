@@ -6,8 +6,9 @@ import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 interface RatingCellProps {
   playerId: string;
   rating?: number | null;
+  disabled?: boolean;
 }
-function RatingCell({ playerId, rating }: RatingCellProps) {
+function RatingCell({ playerId, rating, disabled }: RatingCellProps) {
   const setRating = useMatchDetailsStore((state) => state.setRating);
 
   const handleChange = useCallback(
@@ -26,6 +27,7 @@ function RatingCell({ playerId, rating }: RatingCellProps) {
         min={0}
         defaultValue={rating ?? 0}
         onChange={(e) => handleChange(e.target.value)}
+        disabled={disabled}
       />
     </AparitionBodyCell>
   );

@@ -60,7 +60,7 @@ const data = {
     },
     {
       title: "Competitions",
-      url: "/competitions",
+      url: "/seasons/competitions",
       icon: Trophy,
       sideBar: true,
       navBar: true,

@@ -6,8 +6,9 @@ import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 interface GoalsCellProps {
   playerId: string;
   goals?: number | null;
+  disabled?: boolean;
 }
-function GoalsCell({ playerId, goals }: GoalsCellProps) {
+function GoalsCell({ playerId, goals, disabled }: GoalsCellProps) {
   const setGoals = useMatchDetailsStore((state) => state.setGoals);
 
   const handleChange = useCallback(
@@ -26,6 +27,7 @@ function GoalsCell({ playerId, goals }: GoalsCellProps) {
         min={0}
         defaultValue={goals ?? 0}
         onChange={(e) => handleChange(e.target.value)}
+        disabled={disabled}
       />
     </AparitionBodyCell>
   );

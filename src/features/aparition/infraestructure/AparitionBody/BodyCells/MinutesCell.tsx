@@ -6,8 +6,9 @@ import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 interface MinutesCellProps {
   playerId: string;
   minutes?: number | null;
+  disabled?: boolean;
 }
-function MinutesCell({ playerId, minutes }: MinutesCellProps) {
+function MinutesCell({ playerId, minutes, disabled }: MinutesCellProps) {
   const setMinutes = useMatchDetailsStore((state) => state.setMinutes);
 
   const handleChange = useCallback(
@@ -26,6 +27,7 @@ function MinutesCell({ playerId, minutes }: MinutesCellProps) {
         min={0}
         defaultValue={minutes ?? 0}
         onChange={(e) => handleChange(e.target.value)}
+        disabled={disabled}
       />
     </AparitionBodyCell>
   );

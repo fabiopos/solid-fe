@@ -6,8 +6,9 @@ import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 interface YellowCardCellProps {
   playerId: string;
   yellowCards?: number | null;
+  disabled?: boolean;
 }
-function YellowCardCell({ playerId, yellowCards }: YellowCardCellProps) {
+function YellowCardCell({ playerId, yellowCards, disabled }: YellowCardCellProps) {
   const setYellowCards = useMatchDetailsStore((state) => state.setYellowCards);
 
   const handleChange = useCallback(
@@ -26,6 +27,7 @@ function YellowCardCell({ playerId, yellowCards }: YellowCardCellProps) {
         min={0}
         defaultValue={yellowCards ?? 0}
         onChange={(e) => handleChange(e.target.value)}
+        disabled={disabled}
       />
     </AparitionBodyCell>
   );

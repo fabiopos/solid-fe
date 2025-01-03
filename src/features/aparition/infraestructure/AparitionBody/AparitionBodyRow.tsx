@@ -55,11 +55,11 @@ function AparitionBodyRow({
       <AparitionBodyCell className="text-left">{playerName}</AparitionBodyCell>
       <ConfirmedCell playerId={player.id} confirmed={confirmed} />
       <PlayedCell playerId={player.id} played={played} />
-      <YellowCardCell playerId={player.id} yellowCards={yellowCards} />
-      <RedCardCell playerId={player.id} redCards={redCards} />
-      <MinutesCell playerId={player.id} minutes={minutes} />
-      <GoalsCell playerId={player.id} goals={goals} />
-      <RatingCell playerId={player.id} rating={rating} />
+      <YellowCardCell disabled={!played} playerId={player.id} yellowCards={yellowCards} />
+      <RedCardCell disabled={!played} playerId={player.id} redCards={redCards} />
+      <MinutesCell disabled={!played} playerId={player.id} minutes={minutes} />
+      <GoalsCell disabled={!played} playerId={player.id} goals={goals} />
+      <RatingCell disabled={!played} playerId={player.id} rating={rating} />
     </React.Fragment>
   );
 }
