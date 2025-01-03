@@ -14,7 +14,6 @@ import { useMemo, useState } from "react";
 import { EmptyMatch, FulfilledMatch } from "../domain/match.schema";
 import { useMatchStore } from "@/context/MatchCtx";
 import MatchEditDrawer from "./MatchEditDrawer";
-import { revalidatePath } from "next/cache";
 
 interface MatchTriggerIconProps {
   match: FulfilledMatch;
@@ -79,7 +78,7 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
             Actions
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push(`/matches/${match.id}`)}>
+          <DropdownMenuItem onClick={() => router.push(`/seasons/competitions/matches/${match.id}`)}>
             <div className="grid grid-cols-[150px_10px] items-center gap-2">
               <span>View Match Details</span>
             </div>

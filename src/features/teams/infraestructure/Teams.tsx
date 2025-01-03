@@ -18,14 +18,14 @@ function Teams() {
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-5">
+      <div className="">
         {teams
           .filter((x) => x.hasSubscription)
           .map((team) => (
             <Card key={team.id}>
               <CardHeader>
                 <CardTitle>{team.name}</CardTitle>
-                <CardDescription className="text-right text-white">
+                <CardDescription className="text-right dark:text-white">
                   since {format(team.createdAt, "yyyy")}
                 </CardDescription>
               </CardHeader>

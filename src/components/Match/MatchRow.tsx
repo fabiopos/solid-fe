@@ -63,11 +63,11 @@ function MatchRow({ match, actionsColumn, onClickScore }: MatchRowProps) {
 
       <div className="flex justify-between items-center gap-5 px-10">
         <div className="flex gap-2">
-          <MapPin size={15} className="text-blue-200/40" />
-          <small className="text-blue-200/40">{match.location}</small>
+          <MapPin size={15} className="dark:text-blue-200/40 text-muted-foreground" />
+          <small className="dark:text-blue-200/40 text-muted-foreground">{match.location}</small>
         </div>
         <div>
-          <small className="text-blue-200/40">{match.title}</small>
+          <small className="dark:text-blue-200/40 text-muted-foreground">{match.title}</small>
         </div>
       </div>
     </div>

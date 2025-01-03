@@ -74,7 +74,7 @@ function CompetitionTriggerIcon({ competition }: CompetitionTriggerIconProps) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger>
-          {isLoading ? <Loader className="animate-spin" /> : <Ellipsis />}
+          {isLoading ? <Loader className="animate-spin" /> : <Ellipsis size={18} />}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel className="text-neutral-400 text-xs">

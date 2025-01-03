@@ -7,8 +7,8 @@ interface AparitionStatBoxProps {
 function AparitionStatBox({ label, value }: AparitionStatBoxProps) {
   return (
     <div className="flex flex-col justify-center items-center border rounded-lg px-4 py-2 bg-background">
-      <div className="text-lg font-bold">{value}</div>
-      <div className="text-xs">{label}</div>
+      <div className="text-xl font-bold">{value}</div>
+      <div className="text-xs text-muted-foreground">{label}</div>
     </div>
   );
 }

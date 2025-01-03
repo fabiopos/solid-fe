@@ -6,6 +6,7 @@ import { AparitionGet } from "@/features/aparition/application/AparitionGet";
 import { MatchGet } from "@/features/match/application/MatchGet";
 import MatchDetails from "@/features/match/infraestructure/MatchDetails/MatchDetails";
 import { PlayerGet } from "@/features/players/application/PlayerGet";
+import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 import { PlayerType } from "@/features/players/domain/player.schema";
 import { ApiClient } from "@/lib/ApiClient";
 
@@ -18,7 +19,7 @@ async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
   if (match === null) return null;
 
   return (
-    <PlayersStoreProvider players={allPlayers}>
+    <PlayersStoreProvider players={allPlayers} fieldPositions={[]} teamId={selectedTeamId ?? ''}>
       <MatchDetailsStoreProvider
         players={players}
         aparitions={aparitions}
@@ -43,7 +44,7 @@ async function getMatchDetails(matchId: string) {
   const match = await matchGet.find(matchId, token);
 
   /// all players
-  let allPlayers: PlayerType[] = [];
+  let allPlayers: FulfilledPlayer[] = [];
   const client = new PlayerGet(apiClient);
 
   if (selectedTeamId) {
@@ -57,8 +58,8 @@ async function getMatchDetails(matchId: string) {
 
   const aparitions = await aparitionGet.getAparitions(matchId, token);
 
-  let homeTeamPlayers: PlayerType[] = [];
-  let awayTeamPlayers: PlayerType[] = [];
+  let homeTeamPlayers: FulfilledPlayer[] = [];
+  let awayTeamPlayers: FulfilledPlayer[] = [];
 
   const playerGet = new PlayerGet(apiClient);
 
@@ -75,6 +76,7 @@ async function getMatchDetails(matchId: string) {
     players: { homeTeamPlayers, awayTeamPlayers },
     selectedTeamId,
     allPlayers,
+
   };
 }
 export default MatchDetailsPage;

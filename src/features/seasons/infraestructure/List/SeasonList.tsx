@@ -29,8 +29,8 @@ function SeasonList() {
           <div
             key={c.id}
             className={cn(
-              "border p-2 flex gap-2 justify-between items-center",
-              c.id === selectedSeason?.id && "bg-slate-800"
+              "border px-5 py-2 flex gap-2 justify-between items-center",
+              c.id === selectedSeason?.id && "dark:bg-slate-800"
             )}
           >
             <div className="flex flex-col">
@@ -82,15 +82,15 @@ function SeasonList() {
         </div>
         <Separator className="my-5" />
         <div className="py-2">
-          <small>
+          <small className="text-muted-foreground">
             Competitions ({selectedSeason?.competitions?.length ?? 0})
           </small>
           <ul className="mt-2 space-y-2">
             {filteredCompetitions.map((comp) => (
-              <li key={comp.id} className="flex justify-between items-center">
+              <li key={comp.id} className="flex justify-between items-center hover:bg-slate-50">
                 <Link
                   href={`/seasons/competitions/${comp.id}`}
-                  className="hover:text-cyan-400 flex gap-2 items-center justify-between"
+                  className="font-normal flex gap-2 items-center justify-between"
                 >
                   <Link2Icon size={15} /> <strong>{comp.name}</strong>
                   <div></div>

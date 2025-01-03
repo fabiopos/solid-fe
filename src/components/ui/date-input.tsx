@@ -16,13 +16,13 @@ interface DateInputProps {
 function DateInput({ setDate, value, label, className }: DateInputProps) {
   return (
     <div className="flex flex-col gap-2">
-      <Label className="text-slate-800 font-bold">{label}</Label>
+      <Label className="dark:text-slate-800 font-bold">{label}</Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            variant={"ghost"}
+            variant={"outline"}
             className={cn(
-              "w-[240px] justify-start text-left font-normal gap-2 border border-slate-300 bg-white text-background",
+              "w-[240px] justify-start text-left font-normal gap-2 border border-slate-600 dark:border-slate-300 dark:bg-white dark:text-background bg-slate-100",
               !value && "text-muted-foreground",
               className
             )}

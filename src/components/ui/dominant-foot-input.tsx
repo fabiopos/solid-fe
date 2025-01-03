@@ -17,7 +17,7 @@ function DominantFootInput({
 }: DominantFootInputProps) {
   return (
     <Select onValueChange={setDominantFoot} value={dominantFoot}>
-      <SelectTrigger className="w-full px-2 bg-background border-none">
+      <SelectTrigger className="w-full px-2 bg-background/90 dark:border-none">
         <SelectValue placeholder="Select a Dominant Foot" />
       </SelectTrigger>
       <SelectContent>

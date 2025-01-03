@@ -82,7 +82,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
     [players]
   );
 
-  async function onSubmit(partialPlayer: z.infer<typeof FormSchema>) {    
+  async function onSubmit(partialPlayer: z.infer<typeof FormSchema>) {
     if (!player.id) return;
     if (!data) return;
     await putPlayer(player.id, partialPlayer, data?.user.access_token);
@@ -103,7 +103,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
         <Accordion
           type="single"
           collapsible
-          className="w-full bg-slate-800 p-5 rounded-lg"
+          className="w-full dark:bg-slate-800 p-5 rounded-lg"
         >
           <AccordionItem value="item-1">
             <AccordionTrigger>
@@ -160,7 +160,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                         <PhoneInput
                           value={field.value ?? ""}
                           onChange={field.onChange}
-                          className="text-slate-800 bg-background"
+                          className="dark:text-slate-800 dark:bg-background"
                         />
                       </FormControl>
                       <FormMessage />
@@ -184,7 +184,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                               ? new Date()
                               : field.value
                           }
-                          className="bg-background border-none text-white"
+                          className="dark:bg-background border-none dark:text-white"
                         />
                       </FormControl>
                       <FormMessage />
@@ -217,24 +217,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="city"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-bold">City</FormLabel>
-                      <FormControl>
-                        <RegionSelect
-                          className="bg-background border-none px-4"
-                          countryCode={form.getValues().country ?? ""}
-                          onChange={field.onChange}
-                          value={field.value ?? undefined}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+
                 <FormField
                   control={form.control}
                   name="country"
@@ -243,9 +226,28 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                       <FormLabel className="font-bold">Country</FormLabel>
                       <FormControl>
                         <CountrySelect
-                          className="bg-background border-none px-4"
+                          className="dark:bg-background dark:border-none px-4"
                           onChange={field.onChange}
                           priorityOptions={["CO", "BR", "AR", "VE", "US"]}
+                          value={field.value ?? undefined}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold">City</FormLabel>
+                      <FormControl>
+                        <RegionSelect
+                          className="dark:bg-background dark:border-none px-4"
+                          countryCode={form.getValues().country ?? ""}
+                          onChange={field.onChange}
                           value={field.value ?? undefined}
                         />
                       </FormControl>
@@ -370,7 +372,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                             ...playersNumbers,
                           ]}
                           setNumberOnShirt={field.onChange}
-                          className="bg-background border-none"
+                          className="bg-background dark:border-none"
                         />
                       </FormControl>
                       <FormMessage />
@@ -390,6 +392,7 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                           shirtSize={
                             (field.value as ShirtSize.M) ?? ShirtSize.M
                           }
+                          
                         />
                       </FormControl>
                       <FormMessage />

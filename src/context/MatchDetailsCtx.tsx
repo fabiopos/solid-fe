@@ -21,7 +21,7 @@ export interface MatchDetailsStoreProviderProps {
   children: ReactNode;
   match: FulfilledMatch | null;
   aparitions: FulfilledMatchAparition[];
-  players: { homeTeamPlayers: PlayerType[]; awayTeamPlayers: PlayerType[] };
+  players: { homeTeamPlayers: FulfilledPlayer[]; awayTeamPlayers: FulfilledPlayer[] };
   teamId: string | undefined;
 }
 
@@ -56,7 +56,7 @@ export const MatchDetailsStoreProvider = ({
 };
 
 function buildAparitions(
-  players: PlayerType[],
+  players: FulfilledPlayer[],
   aparitions: FulfilledMatchAparition[],
   matchId?: string | null
 ) {

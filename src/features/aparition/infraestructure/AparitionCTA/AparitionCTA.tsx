@@ -22,7 +22,7 @@ function AparitionCTA() {
   }, [upsertStatus]);
 
   return (
-    <div className="flex justify-between items-center bg-slate-800/40 p-5 rounded-lg">
+    <div className="flex justify-between items-center dark:bg-slate-800/40 bg-slate-50 border p-5 rounded-lg">
       <AparitionsStatBoxes />
       <Button onClick={handleUpsert} disabled={isDisabled} size="sm">
         Update changes

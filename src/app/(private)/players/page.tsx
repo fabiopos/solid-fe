@@ -19,7 +19,7 @@ async function PlayersPage() {
           <h2 className="text-3xl">All Players</h2>
           <Link
             href={`/players/new`}
-            className="text-sm hover:underline hover:underline-offset-2 border p-2 bg-slate-500"
+            className="text-sm hover:underline-offset-2 border py-2 px-4 dark:bg-slate-500 bg-primary text-white hover:bg-primary/90"
           >
             Add New Player
           </Link>

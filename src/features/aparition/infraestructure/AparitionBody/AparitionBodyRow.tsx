@@ -13,6 +13,7 @@ import GoalsCell from "./BodyCells/GoalsCell";
 import RatingCell from "./BodyCells/Rating";
 import FieldPositionBodyCell from "./BodyCells/FieldPositionCell";
 import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
+import PositionCategoryShortBadge from "@/components/Player/PositionCategoryShortBadge";
 
 interface AparitionBodyRowProps {
   player: FulfilledPlayer;
@@ -44,7 +45,7 @@ function AparitionBodyRow({
   return (
     <React.Fragment>
       <FieldPositionBodyCell>
-        <PositionCategoryBadge category={player.favPosition?.category} />
+        <PositionCategoryShortBadge category={player.favPosition?.category} />
       </FieldPositionBodyCell>
       <AparitionBodyCell>{playerName}</AparitionBodyCell>
       <ConfirmedCell playerId={player.id} confirmed={confirmed} />

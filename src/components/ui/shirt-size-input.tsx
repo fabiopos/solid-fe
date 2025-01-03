@@ -14,7 +14,7 @@ interface ShirtSizeInputProps {
 function ShirtSizeInput({ setShirtSize, shirtSize }: ShirtSizeInputProps) {
   return (
     <Select onValueChange={setShirtSize} value={shirtSize}>
-      <SelectTrigger className="w-full px-2 bg-background border-none">
+      <SelectTrigger className="w-full px-2 bg-background dark:border-none">
         <SelectValue placeholder="Select a Shirt Size" />
       </SelectTrigger>
       <SelectContent>
