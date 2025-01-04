@@ -13,20 +13,12 @@ import Link from "next/link";
 async function PlayersPage() {
   const { players, fieldPositions, teamId } = await getPlayers();
   return (
-    <PlayersStoreProvider players={players} fieldPositions={fieldPositions} teamId={teamId}>
-      <div className="">
-        <div className="flex justify-between items-center space-y-5">
-          <h2 className="text-3xl">All Players</h2>
-          <Link
-            href={`/players/new`}
-            className="text-sm hover:underline-offset-2 border py-2 px-4 dark:bg-slate-500 bg-primary text-white hover:bg-primary/90"
-          >
-            Add New Player
-          </Link>
-        </div>
-        <Separator className="my-5" />
-        <PlayersFt />
-      </div>
+    <PlayersStoreProvider
+      players={players}
+      fieldPositions={fieldPositions}
+      teamId={teamId}
+    >
+      <PlayersFt />
     </PlayersStoreProvider>
   );
 }

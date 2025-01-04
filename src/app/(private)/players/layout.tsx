@@ -3,5 +3,5 @@ interface LayoutProps {
 }
 
 export default function LayoutPlayers(props: LayoutProps) {
-  return <main className="">{props.children}</main>;
+  return <>{props.children}</>;
 }

@@ -12,21 +12,22 @@ import { FulfilledPlayer } from "../domain/player.effect.schema";
 
 interface PlayersTableProps {
   players: FulfilledPlayer[];
+  caption?: string;
 }
 
-export default function PlayersTable({ players = [] }: PlayersTableProps) {
+export default function PlayersTable({ players = [], caption }: PlayersTableProps) {
   return (
     <>
-      <Table>
-        <TableCaption>Your squad has {players.length} players.</TableCaption>
+      <Table className="border">
+        <TableCaption className="text-xs italic">{caption}</TableCaption>
         <TableHeader>
-          <TableRow>
+          <TableRow className="text-xs bg-neutral-50 border">
             <TableHead></TableHead>
             <TableHead>Position</TableHead>
             <TableHead className="text-center">Number</TableHead>
             <TableHead className="">Name</TableHead>
-            <TableHead className="">Shirt Size</TableHead>
-            <TableHead className="">Shirt Name</TableHead>
+            {/* <TableHead className="">Shirt Size</TableHead> */}
+            {/* <TableHead className="">Shirt Name</TableHead> */}
             <TableHead className="">
               <div className="flex flex-col">
                 <span>Played</span>

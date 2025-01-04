@@ -11,8 +11,8 @@ import CompetitionStatusText from "@/components/Competition/CompetitionStatusTex
 import { cn } from "@/lib/utils";
 import MatchTriggerIcon from "@/features/match/infraestructure/MatchTriggerIcon";
 import { FulfilledMatch } from "@/features/match/domain/match.schema";
-
-
+import { useState } from "react";
+import MatchAddDrawer from "@/features/match/infraestructure/MatchAddDrawer";
 
 function CompetitionList() {
   const {
@@ -20,7 +20,9 @@ function CompetitionList() {
     setSelectedCompetition: setSelected,
     allCompetitions,
   } = useCompetitionStore((state) => state);
-
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <div className="flex gap-5 p-5 justify-between">
       <div className="space-y-2 flex-1">
@@ -29,7 +31,8 @@ function CompetitionList() {
             key={c.id}
             className={cn(
               "border p-2 flex gap-2 justify-between items-center",
-              c.id === selected?.id && "dark:bg-slate-800"
+              c.id === selected?.id &&
+                "dark:bg-slate-800 bg-slate-50 border-l-4 border-l-primary"
             )}
           >
             <div className="flex flex-col">
@@ -76,7 +79,11 @@ function CompetitionList() {
         </div>
         <Separator className="my-5" />
         <div className="py-2">
-          <small>Matches ({selected?.matches?.length ?? 0})</small>
+          <div className="flex justify-between items-center">
+            <small>Matches ({selected?.matches?.length ?? 0})</small>
+            <Button variant="link" className="font-bold" onClick={handleOpen}>Add Match</Button>
+          </div>
+          <Separator className="my-2" />
           <ul className="mt-2 space-y-2">
             {selected?.matches?.map((m) => (
               <li key={m.id} className="flex justify-between items-center">
@@ -99,6 +106,14 @@ function CompetitionList() {
           </ul>
         </div>
       </div>
+
+      {selected && selected.id && (
+        <MatchAddDrawer
+          competitionId={selected.id}
+          onClose={handleClose}
+          open={open}
+        />
+      )}
     </div>
   );
 }

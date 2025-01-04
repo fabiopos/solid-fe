@@ -64,18 +64,19 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
       <TableCell className="text-center">{player.shirtNumber}</TableCell>
       <TableCell className="font-medium">
         <div className="flex flex-col">
-          <Link href={`/players/details/${player.id}`} className="text-xl">
-            {player.firstName} {player.lastName}
+          <Link href={`/players/details/${player.id}`} className="text-lg uppercase">
+            {player.shirtName}
           </Link>
-          <small className="text-neutral-500">{player.email}</small>
+          <small className="text-neutral-500">
+            {" "}
+            {player.firstName} {player.lastName}
+          </small>
         </div>
       </TableCell>
-      <TableCell className="font-medium text-center">
+      {/* <TableCell className="font-medium text-center">
         {player.shirtSize}
-      </TableCell>
-      <TableCell className="font-medium uppercase">
-        {player.shirtName}
-      </TableCell>
+      </TableCell> */}
+      {/* <TableCell className="font-medium uppercase"></TableCell> */}
       <TableCell className="text-center">0</TableCell>
       <TableCell className="text-center">0 %</TableCell>
       <TableCell className="text-center">0</TableCell>

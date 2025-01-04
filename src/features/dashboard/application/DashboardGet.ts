@@ -1,7 +1,7 @@
 import { ApiClient } from "@/lib/ApiClient";
 import { FulfilledTeamStats } from "../domain/teamStats.schema";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
-import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
+import { FulfilledMatchAparition, FulfilledScorer } from "@/features/aparition/domain/aparition.schema";
 import { FulfilledMatch } from "@/features/match/domain/match.schema";
 
 export class DashboardGet {
@@ -28,7 +28,7 @@ export class DashboardGet {
       `/dashboard/top-scorers/${teamId}?limit=${limit}`,
       token
     );
-    return (await stats.json()) as FulfilledMatchAparition[];
+    return (await stats.json()) as FulfilledScorer[];
   }
 
   async getTopAssists(teamId: string, token: string, limit?: number) {

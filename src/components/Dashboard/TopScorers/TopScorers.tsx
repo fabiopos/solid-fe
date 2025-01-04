@@ -1,9 +1,9 @@
-import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
+import { FulfilledMatchAparition, FulfilledScorer } from "@/features/aparition/domain/aparition.schema";
 import PlayerAvatar from "@/features/players/infraestructure/PlayerAvatar";
 
 
 interface TopScorersProps {
-  aparitions: FulfilledMatchAparition[];
+  aparitions: FulfilledScorer[];
 }
 function TopScorers({ aparitions }: TopScorersProps) {
   return (
@@ -15,11 +15,11 @@ function TopScorers({ aparitions }: TopScorersProps) {
         >
           <div className="flex items-center gap-5">
             <PlayerAvatar
-              fallback={ap.player?.shirtNumber?.toString() ?? "X"}
-              imageUrl={ap.player?.avatarUrl}
+              fallback={ap.shirtNumber?.toString() ?? "X"}
+              imageUrl={ap.avatarUrl}
             />
             <div className="flex flex-col">
-              <span className="uppercase">{ap.player?.shirtName}</span>
+              <span className="uppercase text-foreground/80 text-sm">{ap.name}</span>
             </div>
           </div>
           <span className="text-muted-foreground text-xs">{`${ap.goals} goals`}</span>
