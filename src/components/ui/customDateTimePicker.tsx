@@ -278,17 +278,19 @@ function Calendar({
         months:
           "flex flex-col sm:flex-row space-y-4  sm:space-y-0 justify-center",
         month: "flex flex-col items-center space-y-4",
-        month_caption: "flex justify-center pt-1 relative items-center",
+        caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
         nav: "space-x-1 flex items-center ",
-        button_previous: cn(
+        
+        nav_button_previous: cn(
           buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute left-5 top-5"
         ),
-        button_next: cn(
+        nav_button_next: cn(
           buttonVariants({ variant: "outline" }),
           "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute right-5 top-5"
         ),
+        
         month_grid: "w-full border-collapse space-y-1",
         weekdays: cn("flex", props.showWeekNumber && "justify-end"),
         weekday:
@@ -312,19 +314,17 @@ function Calendar({
         ...classNames,
       }}
       components={{
-        Chevron: ({ ...props }) =>
-          props.orientation === "left" ? (
-            <ChevronLeft className="h-4 w-4" />
-          ) : (
-            <ChevronRight className="h-4 w-4" />
-          ),
-        MonthCaption: ({ calendarMonth }) => {
+        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
+        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        
+
+        Caption: ({ displayMonth }) => {
           return (
             <div className="inline-flex gap-2">
               <Select
-                defaultValue={calendarMonth.date.getMonth().toString()}
+                defaultValue={displayMonth.getMonth().toString()}
                 onValueChange={(value) => {
-                  const newDate = new Date(calendarMonth.date);
+                  const newDate = new Date(displayMonth);
                   newDate.setMonth(Number.parseInt(value, 10));
                   props.onMonthChange?.(newDate);
                 }}
@@ -344,9 +344,9 @@ function Calendar({
                 </SelectContent>
               </Select>
               <Select
-                defaultValue={calendarMonth.date.getFullYear().toString()}
+                defaultValue={displayMonth.getFullYear().toString()}
                 onValueChange={(value) => {
-                  const newDate = new Date(calendarMonth.date);
+                  const newDate = new Date(displayMonth);
                   newDate.setFullYear(Number.parseInt(value, 10));
                   props.onMonthChange?.(newDate);
                 }}

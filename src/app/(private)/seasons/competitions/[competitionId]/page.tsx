@@ -18,15 +18,7 @@ async function CompetitionDetailsPage({
 
   return (
     <div className="">
-      <H1>{result.competition.name}</H1>
-      <br />
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla veritatis
-        adipisci harum nemo minima, et facere eaque tempore numquam ad quos
-        magnam, quam iure sequi quod sed nostrum commodi cumque modi id ratione
-        culpa magni. Consequatur modi quidem corporis laboriosam maxime eaque
-        iusto alias facere.
-      </p>
+     
 
       <MatchStoreProvider allMatches={result.matches}>
         <Matches />

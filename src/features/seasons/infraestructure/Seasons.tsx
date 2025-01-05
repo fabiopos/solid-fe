@@ -27,31 +27,33 @@ const Seasons = () => {
   if (fetchSeasonStatus === "ERROR") return "Error fetching seasons";
   return (
     <div>
-      <h2 className="text-5xl my-4">Welcome to the Seasons Section!</h2>
-      <p className="tracking-wide font-normal">
-        Here, you can take full control of your football team&apos;s seasons.
-        From initial planning to final achievements, Seasons lets you organize
-        and track every key aspect of your campaign. Easily create, edit, and
-        manage seasons by setting goals, scheduling matches, recording results,
-        and much more.
-      </p>
-      <p className="tracking-wide my-5 font-normal">
-        With intuitive and customizable tools, you can:
-      </p>
-      <ul className="my-3 ml-6 list-disc [&>li]:mt-2 font-normal text-sm">
-        <li>
-          <strong>Plan the season:</strong> organize friendlies and
-          competitions.
-        </li>
-        <li>
-          <strong> Track stats:</strong> keep detailed records of team and
-          individual player performance.
-        </li>
-        <li>
-          <strong>Monitor progress:</strong> review charts and reports to
-          evaluate performance and results.
-        </li>
-      </ul>    
+      <div className="bg-white p-5 border rounded-lg mb-2">
+        <h2 className="text-5xl my-4">Welcome to the Seasons Section!</h2>
+        <p className="tracking-wide font-normal">
+          Here, you can take full control of your football team&apos;s seasons.
+          From initial planning to final achievements, Seasons lets you organize
+          and track every key aspect of your campaign. Easily create, edit, and
+          manage seasons by setting goals, scheduling matches, recording
+          results, and much more.
+        </p>
+        <p className="tracking-wide my-5 font-normal">
+          With intuitive and customizable tools, you can:
+        </p>
+        <ul className="my-3 ml-6 list-disc [&>li]:mt-2 font-normal text-sm">
+          <li>
+            <strong>Plan the season:</strong> organize friendlies and
+            competitions.
+          </li>
+          <li>
+            <strong> Track stats:</strong> keep detailed records of team and
+            individual player performance.
+          </li>
+          <li>
+            <strong>Monitor progress:</strong> review charts and reports to
+            evaluate performance and results.
+          </li>
+        </ul>
+      </div>
 
       {/* addseason */}
       <div className="flex justify-end">

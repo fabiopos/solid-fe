@@ -29,8 +29,8 @@ function SeasonList() {
           <div
             key={c.id}
             className={cn(
-              "border px-5 py-2 flex gap-2 justify-between items-center",
-              c.id === selectedSeason?.id && "dark:bg-slate-800"
+              "border px-5 py-2 flex gap-2 justify-between items-center bg-white rounded-lg",
+              c.id === selectedSeason?.id && "dark:bg-slate-800 border-l-primary border-l-4 "
             )}
           >
             <div className="flex flex-col">
@@ -53,7 +53,7 @@ function SeasonList() {
         ))}
       </div>
 
-      <div className="border p-5 flex-1">
+      <div className="border p-5 flex-1 bg-white rounded-lg">
         <div className="flex justify-between pb-5 items-center">
           <strong className="text-xl">{selectedSeason?.name}</strong>
           <div className="flex items-center gap-5">

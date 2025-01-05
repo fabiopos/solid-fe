@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CheckCheck, Clock, Ellipsis, Loader, Trash } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { EmptyMatch, FulfilledMatch } from "../domain/match.schema";
 import { useMatchStore } from "@/context/MatchCtx";
@@ -17,20 +17,23 @@ import MatchEditDrawer from "./MatchEditDrawer";
 
 interface MatchTriggerIconProps {
   match: FulfilledMatch;
+  onDeleteMatch?: (id: string) => void;
+  onUpdateStatus?: () => void;
 }
-function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
-  //const { competitionId } = useParams();
+function MatchTriggerIcon({
+  match,
+  onDeleteMatch,
+  onUpdateStatus,
+}: MatchTriggerIconProps) {
   const { data } = useSession();
   const { patchingStatus, deletingStatus, patchMatch, deleteMatch } =
     useMatchStore((state) => state);
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const handleOpenDrawer = () => {
-    // setSelectedCompetition(competition);
     setOpen(true);
   };
   const handleCloseDrawer = () => {
-    // setSelectedCompetition(null);
     setOpen(false);
   };
   const handleSetDown = (id: string, completed: boolean) => {
@@ -42,13 +45,14 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
       }),
       data?.user.access_token ?? ""
     ).then(() => {
-      // revalidatePath('/seasons/[seasonId]')
+      if (onUpdateStatus) onUpdateStatus();
     });
   };
   const handleDelete = (id: string) => {
     deleteMatch(id, data?.user.access_token ?? "").then(() => {
       router.refresh();
     });
+    if (onDeleteMatch) onDeleteMatch(id);
   };
 
   const isLoading = useMemo(() => {

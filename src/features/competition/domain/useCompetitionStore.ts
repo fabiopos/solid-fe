@@ -33,6 +33,7 @@ export type CompetitionStoreActions = {
   updateSelectedCompetition: (
     emptyCompetition: EmptyCompetition | null
   ) => void;
+  setCompetitions: (competitions: FulfilledCompetition[]) => void;
 };
 
 export type CompetitionStore = CompetitionStoreState & CompetitionStoreActions;
@@ -122,6 +123,9 @@ export const makeCompetitionStore = (
           ...emptyCompetition,
         }),
       }));
+    },
+    setCompetitions: (competitions) => {
+      set(() => ({ allCompetitions: competitions }));
     },
   }));
 };

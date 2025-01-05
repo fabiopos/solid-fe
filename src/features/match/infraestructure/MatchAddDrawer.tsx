@@ -23,16 +23,22 @@ import { DateTimePicker } from "@/components/ui/customDateTimePicker";
 interface MatchDrawerProps {
   open: boolean;
   onClose: () => void;
+  onMatchCreated?: () => void;
   competitionId: string;
 }
 
-function MatchAddDrawer({ open, onClose, competitionId }: MatchDrawerProps) {
+function MatchAddDrawer({
+  open,
+  onClose,
+  competitionId,
+  onMatchCreated,
+}: MatchDrawerProps) {
   const [title, setTitle] = useState("");
-  const [matchDay, setMatchDay] = useState<Date | undefined>()
+  const [matchDay, setMatchDay] = useState<Date | undefined>();
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   const [homeTeamId, setHomeTeamId] = useState<string | undefined>(undefined);
-  const [awayTeamId, setAwayTeamId] = useState<string | undefined>(undefined);  
+  const [awayTeamId, setAwayTeamId] = useState<string | undefined>(undefined);
   const { postMatch } = useMatchStore((state) => state);
   const { data } = useSession();
 
@@ -54,9 +60,20 @@ function MatchAddDrawer({ open, onClose, competitionId }: MatchDrawerProps) {
     });
 
     await postMatch(payload, data?.user.access_token ?? "");
+    if (onMatchCreated) onMatchCreated();
 
     onClose();
-  }, [title, homeTeamId, awayTeamId, matchDay, location, competitionId, postMatch, data?.user.access_token, onClose]);
+  }, [
+    title,
+    homeTeamId,
+    awayTeamId,
+    matchDay,
+    location,
+    competitionId,
+    postMatch,
+    data?.user.access_token,
+    onClose,
+  ]);
 
   const handleDateChange = (date: Date | undefined) => {
     setMatchDay(date);

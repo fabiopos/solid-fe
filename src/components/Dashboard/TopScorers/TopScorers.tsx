@@ -1,6 +1,5 @@
-import { FulfilledMatchAparition, FulfilledScorer } from "@/features/aparition/domain/aparition.schema";
+import { FulfilledScorer } from "@/features/aparition/domain/aparition.schema";
 import PlayerAvatar from "@/features/players/infraestructure/PlayerAvatar";
-
 
 interface TopScorersProps {
   aparitions: FulfilledScorer[];
@@ -19,10 +18,16 @@ function TopScorers({ aparitions }: TopScorersProps) {
               imageUrl={ap.avatarUrl}
             />
             <div className="flex flex-col">
-              <span className="uppercase text-foreground/80 text-sm">{ap.name}</span>
+              <span className="uppercase text-foreground text-sm">
+                {ap.shirtName}
+              </span>
+              <span className="text-muted-foreground text-xs">{ap.name}</span>
             </div>
           </div>
-          <span className="text-muted-foreground text-xs">{`${ap.goals} goals`}</span>
+          <div className="flex flex-col justify-center items-center">
+            <span className="text-foreground text-lg leading-none">{`${ap.goals}`}</span>            
+            <span className="text-muted-foreground text-xs">goals</span>
+          </div>
         </div>
       ))}
     </div>

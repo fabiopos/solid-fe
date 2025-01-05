@@ -20,10 +20,10 @@ function Dashboard() {
           {/* <PieChartWinRate /> */}
           <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] lg:grid-rows-4">
 
-            <div className="dark:bg-slate-800/40 border rounded-md p-2 flex justify-center">
+            <div className="dark:bg-slate-800/40 border rounded-lg p-2 flex justify-center bg-white">
               <TeamStats />
             </div>
-            <div className="dark:bg-slate-800/40 border rounded-lg p-2">
+            <div className="dark:bg-slate-800/40 border rounded-lg p-2 bg-white">
               <LastMatches />
               <NextMatch />
             </div>
@@ -31,12 +31,12 @@ function Dashboard() {
             {/* <div className="bg-slate-800/40 border">
               <LastPlayersAddedFt />
             </div> */}
-            <div className="dark:dark:bg-slate-800/40 border rounded-lg p-2">
+            <div className="dark:dark:bg-slate-800/40 border rounded-lg p-2 bg-white">
               <TopScorersFt />
               <Separator className="my-2" />
               <TopAssistsFt />
             </div>
-            <div className="dark:bg-slate-800/40 col-span-3 row-span-3 border rounded-lg">
+            <div className="dark:bg-slate-800/40 col-span-3 row-span-3 border rounded-lg bg-white">
               <TeamCalendatFt />
             </div>
             {/* <div className="bg-slate-800/40 border rounded-lg">
