@@ -37,10 +37,6 @@ function AparitionBodyRow({
   minutes,
   rating,
 }: AparitionBodyRowProps) {
-
-  
-
-
   const playerName = useMemo(() => {
     return `${getFirstName(player)} ${getLastName(player)}`;
   }, [player]);
@@ -55,16 +51,21 @@ function AparitionBodyRow({
       <AparitionBodyCell className="text-left">{playerName}</AparitionBodyCell>
       <ConfirmedCell playerId={player.id} confirmed={confirmed} />
       <PlayedCell playerId={player.id} played={played} />
-      <YellowCardCell disabled={!played} playerId={player.id} yellowCards={yellowCards} />
-      <RedCardCell disabled={!played} playerId={player.id} redCards={redCards} />
+      <YellowCardCell
+        disabled={!played}
+        playerId={player.id}
+        yellowCards={yellowCards}
+      />
+      <RedCardCell
+        disabled={!played}
+        playerId={player.id}
+        redCards={redCards}
+      />
       <MinutesCell disabled={!played} playerId={player.id} minutes={minutes} />
       <GoalsCell disabled={!played} playerId={player.id} goals={goals} />
       <RatingCell disabled={!played} playerId={player.id} rating={rating} />
     </React.Fragment>
   );
 }
-
-
-
 
 export default AparitionBodyRow;

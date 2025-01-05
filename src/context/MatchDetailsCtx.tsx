@@ -21,7 +21,10 @@ export interface MatchDetailsStoreProviderProps {
   children: ReactNode;
   match: FulfilledMatch | null;
   aparitions: FulfilledMatchAparition[];
-  players: { homeTeamPlayers: FulfilledPlayer[]; awayTeamPlayers: FulfilledPlayer[] };
+  players: {
+    homeTeamPlayers: FulfilledPlayer[];
+    awayTeamPlayers: FulfilledPlayer[];
+  };
   teamId: string | undefined;
 }
 
@@ -41,6 +44,7 @@ export const MatchDetailsStoreProvider = ({
       aparitions,
       match?.id
     );
+
     storeRef.current = makeMatchDetailsStore({
       match,
       aparitions: builtAparitions,
@@ -63,8 +67,9 @@ function buildAparitions(
   if (aparitions.length > 0) return aparitions;
   if (!matchId) return aparitions;
 
-  const builtAparitions: FulfilledMatchAparition[] = [...players].map(
-    (player) =>
+  const builtAparitions: FulfilledMatchAparition[] = [...players]
+    //.sort((a, b) => a.firstName?.localeCompare(b.firstName ?? "") ?? 0)
+    .map((player) =>
       FulfilledMatchAparition.make({
         confirmed: false,
         played: false,
@@ -75,14 +80,12 @@ function buildAparitions(
         redCards: 0,
         rating: 6,
         player: {
-          id: player.id,
-          firstName: player.firstName,
-          lastName: player.lastName,
+          ...player,
         },
         match: { id: matchId },
         matchId: matchId,
       })
-  );
+    );
 
   return builtAparitions;
 }

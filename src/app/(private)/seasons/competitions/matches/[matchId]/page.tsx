@@ -12,14 +12,17 @@ import { ApiClient } from "@/lib/ApiClient";
 
 async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
   const { matchId } = await params;
-  const { match, aparitions, players, selectedTeamId, allPlayers } = await getMatchDetails(
-    matchId
-  );
+  const { match, aparitions, players, selectedTeamId, allPlayers } =
+    await getMatchDetails(matchId);
 
   if (match === null) return null;
 
   return (
-    <PlayersStoreProvider players={allPlayers} fieldPositions={[]} teamId={selectedTeamId ?? ''}>
+    <PlayersStoreProvider
+      players={allPlayers}
+      fieldPositions={[]}
+      teamId={selectedTeamId ?? ""}
+    >
       <MatchDetailsStoreProvider
         players={players}
         aparitions={aparitions}
@@ -76,7 +79,6 @@ async function getMatchDetails(matchId: string) {
     players: { homeTeamPlayers, awayTeamPlayers },
     selectedTeamId,
     allPlayers,
-
   };
 }
 export default MatchDetailsPage;

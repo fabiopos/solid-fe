@@ -19,7 +19,7 @@ interface MatchTriggerIconProps {
   match: FulfilledMatch;
 }
 function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
-  const { competitionId } = useParams();
+  //const { competitionId } = useParams();
   const { data } = useSession();
   const { patchingStatus, deletingStatus, patchMatch, deleteMatch } =
     useMatchStore((state) => state);
@@ -78,7 +78,11 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
             Actions
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => router.push(`/seasons/competitions/matches/${match.id}`)}>
+          <DropdownMenuItem
+            onClick={() =>
+              router.push(`/seasons/competitions/matches/${match.id}`)
+            }
+          >
             <div className="grid grid-cols-[150px_10px] items-center gap-2">
               <span>View Match Details</span>
             </div>
@@ -125,13 +129,15 @@ function MatchTriggerIcon({ match }: MatchTriggerIconProps) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <MatchEditDrawer
-        match={match}
-        open={open}
-        onClose={handleCloseDrawer}
-        competitionId={competitionId as string}
-        // competition={selectedCompetition}
-      />
+      {match.competition?.id && (
+        <MatchEditDrawer
+          match={match}
+          open={open}
+          onClose={handleCloseDrawer}
+          competitionId={match.competition?.id}
+          // competition={selectedCompetition}
+        />
+      )}
     </>
   );
 }
