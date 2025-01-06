@@ -11,7 +11,7 @@ function DocumentNumberInput() {
       <Label className="dark:text-slate-800 font-bold">Document Number</Label>
       <Input
         placeholder="100000000"
-        className="bg-white border-slate-300"
+        className="bg-background border-slate-300"
         maxLength={18}
         value={documentNumber}
         onChange={(e) => setDocumentNumber(e.target.value)}

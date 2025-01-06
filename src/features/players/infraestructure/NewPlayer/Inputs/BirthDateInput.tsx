@@ -23,7 +23,7 @@ function BirthDateInput() {
           <Button
             variant={"ghost"}
             className={cn(
-              "w-[240px] justify-start text-left font-normal gap-2 border border-slate-300 bg-white",
+              "w-[240px] justify-start text-left font-normal gap-2 border border-slate-300 bg-background",
               !birthDate && "text-muted-foreground"
             )}
           >

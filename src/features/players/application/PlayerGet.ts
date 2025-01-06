@@ -1,6 +1,6 @@
 import { ApiClient } from "@/lib/ApiClient";
 import { PlayerType } from "../domain/player.schema";
-import { FulfilledPlayer } from "../domain/player.effect.schema";
+import { FulfilledPlayer, FulfilledPlayerWithStats } from "../domain/player.effect.schema";
 
 export class PlayerGet {
   constructor(private apiClient: ApiClient) {}
@@ -14,12 +14,23 @@ export class PlayerGet {
 
     if (!response.ok) return [];
 
-    const result = await response.json() as FulfilledPlayer[];
+    const result = await response.json() as FulfilledPlayer[];   
 
-    // const mapped = (result as PlayerType[]).map(this.mapPlayers);
-    const sorted = result;
+    return result;
+  }
 
-    return sorted;
+  async getAllPlayersWithStats(
+    teamId: string,
+    access_token?: string
+  ): Promise<FulfilledPlayerWithStats[]> {
+    const endpoint = `/player/${teamId}/with-stats`;
+    const response = await this.apiClient.GET(endpoint, access_token ?? "");
+
+    if (!response.ok) return [];
+
+    const result = await response.json() as FulfilledPlayerWithStats[];   
+
+    return result;
   }
 
   async find(pid: string, token: string) {
@@ -27,7 +38,7 @@ export class PlayerGet {
 
     if (!result.ok) return null;
 
-    return (await result.json()) as FulfilledPlayer;
+    return (await result.json()) as FulfilledPlayerWithStats;
   }
 
   private mapPlayers = (player: PlayerType) =>

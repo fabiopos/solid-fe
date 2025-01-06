@@ -16,7 +16,7 @@ function ShizeShirt() {
         Shirt Size
       </Label>
       <Select onValueChange={setShirtSize} value={shirtSize}>
-        <SelectTrigger className="w-full px-2 bg-white">
+        <SelectTrigger className="w-full px-2 bg-background">
           <SelectValue placeholder="Select a Shirt Size" />
         </SelectTrigger>
         <SelectContent>

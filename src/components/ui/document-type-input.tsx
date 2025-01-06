@@ -19,10 +19,10 @@ function DocumentTypeInput({
 }: DocumentTypeInputProps) {
   return (
     <Select onValueChange={setDocumentType} value={documentType ?? ""}>
-      <SelectTrigger className="bg-white border border-slate-300 px-4">
+      <SelectTrigger className="bg-background border border-slate-300 px-4">
         <SelectValue placeholder="Select a document type" />
       </SelectTrigger>
-      <SelectContent className="bg-white border border-slate-300 text-slate-800">
+      <SelectContent className="bg-background border border-slate-300 text-slate-800">
         <SelectGroup>
           <SelectItem value={DocumentType.CC}>Cedula de Ciudadania</SelectItem>
           <SelectItem value={DocumentType.PP}>Pasaporte</SelectItem>

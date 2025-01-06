@@ -58,7 +58,7 @@ function CompetitionList() {
           <div
             key={c.id}
             className={cn(
-              "border p-2 flex gap-2 justify-between items-center bg-white",
+              "border p-2 flex gap-2 justify-between items-center bg-background",
               c.id === selected?.id &&
                 "dark:bg-slate-800 border-l-4 border-l-primary"
             )}
@@ -82,7 +82,7 @@ function CompetitionList() {
         ))}
       </div>
 
-      <div className="border p-5 flex-1 bg-white">
+      <div className="border p-5 flex-1 bg-background">
         <div className="flex justify-between pb-5 items-center">
           <strong className="text-xl">{selected?.name}</strong>
           <div className="flex items-center gap-5">

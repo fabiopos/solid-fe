@@ -22,7 +22,7 @@ function DateInput({ setDate, value, label, className }: DateInputProps) {
           <Button
             variant={"outline"}
             className={cn(
-              "w-[240px] justify-start text-left font-normal gap-2 border border-slate-600 dark:border-slate-300 dark:bg-white dark:text-background bg-slate-100",
+              "w-[240px] justify-start text-left font-normal gap-2 border border-slate-600 dark:border-slate-300 dark:text-background bg-slate-100",
               !value && "text-muted-foreground",
               className
             )}

@@ -8,7 +8,7 @@ function CountryInput() {
     <div>
       <Label className="dark:text-slate-800 font-bold">Origin Country</Label>
       <CountrySelect
-        className="bg-white border border-slate-300 px-4"
+        className="bg-background border border-slate-300 px-4"
         onChange={setCountry}
         priorityOptions={["CO", "BR", "AR", "VE", "US"]}
         

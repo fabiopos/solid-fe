@@ -5,7 +5,7 @@ import { PlayersStoreProvider } from "@/context/PlayersCtx";
 import { FieldPositionGet } from "@/features/fieldPosition/application/FieldPositionGet";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
 import { PlayerGet } from "@/features/players/application/PlayerGet";
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import { FulfilledPlayer, FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import PlayerDetailsFt from "@/features/players/infraestructure/Details/PlayerDetailsFt";
 import { ApiClient } from "@/lib/ApiClient";
 
@@ -36,7 +36,7 @@ const getData = async (pid: string) => {
 };
 
 interface GetPlayersResponse {
-  players: FulfilledPlayer[];
+  players: FulfilledPlayerWithStats[];
   fieldPositions: FulfilledFieldPosition[];
   teamId: string;
 }
@@ -50,7 +50,7 @@ const getPlayers = async (): Promise<GetPlayersResponse> => {
   const apiClient = new ApiClient();
   const client = new PlayerGet(apiClient);
   const fPos = new FieldPositionGet(apiClient);
-  const players = await client.getAllPlayers(
+  const players = await client.getAllPlayersWithStats(
     teamId,
     session?.user.access_token
   );

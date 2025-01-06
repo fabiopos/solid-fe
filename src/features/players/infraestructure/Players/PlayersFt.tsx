@@ -21,7 +21,7 @@ function PlayersFt() {
         </Link>
       </div>
 
-      <div className="border rounded-lg mt-2 bg-white">
+      <div className="border rounded-lg mt-2 bg-background">
         <Tabs
           defaultValue={tab}
           className="w-full"

@@ -1,4 +1,5 @@
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import { toDate } from "date-fns";
 import { Effect as E, pipe } from "effect";
 
 export const getFirstName = (player: FulfilledPlayer | undefined): string => {
@@ -17,4 +18,8 @@ export const getLastName = (player: FulfilledPlayer) => {
     (name) => name?.split(" "),
     (name) => name?.[0] ?? ""
   );
+};
+
+export const refineDate = (date: string | Date | null | undefined) => {
+  return date ? toDate(date) : null;
 };

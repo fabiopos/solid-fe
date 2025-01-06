@@ -19,7 +19,7 @@ function MatchesHead() {
 
   return (
     <div className="">
-      <div className="bg-white p-5 rounded-lg border">
+      <div className="bg-background p-5 rounded-lg border">
         <H1>Matches</H1>
         <br />
         <p>
@@ -31,7 +31,7 @@ function MatchesHead() {
         <p>Make sure once you finished editing the match, mark the match as <strong>completed</strong> to view match result in the dashboard.</p>
       </div>
 
-      <div className="p-5 bg-white my-2 border rounded-lg">
+      <div className="p-5 bg-background my-2 border rounded-lg">
         <strong className="mb-2 flex">Last Results</strong>
         <MatchesShortResults matches={matches} />
       </div>

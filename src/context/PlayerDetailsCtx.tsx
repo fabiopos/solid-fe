@@ -1,6 +1,6 @@
 "use client";
 
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import { makePlayerDeailsStore, PlayerDetailStore } from "@/features/players/domain/usePlayerDetailsStore";
 
 import { createContext, ReactNode, useContext, useRef } from "react";
@@ -14,7 +14,7 @@ export const PlayerDetailsStoreContext = createContext<
 
 export interface PlayerDetailsStoreProviderProps {
   children: ReactNode;
-  player: FulfilledPlayer | null;
+  player: FulfilledPlayerWithStats | null;
 }
 
 export const PlayerDetailsStoreProvider = ({

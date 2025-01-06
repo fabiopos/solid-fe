@@ -1,6 +1,6 @@
 import { createStore } from "zustand/vanilla";
 import { PlayerUpdateType } from "./player.schema";
-import { FulfilledPlayer } from "./player.effect.schema";
+import { FulfilledPlayer, FulfilledPlayerWithStats } from "./player.effect.schema";
 import { RequestStatus } from "@/types/types.common";
 import { ApiClient } from "@/lib/ApiClient";
 import { RequestError } from "@/shared/errors/RequestError";
@@ -8,13 +8,13 @@ import { PlayerUpdate } from "../application/PlayerUpdate";
 import { PlayerCreate } from "../application/PlayerCreate";
 
 export type PlayerDetailStoreState = {
-  player: FulfilledPlayer | null;
+  player: FulfilledPlayerWithStats | null;
   updateRequestStatus: RequestStatus;
   uploadAvatarStatus: RequestStatus;
   error: RequestError | null;
 };
 export type PlayerDetailStoreActions = {
-  setFulfiledPlayer: (player: FulfilledPlayer) => void;
+  setFulfiledPlayer: (player: FulfilledPlayerWithStats) => void;
   setAvatarUrl: (avatarUrl: string) => void;
   putAvatar: (pid: string, file: File, token: string) => Promise<void>;
   reset: () => void;

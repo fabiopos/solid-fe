@@ -27,7 +27,7 @@ const Seasons = () => {
   if (fetchSeasonStatus === "ERROR") return "Error fetching seasons";
   return (
     <div>
-      <div className="bg-white p-5 border rounded-lg mb-2">
+      <div className="bg-background p-5 border rounded-lg mb-2">
         <h2 className="text-5xl my-4">Welcome to the Seasons Section!</h2>
         <p className="tracking-wide font-normal">
           Here, you can take full control of your football team&apos;s seasons.

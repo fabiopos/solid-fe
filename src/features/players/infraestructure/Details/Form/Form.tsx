@@ -16,7 +16,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { playerUpdateSchema } from "@/features/players/domain/player.schema";
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import {
+  FulfilledPlayer,
+  FulfilledPlayerWithStats,
+} from "@/features/players/domain/player.effect.schema";
 import {
   Accordion,
   AccordionContent,
@@ -42,7 +45,7 @@ import { toDate } from "date-fns";
 const FormSchema = playerUpdateSchema;
 
 interface PlayerDetailsFormProps {
-  player: FulfilledPlayer;
+  player: FulfilledPlayerWithStats;
 }
 export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
   const { players } = usePlayers();
@@ -99,7 +102,10 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full border rounded-lg bg-background"
+      >
         <Accordion
           type="single"
           collapsible
@@ -392,7 +398,6 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
                           shirtSize={
                             (field.value as ShirtSize.M) ?? ShirtSize.M
                           }
-                          
                         />
                       </FormControl>
                       <FormMessage />
@@ -449,9 +454,14 @@ export function PlayerDetailsForm({ player }: PlayerDetailsFormProps) {
         </Accordion>
 
         <br />
-        <Button type="submit" disabled={updateRequestStatus === "IN_PROGRESS"}>
-          {updateRequestStatus === "IN_PROGRESS" ? "Wait..." : "Save Changes"}
-        </Button>
+        <div className="flex justify-end p-2">
+          <Button
+            type="submit"
+            disabled={updateRequestStatus === "IN_PROGRESS"}
+          >
+            {updateRequestStatus === "IN_PROGRESS" ? "Wait..." : "Save Changes"}
+          </Button>
+        </div>
       </form>
     </Form>
   );

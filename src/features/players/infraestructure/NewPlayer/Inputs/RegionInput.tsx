@@ -9,7 +9,7 @@ function RegionInput({}: RegionInputProps) {
     <div>
       <Label className="dark:text-slate-800 font-bold">Origin Region</Label>
       <RegionSelect
-        className="bg-white border border-slate-300 px-4"
+        className="bg-background border border-slate-300 px-4"
         countryCode={country}
         onChange={setCity}
       />

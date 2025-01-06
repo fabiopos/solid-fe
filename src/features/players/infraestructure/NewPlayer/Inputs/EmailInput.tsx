@@ -11,7 +11,7 @@ function EmailInput() {
       <Label className="dark:text-slate-800 font-bold">Email</Label>
       <Input
         placeholder="james@rodriguez.com"
-        className="bg-white border-slate-300"
+        className="bg-background border-slate-300"
         maxLength={18}
         value={email}
         onChange={(e) => setEmail(e.target.value)}

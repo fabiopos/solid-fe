@@ -11,7 +11,7 @@ function FavPositionSelect() {
         Fav. Field Position <Info size={16} />{" "}
       </Label>
       <Select onValueChange={setFavFieldPosition} value={favPosition}>
-        <SelectTrigger className="w-full px-2 bg-white">
+        <SelectTrigger className="w-full px-2 bg-background">
           <SelectValue placeholder="Select a position" />
         </SelectTrigger>
         <SelectContent>

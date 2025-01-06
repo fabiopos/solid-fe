@@ -17,7 +17,7 @@ export default function PlayerFileInput({
   variant,
 }: IFileInputProps) {
   return (
-    <div className="border border-slate-300 bg-white flex justify-center my-2">
+    <div className="border border-slate-300 bg-background flex justify-center my-2">
       <Label htmlFor={name} className="dark:text-slate-800 font-bold p-2">{label}</Label>      
       <Input
         type="file"

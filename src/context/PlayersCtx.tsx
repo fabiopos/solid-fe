@@ -6,7 +6,7 @@ import {
   makePlayersStore,
   type PlayersStore,
 } from "@/features/players/domain/usePlayersStore";
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
+import { FulfilledPlayer, FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
 
 export type PlayersStoreApi = ReturnType<typeof makePlayersStore>;
@@ -17,7 +17,7 @@ export const PlayersStoreContext = createContext<PlayersStoreApi | undefined>(
 
 export interface PlayersStoreProviderProps {
   children: ReactNode;
-  players: FulfilledPlayer[];
+  players: FulfilledPlayerWithStats[];
   fieldPositions: FulfilledFieldPosition[];
   teamId: string;
 }

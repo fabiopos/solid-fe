@@ -15,6 +15,7 @@ import FieldPositionBodyCell from "./BodyCells/FieldPositionCell";
 import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
 import PositionCategoryShortBadge from "@/components/Player/PositionCategoryShortBadge";
 import { getFirstName, getLastName } from "@/lib/player.util";
+import Link from "next/link";
 
 interface AparitionBodyRowProps {
   player: FulfilledPlayer;
@@ -48,7 +49,11 @@ function AparitionBodyRow({
       <FieldPositionBodyCell>
         <PositionCategoryShortBadge category={player.favPosition?.category} />
       </FieldPositionBodyCell>
-      <AparitionBodyCell className="text-left">{playerName}</AparitionBodyCell>
+      <AparitionBodyCell className="text-left">
+        <Link className="hover:underline" href={`/players/details/${player.id}`}>
+          {playerName}
+        </Link>
+      </AparitionBodyCell>
       <ConfirmedCell playerId={player.id} confirmed={confirmed} />
       <PlayedCell playerId={player.id} played={played} />
       <YellowCardCell

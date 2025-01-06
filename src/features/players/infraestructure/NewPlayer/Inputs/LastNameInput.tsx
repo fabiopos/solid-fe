@@ -11,7 +11,7 @@ function LastNameInput() {
       <Label className="dark:text-slate-800 font-bold">Last Name</Label>
       <Input
         placeholder="Rodriguez Rubio"
-        className="bg-white border-slate-300"
+        className="bg-background border-slate-300"
         maxLength={18}
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}

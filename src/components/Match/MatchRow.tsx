@@ -18,7 +18,7 @@ function MatchRow({ match, actionsColumn, onClickScore }: MatchRowProps) {
   if (!match) return null;
   // grid grid-cols-[150px_50px_210px_85px_210px_2fr]
   return (
-    <div className="border rounded-xl my-2 bg-white">
+    <div className="border rounded-xl my-2 bg-background">
       <div className="grid grid-rows-2 grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] lg:grid-rows-1 justify-center items-center py-5">
         <div className="flex flex-col  row-start-1 col-start-1 lg:row-start-auto lg:col-start-auto justify-center items-center">
           <MatchDayTime matchDay={match.matchDay} matchHour={match.matchHour} />

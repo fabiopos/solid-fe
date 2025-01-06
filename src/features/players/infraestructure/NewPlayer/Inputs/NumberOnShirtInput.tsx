@@ -36,7 +36,7 @@ function NumberOnShirtInput() {
       <Label className="dark:text-slate-800 font-bold">Number on Shirt</Label>
 
       <Select onValueChange={setNumberOnShirt} value={numberOnShirt}>
-        <SelectTrigger className="w-full px-2 bg-white">
+        <SelectTrigger className="w-full px-2 bg-background">
           <SelectValue placeholder="Select a shirt number" />
         </SelectTrigger>
         <SelectContent>

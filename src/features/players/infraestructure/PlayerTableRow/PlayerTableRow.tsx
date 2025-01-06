@@ -25,11 +25,14 @@ import { usePlayers } from "../../domain/usePlayers";
 import { useMemo } from "react";
 import PlayerAvatar from "../PlayerAvatar";
 import Link from "next/link";
-import { FulfilledPlayer } from "../../domain/player.effect.schema";
+import {
+  FulfilledPlayer,
+  FulfilledPlayerWithStats,
+} from "../../domain/player.effect.schema";
 import EditPlayerPosition from "./RowActions/EditPlayerPosition";
 
 interface PlayerTableRowProps {
-  player: FulfilledPlayer;
+  player: FulfilledPlayerWithStats;
 }
 
 function PlayerTableRow({ player }: PlayerTableRowProps) {
@@ -64,7 +67,10 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
       <TableCell className="text-center">{player.shirtNumber}</TableCell>
       <TableCell className="font-medium">
         <div className="flex flex-col">
-          <Link href={`/players/details/${player.id}`} className="text-lg uppercase">
+          <Link
+            href={`/players/details/${player.id}`}
+            className="text-lg uppercase"
+          >
             {player.shirtName}
           </Link>
           <small className="text-neutral-500">
@@ -77,12 +83,12 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
         {player.shirtSize}
       </TableCell> */}
       {/* <TableCell className="font-medium uppercase"></TableCell> */}
-      <TableCell className="text-center">0</TableCell>
-      <TableCell className="text-center">0 %</TableCell>
-      <TableCell className="text-center">0</TableCell>
-      <TableCell className="text-center">0</TableCell>
-      <TableCell className="text-center">0</TableCell>
-      <TableCell className="text-center">0 %</TableCell>
+      <TableCell className="text-center">{player.playedMatches} / {player.totalTeamMatches}</TableCell>
+      <TableCell className="text-center">{player.playedMatchesPerc.toFixed(1)}%</TableCell>
+      <TableCell className="text-center">{player.goalsCount}</TableCell>
+      <TableCell className="text-center">{player.goalsAvg?.toFixed(2)}</TableCell>
+      <TableCell className="text-center">{player.minutesPlayed}</TableCell>
+      <TableCell className="text-center">{player.minutesPerc.toFixed(1)}%</TableCell>
       <TableCell className="font-medium">
         <StatusCell player={player} />
       </TableCell>

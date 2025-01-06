@@ -20,14 +20,7 @@ function WeightInput() {
         onValueChange={(value) => setWeight(value[0].toString())}
         value={[Number(weight)]}
       />
-      <small>{weight}kg</small>
-      {/* <Input
-        placeholder="63kg"
-        className="bg-white border-slate-300"
-        maxLength={3}
-        value={weight}
-        onChange={(e) => setWeight(e.target.value)}
-      /> */}
+      <small>{weight}kg</small>   
       {!isValidWeight && !!weight && (
         <small className="text-red-500">
           The weight you entered is invalid.

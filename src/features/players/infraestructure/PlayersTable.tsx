@@ -8,10 +8,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PlayerTableRow from "./PlayerTableRow/PlayerTableRow";
-import { FulfilledPlayer } from "../domain/player.effect.schema";
+import { FulfilledPlayer, FulfilledPlayerWithStats } from "../domain/player.effect.schema";
 
 interface PlayersTableProps {
-  players: FulfilledPlayer[];
+  players: FulfilledPlayerWithStats[];
   caption?: string;
 }
 

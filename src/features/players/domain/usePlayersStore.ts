@@ -6,7 +6,12 @@ import { PlayerStatus, RequestStatus } from "@/types/types.common";
 import { PlayerUpdate } from "../application/PlayerUpdate";
 import { PlayerDelete } from "../application/PlayerDelete";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
-import { FulfilledPlayer } from "./player.effect.schema";
+import {
+  FulfilledPlayer,
+  FulfilledPlayerWithStats,
+} from "./player.effect.schema";
+import { toDate } from "date-fns";
+import { refineDate } from "@/lib/player.util";
 
 export type PlayersStoreState = {
   teamId: string;
@@ -14,11 +19,11 @@ export type PlayersStoreState = {
   playerStatusUpdate: { id: string | null; status: RequestStatus };
   playerStatusDelete: { id: string | null; status: RequestStatus };
   error: string | null;
-  players: FulfilledPlayer[];
+  players: FulfilledPlayerWithStats[];
   allFieldPositions: FulfilledFieldPosition[];
-  selectedPlayer: FulfilledPlayer | null;
+  selectedPlayer: FulfilledPlayerWithStats | null;
   tab: string;
-  filteredPlayers: Record<string, FulfilledPlayer[]>;
+  filteredPlayers: Record<string, FulfilledPlayerWithStats[]>;
   categories: string[];
 };
 export type PlayersStoreActions = {
@@ -31,13 +36,13 @@ export type PlayersStoreActions = {
   setPlayerStatus(playerId: string, playerStatus: PlayerStatus): void;
   setPlayerInactive(playerId: string, active: boolean): void;
   setFavPosition(favPositionId: string): void;
-  setSelectedPlayer(player: FulfilledPlayer | null): void;
-  updateSelectedPlayer(player: FulfilledPlayer): void;
+  setSelectedPlayer(player: FulfilledPlayerWithStats | null): void;
+  updateSelectedPlayer(player: FulfilledPlayerWithStats): void;
   updateSelectedPlayerPositions(newPositions: string[]): void;
   deletePlayer(playerId: string, token: string): Promise<void>;
   patchPlayerFieldPositions(token: string): Promise<void>;
   setTab(tab: string): void;
-  refreshFilteredPlayers(players: FulfilledPlayer[]): Promise<void>;
+  refreshFilteredPlayers(players: FulfilledPlayerWithStats[]): Promise<void>;
 };
 
 export type PlayersStore = PlayersStoreState & PlayersStoreActions;
@@ -69,7 +74,10 @@ export const makePlayersStore = (
       const client = new PlayerGet(new ApiClient());
 
       try {
-        const result = await client.getAllPlayers(teamId, access_token);
+        const result = await client.getAllPlayersWithStats(
+          teamId,
+          access_token
+        );
         set(() => ({
           fetchPlayersStatus: "DONE",
           players: result,
@@ -92,7 +100,11 @@ export const makePlayersStore = (
 
       set(() => ({
         players: players.map((p) => {
-          if (p.id === playerId) return { ...p, status: playerStatus };
+          if (p.id === playerId)
+            return {
+              ...p,
+              status: playerStatus,
+            };
           return p;
         }),
       }));

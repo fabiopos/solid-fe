@@ -11,7 +11,7 @@ function HealthProviderInput() {
       <Label className="dark:text-slate-800 font-bold">Health Provider</Label>
       <Input
         placeholder="Famisanar"
-        className="bg-white border-slate-300"
+        className="bg-background border-slate-300"
         maxLength={20}
         value={healthProvider}
         onChange={(e) => setHealthProvider(e.target.value)}

@@ -30,7 +30,7 @@ function ShirtNumberInput({
 
   return (
     <Select onValueChange={setNumberOnShirt} value={numberOnShirt}>
-      <SelectTrigger className={cn("w-full px-2 bg-white", className)}>
+      <SelectTrigger className={cn("w-full px-2 bg-background", className)}>
         <SelectValue placeholder="Select a shirt number" />
       </SelectTrigger>
       <SelectContent>
