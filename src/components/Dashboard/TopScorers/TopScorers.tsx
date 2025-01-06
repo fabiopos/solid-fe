@@ -1,5 +1,6 @@
 import { FulfilledScorer } from "@/features/aparition/domain/aparition.schema";
 import PlayerAvatar from "@/features/players/infraestructure/PlayerAvatar";
+import Link from "next/link";
 
 interface TopScorersProps {
   aparitions: FulfilledScorer[];
@@ -18,14 +19,19 @@ function TopScorers({ aparitions }: TopScorersProps) {
               imageUrl={ap.avatarUrl}
             />
             <div className="flex flex-col">
-              <span className="uppercase text-foreground text-sm">
-                {ap.shirtName}
-              </span>
+              <Link
+                href={`/players/details/${ap.id}`}
+                className="hover:underline"
+              >
+                <span className="uppercase text-foreground text-sm">
+                  {ap.shirtName}
+                </span>
+              </Link>
               <span className="text-muted-foreground text-xs">{ap.name}</span>
             </div>
           </div>
           <div className="flex flex-col justify-center items-center">
-            <span className="text-foreground text-lg leading-none">{`${ap.goals}`}</span>            
+            <span className="text-foreground text-lg leading-none">{`${ap.goals}`}</span>
             <span className="text-muted-foreground text-xs">goals</span>
           </div>
         </div>
