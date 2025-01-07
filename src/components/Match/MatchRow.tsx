@@ -4,7 +4,6 @@ import MatchScoreBadge from "./MatchScore";
 import TeamShieldAvatar from "../Team/TeamShield";
 
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { MapPin } from "lucide-react";
 import MatchDayTime from "./MatchDayTime";
 

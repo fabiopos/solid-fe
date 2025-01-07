@@ -142,7 +142,7 @@ function Tree({ item }: { item: { id: string; name: string } | any[] }) {
         isActive={i.name === "Copa Compensar"}
         className="data-[active=true]:bg-transparent"
       >
-        <Link href={`/matches/${i.id}`} className="flex gap-2 items-center">
+        <Link href={`/seasons/competitions/matches/${i.id}`} className="flex gap-2 items-center">
           <File size={14} />
           <span className="text-ellipsis max-w-20 overflow-hidden text-nowrap">
             {i.name}

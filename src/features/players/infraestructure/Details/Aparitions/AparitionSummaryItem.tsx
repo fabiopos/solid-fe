@@ -5,6 +5,7 @@ import {
   FulfilledPlayerWithStats,
 } from "@/features/players/domain/player.effect.schema";
 import { format } from "date-fns";
+import { RectangleVertical, RectangleVerticalIcon } from "lucide-react";
 import Link from "next/link";
 
 interface AparitionSummaryItemProps {
@@ -14,17 +15,29 @@ interface AparitionSummaryItemProps {
 function AparitionSummaryItem({ aparition }: AparitionSummaryItemProps) {
   return (
     <div className="flex flex-col">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between py-2">
         <div className="text-xs text-muted-foreground">
-          {aparition.match?.title}
+          {aparition.match?.title} - {aparition.match?.competition?.name}
         </div>
         <div className="text-xs text-muted-foreground">
-          {/* {aparition.match?.competition?.name} */}
+          {!!aparition.yellowCards && (
+            <div className="relative">
+              <RectangleVerticalIcon
+                className="text-yellow-300 rotate-[15deg]"
+                fill="yellow"
+              />{" "}
+              <span className="font-bold absolute -bottom-1 -right-0">x{aparition.yellowCards}</span>
+              
+            </div>
+          )}
         </div>
       </div>
       <div className="flex items-center justify-between">
         <div>
-          <Link href={`/seasons/competitions/matches/${aparition.match?.id}`} className="hover:underline">
+          <Link
+            href={`/seasons/competitions/matches/${aparition.match?.id}`}
+            className="hover:underline"
+          >
             {aparition.match?.homeTeam?.name} {aparition.match?.homeScore}{" "}
             {" - "}
             {aparition.match?.awayScore} {aparition.match?.awayTeam?.name}

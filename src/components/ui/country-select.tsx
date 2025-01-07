@@ -6,6 +6,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { filterCountries } from "@/lib/helpers";
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 import countryRegionData from "country-region-data/dist/data-umd";
 import { useEffect, useState } from "react";

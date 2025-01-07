@@ -5,7 +5,7 @@ import { PlayersStoreProvider } from "@/context/PlayersCtx";
 import { FieldPositionGet } from "@/features/fieldPosition/application/FieldPositionGet";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
 import { PlayerGet } from "@/features/players/application/PlayerGet";
-import { FulfilledPlayer, FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import PlayerDetailsFt from "@/features/players/infraestructure/Details/PlayerDetailsFt";
 import { ApiClient } from "@/lib/ApiClient";
 

@@ -14,13 +14,15 @@ function MatchDetails() {
   const [open, setOpen] = useState(false);
   const teamId = useAuthStore((state) => state.accountData.selectedTeamId);
   const { match } = useMatchDetailsStore((state) => state);
-
-  if (!match) return <>Match not found</>;
-
-  const teamIds = useMemo(() => [match.homeTeamId, match.awayTeamId], [match]);
+  const teamIds = useMemo(
+    () => [match?.homeTeamId, match?.awayTeamId],
+    [match]
+  );
   const isReadonly = useMemo(() => {
     return !teamIds.includes(teamId ?? "");
   }, [teamIds, teamId]);
+
+  if (!match) return <>Match not found</>;
 
   return (
     <div className="container">

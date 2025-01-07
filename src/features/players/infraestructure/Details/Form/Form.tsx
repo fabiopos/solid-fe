@@ -16,10 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { playerUpdateSchema } from "@/features/players/domain/player.schema";
-import {
-  FulfilledPlayer,
-  FulfilledPlayerWithStats,
-} from "@/features/players/domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import {
   Accordion,
   AccordionContent,

@@ -1,5 +1,4 @@
 import { auth } from "@/auth";
-import { H1 } from "@/components/ui/typograhpy";
 import { MatchStoreProvider } from "@/context/MatchCtx";
 import { CompetitionGet } from "@/features/competition/application/CompetitionGet";
 import { FulfilledMatch } from "@/features/match/domain/match.schema";

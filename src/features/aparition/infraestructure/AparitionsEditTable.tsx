@@ -7,7 +7,7 @@ function AparitionsEditTable() {
   return (
     <div className="flex flex-col gap-2">
       <AparitionCTA />
-      <div className="border rounded-lg">
+      <div className="border rounded-lg bg-background">
         <AparitionHeader />
         <AparitionBody />
       </div>

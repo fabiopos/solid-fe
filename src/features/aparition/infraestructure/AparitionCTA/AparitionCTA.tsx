@@ -15,14 +15,14 @@ function AparitionCTA() {
   const handleUpsert = useCallback(() => {
     if (!data) return;
     upsertAparitions(data?.user.access_token);
-  }, [data]);
+  }, [data, upsertAparitions]);
 
   const isDisabled = useMemo(() => {
     return upsertStatus === "IN_PROGRESS";
   }, [upsertStatus]);
 
   return (
-    <div className="flex justify-between items-center dark:bg-slate-800/40 bg-slate-50 border p-5 rounded-lg">
+    <div className="flex justify-between items-center dark:bg-slate-800/40 bg-background border p-5 rounded-lg">
       <AparitionsStatBoxes />
       <Button onClick={handleUpsert} disabled={isDisabled} size="sm">
         Update changes
