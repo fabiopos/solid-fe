@@ -11,15 +11,18 @@ import CompetitionStatusText from "@/components/Competition/CompetitionStatusTex
 import { cn } from "@/lib/utils";
 import MatchTriggerIcon from "@/features/match/infraestructure/MatchTriggerIcon";
 import { FulfilledMatch } from "@/features/match/domain/match.schema";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MatchAddDrawer from "@/features/match/infraestructure/MatchAddDrawer";
 import { ApiClient } from "@/lib/ApiClient";
 import { CompetitionGet } from "@/features/competition/application/CompetitionGet";
 import { useTeamId } from "@/hooks/use-team-id";
 import { useSession } from "next-auth/react";
 import MatchesShortResults from "@/features/match/infraestructure/MatchesShortResults/MatchesShortResults";
+import { useMatchStore } from "@/context/MatchCtx";
+import { useToast } from "@/hooks/use-toast";
 
 function CompetitionList() {
+  const { toast } = useToast();
   const { data } = useSession();
   const selectedTeamId = useTeamId();
   const {
@@ -28,6 +31,7 @@ function CompetitionList() {
     allCompetitions,
     setCompetitions,
   } = useCompetitionStore((state) => state);
+  const { deletingStatus } = useMatchStore((state) => state);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -50,6 +54,16 @@ function CompetitionList() {
   const handleMatchCreated = async () => {
     await refreshCompetitions();
   };
+
+  useEffect(() => {
+    if (deletingStatus.message)
+      toast({
+        title: deletingStatus.status === "ERROR" ? "Error" : "Success",
+        variant: deletingStatus.status === "ERROR" ? "destructive" : "default",
+        description: deletingStatus.message,
+        duration: 3000
+      });
+  }, [deletingStatus.message]);
 
   return (
     <div className="flex gap-5 p-5 justify-between">
@@ -107,7 +121,7 @@ function CompetitionList() {
           </div>
           <div className="flex justify-end flex-col">
             <strong className="text-foreground/80 text-sm my-2">
-            Last {selected?.matches?.length ?? 0} matches results
+              Last {selected?.matches?.length ?? 0} matches results
             </strong>
             <MatchesShortResults matches={selected?.matches ?? []} />
           </div>
@@ -126,7 +140,15 @@ function CompetitionList() {
           <Separator className="my-2" />
           <ul className="mt-2 space-y-2">
             {selected?.matches?.map((m) => (
-              <li key={m.id} className="flex justify-between items-center">
+              <li
+                key={m.id}
+                className={cn(
+                  "flex justify-between items-center",
+                  deletingStatus.id === m.id &&
+                    deletingStatus.status === "ERROR" &&
+                    "text-red-400"
+                )}
+              >
                 <Link
                   href={`/seasons/competitions/matches/${m.id}`}
                   className="hover:text-cyan-400 flex gap-2 items-center justify-between"

@@ -4,8 +4,8 @@ import { ApiClient } from "@/lib/ApiClient";
 export class MatchDelete {
   constructor(private readonly client: ApiClient) {}
 
-  async deleteMatch(matchId: string, token: string) {
+  deleteMatch(matchId: string, token: string) {
     const resource = `/match/${matchId}`;
-    await this.client.DELETE(resource, token);
+    return this.client.DELETE(resource, token);
   }
 }

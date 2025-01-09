@@ -48,10 +48,9 @@ function MatchTriggerIcon({
       if (onUpdateStatus) onUpdateStatus();
     });
   };
-  const handleDelete = (id: string) => {
-    deleteMatch(id, data?.user.access_token ?? "").then(() => {
-      router.refresh();
-    });
+  const handleDelete = async (id: string) => {
+    await deleteMatch(id, data?.user.access_token ?? "")      
+    router.refresh();    
     if (onDeleteMatch) onDeleteMatch(id);
   };
 

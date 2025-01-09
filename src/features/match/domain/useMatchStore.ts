@@ -6,6 +6,9 @@ import { MatchDelete } from "../application/MatchDelete";
 import { MatchCreate } from "../application/MatchCreate";
 import { MatchUpdate } from "../application/MatchUpdate";
 import { MatchGet } from "../application/MatchGet";
+import { deleteMatchAct } from "@/actions/match.actions";
+import { Effect } from "effect";
+import { MatchDeleteError } from "@/exceptions/MatchExceptions";
 
 export type MatchStoreState = {
   selectedMatch: FulfilledMatch | null;
@@ -13,7 +16,11 @@ export type MatchStoreState = {
   allMatches: FulfilledMatch[];
   postingStatus: RequestStatus;
   patchingStatus: { id: string | null; status: RequestStatus };
-  deletingStatus: { id: string | null; status: RequestStatus };
+  deletingStatus: {
+    id: string | null;
+    status: RequestStatus;
+    message?: string;
+  };
 };
 
 export type MatchStoreActions = {
@@ -50,17 +57,43 @@ export const makeMatchStore = (initProps?: Partial<MatchStoreState>) => {
       set(() => ({ allMatches: matches }));
     },
     deleteMatch: async (matchId: string, token: string) => {
-      const curr = get().allMatches;
-      const client = new MatchDelete(new ApiClient());
       set(() => ({
-        deletingStatus: { id: matchId, status: "IN_PROGRESS" },
+        allMatches: get().allMatches.filter((x) => x.id !== matchId),
+        deletingStatus: {
+          id: matchId,
+          status: "IN_PROGRESS",
+          message: undefined,
+        },
       }));
-      await client.deleteMatch(matchId, token);
 
-      set(() => ({
-        allMatches: curr.filter((x) => x.id !== matchId),
-        deletingStatus: { id: matchId, status: "DONE" },
-      }));
+      const onSuccess = (response: Response) => {
+        set(() => ({
+          allMatches: get().allMatches.filter((x) => x.id !== matchId),
+          deletingStatus: {
+            id: matchId,
+            status: "DONE",
+            message: "The selected match has beed deleted.",
+          },
+        }));
+      };
+      const onError = (error: MatchDeleteError) => {
+        set(() => ({
+          deletingStatus: {
+            id: matchId,
+            status: "ERROR",
+            message: error.message,
+          },
+        }));
+      };
+
+      const program = deleteMatchAct({ matchId, token }).pipe(
+        Effect.mapBoth({
+          onFailure: onError,
+          onSuccess: onSuccess,
+        })
+      );
+
+      await Effect.runPromiseExit(program);
     },
     postMatch: async (emptyMatch: EmptyMatch, token: string) => {
       const client = new MatchCreate(new ApiClient());
@@ -75,10 +108,9 @@ export const makeMatchStore = (initProps?: Partial<MatchStoreState>) => {
     patchMatch: async (matchId, emptyMatch, token) => {
       const client = new MatchUpdate(new ApiClient());
       const prev = get().allMatches;
-      set(() => ({
-        patchingStatus: { id: matchId, status: "IN_PROGRESS" },
-      }));
+      set(() => ({ patchingStatus: { id: matchId, status: "IN_PROGRESS" } }));
       const updatedMatch = await client.updateMatch(matchId, emptyMatch, token);
+
       if (!updatedMatch) {
         set(() => ({ patchingStatus: { id: matchId, status: "ERROR" } }));
         return;

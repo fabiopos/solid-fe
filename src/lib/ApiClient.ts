@@ -52,7 +52,7 @@ export class ApiClient {
     });
   };
 
-  DELETE = async (resource: string, access_token?: string) => {
+  DELETE = (resource: string, access_token?: string) => {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
 
@@ -61,7 +61,7 @@ export class ApiClient {
 
     const uri = `http://localhost:3000${resource}`;
 
-    return await fetch(uri, {
+    return fetch(uri, {
       headers: defaultHeaders,
       method: "DELETE",
     });
