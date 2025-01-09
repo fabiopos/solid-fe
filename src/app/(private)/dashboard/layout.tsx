@@ -7,26 +7,14 @@ import TopScorersSection from "./@topScorers/page";
 import { Separator } from "@radix-ui/react-separator";
 import TopAssistsSection from "./@topAssists/page";
 import TeamCalendarSection from "./@teamCalendar/page";
+import DashboardTitle from "@/features/dashboard/infraestructure/DashboardTitle";
 
 function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <>
       <div className="py-14 sm:py-14">
         <div className="mx-auto max-w-full px-2 lg:max-w-full lg:px-8">
-          <h2 className="text-center text-base/7 font-semibold text-primary uppercase">
-            <TextEffect per="char" preset="fade">
-              Solid Manager
-            </TextEffect>
-          </h2>
-          <TextEffect
-            per="word"
-            as="h3"
-            preset="slide"
-            speedReveal={1000}
-            className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl dark:font-semibold tracking-tight dark:text-slate-100 sm:text-5xl"
-          >
-            Everything you need to manage your team
-          </TextEffect>
+          <DashboardTitle />
 
           <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] lg:grid-rows-4">
             <div className="dark:bg-slate-800/40 border rounded-lg p-2 flex justify-center bg-background">
