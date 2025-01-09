@@ -6,8 +6,7 @@ import { AparitionGet } from "@/features/aparition/application/AparitionGet";
 import { MatchGet } from "@/features/match/application/MatchGet";
 import MatchDetails from "@/features/match/infraestructure/MatchDetails/MatchDetails";
 import { PlayerGet } from "@/features/players/application/PlayerGet";
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
-import { PlayerType } from "@/features/players/domain/player.schema";
+import { FulfilledPlayer, FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import { ApiClient } from "@/lib/ApiClient";
 
 async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
@@ -47,11 +46,11 @@ async function getMatchDetails(matchId: string) {
   const match = await matchGet.find(matchId, token);
 
   /// all players
-  let allPlayers: FulfilledPlayer[] = [];
+  let allPlayers: FulfilledPlayerWithStats[] = [];
   const client = new PlayerGet(apiClient);
 
   if (selectedTeamId) {
-    allPlayers = await client.getAllPlayers(
+    allPlayers = await client.getAllPlayersWithStats(
       selectedTeamId,
       session?.user.access_token
     );

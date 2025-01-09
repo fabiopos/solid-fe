@@ -9,11 +9,12 @@ interface MatchesShortResultsProps {
 }
 
 function MatchesShortResults({ matches }: MatchesShortResultsProps) {
+  const filteredMatches = matches.filter(x => x.completed)
   const selectedTeamId = useTeamId();
   if (!selectedTeamId) return null;
   return (
     <div className="flex flex-wrap gap-5">
-      {matches.toReversed().map((match) => (
+      {filteredMatches.toReversed().map((match) => (
         <div key={match.id} className="flex flex-col justify-center items-center">
           <MatchResultBadge match={match} teamId={selectedTeamId} />
           <small className="text-muted-foreground text-xs">

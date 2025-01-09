@@ -7,7 +7,6 @@ import {
   MatchDetailsStore,
 } from "@/features/match/domain/useMatchDetails";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
-import { PlayerType } from "@/features/players/domain/player.schema";
 import { createContext, ReactNode, useContext, useRef } from "react";
 import { useStore } from "zustand";
 

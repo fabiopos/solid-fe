@@ -19,7 +19,6 @@ function Dashboard() {
           </p>
           {/* <PieChartWinRate /> */}
           <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] lg:grid-rows-4">
-
             <div className="dark:bg-slate-800/40 border rounded-lg p-2 flex justify-center bg-background">
               <TeamStats />
             </div>

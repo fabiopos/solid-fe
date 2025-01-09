@@ -6,7 +6,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { FulfilledMatch } from "../../domain/match.schema";
 import {
@@ -15,7 +14,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback } from "react";
 import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 import { useSession } from "next-auth/react";
 interface EditScoreDialogProps {
@@ -31,16 +30,14 @@ export function EditScoreDialog({
   const { data } = useSession();
   const { setScore, formattedScore, putScore, scoreRequestStatus } =
     useMatchDetailsStore((state) => state);
+
   const handleSaveChanges = useCallback(() => {
     if (!data) return;
     putScore(data.user.access_token).then(() => onOpenChange(false));
-  }, [putScore, data]);
+  }, [data, putScore, onOpenChange]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      {/* <DialogTrigger asChild>
-        <Button variant="outline">Edit Score</Button>
-      </DialogTrigger> */}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Edit Score</DialogTitle>
@@ -65,7 +62,7 @@ export function EditScoreDialog({
         <DialogFooter>
           <Button
             type="button"
-            disabled={scoreRequestStatus === "IN_PROGRESS"}
+            disabled={scoreRequestStatus === "IN_PROGRESS" || !formattedScore}
             onClick={handleSaveChanges}
           >
             {scoreRequestStatus === "IN_PROGRESS" ? "Wait..." : "Save changes"}

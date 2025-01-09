@@ -2,7 +2,7 @@
 import CompetitionStatusBadge from "@/components/Competition/CompetitionStatusBadge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { format, set } from "date-fns";
+import { format } from "date-fns";
 import { ChevronRight, Link2Icon } from "lucide-react";
 import Link from "next/link";
 import CompetitionTriggerIcon from "../Details/CompetitionTriggerIcon";

@@ -1,9 +1,7 @@
 import React, { useMemo } from "react";
+import Link from "next/link";
 import AparitionBodyCell from "./AparitionBodyCell";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
-import { Switch } from "@/components/ui/switch";
-import { Input } from "@/components/ui/input";
-
 import ConfirmedCell from "./BodyCells/ConfirmedCell";
 import PlayedCell from "./BodyCells/PlayedCell";
 import YellowCardCell from "./BodyCells/YellowCardCell";
@@ -12,10 +10,8 @@ import MinutesCell from "./BodyCells/MinutesCell";
 import GoalsCell from "./BodyCells/GoalsCell";
 import RatingCell from "./BodyCells/Rating";
 import FieldPositionBodyCell from "./BodyCells/FieldPositionCell";
-import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
 import PositionCategoryShortBadge from "@/components/Player/PositionCategoryShortBadge";
 import { getFirstName, getLastName } from "@/lib/player.util";
-import Link from "next/link";
 
 interface AparitionBodyRowProps {
   player: FulfilledPlayer;
@@ -50,7 +46,7 @@ function AparitionBodyRow({
         <PositionCategoryShortBadge category={player.favPosition?.category} />
       </FieldPositionBodyCell>
       <AparitionBodyCell className="text-left">
-        <Link className="hover:underline" href={`/players/details/${player.id}`}>
+        <Link className="hover:underline font-semibold" href={`/players/details/${player.id}`}>
           {playerName}
         </Link>
       </AparitionBodyCell>
