@@ -1,9 +1,23 @@
 import { ApiClient } from "@/lib/ApiClient";
 import { FulfilledTeamStats } from "../domain/teamStats.schema";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
-import { FulfilledMatchAparition, FulfilledScorer } from "@/features/aparition/domain/aparition.schema";
+import {
+  FulfilledMatchAparition,
+  FulfilledScorer,
+} from "@/features/aparition/domain/aparition.schema";
 import { FulfilledMatch } from "@/features/match/domain/match.schema";
 
+export interface LastMatchesPayload {
+  teamId: string;
+  token: string;
+  limit: number;
+}
+
+export interface TopScorersPayload {
+  teamId: string;
+  token: string;
+  limit: number;
+}
 export class DashboardGet {
   constructor(private readonly client: ApiClient) {}
 
@@ -23,7 +37,7 @@ export class DashboardGet {
     return (await stats.json()) as FulfilledPlayer[];
   }
 
-  async getTopScorers(teamId: string, token: string, limit?: number) {
+  async getTopScorers({ teamId, token, limit }: TopScorersPayload) {
     const stats = await this.client.GET(
       `/dashboard/top-scorers/${teamId}?limit=${limit}`,
       token
@@ -39,7 +53,7 @@ export class DashboardGet {
     return (await stats.json()) as FulfilledMatchAparition[];
   }
 
-  async getLastMatches(teamId: string, token: string, limit?: number) {
+  async getLastMatches({ teamId, token, limit }: LastMatchesPayload) {
     const stats = await this.client.GET(
       `/dashboard/last-matches/${teamId}?limit=${limit}`,
       token
@@ -56,10 +70,7 @@ export class DashboardGet {
   }
 
   async getCalendar(teamId: string, token: string) {
-    const stats = await this.client.GET(
-      `/dashboard/calendar/${teamId}`,
-      token
-    );
+    const stats = await this.client.GET(`/dashboard/calendar/${teamId}`, token);
     return (await stats.json()) as FulfilledMatch[];
   }
 }

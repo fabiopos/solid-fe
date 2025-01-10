@@ -6,7 +6,7 @@ import { DashboardGet } from "../application/DashboardGet";
 
 const LIMIT = 5;
 async function TopScorersFt() {
-    const { players } = await getData()
+  const { players } = await getData();
   return (
     <div className="">
       <div className="px-5 my-2">
@@ -30,11 +30,11 @@ async function getData() {
   if (!teamId) return { players: [] };
 
   const client = new DashboardGet(new ApiClient());
-  const players = await client.getTopScorers(
+  const players = await client.getTopScorers({
     teamId,
-    session.user.access_token,
-    LIMIT
-  );
+    token: session.user.access_token,
+    limit: LIMIT,
+  });
   return { players };
 }
 
