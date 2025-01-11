@@ -1,6 +1,8 @@
 import SoccerBall from "@/components/Icons/SoccerBall";
 import { format } from "date-fns";
-import { DayContentProps } from "react-day-picker";
+import { Effect, pipe } from "effect";
+import { useCallback, useMemo } from "react";
+import { ActiveModifiers, DayContentProps } from "react-day-picker";
 import { twMerge } from "tailwind-merge";
 
 interface EventCellProps extends DayContentProps {
@@ -12,12 +14,41 @@ export default function EventCell({
   date,
   selectedClassName,
 }: EventCellProps) {
+  const isToday = useCallback((mods: ActiveModifiers) => !!mods.today, []);
+  const hasModifiers = useCallback(
+    (mods: ActiveModifiers) => Object.keys(mods).length > 0,
+    []
+  );
+  const hasModifiersUuid = useCallback(
+    (mods: ActiveModifiers) => Object.keys(mods).some((x) => x.length > 30),
+    []
+  );
+  const isOutside = useCallback((mods: ActiveModifiers) => !!mods.outside, []);
+
+  const showEvent = useMemo(() => {
+    return pipe(
+      activeModifiers,
+      ()=> Effect.succeed(hasModifiers(activeModifiers)).pipe(
+        Effect.if({
+          onTrue: ()=> Effect.succeed(!isToday(activeModifiers)),
+          onFalse: ()=> Effect.succeed(false)
+        }),
+        Effect.if({
+          onTrue: ()=> Effect.succeed(!isOutside(activeModifiers)),
+          onFalse: ()=> Effect.succeed(false)
+        }),
+        Effect.if({
+          onTrue: ()=> Effect.succeed(hasModifiersUuid(activeModifiers)),
+          onFalse: ()=> Effect.succeed(false)
+        })        
+      ),
+      Effect.runSync      
+    );
+  }, [activeModifiers, hasModifiers, hasModifiersUuid, isOutside, isToday]);
+
   return (
     <>
-      {!activeModifiers.today &&
-      Object.keys(activeModifiers).length > 0 &&
-      !activeModifiers.outside &&
-      !activeModifiers.disabled ? (
+      {showEvent ? (
         <div
           className={twMerge(
             "flex flex-col items-center justify-center",

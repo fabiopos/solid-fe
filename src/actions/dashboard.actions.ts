@@ -25,24 +25,6 @@ export function getLastMatches() {
     Effect.flatten,
     
   );
-
-  //   const token = await Effect.runPromiseExit(getToken());
-  //   const teamId = await Effect.runPromiseExit(getTeamIdEffect());
-
-  //   if (token._tag !== "Success" || teamId._tag !== "Success")
-  //     return { lastMatches: [] };
-
-  //   const lastMatches = await Effect.runPromiseExit(
-  //     getLastMatchesEffect({
-  //       limit: LIMIT,
-  //       teamId: teamId.value,
-  //       token: token.value,
-  //     })
-  //   );
-
-  //   if(lastMatches._tag !== 'Success') return { lastMatches: [] };
-
-  //   return lastMatches.value;
 }
 
 function getLastMatchesEffect(payload: LastMatchesPayload) {
