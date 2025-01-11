@@ -13,8 +13,8 @@ interface CompetitionBadgesProps {
 
 function CompetitionBadges({ competitions }: CompetitionBadgesProps) {
   return (
-    <div className="mx-2 my-5 flex justify-end gap-2">
-      {competitions.map((x, i) => (
+    <div className="mx-2 my-5 flex justify-end gap-2 text-xs xl:text-lg flex-wrap">
+      {competitions.map((x) => (
         <Badge key={x.key} variant={x.variant}>
           {x.name}
         </Badge>

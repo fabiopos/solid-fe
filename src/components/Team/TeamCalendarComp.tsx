@@ -37,7 +37,7 @@ function TeamCalendarComp({
         caption_label: "p-1",
         day_today: "outline outline-gray-500",
         months:
-          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 xl:gap-4",
+          "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[repeat(auto-fit,_minmax(265px,_1fr))]  gap-2 xl:gap-4",
         month: "border border-gray-200 rounded-xl p-2",
         table: "mx-auto",
         day_outside: "bg-transparent text-muted-foreground opacity-50",
