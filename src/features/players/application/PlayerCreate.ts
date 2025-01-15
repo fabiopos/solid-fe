@@ -1,7 +1,6 @@
 import { ApiClient } from "@/lib/ApiClient";
 import { EmptyPlayer, FulfilledPlayer } from "../domain/player.effect.schema";
 import { RequestError } from "@/shared/errors/RequestError";
-import { createClient } from "@/lib/supabase.server";
 import { createSupaBrowserClient } from "@/lib/supabase.client";
 
 export class PlayerCreate {
@@ -48,7 +47,7 @@ export class PlayerCreate {
     return null;
   }
 
-  async deleteAvatar(pid: string) {}
+  async deleteAvatar(_pid: string) {}
 
   getFullPathUrl(fileName: string) {
     return `https://tvefqfrpvwacsfdyfked.supabase.co/storage/v1/object/public/assets/${fileName}`;

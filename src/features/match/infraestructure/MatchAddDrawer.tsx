@@ -63,17 +63,7 @@ function MatchAddDrawer({
     if (onMatchCreated) onMatchCreated();
 
     onClose();
-  }, [
-    title,
-    homeTeamId,
-    awayTeamId,
-    matchDay,
-    location,
-    competitionId,
-    postMatch,
-    data?.user.access_token,
-    onClose,
-  ]);
+  }, [title, homeTeamId, awayTeamId, matchDay, location, competitionId, postMatch, data?.user.access_token, onMatchCreated, onClose]);
 
   const handleDateChange = (date: Date | undefined) => {
     setMatchDay(date);

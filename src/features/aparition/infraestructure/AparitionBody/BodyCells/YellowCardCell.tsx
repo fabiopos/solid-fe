@@ -15,6 +15,7 @@ function YellowCardCell({ playerId, yellowCards, disabled }: YellowCardCellProps
     (value: string) => {
       setYellowCards(playerId, Number(value));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [playerId]
   );
 

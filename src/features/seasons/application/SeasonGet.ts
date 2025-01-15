@@ -31,7 +31,7 @@ export class SeasonGet {
     return (await result.json()) as FulfilledSeason;
   }
 
-  async getSeasonTree(teamId: string, token: string): Promise<any> {
+  async getSeasonTree(teamId: string, token: string) {
     const resource = `/season/${teamId}/tree`;
     const result = await this.client.GET(resource, token);
     if (!result.ok) return null;

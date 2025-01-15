@@ -1,7 +1,6 @@
 import { LIMIT } from "@/constants/dashboard.constants";
 import { FulfilledMatch } from "@/features/match/domain/match.schema";
 import MatchesShortResults from "@/features/match/infraestructure/MatchesShortResults/MatchesShortResults";
-import { format, formatDistanceToNowStrict } from "date-fns";
 import LastMatchesList from "./LastMatchesList";
 
 interface LastMatchesFtProps {

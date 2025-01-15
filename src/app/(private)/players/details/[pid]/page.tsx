@@ -1,3 +1,4 @@
+"use server";
 import { getCookieTeamId } from "@/app/actions";
 import { auth } from "@/auth";
 import { PlayerDetailsStoreProvider } from "@/context/PlayerDetailsCtx";
@@ -9,12 +10,23 @@ import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effec
 import PlayerDetailsFt from "@/features/players/infraestructure/Details/PlayerDetailsFt";
 import { ApiClient } from "@/lib/ApiClient";
 
-async function PlayerDetailsPage({ params }: { params: { pid: string } }) {
-  const { pid } = await params;
+type PlayerDetailsPageProps = Promise<{ pid: string }>;
+
+export default async function PlayerDetailsPage(props: {
+  params: PlayerDetailsPageProps;
+}) {
+  const { pid } = await props.params;
+
+  if (!pid) return null;
+
   const { player } = await getData(pid);
   const { fieldPositions, players, teamId } = await getPlayers();
   return (
-    <PlayersStoreProvider fieldPositions={fieldPositions} players={players} teamId={teamId}>
+    <PlayersStoreProvider
+      fieldPositions={fieldPositions}
+      players={players}
+      teamId={teamId}
+    >
       <PlayerDetailsStoreProvider player={player}>
         <PlayerDetailsFt />
       </PlayerDetailsStoreProvider>
@@ -61,5 +73,3 @@ const getPlayers = async (): Promise<GetPlayersResponse> => {
 
   return { players, fieldPositions, teamId };
 };
-
-export default PlayerDetailsPage;

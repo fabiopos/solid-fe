@@ -2,7 +2,6 @@ import { Input } from "../ui/input";
 import { Variant } from "@/types/types.common";
 import { Label } from "../ui/label";
 
-
 interface IFileInputProps {
   label: string;
   name: string;
@@ -14,11 +13,12 @@ export default function PlayerFileInput({
   label,
   name,
   onChange,
-  variant,
 }: IFileInputProps) {
   return (
     <div className="border border-slate-300 bg-background flex justify-center my-2">
-      <Label htmlFor={name} className="dark:text-slate-800 font-bold p-2">{label}</Label>      
+      <Label htmlFor={name} className="dark:text-slate-800 font-bold p-2">
+        {label}
+      </Label>
       <Input
         type="file"
         placeholder="Seleccione"

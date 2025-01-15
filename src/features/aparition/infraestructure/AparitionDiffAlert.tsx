@@ -5,12 +5,7 @@ import { Array } from "effect";
 import { useMatchDetailsStore } from "@/context/MatchDetailsCtx";
 import { Button } from "@/components/ui/button";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
-import {
-  ArrowRight,
-  Plus,
-  PlusCircle,
-  ReceiptRussianRubleIcon,
-} from "lucide-react";
+import { Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { cn } from "@/lib/utils";
 import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
@@ -27,7 +22,7 @@ function AparitionDiffAlert() {
 
   const aparitionsPlayerIds = useMemo(() => {
     return aparitions.map((x) => x.player?.id);
-  }, [players, aparitions]);
+  }, [aparitions]);
 
   const differenceIds = useMemo(
     () =>
@@ -52,7 +47,7 @@ function AparitionDiffAlert() {
       await addAparition(player, match?.id, data?.user.access_token ?? "");
       router.refresh();
     },
-    [match, data?.user.access_token]
+    [match?.id, addAparition, data?.user.access_token, router]
   );
 
   const isLoading = useMemo(() => {

@@ -6,14 +6,13 @@ import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { Loader } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import React, { useCallback, useEffect, useMemo } from "react";
 
 function CATButtons() {
   const teamId = useTeamId();
   const { data } = useSession();
   const { toast } = useToast();
-  const router = useRouter();
+  
   const {
     prevStep,
     nextStep,
@@ -43,7 +42,7 @@ function CATButtons() {
   const handleCreatePlayer = useCallback(async () => {
     if (!teamId) return;
     await postPlayer(teamId, data?.user.access_token ?? "");
-  }, [data?.user.access_token, teamId]);
+  }, [data?.user.access_token, postPlayer, teamId]);
 
   useEffect(() => {
     if (createPlayerStatus === "DONE") {
@@ -55,6 +54,7 @@ function CATButtons() {
         window.location.replace(window.location.origin + "/players");
       }, 2000);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createPlayerStatus]);
 
   const firstStepData = useMemo(() => {

@@ -1,9 +1,7 @@
 import ActiveText from "@/components/ui/active-text";
-import { Avatar } from "@/components/ui/avatar";
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 import PlayerAvatar from "@/features/players/infraestructure/PlayerAvatar";
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { format, formatDistanceToNow, formatDistanceToNowStrict } from "date-fns";
+import {  formatDistanceToNowStrict } from "date-fns";
 
 interface LastPlayersAddedProps {
   players: FulfilledPlayer[];

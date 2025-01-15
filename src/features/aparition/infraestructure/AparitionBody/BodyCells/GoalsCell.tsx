@@ -15,6 +15,7 @@ function GoalsCell({ playerId, goals, disabled }: GoalsCellProps) {
     (value: string) => {
       setGoals(playerId, Number(value));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [playerId]
   );
 

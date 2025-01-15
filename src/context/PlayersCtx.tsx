@@ -6,7 +6,7 @@ import {
   makePlayersStore,
   type PlayersStore,
 } from "@/features/players/domain/usePlayersStore";
-import { FulfilledPlayer, FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
 
 export type PlayersStoreApi = ReturnType<typeof makePlayersStore>;

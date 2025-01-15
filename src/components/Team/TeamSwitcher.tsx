@@ -34,7 +34,7 @@ export function TeamSwitcher({ myTeams }: TeamSwitcherProps) {
   const handleSelectTeam = React.useCallback((team: Team) => {
     setActiveTeam(team);
     onSelectTeam(team.id);
-  }, []);
+  }, [onSelectTeam]);
   return (
     <SidebarMenu>
       <SidebarMenuItem>

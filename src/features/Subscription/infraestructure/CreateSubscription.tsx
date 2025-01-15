@@ -36,7 +36,7 @@ export default function CreateSubscription(props: CreateSubscriptionProps) {
     if (createdSubscription?.id) {
       router.push(`/players?sid=${createdSubscription.id}`);
     }
-  }, [createdSubscription?.id]);
+  }, [createdSubscription?.id, router]);
 
   function onSubmit(input: SubscriptionInput) {
     setInput(input);

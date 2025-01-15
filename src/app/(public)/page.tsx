@@ -1,5 +1,3 @@
-import { H1 } from "@/components/ui/typograhpy";
-import Landing from "@/features/landing/infraestructure/Landing";
 export default async function Home() {
   return (
     <div className="dark:bg-slate-800/40 py-24 sm:py-32 flex flex-1">

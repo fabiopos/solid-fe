@@ -7,7 +7,8 @@ import {
 } from "@/components/ui/select";
 import { filterRegions } from "@/lib/helpers";
 
-//@ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+//@ts-expect-error
 import countryRegionData from "country-region-data/dist/data-umd";
 import { useEffect, useState } from "react";
 
@@ -55,6 +56,7 @@ function RegionSelect({
         filterRegions(regions.regions, priorityOptions, whitelist, blacklist)
       );
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countryCode]);
 
   return (

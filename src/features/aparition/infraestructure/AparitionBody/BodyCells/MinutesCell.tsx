@@ -15,6 +15,7 @@ function MinutesCell({ playerId, minutes, disabled }: MinutesCellProps) {
     (value: string) => {
         setMinutes(playerId, Number(value));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [playerId]
   );
 

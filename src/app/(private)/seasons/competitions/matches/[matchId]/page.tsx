@@ -9,8 +9,10 @@ import { PlayerGet } from "@/features/players/application/PlayerGet";
 import { FulfilledPlayer, FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import { ApiClient } from "@/lib/ApiClient";
 
-async function MatchDetailsPage({ params }: { params: { matchId: string } }) {
-  const { matchId } = await params;
+type MatchDetailsPageProps = Promise<{ matchId: string }>;
+
+async function MatchDetailsPage(props: { params: MatchDetailsPageProps }) {
+  const { matchId } = await props.params;
   const { match, aparitions, players, selectedTeamId, allPlayers } =
     await getMatchDetails(matchId);
 

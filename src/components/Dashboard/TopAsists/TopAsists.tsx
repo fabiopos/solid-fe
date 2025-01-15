@@ -1,8 +1,6 @@
-import ActiveText from "@/components/ui/active-text";
 import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
-import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 import PlayerAvatar from "@/features/players/infraestructure/PlayerAvatar";
-import { formatDistanceToNowStrict } from "date-fns";
+
 
 interface TopAssistsProps {
   aparitions: FulfilledMatchAparition[];

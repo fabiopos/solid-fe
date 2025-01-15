@@ -1,11 +1,10 @@
 import { Badge } from "@/components/ui/badge";
-import { PlayerType } from "../domain/player.schema";
 import PlayerAvatar from "./PlayerAvatar";
 import PositionCategoryBadge from "@/components/Player/PositionCategoryBadge";
-import { FulfilledPlayer } from "../domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "../domain/player.effect.schema";
 
 interface PlayerItemProps {
-  player: FulfilledPlayer;
+  player: FulfilledPlayerWithStats;
 }
 
 export default function PlayerItem({ player }: PlayerItemProps) {

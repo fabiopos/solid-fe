@@ -1,6 +1,6 @@
 import { FulfilledPlayer } from "@/features/players/domain/player.effect.schema";
 import { toDate } from "date-fns";
-import { Effect as E, pipe } from "effect";
+import { pipe } from "effect";
 
 export const getFirstName = (player: FulfilledPlayer | undefined): string => {
   return pipe(

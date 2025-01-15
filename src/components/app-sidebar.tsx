@@ -76,6 +76,7 @@ const data = {
 };
 
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tree: any;
   teams: Team[]
 }
@@ -120,7 +121,8 @@ export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
           <SidebarGroupLabel>Seasons, Competitions & Matches</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {tree.map((item: any, index: number) => (
+              
+              {tree.map((item: never, index: number) => (
                 <Tree key={index} item={item} />
               ))}
             </SidebarMenu>
@@ -132,7 +134,7 @@ export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
   );
 }
 
-function Tree({ item }: { item: { id: string; name: string } | any[] }) {
+function Tree({ item }: { item: { id: string; name: string } | never[] }) {
   const [i, ...items] = Array.isArray(item) ? item : [item];
 
   if (!i) return null;

@@ -23,7 +23,7 @@ function MatchesHead() {
         <H1>Matches</H1>
         <br />
         <p>
-          There's a total of <strong>{matches.length}</strong> matches, you can edit the matches
+          There&apos;s a total of <strong>{matches.length}</strong> matches, you can edit the matches
           result clicking the action button next to the match or edit the match
           details.
         </p>

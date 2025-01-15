@@ -2,7 +2,7 @@
 import PlayerFileInput from "@/components/Player/PlayerImageInput";
 import { useNewPlayerStore } from "@/context/NewPlayerCtx";
 import Image from "next/image";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 
 function PlayerAvatarInput() {
   const { setAvatarUrl, avatarUrl, setAvatarFile } = useNewPlayerStore((state) => state);
@@ -18,7 +18,7 @@ function PlayerAvatarInput() {
         setAvatarUrl(String(reader.result));
       };
     },
-    []
+    [setAvatarFile, setAvatarUrl]
   );
   return (
     <div className="border border-slate-300 rounded-lg p-2 flex flex-col items-center justify-center">

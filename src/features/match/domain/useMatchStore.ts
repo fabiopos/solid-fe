@@ -2,7 +2,6 @@ import { RequestStatus } from "@/types/types.common";
 import { createStore } from "zustand";
 import { ApiClient } from "@/lib/ApiClient";
 import { EmptyMatch, FulfilledMatch } from "./match.schema";
-import { MatchDelete } from "../application/MatchDelete";
 import { MatchCreate } from "../application/MatchCreate";
 import { MatchUpdate } from "../application/MatchUpdate";
 import { MatchGet } from "../application/MatchGet";
@@ -66,7 +65,7 @@ export const makeMatchStore = (initProps?: Partial<MatchStoreState>) => {
         },
       }));
 
-      const onSuccess = (response: Response) => {
+      const onSuccess = (_response: Response) => {
         set(() => ({
           allMatches: get().allMatches.filter((x) => x.id !== matchId),
           deletingStatus: {

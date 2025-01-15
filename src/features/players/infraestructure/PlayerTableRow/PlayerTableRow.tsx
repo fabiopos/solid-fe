@@ -25,10 +25,7 @@ import { usePlayers } from "../../domain/usePlayers";
 import { useMemo } from "react";
 import PlayerAvatar from "../PlayerAvatar";
 import Link from "next/link";
-import {
-  FulfilledPlayer,
-  FulfilledPlayerWithStats,
-} from "../../domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "../../domain/player.effect.schema";
 import EditPlayerPosition from "./RowActions/EditPlayerPosition";
 
 interface PlayerTableRowProps {
@@ -83,12 +80,20 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
         {player.shirtSize}
       </TableCell> */}
       {/* <TableCell className="font-medium uppercase"></TableCell> */}
-      <TableCell className="text-center">{player.playedMatches} / {player.totalTeamMatches}</TableCell>
-      <TableCell className="text-center">{player.playedMatchesPerc.toFixed(1)}%</TableCell>
+      <TableCell className="text-center">
+        {player.playedMatches} / {player.totalTeamMatches}
+      </TableCell>
+      <TableCell className="text-center">
+        {player.playedMatchesPerc.toFixed(1)}%
+      </TableCell>
       <TableCell className="text-center">{player.goalsCount}</TableCell>
-      <TableCell className="text-center">{player.goalsAvg?.toFixed(2)}</TableCell>
+      <TableCell className="text-center">
+        {player.goalsAvg?.toFixed(2)}
+      </TableCell>
       <TableCell className="text-center">{player.minutesPlayed}</TableCell>
-      <TableCell className="text-center">{player.minutesPerc.toFixed(1)}%</TableCell>
+      <TableCell className="text-center">
+        {player.minutesPerc.toFixed(1)}%
+      </TableCell>
       <TableCell className="font-medium">
         <StatusCell player={player} />
       </TableCell>

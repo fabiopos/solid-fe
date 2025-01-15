@@ -10,11 +10,13 @@ export default function MatchDayTime({
   matchDay,
   matchHour,
 }: MatchDayTimeProps) {
+  
   const day = useMemo(() => {
     if (!matchDay) return;
     if (typeof matchDay === "string") return format(matchDay, "dd");
     return typeof matchDay === 'object' && format(matchDay, "dd");
-  }, []);
+  }, [matchDay]);
+
   return (
     <>
       {!matchDay && <small>no date specified</small>}

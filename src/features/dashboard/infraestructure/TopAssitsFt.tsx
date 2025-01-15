@@ -1,6 +1,5 @@
 import { getCookieTeamId } from "@/app/actions";
 import { auth } from "@/auth";
-import TopScorers from "@/components/Dashboard/TopScorers/TopScorers";
 import { ApiClient } from "@/lib/ApiClient";
 import { DashboardGet } from "../application/DashboardGet";
 import TopAssists from "@/components/Dashboard/TopAsists/TopAsists";

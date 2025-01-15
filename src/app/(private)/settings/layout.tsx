@@ -1,6 +1,4 @@
 
-import SettingsSideBar from "@/components/Settings/SettingsSideBar";
-
 interface LayoutProps {
   children: React.ReactNode;
 }

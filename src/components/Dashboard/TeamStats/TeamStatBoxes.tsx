@@ -14,15 +14,15 @@ function TeamStatBoxes({ stats }: TeamStatBoxesProps) {
 
   const winPerc = useMemo(() => {
     return Number(((won / matchesCount) * 100).toFixed(0));
-  }, []);
+  }, [matchesCount, won]);
 
   const drawPerc = useMemo(() => {
     return Number(((drawn / matchesCount) * 100).toFixed(0));
-  }, []);
+  }, [drawn, matchesCount]);
 
   const lossPerc = useMemo(() => {
     return Number(((lost / matchesCount) * 100).toFixed(0));
-  }, []);
+  }, [lost, matchesCount]);
 
   return (
     <div className="flex flex-col gap-1 justify-between px-5 my-2">

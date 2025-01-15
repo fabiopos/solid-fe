@@ -1,6 +1,6 @@
 "use client";
 
-import { Label, LabelList, Pie, PieChart } from "recharts";
+import { Label, Pie, PieChart } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -14,11 +14,14 @@ interface PieChartWinRateProps {
   stats: FulfilledTeamStats;
 }
 export function PieChartWinRate({ stats }: PieChartWinRateProps) {
-  const chartData = [
-    { result: "won", value: stats.won, fill: "hsl(var(--color-win))" },
-    { result: "drawn", value: stats.drawn, fill: "hsl(var(--color-draw))" },
-    { result: "lost", value: stats.lost, fill: "hsl(var(--chart-3))" },
-  ];
+  const chartData = useMemo(
+    () => [
+      { result: "won", value: stats.won, fill: "hsl(var(--color-win))" },
+      { result: "drawn", value: stats.drawn, fill: "hsl(var(--color-draw))" },
+      { result: "lost", value: stats.lost, fill: "hsl(var(--chart-3))" },
+    ],
+    [stats.drawn, stats.lost, stats.won]
+  );
 
   const chartConfig = {
     value: {
@@ -40,9 +43,12 @@ export function PieChartWinRate({ stats }: PieChartWinRateProps) {
 
   const totalMatches = useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.value, 0);
-  }, []);
+  }, [chartData]);
 
-  const performance = useMemo(() => (stats.won / totalMatches) * 100, []);
+  const performance = useMemo(
+    () => (stats.won / totalMatches) * 100,
+    [stats.won, totalMatches]
+  );
 
   return (
     <div className="">

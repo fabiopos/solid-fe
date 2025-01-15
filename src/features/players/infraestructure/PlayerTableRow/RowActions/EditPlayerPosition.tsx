@@ -2,7 +2,7 @@
 
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { usePlayersStore } from "@/context/PlayersCtx";
-import { FulfilledPlayer, FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import { GitPullRequestArrow } from "lucide-react";
 
 interface EditPlayerPositionProps {

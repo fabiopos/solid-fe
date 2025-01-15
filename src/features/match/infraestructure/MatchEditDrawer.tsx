@@ -71,17 +71,7 @@ function MatchEditDrawer({
     await patchMatch(match.id, payload, data?.user.access_token ?? "");
 
     onClose();
-  }, [
-    title,
-    homeTeamId,
-    awayTeamId,
-    matchDay,
-    location,
-    competitionId,
-    patchMatch,
-    data?.user.access_token,
-    onClose,
-  ]);
+  }, [title, homeTeamId, awayTeamId, matchDay, location, competitionId, match.id, patchMatch, data?.user.access_token, onClose]);
 
   const handleDateChange = (date: Date | undefined) => {
     setMatchDay(date);

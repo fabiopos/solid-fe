@@ -24,7 +24,7 @@ function MyRivals({ teams }: MyRivalsProps) {
     const teamDel = new TeamDelete(new ApiClient());
     await teamDel.deleteteam(id, data?.user.access_token ?? "");
     router.refresh();
-  }, []);
+  }, [data?.user.access_token, router]);
   return (
     <div>
       {!hasTeams && (

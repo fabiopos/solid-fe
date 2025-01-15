@@ -20,17 +20,15 @@ import {
 } from "@/components/ui/popover";
 import { usePlayersStore } from "@/context/PlayersCtx";
 
-
 interface FieldPositionComboProps {
   defaultValue?: string;
 }
 
-
-
-function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
-  const { allFieldPositions, setFavPosition, selectedPlayer } = usePlayersStore((state) => state);
+function FieldPositionCombo({}: FieldPositionComboProps) {
+  const { allFieldPositions, setFavPosition, selectedPlayer } = usePlayersStore(
+    (state) => state
+  );
   const [open, setOpen] = React.useState(false);
-  
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -42,14 +40,19 @@ function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
           className="w-[400px] justify-between"
         >
           {selectedPlayer?.favPositionId
-            ? allFieldPositions.find((f) => f.id === selectedPlayer?.favPositionId)?.id
+            ? allFieldPositions.find(
+                (f) => f.id === selectedPlayer?.favPositionId
+              )?.id
             : "Select field position..."}
           <ChevronsUpDown className="opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[350px] p-0">
         <Command>
-          <CommandInput placeholder="Search field position..." className="h-9" />
+          <CommandInput
+            placeholder="Search field position..."
+            className="h-9"
+          />
           <CommandList>
             <CommandEmpty>No field position found.</CommandEmpty>
             <CommandGroup>
@@ -58,7 +61,11 @@ function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
                   key={fp.id}
                   value={fp.id}
                   onSelect={(currentValue) => {
-                    setFavPosition(currentValue === selectedPlayer?.favPositionId ? "" : currentValue);
+                    setFavPosition(
+                      currentValue === selectedPlayer?.favPositionId
+                        ? ""
+                        : currentValue
+                    );
                     setOpen(false);
                   }}
                 >
@@ -66,7 +73,9 @@ function FieldPositionCombo({ defaultValue }:FieldPositionComboProps) {
                   <Check
                     className={cn(
                       "ml-auto",
-                      selectedPlayer?.favPositionId === fp.id ? "opacity-100" : "opacity-0"
+                      selectedPlayer?.favPositionId === fp.id
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   />
                 </CommandItem>

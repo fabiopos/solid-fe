@@ -21,7 +21,7 @@ function ShirtNumberInput({
   className,
 }: ShirtNumberInputProps) {
   const numbersAllowed = useMemo(() => {
-    let numbers = [];
+    const numbers = [];
     for (let index = 1; index < 100; index++) {
       numbers.push(index);
     }

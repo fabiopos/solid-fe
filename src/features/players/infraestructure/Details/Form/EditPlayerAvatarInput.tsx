@@ -24,7 +24,7 @@ function EditPlayerAvatarInput({ pid, avatarUrl }: EditPlayerAvatarInputProps) {
         setAvatarUrl(String(reader.result));
       };
     },
-    [data]
+    [data, pid, putAvatar, setAvatarUrl]
   );
   return (
     <div className="border border-slate-300 rounded-lg p-2 flex flex-col items-center justify-center">

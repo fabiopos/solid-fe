@@ -1,6 +1,4 @@
 import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
-import { format } from "date-fns";
-import React from "react";
 import AparitionSummaryItem from "./AparitionSummaryItem";
 
 interface AparitionListProps {

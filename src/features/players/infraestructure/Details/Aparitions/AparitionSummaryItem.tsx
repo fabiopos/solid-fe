@@ -1,11 +1,7 @@
 import { Badge } from "@/components/ui/badge";
-import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
-import {
-  FulfiledPlayerAparition,
-  FulfilledPlayerWithStats,
-} from "@/features/players/domain/player.effect.schema";
+import { FulfiledPlayerAparition } from "@/features/players/domain/player.effect.schema";
 import { format } from "date-fns";
-import { RectangleVertical, RectangleVerticalIcon } from "lucide-react";
+import { RectangleVerticalIcon } from "lucide-react";
 import Link from "next/link";
 
 interface AparitionSummaryItemProps {
@@ -26,8 +22,9 @@ function AparitionSummaryItem({ aparition }: AparitionSummaryItemProps) {
                 className="text-yellow-300 rotate-[15deg]"
                 fill="yellow"
               />{" "}
-              <span className="font-bold absolute -bottom-1 -right-0">x{aparition.yellowCards}</span>
-              
+              <span className="font-bold absolute -bottom-1 -right-0">
+                x{aparition.yellowCards}
+              </span>
             </div>
           )}
         </div>

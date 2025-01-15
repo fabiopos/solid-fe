@@ -2,8 +2,8 @@ import { Label } from "@/components/ui/label";
 import RegionSelect from "@/components/ui/region-select";
 import { useNewPlayerStore } from "@/context/NewPlayerCtx";
 
-interface RegionInputProps {}
-function RegionInput({}: RegionInputProps) {
+
+function RegionInput() {
   const { country, setCity } = useNewPlayerStore((state) => state);
   return (
     <div>

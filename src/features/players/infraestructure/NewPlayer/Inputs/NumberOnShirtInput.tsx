@@ -1,6 +1,4 @@
 "use client";
-
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useNewPlayerStore } from "@/context/NewPlayerCtx";
 import {
@@ -24,7 +22,7 @@ function NumberOnShirtInput() {
   );
 
   const numbersAllowed = useMemo(() => {
-    let numbers = [];
+    const numbers = [];
     for (let index = 1; index < 100; index++) {
       numbers.push(index);
     }

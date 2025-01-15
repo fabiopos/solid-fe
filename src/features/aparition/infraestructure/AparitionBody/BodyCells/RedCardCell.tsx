@@ -13,6 +13,7 @@ function RedCardCell({ playerId, redCards, disabled }: RedCardCellProps) {
 
   const handleChange = useCallback((value: string) => {
     setRedCards(playerId, Number(value))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playerId]);
   return (
     <AparitionBodyCell>

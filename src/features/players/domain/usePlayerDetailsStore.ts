@@ -1,6 +1,6 @@
 import { createStore } from "zustand/vanilla";
 import { PlayerUpdateType } from "./player.schema";
-import { FulfilledPlayer, FulfilledPlayerWithStats } from "./player.effect.schema";
+import { FulfilledPlayerWithStats } from "./player.effect.schema";
 import { RequestStatus } from "@/types/types.common";
 import { ApiClient } from "@/lib/ApiClient";
 import { RequestError } from "@/shared/errors/RequestError";

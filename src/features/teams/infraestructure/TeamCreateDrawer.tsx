@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/drawer";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useCallback, useMemo, useState } from "react";
 import { TeamCreate } from "../application/TeamCreate";
 import { ApiClient } from "@/lib/ApiClient";
@@ -47,7 +46,7 @@ function TeamCreateDrawer({
     router.refresh();
     setName("");
     onClose();
-  }, [name]);
+  }, [data?.user.access_token, name, onClose, router]);
 
   return (
     <Drawer open={open} direction="right" onClose={onClose}>

@@ -15,6 +15,7 @@ function RatingCell({ playerId, rating, disabled }: RatingCellProps) {
     (value: string) => {
         setRating(playerId, Number(value));
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [playerId]
   );
 

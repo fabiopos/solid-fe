@@ -1,6 +1,4 @@
 "use client";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import FirstNameInput from "../Inputs/FirstNameInput";
 import LastNameInput from "../Inputs/LastNameInput";
 import DocumentTypeInput from "../Inputs/DocumentTypeInput";

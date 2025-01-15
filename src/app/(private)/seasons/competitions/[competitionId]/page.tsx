@@ -5,20 +5,18 @@ import { FulfilledMatch } from "@/features/match/domain/match.schema";
 import Matches from "@/features/match/infraestructure/Matches";
 import { ApiClient } from "@/lib/ApiClient";
 
-async function CompetitionDetailsPage({
-  params,
-}: {
-  params: { competitionId: string };
+type CompetitionDetailsPageProps = Promise<{ competitionId: string }>;
+
+async function CompetitionDetailsPage(props: {
+  params: CompetitionDetailsPageProps;
 }) {
-  const { competitionId } = await params;
+  const { competitionId } = await props.params;
   const result = await getCompetitionDetails(competitionId);
 
   if (!result) return <>Error retrieving competition</>;
 
   return (
     <div className="">
-     
-
       <MatchStoreProvider allMatches={result.matches}>
         <Matches />
       </MatchStoreProvider>

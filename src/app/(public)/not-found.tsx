@@ -1,4 +1,4 @@
-import { H1, H2 } from "@/components/ui/typograhpy";
+import { H1 } from "@/components/ui/typograhpy";
 
 export default function Custom404() {
   return (

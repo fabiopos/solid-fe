@@ -6,12 +6,7 @@ import { PlayerStatus, RequestStatus } from "@/types/types.common";
 import { PlayerUpdate } from "../application/PlayerUpdate";
 import { PlayerDelete } from "../application/PlayerDelete";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
-import {
-  FulfilledPlayer,
-  FulfilledPlayerWithStats,
-} from "./player.effect.schema";
-import { toDate } from "date-fns";
-import { refineDate } from "@/lib/player.util";
+import { FulfilledPlayerWithStats } from "./player.effect.schema";
 
 export type PlayersStoreState = {
   teamId: string;

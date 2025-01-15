@@ -1,5 +1,5 @@
 
-import { FulfilledMatch, matchSchema } from '@/features/match/domain/match.schema';
+import { FulfilledMatch } from '@/features/match/domain/match.schema';
 import { seasonSchema } from '@/features/seasons/domain/season.schema';
 import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
 import { Schema as S } from '@effect/schema';

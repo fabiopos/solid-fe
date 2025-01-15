@@ -1,5 +1,4 @@
 import { CompetitionStatusEnum } from "@/shared/enums/competitionStatusEnum";
-import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 
 interface CompetitionStatusTextProps {

@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PlayerTableRow from "./PlayerTableRow/PlayerTableRow";
-import { FulfilledPlayer, FulfilledPlayerWithStats } from "../domain/player.effect.schema";
+import { FulfilledPlayerWithStats } from "../domain/player.effect.schema";
 
 interface PlayersTableProps {
   players: FulfilledPlayerWithStats[];

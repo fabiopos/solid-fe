@@ -63,6 +63,7 @@ function CompetitionList() {
         description: deletingStatus.message,
         duration: 3000
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deletingStatus.message]);
 
   return (
