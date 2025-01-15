@@ -1,12 +1,12 @@
 "use client";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
-import LogoutButton from "../Logout/LogoutButton";
-import { useSession } from "next-auth/react";
-import { navigationMenuStyle } from "../ui/navigation-menu";
+import { navigationMenuStyle } from "@/components/ui/navigation-menu";
 import { menuItems } from "@/constants/menu";
+import LogoutButton from "@/components/logout/logout-button";
 
 
 
