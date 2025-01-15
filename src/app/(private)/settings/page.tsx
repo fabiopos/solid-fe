@@ -1,12 +1,12 @@
+import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MyRivals from "@/features/settings/infraestructure/MyRivals";
 import MyTeams from "@/features/settings/infraestructure/MyTeams";
 import Settings from "@/features/settings/infraestructure/Settings";
-import { SubscriptionGet } from "@/features/subscription/application/SubscriptionGet";
+import { SubscriptionGet } from "../../../features/subscription/application/SubscriptionGet";
 import { FulfilledTeam } from "@/features/teams/domain/team.schema";
 import { ApiClient } from "@/lib/ApiClient";
-import { redirect } from "next/navigation";
 
 const SettingsPage = async () => {
   const subscription = await getData();
