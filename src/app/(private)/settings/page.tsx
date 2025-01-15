@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MyRivals from "@/features/settings/infraestructure/MyRivals";
 import MyTeams from "@/features/settings/infraestructure/MyTeams";
 import Settings from "@/features/settings/infraestructure/Settings";
-import { SubscriptionGet } from "../../../features/subscription/application/SubscriptionGet";
+import { SubscriptionGet } from "../../../features/subscription/application/subscriptionget";
 import { FulfilledTeam } from "@/features/teams/domain/team.schema";
 import { ApiClient } from "@/lib/ApiClient";
 
