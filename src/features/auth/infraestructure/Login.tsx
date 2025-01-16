@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { LoginInput, loginSchema } from "@/features/auth/domain/login.schema";
-import { LoginForm } from "@/components/Login/Form/LoginForm";
+import { LoginForm } from "@/components/login/form/form";
 import { SolidAuth } from "../application/SolidAuth";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/context/AuthCtx";
