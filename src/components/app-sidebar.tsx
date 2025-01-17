@@ -142,7 +142,7 @@ export function AppSidebar({
       </SidebarContent>
       <SidebarRail />
       <SidebarFooter>
-        {isteamselected ? "Team is selected" : "No team selected"}
+        {!isteamselected && <div className="p-2 text-sm">No team selected</div>}
       </SidebarFooter>
     </Sidebar>
   );
