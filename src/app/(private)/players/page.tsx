@@ -45,7 +45,6 @@ const getPlayers = async (): Promise<GetPlayersResponse> => {
     session.user.access_token
   );
 
-  console.log(players);
   return { players, fieldPositions, teamId };
 };
 

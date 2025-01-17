@@ -1,17 +1,20 @@
-
 import { getLastMatches } from "@/actions/dashboard.actions";
 import LastMatchesFt from "@/features/dashboard/infraestructure/LastMatchesFt";
 import { Effect } from "effect";
 
-
 async function LastMatchesSection() {
-  const { lastMatches } = await getData(); 
+  const { lastMatches } = await getData();
   return <LastMatchesFt lastMatches={lastMatches} />;
 }
 
-async function getData() {  
-  const lastMatches = await Effect.runPromise(getLastMatches()())
-  return { lastMatches };
+async function getData() {
+  try {
+    const lastMatches = await Effect.runPromise(getLastMatches()());
+    return { lastMatches };
+  } catch (error) {
+    console.error(error, 'lastMatches/page');
+    return { lastMatches: [] };
+  }
 }
 
 export default LastMatchesSection;

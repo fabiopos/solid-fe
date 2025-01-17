@@ -1,5 +1,4 @@
 "use client";
-import * as React from "react";
 import { ChevronRight, File, Folder } from "lucide-react";
 
 import {
@@ -10,11 +9,12 @@ import {
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
-  SidebarMenu,  
+  SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { TeamSwitcher } from "./Team/TeamSwitcher";
 import { Team } from "@/types/types.common";
+import { useMemo } from "react";
 
 // This is sample data.
 const data = {
@@ -78,17 +79,28 @@ const data = {
 interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tree: any;
-  teams: Team[]
+  teams: Team[];
+  isteamselected: boolean;
+  selectedTeam: Team | undefined;
 }
 
-export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
+export function AppSidebar({
+  tree,
+  teams,
+  isteamselected,
+  selectedTeam,
+  ...props
+}: AppSidebarProps) {
   const pathname = usePathname();
-  const myTeams = React.useMemo(()=> teams.filter(x => x.hasSubscription), [teams])
+  const myTeams = useMemo(
+    () => teams.filter((x) => x.hasSubscription),
+    [teams]
+  );
 
   return (
     <Sidebar {...props}>
       <SidebarHeader>
-        <TeamSwitcher myTeams={myTeams} />
+        <TeamSwitcher myTeams={myTeams} selectedTeam={selectedTeam} />
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
@@ -121,7 +133,6 @@ export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
           <SidebarGroupLabel>Seasons, Competitions & Matches</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              
               {(tree ?? []).map((item: never, index: number) => (
                 <Tree key={index} item={item} />
               ))}
@@ -130,6 +141,9 @@ export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
         </SidebarGroup>
       </SidebarContent>
       <SidebarRail />
+      <SidebarFooter>
+        {isteamselected ? "Team is selected" : "No team selected"}
+      </SidebarFooter>
     </Sidebar>
   );
 }
@@ -144,7 +158,10 @@ function Tree({ item }: { item: { id: string; name: string } | never[] }) {
         isActive={i.name === "Copa Compensar"}
         className="data-[active=true]:bg-transparent"
       >
-        <Link href={`/seasons/competitions/matches/${i.id}`} className="flex gap-2 items-center">
+        <Link
+          href={`/seasons/competitions/matches/${i.id}`}
+          className="flex gap-2 items-center"
+        >
           <File size={14} />
           <span className="text-ellipsis max-w-20 overflow-hidden text-nowrap">
             {i.name}

@@ -116,11 +116,11 @@ export const makePlayersStore = (
     },
     setFavPosition(favPositionId: string) {
       const player = get().selectedPlayer;
-      const allFieldPositions = get().allFieldPositions;
-      const selectedFieldPosition = allFieldPositions.find(
-        (x) => x.id === favPositionId
-      );
-      console.log(selectedFieldPosition);
+      //const allFieldPositions = get().allFieldPositions;
+      // const selectedFieldPosition = allFieldPositions.find(
+      //   (x) => x.id === favPositionId
+      // );
+      
       if (!player) return;
       set(() => ({
         selectedPlayer: {

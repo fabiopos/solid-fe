@@ -47,11 +47,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         let user = null;
 
         try {
-          console.log('authorizing...')
           if (!credentials?.email || !credentials?.password)
             throw new Error("Invalid credentials.");
           // logic to salt and hash password
-          console.log("authorizing...", credentials);
+
           const response = await SolidAuth.login({
             email: credentials?.email as string,
             password: credentials?.password as string,
@@ -70,7 +69,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             access_token: response.token as string,
           };
         } catch (error) {
-          console.log(error);
+          console.error(error, 'authorize');
           return null;
         }
       },

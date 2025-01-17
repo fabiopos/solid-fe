@@ -20,7 +20,6 @@ export function Login() {
   });
 
   async function onSubmit(values: LoginInput) {
-    console.log(values)
     const response = await SolidAuth.loginWithCredentials(values);
     if (response?.ok) {
       await fetchTeams(session?.user.access_token ?? "");

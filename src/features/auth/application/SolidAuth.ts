@@ -33,7 +33,6 @@ export class SolidAuth {
       body: JSON.stringify(credentials),
     });
 
-    console.log("auth response", response);
     const result = await response.json();
 
     return { user: result.user, token: result.token };

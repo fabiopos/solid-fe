@@ -8,8 +8,7 @@ export class ApiClient {
   GET = async (resource: string, access_token: string) => {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
-    defaultHeaders.append("Authorization", `Bearer ${access_token}`);
-    console.log(resource, this.baseApi)
+    defaultHeaders.append("Authorization", `Bearer ${access_token}`);    
     const uri = `${this.baseApi}${resource}`;
     return await fetch(uri, {
       headers: defaultHeaders,

@@ -1,5 +1,4 @@
-
-function Dashboard() {
+async function Dashboard() {
   return <></>;
 }
 

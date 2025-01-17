@@ -8,9 +8,8 @@ interface MatchDeleteProps {
   matchId: string;
 }
 export function deleteMatchAct(props: MatchDeleteProps) {
-  const client = new MatchDelete(new ApiClient());
-  console.log('entra')
-  // await client.deleteMatch(matchId, token);
+  const client = new MatchDelete(new ApiClient()); 
+  
   return pipe(
     props,
     (matchProps) =>

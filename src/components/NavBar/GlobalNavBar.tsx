@@ -6,8 +6,7 @@ import Image from "next/image";
 import logo from "@/app/assets/logo.svg";
 
 const GlobalNavBar = () => {
-  const { status } = useSession();
-  console.log(status, '');
+  const { status } = useSession();  
   switch (status) {
     case "authenticated":
       //return null;

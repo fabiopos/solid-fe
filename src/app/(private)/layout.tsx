@@ -14,19 +14,25 @@ import { ApiClient } from "@/lib/ApiClient";
 import { redirect } from "next/navigation";
 import { getCookieTeamId } from "../actions";
 import { AuthWrapper } from "@/context/AuthWrapper";
+import { Team } from "@/types/types.common";
 
 export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { teams, tree } = await getData();
-
+  const data = await getData();
+  const { teams, tree, isTeamSelected, selectedTeam } = data;  
   if (!teams) return redirect("/");
   return (
     <AuthWrapper>
       <SidebarProvider>
-        <AppSidebar teams={teams} tree={tree} />
+        <AppSidebar
+          teams={teams}
+          tree={tree}
+          isteamselected={isTeamSelected}
+          selectedTeam={selectedTeam}
+        />
         <SidebarInset>
           <main className="w-full p-5 dark:bg-background bg-slate-50 border-t">
             <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
@@ -44,21 +50,37 @@ export default async function RootLayout({
   );
 }
 
-async function getData() {
-  const emptyState = {
-    teams: [],
-    tree: [],
-  };
+interface PrivateLayoutData {
+  teams: Team[];
+  tree: unknown;
+  isTeamSelected: boolean;
+  selectedTeam: Team | undefined;
+  error: string | undefined;
+}
+const emptyState: PrivateLayoutData = {
+  teams: [],
+  tree: [],
+  isTeamSelected: false,
+  selectedTeam: undefined,
+  error: undefined,
+};
+
+async function getData(): Promise<PrivateLayoutData> {
   try {
     const session = await auth();
-
-    const teamId = await getCookieTeamId();
+    const teamId = await getCookieTeamId();   
 
     const token = session?.user.access_token;
+
+    if (!token)
+      return {
+        ...emptyState,
+        isTeamSelected: true,
+        selectedTeam: undefined,
+        error: "No token",
+      };
+
     const apiClient = new ApiClient();
-
-    if (!token) return emptyState;
-
     const teamClient = new TeamGet(apiClient);
     const seasonClient = new SeasonGet(apiClient);
     const teams = await teamClient.getTeams(token);
@@ -66,7 +88,15 @@ async function getData() {
     let tree = [];
     if (teamId) tree = await seasonClient.getSeasonTree(teamId, token);
 
-    return { teams, tree };
+    const selectedTeam = teams.find((x) => x.id === teamId);
+    
+    return {
+      teams,
+      tree,
+      isTeamSelected: !!teamId,
+      selectedTeam,
+      error: !!teamId ? undefined : 'No team selected',
+    };
   } catch (error) {
     console.error("getData", error);
     return emptyState;
