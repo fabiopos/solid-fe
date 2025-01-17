@@ -122,7 +122,7 @@ export function AppSidebar({ tree, teams, ...props }: AppSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               
-              {tree.map((item: never, index: number) => (
+              {(tree ?? []).map((item: never, index: number) => (
                 <Tree key={index} item={item} />
               ))}
             </SidebarMenu>

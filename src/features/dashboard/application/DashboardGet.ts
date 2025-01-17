@@ -26,7 +26,10 @@ export class DashboardGet {
       `/dashboard/team-stats/${teamId}`,
       token
     );
-    return (await stats.json()) as FulfilledTeamStats;
+    
+    if(stats.ok) return (await stats.json()) as FulfilledTeamStats;
+
+    return null;
   }
 
   async getLastPlayersAdded(teamId: string, token: string, limit?: number) {

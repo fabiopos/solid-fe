@@ -1,11 +1,16 @@
+
+
 export class ApiClient {
   constructor() {}
+
+  baseApi: string = process.env.NEXT_PUBLIC_BASE_API ?? 'http://localhost:3000'
 
   GET = async (resource: string, access_token: string) => {
     const defaultHeaders = new Headers();
     defaultHeaders.append("Content-Type", "application/json");
     defaultHeaders.append("Authorization", `Bearer ${access_token}`);
-    const uri = `http://localhost:3000${resource}`;
+    console.log(resource, this.baseApi)
+    const uri = `${this.baseApi}${resource}`;
     return await fetch(uri, {
       headers: defaultHeaders,
       method: "GET",
@@ -23,7 +28,7 @@ export class ApiClient {
     if (access_token)
       defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-    const uri = `http://localhost:3000${resource}`;
+    const uri = `${this.baseApi}${resource}`;
 
     return await fetch(uri, {
       headers: defaultHeaders,
@@ -43,7 +48,7 @@ export class ApiClient {
     if (access_token)
       defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-    const uri = `http://localhost:3000${resource}`;
+    const uri = `${this.baseApi}0${resource}`;
 
     return await fetch(uri, {
       headers: defaultHeaders,
@@ -59,7 +64,7 @@ export class ApiClient {
     if (access_token)
       defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-    const uri = `http://localhost:3000${resource}`;
+    const uri = `${this.baseApi}${resource}`;
 
     return fetch(uri, {
       headers: defaultHeaders,

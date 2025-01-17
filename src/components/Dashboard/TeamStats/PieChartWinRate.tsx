@@ -46,8 +46,8 @@ export function PieChartWinRate({ stats }: PieChartWinRateProps) {
   }, [chartData]);
 
   const performance = useMemo(
-    () => (stats.won / totalMatches) * 100,
-    [stats.won, totalMatches]
+    () => (stats.won  / totalMatches) * 100,
+    [stats?.won, totalMatches]
   );
 
   return (

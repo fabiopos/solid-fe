@@ -28,9 +28,9 @@ async function TeamStats() {
         </h3>
       </div>
       <div className="flex flex-col mt-5">
-        <PieChartWinRate stats={stats} />
+        {stats && <PieChartWinRate stats={stats} />}
         <Separator className="my-2" />
-        <TeamStatBoxes stats={stats} />
+        {stats && <TeamStatBoxes stats={stats} />}
       </div>
     </div>
   );
