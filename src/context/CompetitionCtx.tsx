@@ -8,6 +8,7 @@ import {
   CompetitionStore,
   makeCompetitionStore,
 } from "@/features/competition/domain/useCompetitionStore";
+import { FulfilledMatch } from "@/features/match/domain/match.schema";
 import { FulfilledSeason } from "@/features/seasons/domain/season.schema";
 import { toDate } from "date-fns";
 import { createContext, ReactNode, useContext, useRef } from "react";
@@ -72,10 +73,16 @@ function getCompetitions(
 }
 
 function mapToDomain(competition: CompetitionType) {
+
   return FulfilledCompetition.make({
     ...competition,
+    matches: competition.matches?.map(mapFulfilledMatch) ?? [],
     startDate: competition.startDate && toDate(competition.startDate),
     endDate: competition.endDate && toDate(competition.endDate),
     createdAt: competition.createdAt && toDate(competition.createdAt),
   });
+}
+
+function mapFulfilledMatch(match: FulfilledMatch) {
+  return FulfilledMatch.make({ ...match });
 }

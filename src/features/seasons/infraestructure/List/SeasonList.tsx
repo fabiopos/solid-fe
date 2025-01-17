@@ -1,14 +1,14 @@
-import SeasonStatusBadge from "@/components/Season/SeasonStatusBadge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { useSeasonStore } from "@/context/SeasonCtx";
-import { cn } from "@/lib/utils";
-import { ChevronRight, Link2Icon } from "lucide-react";
-import SeasonActionTriggerIcon from "../Season/SeasonActionTriggerIcon";
+import { useMemo } from "react";
 import { format } from "date-fns";
 import Link from "next/link";
+import { ChevronRight, Link2Icon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useSeasonStore } from "@/context/SeasonCtx";
 import { useCompetitionStore } from "@/context/CompetitionCtx";
-import { useMemo } from "react";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import SeasonStatusBadge from "@/components/Season/SeasonStatusBadge";
+import SeasonActionTriggerIcon from "../Season/SeasonActionTriggerIcon";
 import CompetitionTriggerIcon from "../Details/CompetitionTriggerIcon";
 
 function SeasonList() {
@@ -87,7 +87,7 @@ function SeasonList() {
           </small>
           <ul className="mt-2 space-y-2">
             {filteredCompetitions.map((comp) => (
-              <li key={comp.id} className="flex justify-between items-center hover:bg-slate-50">
+              <li key={comp.id} className="flex justify-between items-center hover:text-cyan-300">
                 <Link
                   href={`/seasons/competitions/${comp.id}`}
                   className="font-normal flex gap-2 items-center justify-between"

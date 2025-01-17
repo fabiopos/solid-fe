@@ -32,14 +32,19 @@ function Teams() {
               <CardContent className="flex flex-col gap-2">
                 <div>
                   <Label>Name</Label>
-                  <Input placeholder="Team Name" value={team.name} />
+                  <Input
+                    placeholder="Team Name"
+                    readOnly
+                    value={team.name}
+                    onChange={() => {}}
+                  />
                 </div>
 
                 <div>
                   <Label>Primary Color</Label>
                   <Input
                     placeholder="Primary Color"
-                     type="color"
+                    type="color"
                     value={team.primaryColor ?? ""}
                   />
                 </div>

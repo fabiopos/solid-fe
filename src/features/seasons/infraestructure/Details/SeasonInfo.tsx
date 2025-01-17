@@ -9,15 +9,13 @@ import {
 } from "@/components/ui/card";
 import SeasonStatusBadge from "@/components/Season/SeasonStatusBadge";
 import { Separator } from "@/components/ui/separator";
-import { ReactNode } from "react";
 import { DEFAULT_DATE_FORMAT } from "@/constants/date";
 
 interface SeasonInfoProps {
-  season: FulfilledSeason | null;
-  children: ReactNode;
+  season: FulfilledSeason | null;  
 }
 
-function SeasonInfo({ season, children }: SeasonInfoProps) {
+function SeasonInfo({ season }: SeasonInfoProps) {
   return (
     <>
       <Card className="relative bg-slate-800">
@@ -68,7 +66,7 @@ function SeasonInfo({ season, children }: SeasonInfoProps) {
               <span className="text-sm font-extralight">Ends on</span>
             </div>
           </div>
-          {children}
+          
         </CardContent>
         <CardFooter></CardFooter>
       </Card>
