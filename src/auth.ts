@@ -38,6 +38,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Credentials({
       // You can specify which fields should be submitted, by adding keys to the `credentials` object.
       // e.g. domain, username, password, 2FA token, etc.
+
       credentials: {
         email: {},
         password: {},
@@ -45,26 +46,33 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       authorize: async (credentials) => {
         let user = null;
 
-        if (!credentials?.email || !credentials?.password)
-          throw new Error("Invalid credentials.");
-        // logic to salt and hash password
-        const response = await SolidAuth.login({
-          email: credentials?.email as string,
-          password: credentials?.password as string,
-        });
+        try {
+          console.log('authorizing...')
+          if (!credentials?.email || !credentials?.password)
+            throw new Error("Invalid credentials.");
+          // logic to salt and hash password
+          console.log("authorizing...", credentials);
+          const response = await SolidAuth.login({
+            email: credentials?.email as string,
+            password: credentials?.password as string,
+          });
 
-        user = response.user;
+          user = response.user;
 
-        if (!user) throw new Error("User not found.");
-        if (!response.token) throw new Error("User not found.");
+          if (!user) throw new Error("User not found.");
+          if (!response.token) throw new Error("User not found.");
 
-        return {
-          id: user.subscriptionId,
-          subscriptionId: user.subscriptionId,
-          email: user.email,
-          name: user.name,
-          access_token: response.token as string,
-        };
+          return {
+            id: user.subscriptionId,
+            subscriptionId: user.subscriptionId,
+            email: user.email,
+            name: user.name,
+            access_token: response.token as string,
+          };
+        } catch (error) {
+          console.log(error);
+          return null;
+        }
       },
     }),
   ],
@@ -74,7 +82,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (!auth) return false;
 
       const token = auth.user.access_token;
-      const isValidToken = await verifyToken(token);      
+      const isValidToken = await verifyToken(token);
       return !!isValidToken;
     },
     jwt({ token, user, account }) {
@@ -88,7 +96,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       return token;
     },
-    session: async ({ session, token }) => {      
+    session: async ({ session, token }) => {
       if (session && session.user) {
         session.user.subscriptionId = token.id as string;
         session.user.access_token = token?.access_token as string;
