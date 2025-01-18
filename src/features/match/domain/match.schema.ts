@@ -14,8 +14,31 @@ const matchCompetition = S.Struct({
   status: S.NullishOr(S.Enums(CompetitionStatusEnum)),
 });
 
+const playerItem = playerSchema.pick(
+  "id",
+  "firstName",
+  "lastName",
+  "shirtNumber",
+  "shirtName",
+  "favPosition",
+  "avatarUrl"
+);
+
 const matchAparition = S.Struct({
   id: S.String,
+  minutes: S.optional(S.NullishOr(S.Number)),
+  goals: S.optional(S.NullishOr(S.Number)),
+  assists: S.optional(S.NullishOr(S.Number)),
+  yellowCards: S.optional(S.NullishOr(S.Number)),
+  redCards: S.optional(S.NullishOr(S.Number)),
+  injury: S.optional(S.NullishOr(S.Boolean)),
+  manOfTheMatch: S.optional(S.NullishOr(S.Boolean)),
+  rating: S.optional(S.NullishOr(S.Number)),
+  played: S.optional(S.NullishOr(S.Boolean)),
+  confirmed: S.optional(S.NullishOr(S.Boolean)),
+  playerId: S.optional(S.NullishOr(S.String)),
+  matchId: S.optional(S.NullishOr(S.String)),
+  player: S.optional(playerItem),
 });
 
 export const matchSchema = S.Struct({
@@ -60,3 +83,36 @@ export class FulfilledMatch extends S.TaggedClass<FulfilledMatch>()(
     ...matchSchema.fields,
   }
 ) {}
+
+export class FulfilledMatchExtended extends FulfilledMatch.extend<FulfilledMatchExtended>(
+  "FulfilledMatchExtended"
+)({}) {
+  get aparitions() {
+    return this.matchAparitions ?? [];
+  }
+
+  get aparitionsGoals() {
+    return this.aparitions.filter((x) => x.goals);
+  }
+
+  get playersWhoScored() {
+    return this.aparitionsGoals.map((x) => x.player);
+  }
+
+  apartitionsByPlayer(pid: string) {
+    return this.aparitions.filter((x) => x.player?.id === pid);
+  }
+
+  playerGoals(pid: string | undefined) {
+    if (!pid) return 0;
+    const playerApps = this.apartitionsByPlayer(pid);
+    return playerApps.reduce((prev, curr) => prev + (curr.goals ?? 0), 0);
+  }
+
+  get scorers() {
+    return this.playersWhoScored.map((player) => ({
+      name: player?.shirtName?.toLocaleLowerCase(),
+      goals: this.playerGoals(player?.id),
+    }));
+  }
+}

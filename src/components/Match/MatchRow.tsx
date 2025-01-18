@@ -1,5 +1,8 @@
-import { FulfilledMatch } from "@/features/match/domain/match.schema";
-import React, { ReactNode } from "react";
+import {
+  FulfilledMatch,
+  FulfilledMatchExtended,
+} from "@/features/match/domain/match.schema";
+import React, { ReactNode, useMemo } from "react";
 import MatchScoreBadge from "./MatchScore";
 import TeamShieldAvatar from "../Team/TeamShield";
 
@@ -14,10 +17,25 @@ interface MatchRowProps {
 }
 
 function MatchRow({ match, actionsColumn, onClickScore }: MatchRowProps) {
+  const matchIns = useMemo(() => {
+    if (!match) return null;
+    return new FulfilledMatchExtended(match);
+  }, [match]);
+
+  const hasScorers = useMemo(() => {
+    return (matchIns?.scorers ?? []).length > 0;
+  }, [matchIns]);
+
   if (!match) return null;
   // grid grid-cols-[150px_50px_210px_85px_210px_2fr]
   return (
     <div className="border rounded-xl my-2 bg-background">
+      <div className="flex justify-start gap-2 pl-5 pt-2">
+        <small className="dark:text-blue-200/40 text-muted-foreground">
+          {match.title}
+        </small>
+      </div>
+
       <div className="grid grid-rows-2 grid-cols-[repeat(auto-fit,_minmax(100px,_1fr))] lg:grid-rows-1 justify-center items-center py-5">
         <div className="flex flex-col  row-start-1 col-start-1 lg:row-start-auto lg:col-start-auto justify-center items-center">
           <MatchDayTime matchDay={match.matchDay} matchHour={match.matchHour} />
@@ -60,13 +78,33 @@ function MatchRow({ match, actionsColumn, onClickScore }: MatchRowProps) {
         </div>
       </div>
 
-      <div className="flex justify-between items-center gap-5 px-10">
-        <div className="flex gap-2">
-          <MapPin size={15} className="dark:text-blue-200/40 text-muted-foreground" />
-          <small className="dark:text-blue-200/40 text-muted-foreground">{match.location}</small>
-        </div>
+      <div className="flex justify-between items-center gap-5 px-10 pb-2">
         <div>
-          <small className="dark:text-blue-200/40 text-muted-foreground">{match.title}</small>
+          {hasScorers && <small>Goals</small>}
+          <div className="flex gap-2">
+            {matchIns?.scorers.map((pyr, idx) => (
+              <small
+                className="dark:text-blue-200/40 text-muted-foreground capitalize"
+                key={`match-apps-${idx}`}
+              >
+                {pyr.name} (<span className="lowercase">x</span>{pyr.goals})
+              </small>
+            ))}
+            {!hasScorers && (
+              <small className="dark:text-blue-200/40 text-muted-foreground">
+                -
+              </small>
+            )}
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <MapPin
+            size={15}
+            className="dark:text-blue-200/40 text-muted-foreground"
+          />
+          <small className="dark:text-blue-200/40 text-muted-foreground">
+            {match.location}
+          </small>
         </div>
       </div>
     </div>
