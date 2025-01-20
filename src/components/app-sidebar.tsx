@@ -1,5 +1,5 @@
 "use client";
-import { ChevronRight, File, Folder } from "lucide-react";
+import { ChevronRight, File, Folder, Network } from "lucide-react";
 
 import {
   Collapsible,
@@ -63,6 +63,14 @@ const data = {
       title: "Competitions",
       url: "/seasons/competitions",
       icon: Trophy,
+      sideBar: true,
+      navBar: true,
+    },
+
+    {
+      title: "Lineups",
+      url: "/lineups",
+      icon: Network,
       sideBar: true,
       navBar: true,
     },

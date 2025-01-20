@@ -32,9 +32,7 @@ async function getCompetitionDetails(competitionId: string) {
   const client = new CompetitionGet(new ApiClient());
   const competition = await client.find(competitionId, token);
 
-  const matches = (competition?.matches ?? []) as FulfilledMatch[];
-
-  console.log(matches)
+  const matches = (competition?.matches ?? []) as FulfilledMatch[];  
 
   const mappedMatches = matches.map((x) => ({
     ...x,
