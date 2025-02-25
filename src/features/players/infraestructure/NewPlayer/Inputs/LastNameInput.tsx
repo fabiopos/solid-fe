@@ -12,7 +12,7 @@ function LastNameInput() {
       <Input
         placeholder="Rodriguez Rubio"
         className="bg-background border-slate-300"
-        maxLength={18}
+        maxLength={20}
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
       />

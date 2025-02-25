@@ -52,7 +52,7 @@ export function SeasonDateRangePicker({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start items-center text-left font-normal text-white",
+              "w-[300px] justify-start items-center text-left font-normal dark:text-white",
               !date && "text-muted-foreground"
             )}
           >

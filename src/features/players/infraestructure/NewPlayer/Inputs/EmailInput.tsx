@@ -12,7 +12,7 @@ function EmailInput() {
       <Input
         placeholder="james@rodriguez.com"
         className="bg-background border-slate-300"
-        maxLength={18}
+        maxLength={80}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />

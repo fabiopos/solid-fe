@@ -18,7 +18,7 @@ interface SeasonInfoProps {
 function SeasonInfo({ season }: SeasonInfoProps) {
   return (
     <>
-      <Card className="relative bg-slate-800">
+      <Card className="relative">
         {/* <div className="w-[80px] h-[40px] bg-transparent absolute -top-4 left-[95%] rounded-full flex justify-center items-center ">
           <SeasonStatusBadge status={season?.status} />
         </div> */}

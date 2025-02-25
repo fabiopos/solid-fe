@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 interface ShirtNumberInputProps {
-  setNumberOnShirt: (shirtNumber: string) => void;
+  setNumberOnShirt: (shirtNumber: number) => void;
   numberOnShirt: string;
   playersNumbers: number[];
   className?: string;
@@ -29,7 +29,10 @@ function ShirtNumberInput({
   }, []);
 
   return (
-    <Select onValueChange={setNumberOnShirt} value={numberOnShirt}>
+    <Select
+      onValueChange={(value) => setNumberOnShirt(Number(value))}
+      value={numberOnShirt}
+    >
       <SelectTrigger className={cn("w-full px-2 bg-background", className)}>
         <SelectValue placeholder="Select a shirt number" />
       </SelectTrigger>

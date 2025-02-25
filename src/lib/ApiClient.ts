@@ -47,7 +47,7 @@ export class ApiClient {
     if (access_token)
       defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-    const uri = `${this.baseApi}0${resource}`;
+    const uri = `${this.baseApi}${resource}`;
 
     return await fetch(uri, {
       headers: defaultHeaders,

@@ -94,8 +94,8 @@ function StepThree() {
 
       <div className="my-5 p-5">
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusamus,
-          asperiores?
+          Estas seguro de que los datos son correctos? Si no es asi, puedes
+          regresar a los pasos anteriores para corregirlos.
         </p>
       </div>
 
