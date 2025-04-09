@@ -22,11 +22,12 @@ const shapes = [
 
 type ImagePropsWithOptionalAlt = Omit<ImageProps, 'alt'> & { alt?: string }
 
-export function HeroImage({
-                              shape = 0,
-                              className,
-                              ...props
-                          }: ImagePropsWithOptionalAlt & { shape?: 0 | 1 | 2 }) {
+export function HeroImage(
+    {
+        shape = 0,
+        className,
+        ...props
+    }: ImagePropsWithOptionalAlt & { shape?: 0 | 1 | 2 }) {
     const id = useId()
     const {width, height, path} = shapes[shape]
 

@@ -104,7 +104,7 @@ function DeviceChartIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
     )
 }
 
-export function Features() {
+export default async function Features() {
     return (
         <section
             id="features"
