@@ -1,4 +1,4 @@
-export function FirstUser() {
+export default async function FirstUser() {
     return (
         <section
             id="first-user"
