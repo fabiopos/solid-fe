@@ -1,49 +1,50 @@
 "use client";
 
-import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
-import { makePlayerDeailsStore, PlayerDetailStore } from "@/features/players/domain/usePlayerDetailsStore";
+import {FulfilledPlayerWithStats} from "@/features/players/domain/player.effect.schema";
+import {makePlayerDeailsStore, PlayerDetailStore} from "@/features/players/domain/usePlayerDetailsStore";
 
-import { createContext, ReactNode, useContext, useRef } from "react";
-import { useStore } from "zustand";
+import {createContext, ReactNode, useContext, useRef} from "react";
+import {useStore} from "zustand";
 
 export type PlayerDetailsStoreApi = ReturnType<typeof makePlayerDeailsStore>;
 
 export const PlayerDetailsStoreContext = createContext<
-  PlayerDetailsStoreApi | undefined
+    PlayerDetailsStoreApi | undefined
 >(undefined);
 
 export interface PlayerDetailsStoreProviderProps {
-  children: ReactNode;
-  player: FulfilledPlayerWithStats | null;
+    children: ReactNode;
+    player: FulfilledPlayerWithStats | null;
 }
 
-export const PlayerDetailsStoreProvider = ({
-  children,
-  player,
-}: PlayerDetailsStoreProviderProps) => {
-  const storeRef = useRef<PlayerDetailsStoreApi>();
-  if (!storeRef.current) {
-    storeRef.current = makePlayerDeailsStore({
-      error: null,
-      player,
-      updateRequestStatus: "IDLE",
-      uploadAvatarStatus: "IDLE",
-    });
-  }
+export const PlayerDetailsStoreProvider = (
+    {
+        children,
+        player,
+    }: PlayerDetailsStoreProviderProps) => {
+    const storeRef = useRef<PlayerDetailsStoreApi | null>(null);
+    if (!storeRef.current) {
+        storeRef.current = makePlayerDeailsStore({
+            error: null,
+            player,
+            updateRequestStatus: "IDLE",
+            uploadAvatarStatus: "IDLE",
+        });
+    }
 
-  return (
-    <PlayerDetailsStoreContext.Provider value={storeRef.current}>
-      {children}
-    </PlayerDetailsStoreContext.Provider>
-  );
+    return (
+        <PlayerDetailsStoreContext.Provider value={storeRef.current}>
+            {children}
+        </PlayerDetailsStoreContext.Provider>
+    );
 };
 
-export const usePlayerDetailsStore = <T,>(selector: (store: PlayerDetailStore) => T): T => {
-  const playerDetailsStoreContext = useContext(PlayerDetailsStoreContext);
+export const usePlayerDetailsStore = <T, >(selector: (store: PlayerDetailStore) => T): T => {
+    const playerDetailsStoreContext = useContext(PlayerDetailsStoreContext);
 
-  if (!playerDetailsStoreContext) {
-    throw new Error(`usePlayerDetailsStore must be used within PlayerDetailsStoreProvider`);
-  }
+    if (!playerDetailsStoreContext) {
+        throw new Error(`usePlayerDetailsStore must be used within PlayerDetailsStoreProvider`);
+    }
 
-  return useStore(playerDetailsStoreContext, selector);
+    return useStore(playerDetailsStoreContext, selector);
 };
