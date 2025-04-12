@@ -2,34 +2,34 @@
 
 const values = [
     {
-        name: 'Be world-class',
+        name: 'Be organized',
         description:
-            'Aut illo quae. Ut et harum ea animi natus. Culpa maiores et sed sint et magnam exercitationem quia. Ullam voluptas nihil vitae dicta molestiae et. Aliquid velit porro vero.',
+            'Bring structure to your team with lineups, attendance, and match info in one place.',
     },
     {
-        name: 'Share everything you know',
+        name: 'Make coaching easier',
         description:
-            'Mollitia delectus a omnis. Quae velit aliquid. Qui nulla maxime adipisci illo id molestiae. Cumque cum ut minus rerum architecto magnam consequatur. Quia quaerat minima.',
+            'Know who’s in, who’s out, and build your matchday squad fast — without last-minute surprises.',
     },
     {
-        name: 'Always learning',
+        name: 'Focus on the game',
         description:
-            'Aut repellendus et officiis dolor possimus. Deserunt velit quasi sunt fuga error labore quia ipsum. Commodi autem voluptatem nam. Quos voluptatem totam.',
+            'Spend less time solving logistics and more time doing what matters: enjoying football.',
     },
     {
-        name: 'Be supportive',
+        name: 'Bring your team together',
         description:
-            'Magnam provident veritatis odit. Vitae eligendi repellat non. Eum fugit impedit veritatis ducimus. Non qui aspernatur laudantium modi. Praesentium rerum error deserunt harum.',
+            'Keep everyone informed with shared calendars, availability updates, and smooth communication.',
     },
     {
-        name: 'Take responsibility',
+        name: 'Play smarter',
         description:
-            'Sit minus expedita quam in ullam molestiae dignissimos in harum. Tenetur dolorem iure. Non nesciunt dolorem veniam necessitatibus laboriosam voluptas perspiciatis error.',
+            'Track performance, match history, and player stats to evolve as a team — game after game.',
     },
     {
-        name: 'Enjoy downtime',
+        name: 'Save time, every week',
         description:
-            'Ipsa in earum deserunt aut. Quos minus aut animi et soluta. Ipsum dicta ut quia eius. Possimus reprehenderit iste aspernatur ut est velit consequatur distinctio.',
+            'Forget the spreadsheets and group chats. Solid Manager simplifies your workflow so you can coach better.',
     },
 ]
 
@@ -37,12 +37,12 @@ export default function AboutValues() {
     return (
         <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-40 lg:px-8">
             <div className="mx-auto max-w-2xl lg:mx-0">
-                <h2 className="text-pretty text-4xl font-semibold tracking-tight text-cyan-300 sm:text-5xl">Our
-                    values</h2>
+                <h2 className="text-pretty text-4xl font-semibold tracking-tight text-cyan-300 sm:text-5xl">
+                    What drives us
+                </h2>
                 <p className="mt-6 text-lg/8 text-gray-300">
-                    Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate
-                    veritatis in
-                    accusamus quisquam.
+                    We designed Solid Manager to simplify the game off the pitch — for everyone who makes football
+                    happen every weekend.
                 </p>
             </div>
             <dl className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 text-base/7 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3">

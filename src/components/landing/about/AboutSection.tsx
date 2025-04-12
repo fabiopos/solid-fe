@@ -23,16 +23,15 @@ export default function AboutSection() {
                     <div className="mx-auto max-w-2xl gap-x-14 lg:mx-0 lg:flex lg:max-w-none lg:items-center">
                         <div className="relative w-full lg:max-w-xl lg:shrink-0 xl:max-w-2xl">
                             <h1 className="text-pretty text-5xl font-semibold tracking-tight text-cyan-300 sm:text-7xl">
-                                We’re changing the way people connect
+                                We’re helping amateur football teams thrive
                             </h1>
                             <p className="mt-8 text-pretty text-lg font-medium text-gray-300 sm:max-w-md sm:text-xl/8 lg:max-w-none">
-                                Cupidatat minim id magna ipsum sint dolor qui. Sunt sit in quis cupidatat mollit
-                                aute velit. Et
-                                labore commodo nulla aliqua proident mollit ullamco exercitation tempor. Sint
-                                aliqua anim nulla sunt
-                                mollit id pariatur in voluptate cillum. Eu voluptate tempor esse minim amet
-                                fugiat veniam occaecat
-                                aliqua.
+                                Solid Manager was born out of the chaos of group chats, missing players, and last-minute
+                                lineup changes. We set out to build a tool that brings structure, communication, and
+                                performance tracking into one easy-to-use app for grassroots football teams.
+
+                                Whether you're a weekend warrior, a team captain, or a coach juggling multiple squads —
+                                our mission is to give you the tools to stay organized and focused on the game.
                             </p>
                         </div>
                         <div
