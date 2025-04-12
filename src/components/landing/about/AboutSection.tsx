@@ -30,7 +30,8 @@ export default function AboutSection() {
                                 lineup changes. We set out to build a tool that brings structure, communication, and
                                 performance tracking into one easy-to-use app for grassroots football teams.
 
-                                Whether you're a weekend warrior, a team captain, or a coach juggling multiple squads —
+                                Whether you&#39;re a weekend warrior, a team captain, or a coach juggling multiple
+                                squads —
                                 our mission is to give you the tools to stay organized and focused on the game.
                             </p>
                         </div>
