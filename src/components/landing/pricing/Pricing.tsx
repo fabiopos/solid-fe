@@ -63,11 +63,9 @@ export default function Pricing() {
         <div className="bg-transparent py-24 sm:py-32">
 
             <section aria-labelledby="pricing-heading" className="relative mx-auto max-w-7xl px-6 lg:px-8">
-                <h2 id="pricing-heading" className="sr-only">
-                    Pricing
+                <h2 className="text-pretty text-5xl font-semibold tracking-tight text-cyan-300 sm:text-balance sm:text-6xl pb-14">
+                    Simple, honest pricing
                 </h2>
-
-
                 <div
                     className="mx-auto max-w-2xl space-y-12 px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:space-y-0 lg:px-8">
                     {pricing.tiers.map((tier) => (
