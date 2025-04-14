@@ -1,50 +1,51 @@
 "use client";
 
-import { type ReactNode, createContext, useRef, useContext } from "react";
-import { useStore } from "zustand";
+import {createContext, type ReactNode, useContext, useRef} from "react";
+import {useStore} from "zustand";
 
 import {
-  type SubscriptionCreateStore,
   makeSubscriptionCreateStore,
+  type SubscriptionCreateStore,
 } from "@/features/subscription/domain/useSubscriptionCreateStore";
 
 export type SubscriptionCreateStoreApi = ReturnType<
-  typeof makeSubscriptionCreateStore
+    typeof makeSubscriptionCreateStore
 >;
 
 export const SubscriptionCreateStoreContext = createContext<
-  SubscriptionCreateStoreApi | undefined
+    SubscriptionCreateStoreApi | undefined
 >(undefined);
 
 export interface SubscriptionCreateStoreProviderProps {
-  children: ReactNode;
+    children: ReactNode;
 }
 
-export const SubscriptionCreateStoreProvider = ({
-  children,
-}: SubscriptionCreateStoreProviderProps) => {
-  const storeRef = useRef<SubscriptionCreateStoreApi>();
-  if (!storeRef.current) {
-    storeRef.current = makeSubscriptionCreateStore();
-  }
+export const SubscriptionCreateStoreProvider = (
+    {
+        children,
+    }: SubscriptionCreateStoreProviderProps) => {
+    const storeRef = useRef<SubscriptionCreateStoreApi | null>(null);
+    if (!storeRef.current) {
+        storeRef.current = makeSubscriptionCreateStore();
+    }
 
-  return (
-    <SubscriptionCreateStoreContext.Provider value={storeRef.current}>
-      {children}
-    </SubscriptionCreateStoreContext.Provider>
-  );
+    return (
+        <SubscriptionCreateStoreContext.Provider value={storeRef.current}>
+            {children}
+        </SubscriptionCreateStoreContext.Provider>
+    );
 };
 
-export const useSubscriptionCreateStore = <T,>(
-  selector: (store: SubscriptionCreateStore) => T
+export const useSubscriptionCreateStore = <T, >(
+    selector: (store: SubscriptionCreateStore) => T
 ): T => {
-  const subscriptionCreateStoreContext = useContext(
-    SubscriptionCreateStoreContext
-  );
+    const subscriptionCreateStoreContext = useContext(
+        SubscriptionCreateStoreContext
+    );
 
-  if (!subscriptionCreateStoreContext) {
-    throw new Error(`useSubscriptionCreateStore must be used within SubscriptionCreateStoreProvider`);
-  }
+    if (!subscriptionCreateStoreContext) {
+        throw new Error(`useSubscriptionCreateStore must be used within SubscriptionCreateStoreProvider`);
+    }
 
-  return useStore(subscriptionCreateStoreContext, selector);
+    return useStore(subscriptionCreateStoreContext, selector);
 };
