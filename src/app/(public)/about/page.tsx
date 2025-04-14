@@ -5,7 +5,7 @@ import AboutValues from "@/components/landing/about/AboutValues";
 
 const AboutPage = () => {
     return (
-        <div className="mx-auto pb-24">
+        <div className="mx-auto max-w-sm sm:max-w-none pb-24">
             <AboutSection/>
             <AboutContent/>
             <AboutValues/>

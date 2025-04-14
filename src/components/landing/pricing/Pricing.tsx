@@ -5,72 +5,128 @@ const includedFeatures = [
     'Lineup builder & match planner',
     'Injury & attendance tracking',
     'League table & stats view',
-]
+];
+
+const pricing = {
+    tiers: [
+        {
+            title: 'Basic',
+            price: 0,
+            frequency: '/forever',
+            description: 'Perfect for casual teams getting started.',
+            features: [
+                '1 team',
+                'Up to 15 players',
+                'Basic lineup builder',
+                'Match schedule view',
+                'Player availability',
+            ],
+            cta: 'Free forever',
+            mostPopular: false,
+        },
+        {
+            title: 'Team Pro',
+            price: 12,
+            frequency: '/month',
+            description: 'Designed for active teams that want full control.',
+            features: [
+                'Unlimited players',
+                'Lineup planner + drag & drop',
+                'Player stats & attendance tracking',
+                'Injury reports',
+                'League table tracking',
+                'Priority support',
+            ],
+            cta: 'Start 7-day free trial',
+            mostPopular: true,
+        },
+        {
+            title: 'Club Plus',
+            price: 29,
+            frequency: '/month',
+            description: 'Best for clubs managing multiple teams or competitions.',
+            features: [
+                'Multiple team support',
+                'Coach and staff roles',
+                'Centralized calendar & events',
+                'Team performance reports',
+                'Custom branding',
+                'Early access to new features',
+                'Dedicated onboarding',
+            ],
+            cta: 'Contact sales',
+            mostPopular: false,
+        },
+    ],
+}
+
+function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+}
 
 
 export default function Pricing() {
     return (
         <div className="bg-transparent py-24 sm:py-32">
-            <div className="mx-auto max-w-7xl px-6 lg:px-8">
-                <div className="mx-auto max-w-4xl sm:text-center">
-                    <h2 className="text-pretty text-5xl font-semibold tracking-tight text-cyan-300 sm:text-balance sm:text-6xl">
-                        Simple, honest pricing
-                    </h2>
-                    <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg font-medium text-gray-300 sm:text-xl/8">
-                        Pay once and unlock all features — no subscriptions, no hidden fees.
-                    </p>
-                </div>
+
+            <section aria-labelledby="pricing-heading" className="relative mx-auto max-w-7xl px-6 lg:px-8">
+                <h2 id="pricing-heading" className="sr-only">
+                    Pricing
+                </h2>
+
+
                 <div
-                    className="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
-                    <div className="p-8 sm:p-10 lg:flex-auto">
-                        <h3 className="text-3xl font-semibold tracking-tight text-cyan-300">Lifetime membership</h3>
-                        <p className="mt-6 text-base/7 text-gray-300">
-                            A single payment gives you unlimited access to every feature Solid Manager has to offer —
-                            forever.
-                        </p>
-                        <div className="mt-10 flex items-center gap-x-4">
-                            <h4 className="flex-none text-sm/6 font-semibold text-cyan-300">What’s included</h4>
-                            <div className="h-px flex-auto bg-gray-100"/>
-                        </div>
-                        <ul role="list"
-                            className="mt-8 grid grid-cols-1 gap-4 text-sm/6 text-gray-300 sm:grid-cols-2 sm:gap-6">
-                            {includedFeatures.map((feature) => (
-                                <li key={feature} className="flex gap-x-3">
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor"
-                                        className="h-6 w-5 flex-none text-cyan-300">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                              d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
-                                    </svg>
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:shrink-0">
+                    className="mx-auto max-w-2xl space-y-12 px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:space-y-0 lg:px-8">
+                    {pricing.tiers.map((tier) => (
                         <div
-                            className="rounded-2xl bg-cyan-900 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
-                            <div className="mx-auto max-w-xs px-8">
-                                <p className="text-base font-semibold text-gray-300">Pay once, own it forever</p>
-                                <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                                    <span className="text-5xl font-semibold tracking-tight text-cyan-300">$49</span>
-                                    <span className="text-sm/6 font-semibold tracking-wide text-gray-300">USD</span>
+                            key={tier.title}
+                            className="relative flex flex-col rounded-2xl border border-gray-200 bg-cyan-950 p-8 shadow-sm"
+                        >
+                            <div className="flex-1">
+                                <h3 className="text-xl font-semibold text-cyan-300">{tier.title}</h3>
+                                {tier.mostPopular ? (
+                                    <p className="absolute top-0 -translate-y-1/2 transform rounded-full bg-cyan-500 px-4 py-1.5 text-sm font-semibold text-white shadow-lg shadow-cyan-200/50">
+                                        Most popular
+                                    </p>
+                                ) : null}
+                                <p className="mt-4 flex items-baseline text-cyan-300">
+                                    <span className="text-5xl font-bold tracking-tight">${tier.price}</span>
+                                    <span className="ml-1 text-xl font-semibold">{tier.frequency}</span>
                                 </p>
-                                <a
-                                    href="#"
-                                    className="mt-10 block w-full rounded-md bg-cyan-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                >
-                                    Get access
-                                </a>
-                                <p className="mt-6 text-xs/5 text-gray-300">
-                                    Invoices and receipts available for teams and clubs.
-                                </p>
+                                <p className="mt-6 text-gray-300">{tier.description}</p>
+
+                                {/* Feature list */}
+                                <ul role="list" className="mt-6 space-y-6">
+                                    {tier.features.map((feature) => (
+                                        <li key={feature} className="flex">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke-width="1.5" stroke="currentColor"
+                                                className="h-6 w-5 flex-none text-cyan-300">
+                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                      d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/>
+                                            </svg>
+                                            <span className="ml-3 text-gray-300">{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
+
+                            <a
+                                href="#"
+                                className={classNames(
+                                    tier.mostPopular
+                                        ? 'bg-cyan-500 text-white hover:bg-cyan-600'
+                                        : 'bg-cyan-50 text-cyan-700 hover:bg-cyan-100',
+                                    'mt-8 block w-full rounded-md border border-transparent px-6 py-3 text-center font-medium',
+                                )}
+                            >
+                                {tier.cta}
+                            </a>
                         </div>
-                    </div>
+                    ))}
                 </div>
-            </div>
+            </section>
         </div>
     )
 }
