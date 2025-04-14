@@ -1,12 +1,5 @@
 'use client'
 
-const includedFeatures = [
-    'Unlimited team management',
-    'Lineup builder & match planner',
-    'Injury & attendance tracking',
-    'League table & stats view',
-];
-
 const pricing = {
     tiers: [
         {
