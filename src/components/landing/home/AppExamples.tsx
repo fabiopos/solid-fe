@@ -12,7 +12,7 @@ export default async function AppExamples() {
                 <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-semibold tracking-tight text-gray-300 sm:text-5xl">
                     Everything you need to coaching a team in your app
                 </p>
-                <div className="mt-10 grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
+                <div className="mt-10 grid gap-4 grid-cols-1 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
                     <div className="relative lg:row-span-2">
                         <div
                             className="absolute inset-px rounded-lg bg-cyan-200/30 lg:rounded-l-[2rem]"></div>
@@ -72,7 +72,7 @@ export default async function AppExamples() {
                                 <p className="mt-2 text-lg font-medium tracking-tight text-cyan-300 max-lg:text-center">
                                     Play smarter, not harder
                                 </p>
-                                <p className="mt-2 max-w-lg text-sm/6 text-black max-lg:text-center bg-white w-96 sm:w-64 sm:p-2 mx-auto rounded-lg">
+                                <p className="mt-2 max-w-60 sm:max-w-lg text-sm/6 text-black max-lg:text-center bg-white w-96 sm:w-64 sm:p-2 mx-auto rounded-lg">
                                     Plan lineups, keep backups, and adapt on the go.
                                 </p>
                             </div>
