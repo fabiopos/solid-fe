@@ -2,7 +2,7 @@ export default async function FirstUser() {
     return (
         <section
             id="first-user"
-            className="relative overflow-hidden bg-cyan-950 text-white py-20 sm:py-28 rounded-2xl"
+            className="relative overflow-hidden bg-cyan-950 text-white px-4 py-20 sm:py-28 rounded-2xl"
         >
             <div className="relative">
                 <div className="mx-auto max-w-md sm:text-center">

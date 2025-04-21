@@ -12,13 +12,13 @@ export default async function HeroSection() {
                     Manage lineups, fixtures, injuries, and stats — all in one place.
                 </p>
             </div>
-            <div className="h-auto">
+            <div className="w-full max-w-full overflow-hidden flex justify-center lg:justify-end">
                 <HeroImage
                     width={655}
                     height={680}
                     src="https://images.unsplash.com/photo-1517747614396-d21a78b850e8?q=80&w=1827&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                     sizes="(min-width: 1024px) 41rem, 31rem"
-                    className="justify-center lg:justify-end"
+                    className="w-full h-auto max-w-[500px] lg:max-w-[655px]"
                 />
             </div>
         </div>
