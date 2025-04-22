@@ -13,10 +13,11 @@ export const PlayersStoreContext = createContext<PlayersStoreApi | undefined>(
 );
 
 export interface PlayersStoreProviderProps {
-    children: ReactNode;
-    players: FulfilledPlayerWithStats[];
-    fieldPositions: FulfilledFieldPosition[];
-    teamId: string;
+    children: ReactNode,
+    players: FulfilledPlayerWithStats[],
+    fieldPositions: FulfilledFieldPosition[],
+    teamId: string,
+    token?: string | undefined
 }
 
 export const PlayersStoreProvider = (
@@ -60,6 +61,7 @@ export const PlayersStoreProvider = (
             tab: "all",
             categories: uniqueCategories,
             teamId,
+            lineup: {},
         });
     }
 
