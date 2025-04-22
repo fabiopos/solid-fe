@@ -19,7 +19,9 @@ export function PlayerCard({player, draggable = true}: PlayerCardProps) {
     const baseClass =
         "p-2 rounded shadow text-center text-sm flex flex-col items-center justify-center";
     const classes = `${baseClass} ${
-        draggable ? "cursor-move bg-white" : "bg-green-700 text-white"
+        draggable
+            ? "cursor-move bg-white dark:bg-gray-900"
+            : "bg-gray-400 text-white shadow"
     }`;
 
     return (
@@ -30,14 +32,14 @@ export function PlayerCard({player, draggable = true}: PlayerCardProps) {
             style={style}
             className={classes}
         >
-            <div className="flex flex-col">
+            <div className="flex flex-col items-center justify-center max-w-36 min-w-36 max-h-20 min-h-20">
                 <Link
                     href={`/players/details/${player.id}`}
-                    className="text-lg uppercase"
+                    className="text-lg uppercase dark:text-white hover:underline hover:text-blue-700"
                 >
                     {player.shirtName}
                 </Link>
-                <small className="text-neutral-500">
+                <small className="text-black">
                     {player.firstName} {player.lastName}
                 </small>
             </div>
