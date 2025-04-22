@@ -10,8 +10,6 @@ function PlayersFt() {
         (state) => state
     );
 
-    console.log("//", players)
-
     return (
         <div>
             <div className="flex justify-end">
