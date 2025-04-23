@@ -15,7 +15,7 @@ export default function AboutSection() {
                         clipPath:
                             'polygon(63.1% 29.5%, 100% 17.1%, 76.6% 3%, 48.4% 0%, 44.6% 4.7%, 54.5% 25.3%, 59.8% 49%, 55.2% 57.8%, 44.4% 57.2%, 27.8% 47.9%, 35.1% 81.5%, 0% 97.7%, 39.2% 100%, 35.2% 81.4%, 97.2% 52.8%, 63.1% 29.5%)',
                     }}
-                    className="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-white to-cyan-500 opacity-40"
+                    className="aspect-[801/1036] w-[50.0625rem] bg-gradient-to-tr from-cyan-700 to-cyan-500 opacity-50 dark:from-white dark:to-cyan-500 dark:opacity-40"
                 />
             </div>
             <div className="overflow-hidden">
@@ -25,7 +25,7 @@ export default function AboutSection() {
                             <h1 className="text-pretty text-5xl font-semibold tracking-tight text-cyan-300 sm:text-7xl">
                                 We’re helping amateur football teams thrive
                             </h1>
-                            <p className="mt-8 text-pretty text-lg font-medium text-gray-300 sm:max-w-md sm:text-xl/8 lg:max-w-none">
+                            <p className="mt-8 text-pretty text-lg font-medium text-gray-800 dark:text-gray-300 sm:max-w-md sm:text-xl/8 lg:max-w-none">
                                 Solid Manager was born out of the chaos of group chats, missing players, and last-minute
                                 lineup changes. We set out to build a tool that brings structure, communication, and
                                 performance tracking into one easy-to-use app for grassroots football teams.

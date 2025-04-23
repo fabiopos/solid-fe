@@ -33,10 +33,10 @@ export default function AboutTeam() {
             </div>
             <div className="mx-auto mt-32 max-w-7xl px-6 sm:mt-48 lg:px-8">
                 <div className="mx-auto max-w-2xl lg:mx-0">
-                    <h2 className="text-pretty text-4xl font-semibold tracking-tight text-cyan-300 sm:text-5xl">
+                    <h2 className="text-pretty text-4xl font-semibold tracking-tight text-cyan-600 dark:text-cyan-300 sm:text-5xl">
                         Our team
                     </h2>
-                    <p className="mt-6 text-lg/8 text-gray-300">
+                    <p className="mt-6 text-lg/8 text-gray-600 dark:text-gray-300">
                         We’re a tight-knit group of football lovers, engineers, and product thinkers building tools we
                         wish we had when managing our own teams.
                     </p>
@@ -49,8 +49,8 @@ export default function AboutTeam() {
                         <li key={person.name}>
                             <Image width={96} height={96} alt="" src={person.imageUrl}
                                    className="mx-auto size-24 rounded-full"/>
-                            <h3 className="mt-6 text-lg/7 font-semibold tracking-tight text-cyan-300">{person.name}</h3>
-                            <p className="text-base/6 text-gray-300">{person.role}</p>
+                            <h3 className="mt-6 text-lg/7 font-semibold tracking-tight text-cyan-600 dark:text-cyan-300">{person.name}</h3>
+                            <p className="text-base/6 text-gray-600 dark:text-gray-300">{person.role}</p>
                             <p className="text-xs text-gray-400 mt-1">{person.bio}</p>
                         </li>
                     ))}
