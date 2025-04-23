@@ -113,10 +113,10 @@ export default async function Features() {
         >
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-2xl sm:text-center">
-                    <h2 className="text-3xl font-medium tracking-tight text-cyan-300">
+                    <h2 className="text-3xl font-medium tracking-tight text-cyan-500 dark:text-cyan-300">
                         Now is the time to build your team.
                     </h2>
-                    <p className="mt-2 text-lg text-gray-300">
+                    <p className="mt-2 text-lg  text-gray-900 dark:text-gray-300">
                         Whether you’re a coach, captain or weekend warrior — Solid Manager gives you the tools to stay
                         organized, compete better, and enjoy the game like never before.
                     </p>
@@ -131,10 +131,10 @@ export default async function Features() {
                             className="rounded-2xl border border-gray-200 p-8 bg-cyan-500/20 shadow-xl"
                         >
                             <feature.icon className="h-8 w-8"/>
-                            <h3 className="mt-6 font-semibold text-cyan-400">
+                            <h3 className="mt-6 font-semibold text-cyan-600 dark:text-cyan-400">
                                 {feature.name}
                             </h3>
-                            <p className="mt-2 text-gray-200">{feature.description}</p>
+                            <p className="mt-2 text-gray-700 dark:text-gray-200">{feature.description}</p>
                         </li>
                     ))}
                 </ul>

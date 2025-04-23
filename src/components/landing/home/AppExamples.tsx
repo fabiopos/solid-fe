@@ -8,8 +8,10 @@ export default async function AppExamples() {
             className=" pb-24 sm:pb-32"
         >
             <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-8">
-                <h2 className="text-center text-base/7 font-semibold text-cyan-300">All in one place</h2>
-                <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-semibold tracking-tight text-gray-300 sm:text-5xl">
+                <h2 className="text-center text-base/7 font-semibold  text-cyan-600 dark:text-cyan-300">
+                    All in one place
+                </h2>
+                <p className="mx-auto mt-2 max-w-lg text-balance text-center text-4xl font-semibold tracking-tight text-gray-600 dark:text-gray-300 sm:text-5xl">
                     Everything you need to coaching a team in your app
                 </p>
                 <div className="mt-10 grid gap-4 grid-cols-1 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
@@ -19,10 +21,10 @@ export default async function AppExamples() {
                         <div
                             className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
                             <div className="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
-                                <p className="mt-2 text-2xl font-medium tracking-tight text-cyan-300 max-lg:text-center">
+                                <p className="mt-2 text-2xl font-medium tracking-tight  text-cyan-600 dark:text-cyan-300 max-lg:text-center">
                                     Save time before every match
                                 </p>
-                                <p className="mt-2 max-w-lg text-sm/6 text-white max-lg:text-center">
+                                <p className="mt-2 max-w-lg text-sm/6 text-gray-800 dark:text-white max-lg:text-center">
                                     No more chasing players manually or guessing who’s available.
                                 </p>
                             </div>
@@ -47,7 +49,7 @@ export default async function AppExamples() {
                         <div
                             className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
                             <div className="px-8 pt-8 sm:px-10 sm:pt-10 z-10">
-                                <p className=" text-2xl font-semibold tracking-tight text-white max-lg:text-center">
+                                <p className=" text-2xl font-semibold tracking-tight text-gray-800 dark:text-white max-lg:text-center">
                                     🏅 Why Solid Manager works for real teams
                                 </p>
                             </div>
@@ -69,7 +71,7 @@ export default async function AppExamples() {
                         <div
                             className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)]">
                             <div className="px-8 pt-8 sm:px-10 sm:pt-10">
-                                <p className="mt-2 text-lg font-medium tracking-tight text-cyan-300 max-lg:text-center">
+                                <p className="mt-2 text-lg font-medium tracking-tight text-cyan-600 dark:text-cyan-300 max-lg:text-center">
                                     Play smarter, not harder
                                 </p>
                                 <p className="mt-2 max-w-60 sm:max-w-lg text-sm/6 text-black max-lg:text-center bg-white w-96 sm:w-64 sm:p-2 mx-auto rounded-lg">
@@ -91,11 +93,11 @@ export default async function AppExamples() {
                     </div>
                     <div className="relative lg:row-span-2">
                         <div
-                            className="absolute inset-px rounded-lg bg-white/50 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
+                            className="absolute inset-px rounded-lg bg-gray-300/50 dark:bg-white/50 max-lg:rounded-b-[2rem] lg:rounded-r-[2rem]"></div>
                         <div
                             className="relative flex h-full flex-col overflow-hidden rounded-[calc(theme(borderRadius.lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
                             <div className="px-8 pb-3 pt-8 sm:px-10 sm:pb-0 sm:pt-10">
-                                <p className="mt-2 text-lg font-medium tracking-tight text-white max-lg:text-center">
+                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-800 dark:text-white max-lg:text-center">
                                     Build team commitment
                                 </p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-800 max-lg:text-center">
