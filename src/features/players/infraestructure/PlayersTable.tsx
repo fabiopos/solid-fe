@@ -3,7 +3,6 @@ import {Table, TableBody, TableCaption, TableHead, TableHeader, TableRow,} from 
 import PlayerTableRow from "./PlayerTableRow/PlayerTableRow";
 import {FulfilledPlayerWithStats} from "../domain/player.effect.schema";
 import {DndContext, DragEndEvent} from "@dnd-kit/core";
-import {LineupField} from "@/components/DragAndDrop/LineupField";
 import {usePlayersStore} from "@/context/PlayersCtx";
 
 interface PlayersTableProps {
@@ -26,11 +25,11 @@ export default function PlayersTable({players = [], caption}: PlayersTableProps)
     return (
         <>
             <DndContext onDragEnd={handleDragEnd}>
-                <div className="w-full my-4">
+                {/* <div className="w-full my-4">
                     <div className="w-1/2 mx-auto">
                         <LineupField/>
                     </div>
-                </div>
+                </div> */}
                 <div className="w-full">
                     <Table className="border w-auto">
                         <TableCaption className="text-xs italic">{caption}</TableCaption>
