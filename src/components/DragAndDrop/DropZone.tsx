@@ -5,13 +5,11 @@ import {PlayerCard} from "@/components/DragAndDrop/PlayerCard";
 interface DropZoneProps {
     id: string;
     label: string;
-    className?: string;
 }
 
 export function DropZone({id, label}: DropZoneProps) {
     const {isOver, setNodeRef} = useDroppable({id});
     const assigned = usePlayersStore((s) => s.lineup[id] ?? null);
-
     return (
         <div
             ref={setNodeRef}

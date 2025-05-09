@@ -42,8 +42,6 @@ function PlayerTableRow({player}: PlayerTableRowProps) {
         );
     }, [playerStatusDelete, player]);
 
-    console.log(player);
-
     return (
         <TableRow key={player.id} className="bg-background/90">
             <TableCell>

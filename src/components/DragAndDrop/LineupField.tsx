@@ -1,7 +1,5 @@
 import {DropZone} from "./DropZone";
 import {usePlayersStore} from "@/context/PlayersCtx";
-import {ApiClient} from "@/lib/ApiClient";
-import {LineupCreate} from "@/features/players/application/LineupCreate";
 
 const positions = [
     {id: "gk", label: "Goalkeeper"},
@@ -16,28 +14,19 @@ const positions = [
 
 
 export function LineupField() {
-    const lineup = usePlayersStore((s) => s.lineup);
+    const fullLineup = usePlayersStore((s) => s.lineup);
     const teamId = usePlayersStore((s) => s.teamId);
+    const resetLineup = usePlayersStore((s) => s.resetLineup);
 
-    const handleSave = async () => {
-        const payload = Object.entries(lineup)
+    const handleSave = () => {
+        const payload = Object.entries(fullLineup)
             .filter(([, player]) => player != null)
             .map(([positionId, player]) => ({
                 positionId,
                 playerId: String(player!.id),
             }));
 
-        const client = new ApiClient();
-        const lineupCreate = new LineupCreate(client);
-
-        const result = await lineupCreate.createLineup({teamId, positions: payload});
-        if (result) {
-            alert("✅ Alineación guardada");
-        } else {
-            alert("❌ Error al guardar alineación");
-        }
-
-        console.log("Alineación a guardar", {
+        console.log("Alineación a guardar en LocalStorage", {
             teamId,
             positions: payload,
         })
@@ -60,9 +49,12 @@ export function LineupField() {
                     </div>
                 ))}
             </div>
-            <div className="mt-4 flex justify-center">
+            <div className="mt-4 flex justify-center items-center space-x-4">
                 <button onClick={handleSave} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Save lineup
+                </button>
+                <button onClick={resetLineup} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    Reset lineup
                 </button>
             </div>
         </>
