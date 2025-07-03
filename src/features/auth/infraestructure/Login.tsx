@@ -7,9 +7,12 @@ import { LoginForm } from "@/components/login/form/form";
 import { SolidAuth } from "../application/SolidAuth";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/context/AuthCtx";
+import { Effect, pipe } from "effect";
+import { useToast } from "@/hooks/use-toast";
 
 export function Login() {
   const router = useRouter();
+  const { toast } = useToast();
   const { fetchTeams, session } = useAuthStore((state) => state);
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
@@ -20,11 +23,30 @@ export function Login() {
   });
 
   async function onSubmit(values: LoginInput) {
-    const response = await SolidAuth.loginWithCredentials(values);
-    if (response?.ok) {
-      await fetchTeams(session?.user.access_token ?? "");
-      router.push("/");
-    }
+    const loginExecutor = pipe(
+      SolidAuth.loginWithCredentials(values),
+      Effect.mapBoth({
+        onSuccess: (response) => Effect.succeed(response),
+        onFailure: (_) => {
+          toast({
+            title: "Login failed",
+            description: "Please check your credentials and try again.",
+            variant: "destructive",
+          });
+        },
+      }),
+      Effect.flatMap((_response) =>
+        Effect.tryPromise(() => fetchTeams(session?.user.access_token ?? ""))
+      ),
+      Effect.tap(router.push("/"))
+    );
+
+    Effect.runPromise(loginExecutor);
+    // const response = await SolidAuth.loginWithCredentials(values);
+    // if (response?.ok) {
+    //   await fetchTeams(session?.user.access_token ?? "");
+    //   router.push("/");
+    // }
   }
 
   return <LoginForm onSubmit={onSubmit} form={form} />;

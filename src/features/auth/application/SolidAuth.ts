@@ -1,19 +1,38 @@
-import { signIn, signOut } from "next-auth/react";
+import { signIn, SignInOptions, signOut } from "next-auth/react";
 import { LoginInput } from "../domain/login.schema";
+import { Effect, pipe } from "effect";
+// import { sign } from "crypto";
 
 export class SolidAuth {
-  static async loginWithCredentials(credentials: LoginInput) {
-    try {
-      return await signIn("credentials", {
-        email: credentials.email,
-        password: credentials.password,
-        redirect: false,
-      });
-    } catch (error) {
-      if (error instanceof Error) throw new Error(error.message);
-      throw new Error("Unknown error login with credentials");
-    }
+  static loginWithCredentials(credentials: LoginInput) {
+    const signInOptions: SignInOptions = {
+      email: credentials.email,
+      password: credentials.password,
+      redirect: false,
+    };
+
+    return pipe(
+      Effect.tryPromise(() => signIn("credentials", signInOptions)),
+      Effect.flatMap((result) =>
+        result && !result?.error
+          ? Effect.succeed(result)
+          : Effect.fail("Login failed")
+      )
+    );
   }
+
+  // static async loginWithCredentials(credentials: LoginInput) {
+  //   try {
+  //     return await signIn("credentials", {
+  //       email: credentials.email,
+  //       password: credentials.password,
+  //       redirect: false,
+  //     });
+  //   } catch (error) {
+  //     if (error instanceof Error) throw new Error(error.message);
+  //     throw new Error("Unknown error login with credentials");
+  //   }
+  // }
 
   static async logout() {
     sessionStorage.removeItem("auth-storage");
