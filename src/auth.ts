@@ -4,6 +4,7 @@ import { SolidAuth } from "./features/auth/application/SolidAuth";
 import { jwtVerify } from "jose";
 import { CustomJWT } from "./types/types.common";
 import { toDate } from "date-fns";
+import { useAuthStore } from "./context/AuthCtx";
 
 declare module "next-auth" {
   /**
@@ -69,7 +70,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             access_token: response.token as string,
           };
         } catch (error) {
-          console.error(error, 'authorize');
+          console.error(error, "authorize");
           return null;
         }
       },
@@ -101,6 +102,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user.access_token = token?.access_token as string;
         session.expires = toDate(token.exp as number);
       }
+
       return session;
     },
   },

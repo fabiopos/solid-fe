@@ -22,7 +22,7 @@ function DashboardLayout() {
             <div className="dark:bg-slate-800/40 border col-span-4 lg:col-span-1 rounded-lg p-2 bg-background">
               <LastMatchesSection />
               <NextMatchSection />
-            </div>          
+            </div>
             <div className="dark:dark:bg-slate-800/40 border col-span-4 lg:col-span-1 rounded-lg p-2 bg-background">
               <TopScorersSection />
               <Separator className="my-2" />
@@ -34,7 +34,6 @@ function DashboardLayout() {
           </div>
         </div>
       </div>
-      
     </>
   );
 }

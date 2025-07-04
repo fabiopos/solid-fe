@@ -15,6 +15,10 @@ import { redirect } from "next/navigation";
 import { getCookieTeamId } from "../actions";
 import { AuthWrapper } from "@/context/AuthWrapper";
 import { Team } from "@/types/types.common";
+import { Effect, pipe, Schedule } from "effect";
+import { getSession } from "next-auth/react";
+import { getToken } from "@/actions/dashboard.actions";
+import { get } from "http";
 
 export default async function RootLayout({
   children,
@@ -22,7 +26,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const data = await getData();
-  const { teams, tree, isTeamSelected, selectedTeam } = data;  
+  const { teams, tree, isTeamSelected, selectedTeam } = data;
   if (!teams) return redirect("/");
   return (
     <AuthWrapper>
@@ -55,6 +59,7 @@ interface PrivateLayoutData {
   tree: unknown;
   isTeamSelected: boolean;
   selectedTeam: Team | undefined;
+  selectedTeamId: string | undefined;
   error: string | undefined;
 }
 const emptyState: PrivateLayoutData = {
@@ -63,42 +68,58 @@ const emptyState: PrivateLayoutData = {
   isTeamSelected: false,
   selectedTeam: undefined,
   error: undefined,
+  selectedTeamId: undefined,
 };
 
 async function getData(): Promise<PrivateLayoutData> {
   try {
-    const session = await auth();
-    const teamId = await getCookieTeamId();   
-
-    const token = session?.user.access_token;
-
-    if (!token)
-      return {
-        ...emptyState,
-        isTeamSelected: true,
-        selectedTeam: undefined,
-        error: "No token",
-      };
-
+    const token = await Effect.runPromise(getTokenRetry());
     const apiClient = new ApiClient();
-    const teamClient = new TeamGet(apiClient);
-    const seasonClient = new SeasonGet(apiClient);
-    const teams = await teamClient.getTeams(token);
+
+    const teams = await getTeams(apiClient, token);
+    const selectedTeam = await getSelectedOrDefaultTeam(teams);
 
     let tree = [];
-    if (teamId) tree = await seasonClient.getSeasonTree(teamId, token);
+    if (selectedTeam)
+      tree = await getSeasonTree(apiClient, selectedTeam?.id, token);
 
-    const selectedTeam = teams.find((x) => x.id === teamId);
-    
-    return {
+    const payload = {
+      ...emptyState,
       teams,
       tree,
-      isTeamSelected: !!teamId,
       selectedTeam,
-      error: !!teamId ? undefined : 'No team selected',
-    };
+      isTeamSelected: !!selectedTeam,
+    } as PrivateLayoutData;
+
+    return payload;
   } catch (error) {
-    console.error("getData", error);
     return emptyState;
   }
+}
+
+function getTeams(apiClient: ApiClient, token: string) {
+  const teamClient = new TeamGet(apiClient);
+  return teamClient.getTeams(token);
+}
+
+function getSeasonTree(apiClient: ApiClient, teamId: string, token: string) {
+  const seasonClient = new SeasonGet(apiClient);
+  return seasonClient.getSeasonTree(teamId, token);
+}
+
+function getTokenRetry() {
+  const policy = Schedule.addDelay(Schedule.recurs(2), () => "100 millis");
+  const task = getToken();
+  const p = Effect.retryOrElse(task, policy, () =>
+    Effect.fail(new Error("No token found after retries"))
+  );
+  return p;
+}
+
+async function getSelectedOrDefaultTeam(teams: Team[]) {
+  const teamId = await getCookieTeamId();
+  if (teamId) {
+    return teams.find((team) => team.id === teamId);
+  }
+  return teams.length > 0 ? teams[0] : undefined;
 }

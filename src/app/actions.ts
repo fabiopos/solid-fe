@@ -12,6 +12,6 @@ export async function deleteCookieTeamId() {
 }
 
 export async function getCookieTeamId() {
-  const cookieStore = await cookies();  
+  const cookieStore = await cookies();
   return cookieStore.get("selectedTeamId")?.value;
 }

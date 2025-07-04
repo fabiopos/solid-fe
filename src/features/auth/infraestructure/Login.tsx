@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 export function Login() {
   const router = useRouter();
   const { toast } = useToast();
-  const { fetchTeams, session } = useAuthStore((state) => state);
+  const { session } = useAuthStore((state) => state);
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -35,10 +35,9 @@ export function Login() {
           });
         },
       }),
-      Effect.flatMap((_response) =>
-        Effect.tryPromise(() => fetchTeams(session?.user.access_token ?? ""))
-      ),
-      Effect.tap(router.push("/"))
+      Effect.tap(
+        () => (window.location.href = `${window.location.origin}/dashboard`)
+      )
     );
 
     Effect.runPromise(loginExecutor);
