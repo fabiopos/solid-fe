@@ -19,6 +19,7 @@ import { Effect, pipe, Schedule } from "effect";
 import { getSession } from "next-auth/react";
 import { getToken } from "@/actions/dashboard.actions";
 import { get } from "http";
+import { getInitialData } from "@/actions/init.action";
 
 export default async function RootLayout({
   children,
@@ -73,26 +74,10 @@ const emptyState: PrivateLayoutData = {
 
 async function getData(): Promise<PrivateLayoutData> {
   try {
-    const token = await Effect.runPromise(getTokenRetry());
-    const apiClient = new ApiClient();
-
-    const teams = await getTeams(apiClient, token);
-    const selectedTeam = await getSelectedOrDefaultTeam(teams);
-
-    let tree = [];
-    if (selectedTeam)
-      tree = await getSeasonTree(apiClient, selectedTeam?.id, token);
-
-    const payload = {
-      ...emptyState,
-      teams,
-      tree,
-      selectedTeam,
-      isTeamSelected: !!selectedTeam,
-    } as PrivateLayoutData;
-
-    return payload;
+    const dataExecutor = await Effect.runPromise(getInitialData());
+    return dataExecutor;
   } catch (error) {
+    console.error("Failed to initialize data:", error);
     return emptyState;
   }
 }
@@ -121,5 +106,10 @@ async function getSelectedOrDefaultTeam(teams: Team[]) {
   if (teamId) {
     return teams.find((team) => team.id === teamId);
   }
-  return teams.length > 0 ? teams[0] : undefined;
+  const candidates = getTeamsCandidates(teams);
+  return teams.length > 0 ? candidates[0] : undefined;
+}
+
+function getTeamsCandidates(teams: Team[]) {
+  return teams.filter((x) => x.active && x.hasSubscription);
 }
