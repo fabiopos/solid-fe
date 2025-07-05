@@ -1,69 +1,69 @@
 export class ApiClient {
-    baseApi: string = process.env.NEXT_PUBLIC_BASE_API ?? 'http://localhost:3000'
-    
-    GET = async (resource: string, access_token: string) => {
-        const defaultHeaders = new Headers();
-        defaultHeaders.append("Content-Type", "application/json");
-        defaultHeaders.append("Authorization", `Bearer ${access_token}`);
-        const uri = `${this.baseApi}${resource}`;
-        return await fetch(uri, {
-            headers: defaultHeaders,
-            method: "GET",
-        });
-    };
+  baseApi: string = process.env.NEXT_PUBLIC_BASE_API ?? "http://localhost:3000";
 
-    POST = async <T>(
-        resource: string,
-        body: T,
-        access_token?: string
-    ): Promise<Response> => {
-        const defaultHeaders = new Headers();
-        defaultHeaders.append("Content-Type", "application/json");
+  GET = async (resource: string, access_token: string) => {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
+    defaultHeaders.append("Authorization", `Bearer ${access_token}`);
+    const uri = `${this.baseApi}${resource}`;
+    return await fetch(uri, {
+      headers: defaultHeaders,
+      method: "GET",
+    });
+  };
 
-        if (access_token)
-            defaultHeaders.append("Authorization", `Bearer ${access_token}`);
+  POST = async <T>(
+    resource: string,
+    body: T,
+    access_token?: string
+  ): Promise<Response> => {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
 
-        const uri = `${this.baseApi}${resource}`;
+    if (access_token)
+      defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-        return await fetch(uri, {
-            headers: defaultHeaders,
-            method: "POST",
-            body: JSON.stringify(body),
-        });
-    };
+    const uri = `${this.baseApi}${resource}`;
 
-    PATCH = async <T>(
-        resource: string,
-        body: T,
-        access_token?: string
-    ): Promise<Response> => {
-        const defaultHeaders = new Headers();
-        defaultHeaders.append("Content-Type", "application/json");
+    return await fetch(uri, {
+      headers: defaultHeaders,
+      method: "POST",
+      body: JSON.stringify(body),
+    });
+  };
 
-        if (access_token)
-            defaultHeaders.append("Authorization", `Bearer ${access_token}`);
+  PATCH = async <T>(
+    resource: string,
+    body: T,
+    access_token?: string
+  ): Promise<Response> => {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
 
-        const uri = `${this.baseApi}0${resource}`;
+    if (access_token)
+      defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-        return await fetch(uri, {
-            headers: defaultHeaders,
-            method: "PATCH",
-            body: JSON.stringify(body),
-        });
-    };
+    const uri = `${this.baseApi}${resource}`;
 
-    DELETE = (resource: string, access_token?: string) => {
-        const defaultHeaders = new Headers();
-        defaultHeaders.append("Content-Type", "application/json");
+    return await fetch(uri, {
+      headers: defaultHeaders,
+      method: "PATCH",
+      body: JSON.stringify(body),
+    });
+  };
 
-        if (access_token)
-            defaultHeaders.append("Authorization", `Bearer ${access_token}`);
+  DELETE = (resource: string, access_token?: string) => {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
 
-        const uri = `${this.baseApi}${resource}`;
+    if (access_token)
+      defaultHeaders.append("Authorization", `Bearer ${access_token}`);
 
-        return fetch(uri, {
-            headers: defaultHeaders,
-            method: "DELETE",
-        });
-    };
+    const uri = `${this.baseApi}${resource}`;
+
+    return fetch(uri, {
+      headers: defaultHeaders,
+      method: "DELETE",
+    });
+  };
 }
