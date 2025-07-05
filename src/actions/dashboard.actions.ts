@@ -23,8 +23,7 @@ export function getLastMatches() {
     ),
     Effect.flatten,
     Effect.map(getLastMatchesEffect),
-    Effect.flatten,
-    
+    Effect.flatten
   );
 }
 
@@ -51,7 +50,7 @@ function getSessionEffect() {
   );
 }
 
-function getToken() {
+export function getToken() {
   return pipe(
     undefined,
     getSessionEffect,
