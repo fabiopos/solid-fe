@@ -6,12 +6,17 @@ import FieldPositionModal from "@/features/fieldPosition/infraestructure/FieldPo
 import PlayersFtHeader from "./PlayersFtHeader";
 import PlayersFtTabList from "./Tabs/PlayersFtTabList";
 import PlayersTabContent from "./Tabs/PlayersTabContent";
+import { useMemo } from "react";
 
 function PlayersFt() {
   const { players, filteredPlayers, tab, setTab, categories, onlyActive } =
     usePlayersStore((state) => state);
 
   const playersByStatus = players.filter((x) => x.active === onlyActive);
+
+  const playersFilteredByStatus = useMemo(() => {
+    return (filteredPlayers[tab] ?? []).filter((x) => x.active === onlyActive);
+  }, [filteredPlayers, tab, onlyActive]);
 
   return (
     <div>
@@ -29,9 +34,7 @@ function PlayersFt() {
           {tab !== "all" && (
             <PlayersTabContent
               tabValue={tab}
-              players={(filteredPlayers[tab] ?? []).filter(
-                (x) => x.active === onlyActive
-              )}
+              players={playersFilteredByStatus}
             />
           )}
           <FieldPositionModal />

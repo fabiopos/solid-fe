@@ -4,7 +4,7 @@ import {
   FulfilledPlayer,
   FulfilledPlayerWithStats,
 } from "../domain/player.effect.schema";
-import { Effect, flow, pipe } from "effect";
+import { Effect, flow } from "effect";
 
 export class PlayerGet {
   constructor(private apiClient: ApiClient) {}

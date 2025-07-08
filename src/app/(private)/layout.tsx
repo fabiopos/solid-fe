@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import {

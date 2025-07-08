@@ -32,12 +32,9 @@ export function TeamSwitcher({ myTeams, selectedTeam }: TeamSwitcherProps) {
 
   const [activeTeam, setActiveTeam] = useState<Team | undefined>(selectedTeam);
 
-  const handleSelectTeam = useCallback(
-    (team: Team) => {
-      setActiveTeam(team);
-    },
-    [onSelectTeam]
-  );
+  const handleSelectTeam = useCallback((team: Team) => {
+    setActiveTeam(team);
+  }, []);
 
   useEffect(() => {
     if (activeTeam) onSelectTeam(activeTeam.id);

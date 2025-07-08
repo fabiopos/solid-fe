@@ -4,7 +4,6 @@ import { SolidAuth } from "./features/auth/application/SolidAuth";
 import { jwtVerify } from "jose";
 import { CustomJWT } from "./types/types.common";
 import { toDate } from "date-fns";
-import { useAuthStore } from "./context/AuthCtx";
 
 declare module "next-auth" {
   /**

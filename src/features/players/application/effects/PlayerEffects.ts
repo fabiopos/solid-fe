@@ -2,7 +2,6 @@ import { Effect, pipe } from "effect";
 import { PlayerUpdate } from "../PlayerUpdate";
 import { ApiClient } from "@/lib/ApiClient";
 import { PlayerUpdateType } from "../../domain/player.schema";
-import { on } from "events";
 
 interface IPlayerUpdateParams {
   playerId: string;

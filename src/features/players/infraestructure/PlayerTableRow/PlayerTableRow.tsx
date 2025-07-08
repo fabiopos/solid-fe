@@ -74,7 +74,7 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
         {player.playedMatches} / {player.totalTeamMatches}
       </TableCell>
       <TableCell className="text-center">
-        {player.playedMatchesPerc.toFixed(1)}%
+        {player.playedMatchesPerc?.toFixed(1)}%
       </TableCell>
       <TableCell className="text-center">{player.goalsCount}</TableCell>
       <TableCell className="text-center">
@@ -82,7 +82,7 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
       </TableCell>
       <TableCell className="text-center">{player.minutesPlayed}</TableCell>
       <TableCell className="text-center">
-        {player.minutesPerc.toFixed(1)}%
+        {player.minutesPerc?.toFixed(1)}%
       </TableCell>
       <TableCell className="font-medium">
         <StatusCell player={player} />
