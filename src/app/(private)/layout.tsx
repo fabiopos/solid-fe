@@ -8,18 +8,11 @@ import {
 } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/toaster";
 import AppBreadcumbs from "@/features/appBreadcumbs/AppBreadcumbs";
-import { SeasonGet } from "@/features/seasons/application/SeasonGet";
-import { TeamGet } from "@/features/teams/application/TeamGet";
-import { ApiClient } from "@/lib/ApiClient";
 import { redirect } from "next/navigation";
-import { getCookieTeamId } from "../actions";
 import { AuthWrapper } from "@/context/AuthWrapper";
-import { Team } from "@/types/types.common";
-import { Effect, pipe, Schedule } from "effect";
-import { getSession } from "next-auth/react";
-import { getToken } from "@/actions/dashboard.actions";
-import { get } from "http";
+import { Effect } from "effect";
 import { getInitialData } from "@/actions/init.action";
+import { PrivateLayoutData } from "@/types/layout.types";
 
 export default async function RootLayout({
   children,
@@ -55,14 +48,6 @@ export default async function RootLayout({
   );
 }
 
-interface PrivateLayoutData {
-  teams: Team[];
-  tree: unknown;
-  isTeamSelected: boolean;
-  selectedTeam: Team | undefined;
-  selectedTeamId: string | undefined;
-  error: string | undefined;
-}
 const emptyState: PrivateLayoutData = {
   teams: [],
   tree: [],
@@ -70,6 +55,7 @@ const emptyState: PrivateLayoutData = {
   selectedTeam: undefined,
   error: undefined,
   selectedTeamId: undefined,
+  token: undefined,
 };
 
 async function getData(): Promise<PrivateLayoutData> {
@@ -80,36 +66,4 @@ async function getData(): Promise<PrivateLayoutData> {
     console.error("Failed to initialize data:", error);
     return emptyState;
   }
-}
-
-function getTeams(apiClient: ApiClient, token: string) {
-  const teamClient = new TeamGet(apiClient);
-  return teamClient.getTeams(token);
-}
-
-function getSeasonTree(apiClient: ApiClient, teamId: string, token: string) {
-  const seasonClient = new SeasonGet(apiClient);
-  return seasonClient.getSeasonTree(teamId, token);
-}
-
-function getTokenRetry() {
-  const policy = Schedule.addDelay(Schedule.recurs(2), () => "100 millis");
-  const task = getToken();
-  const p = Effect.retryOrElse(task, policy, () =>
-    Effect.fail(new Error("No token found after retries"))
-  );
-  return p;
-}
-
-async function getSelectedOrDefaultTeam(teams: Team[]) {
-  const teamId = await getCookieTeamId();
-  if (teamId) {
-    return teams.find((team) => team.id === teamId);
-  }
-  const candidates = getTeamsCandidates(teams);
-  return teams.length > 0 ? candidates[0] : undefined;
-}
-
-function getTeamsCandidates(teams: Team[]) {
-  return teams.filter((x) => x.active && x.hasSubscription);
 }

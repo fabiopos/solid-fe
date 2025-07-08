@@ -1,8 +1,5 @@
 import { Team } from "@/types/types.common";
-import { Effect, pipe, Schedule } from "effect";
-import { getToken } from "./dashboard.actions";
-import { getCookieTeamId } from "@/app/actions";
-import { get } from "http";
+import { Effect, pipe } from "effect";
 import { ApiClient } from "@/lib/ApiClient";
 import { TeamGet } from "@/features/teams/application/TeamGet";
 import { SeasonGet } from "@/features/seasons/application/SeasonGet";
@@ -13,7 +10,6 @@ import {
   getSelectedTeamId,
   getTeamsEffect,
   TeamClient,
-  type ITeamClient,
 } from "@/core/infra/teams";
 
 export function getInitialData() {
@@ -31,7 +27,7 @@ function getData(token: string) {
   const teamClient = new TeamGet(apiClient);
   return pipe(
     getTeamsEffect(token),
-    Effect.flatMap(mapTeamsData),
+    Effect.flatMap((payload) => mapTeamsData(payload, token)),
     Effect.flatMap((payload) => getTreeData(payload, token))
   ).pipe(
     Effect.provideService(TeamClient, {
@@ -41,7 +37,7 @@ function getData(token: string) {
   );
 }
 
-function mapTeamsData(teams: Team[]) {
+function mapTeamsData(teams: Team[], token: string) {
   return pipe(
     getSelectedTeamId(),
     Effect.map((selectedTeamId) =>
@@ -57,6 +53,7 @@ function mapTeamsData(teams: Team[]) {
           selectedTeam,
           selectedTeamId: selectedTeam?.id,
           error: undefined,
+          token,
         } as PrivateLayoutData)
     )
   );

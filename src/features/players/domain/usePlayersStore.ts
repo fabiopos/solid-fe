@@ -173,8 +173,6 @@ export const makePlayersStore = (
       });
 
       Effect.runPromise(updateExecutor).catch(Effect.log);
-
-      //await client.editPlayer(playerId, player, token);
     },
     async deletePlayer(pid, token) {
       const allPlayers = get().players;

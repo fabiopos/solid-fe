@@ -1,6 +1,5 @@
 "use client";
 
-
 import { ChevronsUpDown } from "lucide-react";
 
 import {
@@ -21,11 +20,11 @@ import {
 import { Team } from "@/types/types.common";
 import Image from "next/image";
 import { useTeamSelect } from "@/features/team-select/domain/useTeamSelect";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 interface TeamSwitcherProps {
   myTeams: Team[];
-  selectedTeam: Team | undefined
+  selectedTeam: Team | undefined;
 }
 export function TeamSwitcher({ myTeams, selectedTeam }: TeamSwitcherProps) {
   const { isMobile } = useSidebar();
@@ -33,10 +32,17 @@ export function TeamSwitcher({ myTeams, selectedTeam }: TeamSwitcherProps) {
 
   const [activeTeam, setActiveTeam] = useState<Team | undefined>(selectedTeam);
 
-  const handleSelectTeam = useCallback((team: Team) => {
-    setActiveTeam(team);
-    onSelectTeam(team.id);
-  }, [onSelectTeam]);
+  const handleSelectTeam = useCallback(
+    (team: Team) => {
+      setActiveTeam(team);
+    },
+    [onSelectTeam]
+  );
+
+  useEffect(() => {
+    if (activeTeam) onSelectTeam(activeTeam.id);
+  }, [activeTeam]);
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>

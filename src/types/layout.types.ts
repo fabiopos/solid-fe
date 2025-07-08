@@ -7,4 +7,5 @@ export interface PrivateLayoutData {
   selectedTeam: Team | undefined;
   selectedTeamId: string | undefined;
   error: string | undefined;
+  token: string | undefined;
 }

@@ -12,6 +12,7 @@ async function getData() {
     const lastMatches = await Effect.runPromise(getLastMatches()());
     return { lastMatches };
   } catch (error) {
+    console.log(error);
     return { lastMatches: [] };
   }
 }
