@@ -24,6 +24,7 @@ export type PlayersStoreState = {
   filteredPlayers: Record<string, FulfilledPlayerWithStats[]>;
   categories: string[];
   lineup: Record<string, FulfilledPlayerWithStats | null>;
+  onlyActive: boolean; // This is not used in the current code but can be added if needed
 };
 export type PlayersStoreActions = {
   fetchPlayers(teamId: string, access_token: string): Promise<void>;
@@ -35,6 +36,7 @@ export type PlayersStoreActions = {
   setPlayerStatus(playerId: string, playerStatus: PlayerStatus): void;
   setPlayerInactive(playerId: string, active: boolean): void;
   setFavPosition(favPositionId: string): void;
+  setOnlyActive(onlyActive: boolean): void;
   setSelectedPlayer(player: FulfilledPlayerWithStats | null): void;
   updateSelectedPlayer(player: FulfilledPlayerWithStats): void;
   updateSelectedPlayerPositions(newPositions: string[]): void;
@@ -63,6 +65,7 @@ const defaultInitState: PlayersStoreState = {
   filteredPlayers: { all: [] },
   categories: [],
   lineup: {},
+  onlyActive: true, // This is not used in the current code but can be added if needed
 };
 export const makePlayersStore = (
   initState: PlayersStoreState = defaultInitState
@@ -71,6 +74,9 @@ export const makePlayersStore = (
     ...initState,
     setTab(tab: string) {
       set(() => ({ tab }));
+    },
+    setOnlyActive(onlyActive: boolean) {
+      set(() => ({ onlyActive }));
     },
     async fetchPlayers(teamId, access_token) {
       set(() => ({ fetchPlayersStatus: "IN_PROGRESS" }));

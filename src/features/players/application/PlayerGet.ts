@@ -1,6 +1,10 @@
 import { ApiClient } from "@/lib/ApiClient";
 import { PlayerType } from "../domain/player.schema";
-import { FulfilledPlayer, FulfilledPlayerWithStats } from "../domain/player.effect.schema";
+import {
+  FulfilledPlayer,
+  FulfilledPlayerWithStats,
+} from "../domain/player.effect.schema";
+import { Effect, flow, pipe } from "effect";
 
 export class PlayerGet {
   constructor(private apiClient: ApiClient) {}
@@ -14,7 +18,7 @@ export class PlayerGet {
 
     if (!response.ok) return [];
 
-    const result = await response.json() as FulfilledPlayer[];   
+    const result = (await response.json()) as FulfilledPlayer[];
 
     return result;
   }
@@ -23,14 +27,45 @@ export class PlayerGet {
     teamId: string,
     access_token?: string
   ): Promise<FulfilledPlayerWithStats[]> {
-    const endpoint = `/player/${teamId}/with-stats`;
-    const response = await this.apiClient.GET(endpoint, access_token ?? "");
+    const activeEndpoint = `/player/${teamId}/with-stats/active`;
+    const inactiveEndpoint = `/player/${teamId}/with-stats/inactive`;
 
-    if (!response.ok) return [];
+    const activePlayersEffect = this.getAllPlayersWithStatsEffect(
+      activeEndpoint,
+      access_token ?? "",
+      this.apiClient
+    );
 
-    const result = await response.json() as FulfilledPlayerWithStats[];   
+    const inactivePlayersEffect = this.getAllPlayersWithStatsEffect(
+      inactiveEndpoint,
+      access_token ?? "",
+      this.apiClient
+    );
 
-    return result;
+    const res = Effect.all([activePlayersEffect(), inactivePlayersEffect()], {
+      concurrency: "unbounded",
+    });
+
+    const [activePlayers, inactivePlayers] = await Effect.runPromise(res);
+    return [...activePlayers, ...inactivePlayers];
+  }
+
+  getAllPlayersWithStatsEffect(
+    endpoint: string,
+    token: string,
+    apiClient: ApiClient
+  ) {
+    return flow(
+      () => endpoint,
+      (endpoint: string) =>
+        Effect.tryPromise(() => apiClient.GET(endpoint, token)),
+      Effect.flatMap((response) => {
+        if (!response.ok) return Effect.succeed([]);
+        return Effect.tryPromise(
+          () => response.json() as Promise<FulfilledPlayerWithStats[]>
+        );
+      })
+    );
   }
 
   async find(pid: string, token: string) {

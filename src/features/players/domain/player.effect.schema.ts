@@ -64,7 +64,7 @@ export const playerSchema = S.Struct({
   firstName: S.optional(S.String),
   lastName: S.optional(S.String),
   documentNumber: S.optional(S.String),
-  documentType: S.Enums(DocumentType),
+  documentType: S.optional(S.Enums(DocumentType)),
   active: S.optional(S.Boolean),
   status: S.optional(S.Enums(PlayerStatus)),
   email: S.optional(
@@ -208,14 +208,14 @@ export class FulfilledPlayerWithStats extends S.TaggedClass<FulfilledPlayerWithS
   "FulfilledPlayerWithStats",
   {
     ...playerSchema.fields,
-    totalTeamMatches: S.Number,
-    playedMatches: S.Number,
-    goalsCount: S.Number,
-    minutesPlayed: S.Number,
-    assists: S.Number,
-    playedMatchesPerc: S.Number,
-    goalsAvg: S.Number,
-    assistsAvg: S.Number,
-    minutesPerc: S.Number,
+    totalTeamMatches: S.optional(S.Number),
+    playedMatches: S.optional(S.Number),
+    goalsCount: S.optional(S.Number),
+    minutesPlayed: S.optional(S.Number),
+    assists: S.optional(S.Number),
+    playedMatchesPerc: S.optional(S.Number),
+    goalsAvg: S.optional(S.Number),
+    assistsAvg: S.optional(S.Number),
+    minutesPerc: S.optional(S.Number),
   }
 ) {}
