@@ -7,8 +7,7 @@ import { PlayerUpdate } from "../application/PlayerUpdate";
 import { PlayerDelete } from "../application/PlayerDelete";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
 import { FulfilledPlayerWithStats } from "./player.effect.schema";
-import { Console, Effect, pipe, Record } from "effect";
-import { UnknownException } from "effect/Cause";
+import { Effect, Record } from "effect";
 import { playerUpdateEffect } from "../application/effects/PlayerEffects";
 
 export type PlayersStoreState = {
@@ -160,7 +159,7 @@ export const makePlayersStore = (
           }));
         },
         onSuccessUpdate: (res) => {
-          player.status && get().setPlayerStatus(playerId, player.status);
+          if (player.status) get().setPlayerStatus(playerId, player.status);
           set(() => ({
             playerStatusUpdate: {
               id: playerId,

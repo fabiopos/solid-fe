@@ -1,4 +1,4 @@
-import { getCookieTeamId, setCookieTeamId } from "@/app/actions";
+import { getCookieTeamId } from "@/app/actions";
 import { Team } from "@/types/types.common";
 import { Context, Effect, pipe } from "effect";
 

@@ -17,7 +17,6 @@ export function getLastMatches() {
     Effect.map((token) => ({ token })),
     Effect.map((a) =>
       getTeamIdEffect().pipe(
-        //Effect.mapError((_e) => Effect.succeed([])),
         Effect.map((teamId) => ({ teamId, token: a.token, limit: LIMIT }))
       )
     ),

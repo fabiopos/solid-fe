@@ -15,7 +15,6 @@ export const usePlayers = () => {
     error,
     fetchPlayersStatus,
     players,
-    setPlayerStatus,
     setPlayerInactive,
     updatePlayer,
     deletePlayer,
@@ -35,7 +34,7 @@ export const usePlayers = () => {
   const handleSetDown = useCallback(
     (playerId: string | undefined, newStatus: PlayerStatus) => {
       if (!playerId) return;
-      // setPlayerStatus(playerId, newStatus);
+
       const player = players.find((x) => x.id === playerId);
 
       if (!player) return;
@@ -43,7 +42,7 @@ export const usePlayers = () => {
 
       updatePlayer(playerId, { status: newStatus }, data?.user.access_token);
     },
-    [data?.user.access_token, players, setPlayerStatus, updatePlayer]
+    [data?.user.access_token, players, updatePlayer]
   );
 
   const handleSetInactive = useCallback(

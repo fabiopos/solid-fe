@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/table";
 import PlayerTableRow from "./PlayerTableRow/PlayerTableRow";
 import { FulfilledPlayerWithStats } from "../domain/player.effect.schema";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { usePlayersStore } from "@/context/PlayersCtx";
 
 interface PlayersTableProps {
   players: FulfilledPlayerWithStats[];

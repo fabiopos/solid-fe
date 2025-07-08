@@ -5,15 +5,11 @@ import { useForm } from "react-hook-form";
 import { LoginInput, loginSchema } from "@/features/auth/domain/login.schema";
 import { LoginForm } from "@/components/login/form/form";
 import { SolidAuth } from "../application/SolidAuth";
-import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/context/AuthCtx";
 import { Effect, pipe } from "effect";
 import { useToast } from "@/hooks/use-toast";
 
 export function Login() {
-  const router = useRouter();
   const { toast } = useToast();
-  const { session } = useAuthStore((state) => state);
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: {

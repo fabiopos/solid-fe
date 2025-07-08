@@ -1,7 +1,6 @@
 "use client";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs } from "@/components/ui/tabs";
 import { usePlayersStore } from "@/context/PlayersCtx";
-import PlayersTable from "../PlayersTable";
 import FieldPositionModal from "@/features/fieldPosition/infraestructure/FieldPositionModal/FieldPositionModal";
 import PlayersFtHeader from "./PlayersFtHeader";
 import PlayersFtTabList from "./Tabs/PlayersFtTabList";
@@ -9,8 +8,9 @@ import PlayersTabContent from "./Tabs/PlayersTabContent";
 import { useMemo } from "react";
 
 function PlayersFt() {
-  const { players, filteredPlayers, tab, setTab, categories, onlyActive } =
-    usePlayersStore((state) => state);
+  const { players, filteredPlayers, tab, setTab, onlyActive } = usePlayersStore(
+    (state) => state
+  );
 
   const playersByStatus = players.filter((x) => x.active === onlyActive);
 
