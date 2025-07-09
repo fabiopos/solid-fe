@@ -38,6 +38,7 @@ export function TeamSwitcher({ myTeams, selectedTeam }: TeamSwitcherProps) {
 
   useEffect(() => {
     if (activeTeam) onSelectTeam(activeTeam.id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTeam]);
 
   return (
