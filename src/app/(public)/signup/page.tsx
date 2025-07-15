@@ -1,6 +1,7 @@
+import { redirect } from "next/navigation";
 
 const SignupPage = () => {
-  return <div>SignupPage</div>;
+  return redirect("/subscription/start");
 };
 
 export default SignupPage;

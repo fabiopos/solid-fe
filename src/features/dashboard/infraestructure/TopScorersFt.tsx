@@ -30,12 +30,18 @@ async function getData() {
   if (!teamId) return { players: [] };
 
   const client = new DashboardGet(new ApiClient());
-  const players = await client.getTopScorers({
-    teamId,
-    token: session.user.access_token,
-    limit: LIMIT,
-  });
-  return { players };
+  try {
+    const players = await client.getTopScorers({
+      teamId,
+      token: session.user.access_token,
+      limit: LIMIT,
+    });
+
+    return { players };
+  } catch (error) {
+    console.log(error);
+    return { players: [] };
+  }
 }
 
 export default TopScorersFt;
