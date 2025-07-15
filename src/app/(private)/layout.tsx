@@ -48,7 +48,7 @@ export default async function RootLayout({
 }
 
 const emptyState: PrivateLayoutData = {
-  teams: [],
+  teams: undefined,
   tree: [],
   isTeamSelected: false,
   selectedTeam: undefined,
@@ -62,7 +62,7 @@ async function getData(): Promise<PrivateLayoutData> {
     const dataExecutor = await Effect.runPromise(getInitialData());
     return dataExecutor;
   } catch (error) {
-    console.error("Failed to initialize data:", error);
+    console.log("Failed to initialize data:", error);
     return emptyState;
   }
 }

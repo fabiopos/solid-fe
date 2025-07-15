@@ -3,10 +3,12 @@ import { auth } from "@/auth";
 import { PlayersStoreProvider } from "@/context/PlayersCtx";
 import { FieldPositionGet } from "@/features/fieldPosition/application/FieldPositionGet";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
-import { PlayerGet } from "@/features/players/application/PlayerGet";
+//import { PlayerGet } from "@/features/players/application/PlayerGet";
 import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import PlayersFt from "@/features/players/infraestructure/Players/PlayersFt";
 import { ApiClient } from "@/lib/ApiClient";
+import { getPWSByTeamId } from "@/services/player/program";
+import { Console, Effect } from "effect";
 
 async function PlayersPage() {
   const { players, fieldPositions, teamId } = await getPlayers();
@@ -22,7 +24,7 @@ async function PlayersPage() {
 }
 
 interface GetPlayersResponse {
-  players: FulfilledPlayerWithStats[];
+  players: (typeof FulfilledPlayerWithStats.Type)[];
   fieldPositions: FulfilledFieldPosition[];
   teamId: string;
 }
@@ -35,11 +37,23 @@ const getPlayers = async (): Promise<GetPlayersResponse> => {
   if (!session) return { fieldPositions: [], players: [], teamId: "" };
 
   const apiClient = new ApiClient();
-  const client = new PlayerGet(apiClient);
+  // const client = new PlayerGet(apiClient);
   const fPos = new FieldPositionGet(apiClient);
-  const players = await client.getAllPlayersWithStats(
-    teamId,
-    session?.user.access_token
+  // const players = await client.getAllPlayersWithStats(
+  //   teamId,
+  //   session?.user.access_token
+  // );
+
+  const players = await Effect.runPromise(
+    getPWSByTeamId(teamId).pipe(
+      Effect.tapError(Console.log),
+      Effect.catchTags({
+        ConfigError: () => Effect.succeed([]),
+        FetchError: () => Effect.succeed([]),
+        JsonError: () => Effect.succeed([]),
+        ParseError: () => Effect.succeed([]),
+      })
+    )
   );
 
   const fieldPositions = await fPos.getAllFieldPositions(

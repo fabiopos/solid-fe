@@ -2,7 +2,7 @@ import { Schema as S } from "@effect/schema";
 
 export const fieldPositionSchema = S.Struct({
   id: S.optional(S.String),
-  createdAt: S.optional(S.Date),
+  createdAt: S.optional(S.Union(S.String, S.Date, S.Null)),
   name: S.optional(S.String),
   description: S.optional(S.NullishOr(S.String)),
   order: S.optional(S.Number),

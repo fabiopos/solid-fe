@@ -27,27 +27,16 @@ export class PlayerGet {
     teamId: string,
     access_token?: string
   ): Promise<FulfilledPlayerWithStats[]> {
-    const activeEndpoint = `/player/${teamId}/with-stats/active`;
-    const inactiveEndpoint = `/player/${teamId}/with-stats/inactive`;
+    const endpoint = `/player/${teamId}/with-stats`;
 
-    const activePlayersEffect = this.getAllPlayersWithStatsEffect(
-      activeEndpoint,
+    const playersEffect = this.getAllPlayersWithStatsEffect(
+      endpoint,
       access_token ?? "",
       this.apiClient
     );
 
-    const inactivePlayersEffect = this.getAllPlayersWithStatsEffect(
-      inactiveEndpoint,
-      access_token ?? "",
-      this.apiClient
-    );
-
-    const res = Effect.all([activePlayersEffect(), inactivePlayersEffect()], {
-      concurrency: "unbounded",
-    });
-
-    const [activePlayers, inactivePlayers] = await Effect.runPromise(res);
-    return [...activePlayers, ...inactivePlayers];
+    const res = await Effect.runPromise(playersEffect());
+    return res;
   }
 
   getAllPlayersWithStatsEffect(

@@ -8,12 +8,14 @@ import {
   LastMatchesPayload,
 } from "@/features/dashboard/application/DashboardGet";
 import { ApiClient } from "@/lib/ApiClient";
+import { NoTeamSelectedError } from "@/shared/errors/NoTeamSelectedError";
+import { isPast, toDate } from "date-fns";
 import { Effect, flow, pipe } from "effect";
+import { Session } from "next-auth";
 
 export function getLastMatches() {
   return flow(
     getToken,
-    Effect.orDie,
     Effect.map((token) => ({ token })),
     Effect.map((a) =>
       getTeamIdEffect().pipe(
@@ -42,10 +44,16 @@ function getSessionEffect() {
     () =>
       Effect.tryPromise({
         try: () => auth(),
-        catch: () => new NoAuthError("Not autheticated"),
+        catch: () => new NoAuthError(),
       }),
     Effect.map((session) => Effect.succeed(session)),
     Effect.flatten
+  );
+}
+
+function validateSession(session: Session | null) {
+  return pipe(session, (s) =>
+    isPast(toDate(s?.expires ?? "")) ? false : true
   );
 }
 
@@ -54,11 +62,12 @@ export function getToken() {
     undefined,
     getSessionEffect,
     Effect.map((session) =>
-      session
-        ? Effect.succeed(session.user.access_token)
-        : Effect.fail(new NoTokenError("No user found"))
+      validateSession(session)
+        ? Effect.succeed(session?.user.access_token ?? "")
+        : Effect.fail(new NoTokenError())
     ),
     Effect.flatten
+    // Effect.tapError(() => redirect("/logout"))
   );
 }
 
@@ -66,13 +75,13 @@ function getTeamIdEffect() {
   return pipe(
     Effect.tryPromise({
       try: () => getCookieTeamId(),
-      catch: () => new Error(),
+      catch: () => new NoTeamSelectedError(),
     }),
     Effect.matchEffect({
       onSuccess: (teamId) =>
         teamId
           ? Effect.succeed(teamId)
-          : Effect.fail(new Error("No team selected")),
+          : Effect.fail(new NoTeamSelectedError("No team selected")),
       onFailure: (e) => Effect.fail(e),
     })
   );

@@ -9,10 +9,22 @@ async function LastMatchesSection() {
 
 async function getData() {
   try {
-    const lastMatches = await Effect.runPromise(getLastMatches()());
+    const program = getLastMatches()();
+    const lastMatches = await Effect.runPromise(
+      program.pipe(
+        Effect.catchTags({
+          NoAuthError: (e) => {
+            return Effect.fail(e);
+          },
+          NoTokenError: (e) => {
+            return Effect.fail(e);
+          },
+        })
+      )
+    );
     return { lastMatches };
   } catch (error) {
-    console.log(error);
+    console.log("Error =>", error);
     return { lastMatches: [] };
   }
 }

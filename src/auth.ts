@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { SolidAuth } from "./features/auth/application/SolidAuth";
-import { jwtVerify } from "jose";
+import { jwtVerify, decodeJwt } from "jose";
 import { CustomJWT } from "./types/types.common";
 import { toDate } from "date-fns";
 
@@ -90,7 +90,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       if (account?.provider === "credentials" && user) {
-        return { ...token, access_token: user.access_token };
+        return { ...token, access_token: user.access_token, user };
       }
 
       return token;
@@ -99,7 +99,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session && session.user) {
         session.user.subscriptionId = token.id as string;
         session.user.access_token = token?.access_token as string;
-        session.expires = toDate(token.exp as number);
+
+        const decodedToken = decodeJwt(token?.access_token as string);
+        session.expires = toDate((decodedToken.exp as number) * 1000);
       }
 
       return session;
@@ -113,10 +115,11 @@ async function verifyToken(token: string): Promise<CustomJWT | null> {
       process.env.NEXT_JWT_AUTH_SECRET ?? ""
     );
     const decoded = (await jwtVerify(token, secret)) as unknown as CustomJWT; // Verifica el token
+
     return decoded; // Devuelve el payload si es válido
   } catch (error) {
     if (error instanceof Error)
-      console.error("Error al verificar el token:", error.message);
+      console.log("Error al verificar el token:", error.message);
     return null; // Devuelve null si no es válido
   }
 }

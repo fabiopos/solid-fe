@@ -1,11 +1,5 @@
-export class NoTokenError extends Error {
-    constructor(message: string) {
-      super(message);
-    }
-  }
+import { Data } from "effect";
 
-  export class NoAuthError extends Error {
-    constructor(message: string) {
-      super(message);
-    }
-  }
+export class NoTokenError extends Data.TaggedError("NoTokenError") {}
+
+export class NoAuthError extends Data.TaggedError("NoAuthError") {}

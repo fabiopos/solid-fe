@@ -60,7 +60,7 @@ export const playerSchema = S.Struct({
   id: S.optional(S.String),
   teamId: S.optional(S.String),
   createdAt: S.optional(S.Union(S.String, S.Date, S.Null)),
-  bornDate: S.optional(S.NullOr(S.Date)),
+  bornDate: S.optional(S.Union(S.String, S.Date, S.Null)),
   firstName: S.optional(S.String),
   lastName: S.optional(S.String),
   documentNumber: S.optional(S.String),
@@ -219,3 +219,8 @@ export class FulfilledPlayerWithStats extends S.TaggedClass<FulfilledPlayerWithS
     minutesPerc: S.optional(S.Number),
   }
 ) {}
+
+export const decodePWS = S.decodeUnknown(FulfilledPlayerWithStats);
+
+export const encodePWS = S.encodeUnknown(FulfilledPlayerWithStats);
+//const p = Effect.runPromise( decodePWS({}).pipe(p => p.))

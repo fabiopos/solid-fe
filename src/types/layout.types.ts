@@ -1,7 +1,7 @@
 import { Team } from "./types.common";
 
 export interface PrivateLayoutData {
-  teams: Team[];
+  teams: Team[] | undefined;
   tree: unknown;
   isTeamSelected: boolean;
   selectedTeam: Team | undefined;
