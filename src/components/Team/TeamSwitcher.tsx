@@ -21,12 +21,12 @@ import { Team } from "@/types/types.common";
 import Image from "next/image";
 import { useTeamSelect } from "@/features/team-select/domain/useTeamSelect";
 import { useCallback, useEffect, useState } from "react";
+import { useSolidStore } from "@/providers/store.provider";
+import { selectMyTeams, selectSelectedTeam } from "@/stores/selectors";
 
-interface TeamSwitcherProps {
-  myTeams: Team[];
-  selectedTeam: Team | undefined;
-}
-export function TeamSwitcher({ myTeams, selectedTeam }: TeamSwitcherProps) {
+export function TeamSwitcher() {
+  const myTeams = useSolidStore(selectMyTeams);
+  const selectedTeam = useSolidStore(selectSelectedTeam);
   const { isMobile } = useSidebar();
   const { onSelectTeam } = useTeamSelect();
 
