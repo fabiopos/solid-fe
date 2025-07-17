@@ -1,23 +1,21 @@
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { usePlayersStore } from "@/context/PlayersCtx";
-import React from "react";
+import { useSolidStore } from "@/providers/store.provider";
+import {
+  selectCategoriesCount,
+  selectPlayersByStatus,
+} from "@/stores/selectors";
 
 function PlayersFtTabList() {
-  const { players, filteredPlayers, categories, onlyActive } = usePlayersStore(
-    (state) => state
-  );
-  const playersByStatus = players.filter((x) => x.active === onlyActive);
+  const playersByStatus = useSolidStore(selectPlayersByStatus);
+  const categoriesCounts = useSolidStore(selectCategoriesCount);
   return (
     <TabsList>
       <TabsTrigger value="all">
         All Players ({playersByStatus.length})
       </TabsTrigger>
-      {categories.map((x) => (
-        <TabsTrigger key={x} value={x ?? ""} className="capitalize">
-          {x.toLowerCase()} (
-          {(filteredPlayers[x] ?? []).filter((x) => x.active === onlyActive)
-            .length ?? 0}
-          )
+      {categoriesCounts.map(({ name, count }) => (
+        <TabsTrigger key={name} value={name} className="capitalize">
+          {name.toLowerCase()} ({count})
         </TabsTrigger>
       ))}
     </TabsList>

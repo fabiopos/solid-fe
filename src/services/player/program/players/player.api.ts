@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   decodePWS,
   encodePWS,
@@ -7,9 +6,9 @@ import {
 import { FetchError, JsonError } from "@/services/http/errors/http.errors";
 import { fetchRequest } from "@/services/http/program/http.program";
 import { ParseError } from "@effect/schema/ParseResult";
-import { Context, Effect, pipe } from "effect";
-import { isArray } from "effect/Array";
+import { Context, Effect } from "effect";
 import { ConfigError } from "effect/ConfigError";
+import { parseJson } from "../common";
 
 interface PlayerApiImpl {
   readonly getPlayerWS: Effect.Effect<
@@ -19,17 +18,6 @@ interface PlayerApiImpl {
   >;
 }
 
-const parseJson = (players: any): Effect.Effect<unknown[], JsonError> => {
-  return pipe(
-    players,
-    isArray,
-    Effect.if({
-      onFalse: () => Effect.fail(new JsonError()),
-      onTrue: () => Effect.succeed(players as unknown[]),
-    })
-  );
-};
-
 export class PlayerApi extends Context.Tag("PlayerApi")<
   PlayerApi,
   PlayerApiImpl
@@ -37,9 +25,9 @@ export class PlayerApi extends Context.Tag("PlayerApi")<
   static readonly Live = (teamId: string) =>
     PlayerApi.of({
       getPlayerWS: Effect.gen(function* () {
-        const resource = `/player/${teamId}/with-stats`;
+        const endpoint = `/player/${teamId}/with-stats`;
 
-        const json = yield* fetchRequest(resource);
+        const json = yield* fetchRequest({ endpoint });
 
         const players = yield* parseJson(json);
 

@@ -1,11 +1,13 @@
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { usePlayersStore } from "@/context/PlayersCtx";
+import { useSolidStore } from "@/providers/store.provider";
+import { selectOnlyActive } from "@/stores/selectors";
 import Link from "next/link";
 import React from "react";
 
 function PlayersFtHeader() {
-  const { setOnlyActive, onlyActive } = usePlayersStore((state) => state);
+  const setOnlyActive = useSolidStore((state) => state.setOnlyActive);
+  const onlyActive = useSolidStore(selectOnlyActive);
   return (
     <div className="flex justify-end">
       <div className="flex items-center space-x-4">

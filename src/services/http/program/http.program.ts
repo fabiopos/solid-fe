@@ -1,11 +1,16 @@
-import { Config, Effect } from "effect";
+import { Effect } from "effect";
 import { FetchError, JsonError } from "../errors/http.errors";
 
-const config = Config.string("NEXT_PUBLIC_BASE_API");
+const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
 
-const fetchReq = (endpoint: string) =>
+interface FetchOptions {
+  endpoint: string;
+  options?: RequestInit;
+}
+
+const fetchReq = ({ endpoint, options }: FetchOptions) =>
   Effect.tryPromise({
-    try: () => fetch(endpoint),
+    try: () => fetch(endpoint, options),
     catch: () => new FetchError(),
   });
 
@@ -15,14 +20,13 @@ const jsonResponse = (response: Response) =>
     catch: () => new JsonError(),
   });
 
-export const fetchRequest = (resource: string) =>
+export const fetchRequest = ({ endpoint: resource, options }: FetchOptions) =>
   Effect.gen(function* () {
-    const baseUrl = yield* config;
     const endpoint = `${baseUrl}${resource}`;
 
     // yield* Console.log("retrieving", endpoint);
 
-    const response = yield* fetchReq(endpoint);
+    const response = yield* fetchReq({ endpoint, options });
 
     if (!response.ok) {
       return yield* new FetchError();

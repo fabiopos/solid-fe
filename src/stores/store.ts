@@ -6,6 +6,7 @@ import { Store, StoreState } from "../types/store";
 import { createSessionSlice } from "./session/session-slice";
 import { createTeamSlice } from "./team/team-slice";
 import { createSeasonSlice } from "./season/season-slice";
+import { createPlayerSlice } from "./player/player-slice";
 
 //import { createCartSlice } from "./cart-slice";
 
@@ -15,6 +16,8 @@ const defaultState: StoreState = {
   selectedTeamId: undefined,
   teams: [],
   tree: [],
+  fieldPositions: [],
+  players: [],
 };
 
 export const createSolidStore = (
@@ -28,7 +31,7 @@ export const createSolidStore = (
             ...createSessionSlice(...a),
             ...createTeamSlice(...a),
             ...createSeasonSlice(...a),
-            // ...other slices
+            ...createPlayerSlice(...a),
             ...initialState,
           }))
         ),

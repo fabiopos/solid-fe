@@ -21,8 +21,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import StatusCell from "../TableCells/StatusCell";
-import { usePlayers } from "../../domain/usePlayers";
-import { useMemo } from "react";
 import PlayerAvatar from "../PlayerAvatar";
 import Link from "next/link";
 import { FulfilledPlayerWithStats } from "../../domain/player.effect.schema";
@@ -34,22 +32,26 @@ interface PlayerTableRowProps {
 }
 
 function PlayerTableRow({ player }: PlayerTableRowProps) {
-  const { handlers, playerStatusDelete, playerStatusUpdate } = usePlayers();
-  const { handleSetDown, handleDelete, handleSetInactive } = handlers;
+  // const { handlers, playerStatusDelete, playerStatusUpdate } = usePlayers();
+  // const { handleSetDown, handleDelete, handleSetInactive } = handlers;
+  const isUpdating = false;
+  const isDeleting = false;
+  const handleSetDown = (_id: string | undefined, _status: PlayerStatus) => {};
+  const handleDelete = (_id: string | undefined) => {};
+  const handleSetInactive = (_id: string | undefined, _state: boolean) => {};
+  // const isUpdating = useMemo(() => {
+  //   return (
+  //     playerStatusUpdate.id === player.id &&
+  //     playerStatusUpdate.status === "IN_PROGRESS"
+  //   );
+  // }, [playerStatusUpdate, player]);
 
-  const isUpdating = useMemo(() => {
-    return (
-      playerStatusUpdate.id === player.id &&
-      playerStatusUpdate.status === "IN_PROGRESS"
-    );
-  }, [playerStatusUpdate, player]);
-
-  const isDeleting = useMemo(() => {
-    return (
-      playerStatusDelete.id === player.id &&
-      playerStatusDelete.status === "IN_PROGRESS"
-    );
-  }, [playerStatusDelete, player]);
+  // const isDeleting = useMemo(() => {
+  //   return (
+  //     playerStatusDelete.id === player.id &&
+  //     playerStatusDelete.status === "IN_PROGRESS"
+  //   );
+  // }, [playerStatusDelete, player]);
 
   return (
     <TableRow key={player.id} className="bg-background/90">

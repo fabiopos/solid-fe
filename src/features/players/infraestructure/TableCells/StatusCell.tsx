@@ -1,17 +1,20 @@
 import React from "react";
 import { PlayerStatus } from "@/types/types.common";
 import { Ambulance, ArrowDown, ArrowUp, Loader } from "lucide-react";
-import { usePlayersStore } from "@/context/PlayersCtx";
-import { FulfilledPlayer, FulfilledPlayerWithStats } from "../../domain/player.effect.schema";
+import {
+  FulfilledPlayer,
+  FulfilledPlayerWithStats,
+} from "../../domain/player.effect.schema";
 
 interface StatusCellProps {
   player: FulfilledPlayer | FulfilledPlayerWithStats;
 }
 const StatusCell = ({ player }: StatusCellProps) => {
-  const { playerStatusUpdate, playerStatusDelete } = usePlayersStore(
-    (state) => state
-  );
-
+  // const { playerStatusUpdate, playerStatusDelete } = usePlayersStore(
+  //   (state) => state
+  // );
+  const playerStatusUpdate = { id: "", status: "IDLE" };
+  const playerStatusDelete = { id: "", status: "IDLE" };
   if (
     playerStatusUpdate.id === player.id &&
     playerStatusUpdate.status === "IN_PROGRESS"
