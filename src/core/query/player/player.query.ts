@@ -37,7 +37,7 @@ export const patchPlayerPositionsOptions = ({
   });
 
 type PatchPlayerOptionsParams = {
-  onSuccess: (data: void, variables: PATCHPlayerParams, ctx: unknown) => void;
+  onSuccess?: (data: void, variables: PATCHPlayerParams, ctx: unknown) => void;
 };
 
 export const patchPlayerOptions = ({ onSuccess }: PatchPlayerOptionsParams) =>

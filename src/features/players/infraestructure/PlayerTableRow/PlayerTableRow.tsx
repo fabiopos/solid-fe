@@ -43,9 +43,7 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
   const setPlayerStatus = useSolidStore((state) => state.setPlayerStatus);
   const setPlayerInactive = useSolidStore((state) => state.setPlayerInactive);
   const setPlayerDelete = useSolidStore((state) => state.setPlayerDelete);
-  const { mutate, isPending } = useMutation(
-    patchPlayerOptions({ onSuccess: () => {} })
-  );
+  const { mutate, isPending } = useMutation(patchPlayerOptions({}));
   const { mutate: mutateDelete, isPending: isDeleting } = useMutation(
     deletePlayerOptions({
       onSuccess: (_, variables) => {
