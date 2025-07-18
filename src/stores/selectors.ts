@@ -8,6 +8,7 @@ export const selectTree = (state: StoreState) => state.tree as never[];
 export const selectUser = (state: StoreState) => state.user;
 export const selectPlayers = (state: StoreState) => state.players;
 export const selectFieldPositions = (state: StoreState) => state.fieldPositions;
+export const selectSelectedPlayer = (state: StoreState) => state.selectedPlayer;
 
 export const selectAccessToken = createSelector(
   [selectUser],
@@ -90,4 +91,14 @@ export const selectCategoriesCount = createSelector(
       count: players[c].length ?? 0,
     }));
   }
+);
+
+export const selectSelectedPlayerPositions = createSelector(
+  [selectSelectedPlayer],
+  (selectedPlayer) =>
+    selectedPlayer
+      ? (selectedPlayer.playerPositions ?? []).map(
+          (x) => x.fieldPosition?.id ?? ""
+        )
+      : []
 );

@@ -8,9 +8,9 @@ interface FetchOptions {
   options?: RequestInit;
 }
 
-const fetchReq = ({ endpoint, options }: FetchOptions) =>
+export const fetchReq = ({ endpoint, options }: FetchOptions) =>
   Effect.tryPromise({
-    try: () => fetch(endpoint, options),
+    try: () => fetch(`${baseUrl}${endpoint}`, options),
     catch: () => new FetchError(),
   });
 
@@ -20,12 +20,8 @@ const jsonResponse = (response: Response) =>
     catch: () => new JsonError(),
   });
 
-export const fetchRequest = ({ endpoint: resource, options }: FetchOptions) =>
+export const fetchRequest = ({ endpoint, options }: FetchOptions) =>
   Effect.gen(function* () {
-    const endpoint = `${baseUrl}${resource}`;
-
-    // yield* Console.log("retrieving", endpoint);
-
     const response = yield* fetchReq({ endpoint, options });
 
     if (!response.ok) {
@@ -35,4 +31,18 @@ export const fetchRequest = ({ endpoint: resource, options }: FetchOptions) =>
     const json = yield* jsonResponse(response);
 
     return json;
+  });
+
+export const getDefaultOptions = (method: string, token?: string) =>
+  Effect.gen(function* () {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
+    defaultHeaders.append("Authorization", `Bearer ${token}`);
+
+    const options = {
+      headers: defaultHeaders,
+      method,
+    } as RequestInit;
+
+    return options;
   });

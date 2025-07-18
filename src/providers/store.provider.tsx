@@ -3,6 +3,7 @@ import { type ReactNode, createContext, useRef, useContext } from "react";
 import { Store, StoreState } from "@/types/store";
 import { createSolidStore } from "@/stores/store";
 import { useStore } from "zustand";
+import { onSelectPlayer } from "@/subscriptions/players/players.subscriptions";
 
 export type StoreApi = ReturnType<typeof createSolidStore>;
 
@@ -20,6 +21,7 @@ export const StoreProvider = ({
   const storeRef = useRef<StoreApi | null>(null);
   if (storeRef.current === null) {
     storeRef.current = createSolidStore(initialState);
+    storeRef.current.subscribe((state) => state.selectedPlayer, onSelectPlayer);
   }
 
   return (

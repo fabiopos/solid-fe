@@ -38,7 +38,7 @@ function PlayersFt() {
               players={playersFilteredByStatus}
             />
           )}
-          {/* <FieldPositionModal /> */}
+          <FieldPositionModal />
         </Tabs>
       </div>
     </div>

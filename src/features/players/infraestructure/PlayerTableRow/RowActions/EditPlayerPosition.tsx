@@ -1,8 +1,8 @@
 "use client";
 
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { usePlayersStore } from "@/context/PlayersCtx";
 import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
+import { useSolidStore } from "@/providers/store.provider";
 import { GitPullRequestArrow } from "lucide-react";
 
 interface EditPlayerPositionProps {
@@ -10,7 +10,7 @@ interface EditPlayerPositionProps {
 }
 
 function EditPlayerPosition({ player }: EditPlayerPositionProps) {
-  const { setSelectedPlayer } = usePlayersStore((state) => state);
+  const setSelectedPlayer = useSolidStore((state) => state.setSelectedPlayer);
   return (
     <DropdownMenuItem onClick={() => setSelectedPlayer(player)}>
       <div className="grid grid-cols-[110px_10px] items-center gap-2">

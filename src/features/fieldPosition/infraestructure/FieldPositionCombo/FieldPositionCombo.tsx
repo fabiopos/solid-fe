@@ -18,16 +18,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { usePlayersStore } from "@/context/PlayersCtx";
+import { useSolidStore } from "@/providers/store.provider";
+import { selectFieldPositions, selectSelectedPlayer } from "@/stores/selectors";
 
 interface FieldPositionComboProps {
   defaultValue?: string;
 }
 
 function FieldPositionCombo({}: FieldPositionComboProps) {
-  const { allFieldPositions, setFavPosition, selectedPlayer } = usePlayersStore(
-    (state) => state
-  );
+  const selectedPlayer = useSolidStore(selectSelectedPlayer);
+  const setFavPosition = useSolidStore((state) => state.setFavPosition);
+  const allFieldPositions = useSolidStore(selectFieldPositions);
   const [open, setOpen] = React.useState(false);
 
   return (
