@@ -1,28 +1,9 @@
 import { Effect } from "effect";
 import {
-  DELETEPlayerParams,
-  GetPWSParams,
   PATCHPlayerParams,
   PlayerApi,
   UpdateFieldPositionsParams,
 } from "./player.api";
-
-const runnableGetPWS = ({ teamId }: GetPWSParams) =>
-  Effect.gen(function* () {
-    const playerApi = yield* PlayerApi;
-    const program = playerApi.getPlayerWS(teamId);
-    return yield* program;
-  });
-
-/**
- * GET all players with stats
- * @param params teamId and token
- * @returns FulfilledPlayerWithStatus[]
- */
-export const getPWSByTeamId = (params: GetPWSParams) =>
-  runnableGetPWS(params).pipe(
-    Effect.provideService(PlayerApi, PlayerApi.Live({ token: params.token }))
-  );
 
 /// update field positions
 const runnablePatchPFP = (
@@ -51,18 +32,5 @@ const runnablePatchPlayer = (params: PATCHPlayerParams) =>
 
 export const updatePlayer = (params: PATCHPlayerParams) =>
   runnablePatchPlayer(params).pipe(
-    Effect.provideService(PlayerApi, PlayerApi.Live({ token: params.token }))
-  );
-
-// delete player
-const runnableDeletePlayer = (params: DELETEPlayerParams) =>
-  Effect.gen(function* () {
-    const playerApi = yield* PlayerApi;
-    const program = playerApi.deletePlayer(params);
-    return yield* program;
-  });
-
-export const deletePlayer = (params: DELETEPlayerParams) =>
-  runnableDeletePlayer(params).pipe(
     Effect.provideService(PlayerApi, PlayerApi.Live({ token: params.token }))
   );

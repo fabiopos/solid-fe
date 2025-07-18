@@ -17,7 +17,7 @@ import { PlayerUpdateType } from "@/features/players/domain/player.schema";
 
 export type GetPWSParams = {
   teamId: string;
-  token: string;
+  token?: string;
 };
 
 export type PATCHPlayerParams = {

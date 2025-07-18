@@ -1,24 +1,25 @@
+import { Effect } from "effect";
 import {
   DELETEPlayerParams,
   PATCHPlayerParams,
   UpdateFieldPositionsParams,
 } from "@/services/player/program/players/player.api";
+import { getPWSByTeamId } from "@/services/player/program/players/player.get.service";
+import { deletePlayer } from "@/services/player/program/players/player.delete.service";
+import { mutationOptions, queryOptions } from "@tanstack/react-query";
 import {
-  deletePlayer,
-  getPWSByTeamId,
   updatePlayer,
   updatePlayerPositions,
-} from "@/services/player/program/players/player.service";
-import { mutationOptions, queryOptions } from "@tanstack/react-query";
-import { Effect } from "effect";
+} from "@/services/player/program/players/player.update.service";
 
 export const playerWithStatsQueryOptions = (
-  selectedTeamId: string | undefined
+  selectedTeamId: string | undefined,
+  token: string | undefined
 ) =>
   queryOptions({
     queryKey: ["players", selectedTeamId],
     queryFn: () =>
-      Effect.runPromise(getPWSByTeamId({ teamId: selectedTeamId!, token: "" })),
+      Effect.runPromise(getPWSByTeamId({ teamId: selectedTeamId!, token })),
     enabled: !!selectedTeamId,
   });
 
