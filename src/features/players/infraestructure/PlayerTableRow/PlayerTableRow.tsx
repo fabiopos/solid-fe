@@ -26,17 +26,37 @@ import Link from "next/link";
 import { FulfilledPlayerWithStats } from "../../domain/player.effect.schema";
 import EditPlayerPosition from "./RowActions/EditPlayerPosition";
 import { PlayerCard } from "@/components/DragAndDrop/PlayerCard";
+import { useSolidStore } from "@/providers/store.provider";
+import { useMutation } from "@tanstack/react-query";
+import { patchPlayerOptions } from "@/core/query/player/player.query";
+import { selectAccessToken } from "@/stores/selectors";
 
 interface PlayerTableRowProps {
   player: FulfilledPlayerWithStats;
 }
 
 function PlayerTableRow({ player }: PlayerTableRowProps) {
+  const token = useSolidStore(selectAccessToken);
+  const setPlayerStatus = useSolidStore((state) => state.setPlayerStatus);
+  const { mutate, isPending } = useMutation(
+    patchPlayerOptions({ onSuccess: () => {} })
+  );
   // const { handlers, playerStatusDelete, playerStatusUpdate } = usePlayers();
   // const { handleSetDown, handleDelete, handleSetInactive } = handlers;
-  const isUpdating = false;
+
   const isDeleting = false;
-  const handleSetDown = (_id: string | undefined, _status: PlayerStatus) => {};
+  const handleStatusChange = (id: string | undefined, status: PlayerStatus) => {
+    if (!id) return;
+    setPlayerStatus(id, status);
+    mutate({
+      id: player.id!,
+      player: {
+        ...player,
+        status,
+      },
+      token,
+    }); // Assuming token is available in the context or passed down
+  };
   const handleDelete = (_id: string | undefined) => {};
   const handleSetInactive = (_id: string | undefined, _state: boolean) => {};
   // const isUpdating = useMemo(() => {
@@ -114,8 +134,8 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
               Player Health
             </DropdownMenuLabel>
             <DropdownMenuItem
-              disabled={player.status === PlayerStatus.OK || isUpdating}
-              onClick={() => handleSetDown(player.id, PlayerStatus.OK)}
+              disabled={player.status === PlayerStatus.OK || isPending}
+              onClick={() => handleStatusChange(player.id, PlayerStatus.OK)}
             >
               <div className="grid grid-cols-[110px_10px] items-center gap-2">
                 <span>Set as healthy</span>
@@ -123,8 +143,8 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem
-              disabled={player.status === PlayerStatus.DOWN || isUpdating}
-              onClick={() => handleSetDown(player.id, PlayerStatus.DOWN)}
+              disabled={player.status === PlayerStatus.DOWN || isPending}
+              onClick={() => handleStatusChange(player.id, PlayerStatus.DOWN)}
             >
               <div className="grid grid-cols-[110px_10px] items-center gap-2">
                 <span>Set as down</span>
@@ -132,8 +152,10 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem
-              disabled={player.status === PlayerStatus.INJURIED || isUpdating}
-              onClick={() => handleSetDown(player.id, PlayerStatus.INJURIED)}
+              disabled={player.status === PlayerStatus.INJURIED || isPending}
+              onClick={() =>
+                handleStatusChange(player.id, PlayerStatus.INJURIED)
+              }
             >
               <div className="grid grid-cols-[110px_10px] items-center gap-2">
                 <span>Set as injuried</span>

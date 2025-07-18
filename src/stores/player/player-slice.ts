@@ -2,6 +2,7 @@ import { StateCreator } from "zustand";
 import { Store } from "@/types/store";
 import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
+import { PlayerStatus } from "@/types/types.common";
 
 export type PlayerState = {
   players: FulfilledPlayerWithStats[];
@@ -20,6 +21,7 @@ export type PlayerActions = {
   setSelectedPlayerPositions: (fieldPositionsIds: string[]) => void;
   setFavPosition: (favPositionId: string) => void;
   syncSelectedPlayerChanges: () => void;
+  setPlayerStatus: (playerId: string, playerStatus: PlayerStatus) => void;
 };
 
 export type PlayerSlice = PlayerState & PlayerActions;
@@ -75,5 +77,12 @@ export const createPlayerSlice: StateCreator<
         }),
       };
     });
+  },
+  setPlayerStatus: (playerId: string, playerStatus: PlayerStatus) => {
+    set((state) => ({
+      players: state.players.map((player) =>
+        player.id === playerId ? { ...player, status: playerStatus } : player
+      ),
+    }));
   },
 });

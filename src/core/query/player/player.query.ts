@@ -1,6 +1,10 @@
-import { UpdateFieldPositionsParams } from "@/services/player/program/players/player.api";
+import {
+  PATCHPlayerParams,
+  UpdateFieldPositionsParams,
+} from "@/services/player/program/players/player.api";
 import {
   getPWSByTeamId,
+  updatePlayer,
   updatePlayerPositions,
 } from "@/services/player/program/players/player.service";
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
@@ -20,11 +24,23 @@ type PatchPayload = UpdateFieldPositionsParams & { token?: string };
 type PatchPlayerPositionsOptionsParams = {
   onSuccess: (data: void, variables: PatchPayload, ctx: unknown) => void;
 };
+
 export const patchPlayerPositionsOptions = ({
   onSuccess,
 }: PatchPlayerPositionsOptionsParams) =>
   mutationOptions({
     mutationFn: (payload: PatchPayload) =>
       Effect.runPromise(updatePlayerPositions(payload)),
+    onSuccess,
+  });
+
+type PatchPlayerOptionsParams = {
+  onSuccess: (data: void, variables: PATCHPlayerParams, ctx: unknown) => void;
+};
+
+export const patchPlayerOptions = ({ onSuccess }: PatchPlayerOptionsParams) =>
+  mutationOptions({
+    mutationFn: (payload: PATCHPlayerParams) =>
+      Effect.runPromise(updatePlayer(payload)),
     onSuccess,
   });

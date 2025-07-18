@@ -13,10 +13,17 @@ import { ParseError } from "@effect/schema/ParseResult";
 import { Context, Effect } from "effect";
 import { ConfigError } from "effect/ConfigError";
 import { parseJson } from "../common";
+import { PlayerUpdateType } from "@/features/players/domain/player.schema";
 
 export type GetPWSParams = {
   teamId: string;
   token: string;
+};
+
+export type PATCHPlayerParams = {
+  id: string;
+  player: PlayerUpdateType;
+  token?: string;
 };
 
 export type PlayerApiLiveParams = {
@@ -38,6 +45,14 @@ interface PlayerApiImpl {
   >;
   readonly updateFieldPositions: (
     params: UpdateFieldPositionsParams
+  ) => Effect.Effect<
+    void,
+    FetchError | JsonError | ParseError | ConfigError,
+    never
+  >;
+
+  readonly updatePlayer: (
+    params: PATCHPlayerParams
   ) => Effect.Effect<
     void,
     FetchError | JsonError | ParseError | ConfigError,
@@ -74,6 +89,17 @@ export class PlayerApi extends Context.Tag("PlayerApi")<
           if (!response.ok) {
             return yield* new FetchError();
           }
+        }),
+      updatePlayer: (params) =>
+        Effect.gen(function* () {
+          const endpoint = `/player/${params.id}`;
+          const options = yield* getDefaultOptions("PATCH", params.token);
+          options.body = JSON.stringify(params.player);
+          const response = yield* fetchReq({ endpoint, options });
+          if (!response.ok) {
+            return yield* new FetchError();
+          }
+          return response;
         }),
     });
 }
