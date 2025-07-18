@@ -26,6 +26,11 @@ export type PATCHPlayerParams = {
   token?: string;
 };
 
+export type DELETEPlayerParams = {
+  id: string;
+  token?: string;
+};
+
 export type PlayerApiLiveParams = {
   token?: string;
 };
@@ -53,6 +58,14 @@ interface PlayerApiImpl {
 
   readonly updatePlayer: (
     params: PATCHPlayerParams
+  ) => Effect.Effect<
+    void,
+    FetchError | JsonError | ParseError | ConfigError,
+    never
+  >;
+
+  readonly deletePlayer: (
+    params: DELETEPlayerParams
   ) => Effect.Effect<
     void,
     FetchError | JsonError | ParseError | ConfigError,
@@ -95,6 +108,16 @@ export class PlayerApi extends Context.Tag("PlayerApi")<
           const endpoint = `/player/${params.id}`;
           const options = yield* getDefaultOptions("PATCH", params.token);
           options.body = JSON.stringify(params.player);
+          const response = yield* fetchReq({ endpoint, options });
+          if (!response.ok) {
+            return yield* new FetchError();
+          }
+          return response;
+        }),
+      deletePlayer: (params) =>
+        Effect.gen(function* () {
+          const endpoint = `/player/${params.id}`;
+          const options = yield* getDefaultOptions("DELETE", params.token);
           const response = yield* fetchReq({ endpoint, options });
           if (!response.ok) {
             return yield* new FetchError();

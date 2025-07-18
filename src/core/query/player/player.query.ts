@@ -1,8 +1,10 @@
 import {
+  DELETEPlayerParams,
   PATCHPlayerParams,
   UpdateFieldPositionsParams,
 } from "@/services/player/program/players/player.api";
 import {
+  deletePlayer,
   getPWSByTeamId,
   updatePlayer,
   updatePlayerPositions,
@@ -42,5 +44,16 @@ export const patchPlayerOptions = ({ onSuccess }: PatchPlayerOptionsParams) =>
   mutationOptions({
     mutationFn: (payload: PATCHPlayerParams) =>
       Effect.runPromise(updatePlayer(payload)),
+    onSuccess,
+  });
+
+type DeletePlayerOptionsParams = {
+  onSuccess: (data: void, variables: DELETEPlayerParams, ctx: unknown) => void;
+};
+
+export const deletePlayerOptions = ({ onSuccess }: DeletePlayerOptionsParams) =>
+  mutationOptions({
+    mutationFn: (payload: DELETEPlayerParams) =>
+      Effect.runPromise(deletePlayer(payload)),
     onSuccess,
   });

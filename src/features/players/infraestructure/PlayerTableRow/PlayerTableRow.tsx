@@ -28,7 +28,10 @@ import EditPlayerPosition from "./RowActions/EditPlayerPosition";
 import { PlayerCard } from "@/components/DragAndDrop/PlayerCard";
 import { useSolidStore } from "@/providers/store.provider";
 import { useMutation } from "@tanstack/react-query";
-import { patchPlayerOptions } from "@/core/query/player/player.query";
+import {
+  deletePlayerOptions,
+  patchPlayerOptions,
+} from "@/core/query/player/player.query";
 import { selectAccessToken } from "@/stores/selectors";
 
 interface PlayerTableRowProps {
@@ -38,13 +41,19 @@ interface PlayerTableRowProps {
 function PlayerTableRow({ player }: PlayerTableRowProps) {
   const token = useSolidStore(selectAccessToken);
   const setPlayerStatus = useSolidStore((state) => state.setPlayerStatus);
+  const setPlayerInactive = useSolidStore((state) => state.setPlayerInactive);
+  const setPlayerDelete = useSolidStore((state) => state.setPlayerDelete);
   const { mutate, isPending } = useMutation(
     patchPlayerOptions({ onSuccess: () => {} })
   );
-  // const { handlers, playerStatusDelete, playerStatusUpdate } = usePlayers();
-  // const { handleSetDown, handleDelete, handleSetInactive } = handlers;
+  const { mutate: mutateDelete, isPending: isDeleting } = useMutation(
+    deletePlayerOptions({
+      onSuccess: (_, variables) => {
+        setPlayerDelete(variables.id);
+      },
+    })
+  );
 
-  const isDeleting = false;
   const handleStatusChange = (id: string | undefined, status: PlayerStatus) => {
     if (!id) return;
     setPlayerStatus(id, status);
@@ -57,21 +66,24 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
       token,
     }); // Assuming token is available in the context or passed down
   };
-  const handleDelete = (_id: string | undefined) => {};
-  const handleSetInactive = (_id: string | undefined, _state: boolean) => {};
-  // const isUpdating = useMemo(() => {
-  //   return (
-  //     playerStatusUpdate.id === player.id &&
-  //     playerStatusUpdate.status === "IN_PROGRESS"
-  //   );
-  // }, [playerStatusUpdate, player]);
 
-  // const isDeleting = useMemo(() => {
-  //   return (
-  //     playerStatusDelete.id === player.id &&
-  //     playerStatusDelete.status === "IN_PROGRESS"
-  //   );
-  // }, [playerStatusDelete, player]);
+  const handleSetInactive = (id: string | undefined, state: boolean) => {
+    if (!id) return;
+    setPlayerInactive(id!, state);
+    mutate({
+      id: player.id!,
+      player: {
+        ...player,
+        active: state,
+      },
+      token,
+    });
+  };
+
+  const handleDelete = (id: string | undefined) => {
+    if (!id) return;
+    mutateDelete({ id, token });
+  };
 
   return (
     <TableRow key={player.id} className="bg-background/90">

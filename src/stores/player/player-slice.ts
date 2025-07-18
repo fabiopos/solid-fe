@@ -22,6 +22,8 @@ export type PlayerActions = {
   setFavPosition: (favPositionId: string) => void;
   syncSelectedPlayerChanges: () => void;
   setPlayerStatus: (playerId: string, playerStatus: PlayerStatus) => void;
+  setPlayerInactive: (playerId: string, active: boolean) => void;
+  setPlayerDelete: (playerId: string) => void;
 };
 
 export type PlayerSlice = PlayerState & PlayerActions;
@@ -83,6 +85,21 @@ export const createPlayerSlice: StateCreator<
       players: state.players.map((player) =>
         player.id === playerId ? { ...player, status: playerStatus } : player
       ),
+    }));
+  },
+  setPlayerInactive(playerId: string, active: boolean) {
+    const players = get().players;
+
+    set(() => ({
+      players: players.map((p) => {
+        if (p.id === playerId) return { ...p, active };
+        return p;
+      }),
+    }));
+  },
+  setPlayerDelete(playerId: string) {
+    set((state) => ({
+      players: state.players.filter((p) => p.id !== playerId),
     }));
   },
 });
