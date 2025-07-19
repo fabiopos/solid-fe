@@ -18,17 +18,23 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { usePlayersStore } from "@/context/PlayersCtx";
+import { useSolidStore } from "@/providers/store.provider";
+import { selectFieldPositions, selectSelectedPlayer } from "@/stores/selectors";
 
 interface FieldPositionComboProps {
   defaultValue?: string;
 }
 
 function FieldPositionCombo({}: FieldPositionComboProps) {
-  const { allFieldPositions, setFavPosition, selectedPlayer } = usePlayersStore(
-    (state) => state
-  );
+  const selectedPlayer = useSolidStore(selectSelectedPlayer);
+  const setFavPosition = useSolidStore((state) => state.setFavPosition);
+  const allFieldPositions = useSolidStore(selectFieldPositions);
   const [open, setOpen] = React.useState(false);
+
+  const handleChange = (value: string) => {
+    if (!selectedPlayer) return;
+    setFavPosition(value);
+  };
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -57,18 +63,7 @@ function FieldPositionCombo({}: FieldPositionComboProps) {
             <CommandEmpty>No field position found.</CommandEmpty>
             <CommandGroup>
               {allFieldPositions.map((fp) => (
-                <CommandItem
-                  key={fp.id}
-                  value={fp.id}
-                  onSelect={(currentValue) => {
-                    setFavPosition(
-                      currentValue === selectedPlayer?.favPositionId
-                        ? ""
-                        : currentValue
-                    );
-                    setOpen(false);
-                  }}
-                >
+                <CommandItem key={fp.id} value={fp.id} onSelect={handleChange}>
                   {fp.id} - {fp.name}
                   <Check
                     className={cn(

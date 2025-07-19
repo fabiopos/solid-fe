@@ -37,11 +37,6 @@ export function Login() {
     );
 
     Effect.runPromise(loginExecutor);
-    // const response = await SolidAuth.loginWithCredentials(values);
-    // if (response?.ok) {
-    //   await fetchTeams(session?.user.access_token ?? "");
-    //   router.push("/");
-    // }
   }
 
   return <LoginForm onSubmit={onSubmit} form={form} />;

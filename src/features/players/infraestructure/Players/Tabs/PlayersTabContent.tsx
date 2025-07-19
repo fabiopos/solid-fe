@@ -1,6 +1,6 @@
 import { TabsContent } from "@/components/ui/tabs";
-import PlayersTable from "../../PlayersTable";
 import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
+import PlayersTable from "../../PlayersTable";
 
 interface TabContentProps {
   tabValue: string;

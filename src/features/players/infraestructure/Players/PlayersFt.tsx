@@ -1,22 +1,23 @@
 "use client";
 import { Tabs } from "@/components/ui/tabs";
-import { usePlayersStore } from "@/context/PlayersCtx";
 import FieldPositionModal from "@/features/fieldPosition/infraestructure/FieldPositionModal/FieldPositionModal";
 import PlayersFtHeader from "./PlayersFtHeader";
 import PlayersFtTabList from "./Tabs/PlayersFtTabList";
 import PlayersTabContent from "./Tabs/PlayersTabContent";
-import { useMemo } from "react";
+import { useSolidStore } from "@/providers/store.provider";
+import {
+  selectActiveTab,
+  selectPlayersByStatus,
+  selectPlayersInCategoryByStatus,
+} from "@/stores/selectors";
 
 function PlayersFt() {
-  const { players, filteredPlayers, tab, setTab, onlyActive } = usePlayersStore(
-    (state) => state
+  const setTab = useSolidStore((state) => state.setTab);
+  const tab = useSolidStore(selectActiveTab);
+  const playersByStatus = useSolidStore(selectPlayersByStatus);
+  const playersFilteredByStatus = useSolidStore(
+    selectPlayersInCategoryByStatus
   );
-
-  const playersByStatus = players.filter((x) => x.active === onlyActive);
-
-  const playersFilteredByStatus = useMemo(() => {
-    return (filteredPlayers[tab] ?? []).filter((x) => x.active === onlyActive);
-  }, [filteredPlayers, tab, onlyActive]);
 
   return (
     <div>

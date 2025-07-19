@@ -8,4 +8,5 @@ export interface PrivateLayoutData {
   selectedTeamId: string | undefined;
   error: string | undefined;
   token: string | undefined;
+  isSignedIn: boolean;
 }

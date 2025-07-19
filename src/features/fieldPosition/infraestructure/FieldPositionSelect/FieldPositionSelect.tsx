@@ -1,12 +1,16 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
-import { usePlayersStore } from "@/context/PlayersCtx";
 import { cn } from "@/lib/utils";
+import { useSolidStore } from "@/providers/store.provider";
+import { selectFieldPositions, selectSelectedPlayer } from "@/stores/selectors";
 import { useMemo } from "react";
 
 function FieldPositionSelect() {
-  const { allFieldPositions, updateSelectedPlayerPositions, selectedPlayer } =
-    usePlayersStore((state) => state);
+  const selectedPlayer = useSolidStore(selectSelectedPlayer);
+  const allFieldPositions = useSolidStore(selectFieldPositions);
+  const setSelectedPlayerPositions = useSolidStore(
+    (state) => state.setSelectedPlayerPositions
+  );
 
   const playerPositions: string[] = useMemo(() => {
     return (
@@ -17,10 +21,10 @@ function FieldPositionSelect() {
 
   const onCheckedChange = (checked: boolean | string, pos: string) => {
     if (checked === true) {
-      updateSelectedPlayerPositions([...playerPositions, pos]);
+      setSelectedPlayerPositions([...playerPositions, pos]);
     }
     if (checked === false) {
-      updateSelectedPlayerPositions(playerPositions.filter((x) => x !== pos));
+      setSelectedPlayerPositions(playerPositions.filter((x) => x !== pos));
     }
   };
 

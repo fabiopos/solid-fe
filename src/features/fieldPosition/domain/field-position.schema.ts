@@ -17,3 +17,7 @@ export class FulfilledFieldPosition extends S.TaggedClass<FulfilledFieldPosition
     ...fieldPositionSchema.fields,
   }
 ) {}
+
+export const decodeFP = S.decodeUnknown(FulfilledFieldPosition);
+
+export const encodeFP = S.encodeUnknown(FulfilledFieldPosition);

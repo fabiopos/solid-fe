@@ -21,35 +21,67 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import StatusCell from "../TableCells/StatusCell";
-import { usePlayers } from "../../domain/usePlayers";
-import { useMemo } from "react";
 import PlayerAvatar from "../PlayerAvatar";
 import Link from "next/link";
 import { FulfilledPlayerWithStats } from "../../domain/player.effect.schema";
 import EditPlayerPosition from "./RowActions/EditPlayerPosition";
 import { PlayerCard } from "@/components/DragAndDrop/PlayerCard";
+import { useSolidStore } from "@/providers/store.provider";
+import { useMutation } from "@tanstack/react-query";
+import {
+  deletePlayerOptions,
+  patchPlayerOptions,
+} from "@/core/query/player/player.query";
+import { selectAccessToken } from "@/stores/selectors";
 
 interface PlayerTableRowProps {
   player: FulfilledPlayerWithStats;
 }
 
 function PlayerTableRow({ player }: PlayerTableRowProps) {
-  const { handlers, playerStatusDelete, playerStatusUpdate } = usePlayers();
-  const { handleSetDown, handleDelete, handleSetInactive } = handlers;
+  const token = useSolidStore(selectAccessToken);
+  const setPlayerStatus = useSolidStore((state) => state.setPlayerStatus);
+  const setPlayerInactive = useSolidStore((state) => state.setPlayerInactive);
+  const setPlayerDelete = useSolidStore((state) => state.setPlayerDelete);
+  const { mutate, isPending } = useMutation(patchPlayerOptions({}));
+  const { mutate: mutateDelete, isPending: isDeleting } = useMutation(
+    deletePlayerOptions({
+      onSuccess: (_, variables) => {
+        setPlayerDelete(variables.id);
+      },
+    })
+  );
 
-  const isUpdating = useMemo(() => {
-    return (
-      playerStatusUpdate.id === player.id &&
-      playerStatusUpdate.status === "IN_PROGRESS"
-    );
-  }, [playerStatusUpdate, player]);
+  const handleStatusChange = (id: string | undefined, status: PlayerStatus) => {
+    if (!id) return;
+    setPlayerStatus(id, status);
+    mutate({
+      id: player.id!,
+      player: {
+        ...player,
+        status,
+      },
+      token,
+    }); // Assuming token is available in the context or passed down
+  };
 
-  const isDeleting = useMemo(() => {
-    return (
-      playerStatusDelete.id === player.id &&
-      playerStatusDelete.status === "IN_PROGRESS"
-    );
-  }, [playerStatusDelete, player]);
+  const handleSetInactive = (id: string | undefined, state: boolean) => {
+    if (!id) return;
+    setPlayerInactive(id!, state);
+    mutate({
+      id: player.id!,
+      player: {
+        ...player,
+        active: state,
+      },
+      token,
+    });
+  };
+
+  const handleDelete = (id: string | undefined) => {
+    if (!id) return;
+    mutateDelete({ id, token });
+  };
 
   return (
     <TableRow key={player.id} className="bg-background/90">
@@ -112,8 +144,8 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
               Player Health
             </DropdownMenuLabel>
             <DropdownMenuItem
-              disabled={player.status === PlayerStatus.OK || isUpdating}
-              onClick={() => handleSetDown(player.id, PlayerStatus.OK)}
+              disabled={player.status === PlayerStatus.OK || isPending}
+              onClick={() => handleStatusChange(player.id, PlayerStatus.OK)}
             >
               <div className="grid grid-cols-[110px_10px] items-center gap-2">
                 <span>Set as healthy</span>
@@ -121,8 +153,8 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem
-              disabled={player.status === PlayerStatus.DOWN || isUpdating}
-              onClick={() => handleSetDown(player.id, PlayerStatus.DOWN)}
+              disabled={player.status === PlayerStatus.DOWN || isPending}
+              onClick={() => handleStatusChange(player.id, PlayerStatus.DOWN)}
             >
               <div className="grid grid-cols-[110px_10px] items-center gap-2">
                 <span>Set as down</span>
@@ -130,8 +162,10 @@ function PlayerTableRow({ player }: PlayerTableRowProps) {
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem
-              disabled={player.status === PlayerStatus.INJURIED || isUpdating}
-              onClick={() => handleSetDown(player.id, PlayerStatus.INJURIED)}
+              disabled={player.status === PlayerStatus.INJURIED || isPending}
+              onClick={() =>
+                handleStatusChange(player.id, PlayerStatus.INJURIED)
+              }
             >
               <div className="grid grid-cols-[110px_10px] items-center gap-2">
                 <span>Set as injuried</span>

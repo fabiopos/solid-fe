@@ -1,11 +1,16 @@
-import { Config, Effect } from "effect";
+import { Effect } from "effect";
 import { FetchError, JsonError } from "../errors/http.errors";
 
-const config = Config.string("NEXT_PUBLIC_BASE_API");
+const baseUrl = process.env.NEXT_PUBLIC_BASE_API;
 
-const fetchReq = (endpoint: string) =>
+interface FetchOptions {
+  endpoint: string;
+  options?: RequestInit;
+}
+
+export const fetchReq = ({ endpoint, options }: FetchOptions) =>
   Effect.tryPromise({
-    try: () => fetch(endpoint),
+    try: () => fetch(`${baseUrl}${endpoint}`, options),
     catch: () => new FetchError(),
   });
 
@@ -15,14 +20,9 @@ const jsonResponse = (response: Response) =>
     catch: () => new JsonError(),
   });
 
-export const fetchRequest = (resource: string) =>
+export const fetchRequest = ({ endpoint, options }: FetchOptions) =>
   Effect.gen(function* () {
-    const baseUrl = yield* config;
-    const endpoint = `${baseUrl}${resource}`;
-
-    // yield* Console.log("retrieving", endpoint);
-
-    const response = yield* fetchReq(endpoint);
+    const response = yield* fetchReq({ endpoint, options });
 
     if (!response.ok) {
       return yield* new FetchError();
@@ -31,4 +31,18 @@ export const fetchRequest = (resource: string) =>
     const json = yield* jsonResponse(response);
 
     return json;
+  });
+
+export const getDefaultOptions = (method: string, token?: string) =>
+  Effect.gen(function* () {
+    const defaultHeaders = new Headers();
+    defaultHeaders.append("Content-Type", "application/json");
+    defaultHeaders.append("Authorization", `Bearer ${token}`);
+
+    const options = {
+      headers: defaultHeaders,
+      method,
+    } as RequestInit;
+
+    return options;
   });

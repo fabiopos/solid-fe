@@ -34,8 +34,6 @@ async function getCompetitionDetails(competitionId: string) {
 
   const matches = (competition?.matches ?? []) as FulfilledMatch[];
 
-  console.log(matches)
-
   const mappedMatches = matches.map((x) => ({
     ...x,
     competition: {
