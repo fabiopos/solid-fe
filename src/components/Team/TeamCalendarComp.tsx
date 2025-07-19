@@ -2,6 +2,7 @@
 import { Calendar } from "../ui/calendar";
 import { DayModifiers, ModifiersClassNames } from "react-day-picker";
 import EventCell from "./EventCell";
+import { sub } from "date-fns";
 
 interface TeamCalendarCompProps {
   minDate: Date;
@@ -13,7 +14,6 @@ interface TeamCalendarCompProps {
   };
 }
 function TeamCalendarComp({
-  minDate,
   modifiers,
   modifiersClassNames,
   range,
@@ -21,7 +21,7 @@ function TeamCalendarComp({
   return (
     <Calendar
       mode="multiple"
-      defaultMonth={minDate}
+      defaultMonth={sub(new Date(), { months: 6 })}
       modifiers={modifiers}
       modifiersClassNames={modifiersClassNames}
       fromDate={range.from}
