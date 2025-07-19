@@ -8,7 +8,7 @@ export function getSessionEffect() {
     () =>
       Effect.tryPromise({
         try: () => auth(),
-        catch: () => new NoAuthError("Not autheticated"),
+        catch: () => new NoAuthError(),
       }),
     Effect.map((session) => Effect.succeed(session)),
     Effect.flatten
@@ -22,7 +22,7 @@ export function getToken() {
     Effect.map((session) =>
       session
         ? Effect.succeed(session.user.access_token)
-        : Effect.fail(new NoTokenError("No user found"))
+        : Effect.fail(new NoTokenError())
     ),
     Effect.flatten
   );

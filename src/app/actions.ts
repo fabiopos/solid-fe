@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 
 export async function setCookieTeamId(teamId: string) {
   const cookieStore = await cookies();
-  console.log("setting cookie with teamId:", teamId);
   cookieStore.set("selectedTeamId", teamId);
 }
 

@@ -18,6 +18,9 @@ const defaultState: StoreState = {
   tree: [],
   fieldPositions: [],
   players: [],
+  onlyActive: true,
+  selectedPlayer: null,
+  tab: "all",
 };
 
 export const createSolidStore = (
