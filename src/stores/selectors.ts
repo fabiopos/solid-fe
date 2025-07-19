@@ -84,11 +84,11 @@ export const selectPlayersInCategoryByStatus = createSelector(
 );
 
 export const selectCategoriesCount = createSelector(
-  [selectFieldPositionCategories, selectPlayersInCategory],
-  (categories, players) => {
+  [selectFieldPositionCategories, selectPlayersInCategory, selectOnlyActive],
+  (categories, players, onlyActive) => {
     return categories.map((c) => ({
       name: c,
-      count: players[c].length ?? 0,
+      count: players[c].filter((x) => x.active === onlyActive).length ?? 0,
     }));
   }
 );

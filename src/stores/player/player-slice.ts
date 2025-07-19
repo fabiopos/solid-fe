@@ -63,10 +63,12 @@ export const createPlayerSlice: StateCreator<
   setFavPosition(favPositionId: string) {
     const player = get().selectedPlayer;
     if (!player) return;
-    set(() => ({
+    set((state) => ({
       selectedPlayer: {
         ...player,
         favPositionId,
+        favPosition:
+          state.fieldPositions.find((fp) => fp.id === favPositionId) ?? null,
       },
     }));
   },

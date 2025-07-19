@@ -37,7 +37,7 @@ export type PlayerApiLiveParams = {
 
 export type UpdateFieldPositionsParams = {
   pid: string;
-  body: { favPosition: string; fieldPositions: string[] };
+  body: { favPositionId: string; fieldPositions: string[] };
 };
 
 interface PlayerApiImpl {

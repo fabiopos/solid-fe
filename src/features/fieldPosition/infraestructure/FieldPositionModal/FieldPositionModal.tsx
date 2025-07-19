@@ -48,7 +48,7 @@ function FieldPositionModal() {
     mutate({
       pid: selectedPlayer.id!,
       body: {
-        favPosition: selectedPlayer.favPositionId ?? "",
+        favPositionId: selectedPlayer.favPositionId ?? "",
         fieldPositions: selectedPlayerPositions,
       },
       token,

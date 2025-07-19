@@ -31,6 +31,11 @@ function FieldPositionCombo({}: FieldPositionComboProps) {
   const allFieldPositions = useSolidStore(selectFieldPositions);
   const [open, setOpen] = React.useState(false);
 
+  const handleChange = (value: string) => {
+    if (!selectedPlayer) return;
+    setFavPosition(value);
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -58,18 +63,7 @@ function FieldPositionCombo({}: FieldPositionComboProps) {
             <CommandEmpty>No field position found.</CommandEmpty>
             <CommandGroup>
               {allFieldPositions.map((fp) => (
-                <CommandItem
-                  key={fp.id}
-                  value={fp.id}
-                  onSelect={(currentValue) => {
-                    setFavPosition(
-                      currentValue === selectedPlayer?.favPositionId
-                        ? ""
-                        : currentValue
-                    );
-                    setOpen(false);
-                  }}
-                >
+                <CommandItem key={fp.id} value={fp.id} onSelect={handleChange}>
                   {fp.id} - {fp.name}
                   <Check
                     className={cn(
