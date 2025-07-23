@@ -1,5 +1,3 @@
-
-
 import * as S from "@effect/schema/Schema";
 
 export const teamSchema = S.Struct({
@@ -9,10 +7,16 @@ export const teamSchema = S.Struct({
   subscriptionId: S.optional(S.String),
   hasSubscription: S.optional(S.Boolean),
   createdAt: S.optional(S.Date),
-  players: S.optional(S.NullishOr(S.Array(S.Struct({
-    name: S.optional(S.NullishOr(S.String)),
-    id: S.optional(S.NullishOr(S.String))
-  })))),
+  players: S.optional(
+    S.NullishOr(
+      S.Array(
+        S.Struct({
+          name: S.optional(S.NullishOr(S.String)),
+          id: S.optional(S.NullishOr(S.String)),
+        })
+      )
+    )
+  ),
   primaryColor: S.optional(S.NullishOr(S.String)),
   secondaryColor: S.optional(S.NullishOr(S.String)),
   logoUrl: S.optional(S.NullishOr(S.String)),
@@ -61,3 +65,5 @@ export class TeamResponse extends S.TaggedClass<TeamResponse>()("TeamReponse", {
   ...teamSchema.fields,
   playersCount: S.optional(S.Number),
 }) {}
+
+export const decodeTeam = S.decodeUnknown(FulfilledTeam);
