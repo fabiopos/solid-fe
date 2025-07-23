@@ -28,4 +28,6 @@ async function OnBoarding({
   );
 }
 
+// TODO: get initial data: Team, email, phone, numbersTaken
+
 export default OnBoarding;

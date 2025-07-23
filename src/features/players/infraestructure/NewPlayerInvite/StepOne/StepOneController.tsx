@@ -102,6 +102,7 @@ function StepOneController() {
     />
   );
 
+  // TODO: create validation isvalidPhone
   const phoneNumberInput = (
     <PhoneNumberInputView
       setPhone={(phone) => {

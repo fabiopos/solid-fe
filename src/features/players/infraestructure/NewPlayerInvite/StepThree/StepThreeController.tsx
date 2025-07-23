@@ -24,6 +24,7 @@ function StepThreeController() {
       riskInsurance={newPlayer?.riskInsurance ?? ""}
       favPosition={newPlayer?.favPositionId ?? ""}
       numberOnShirt={newPlayer?.shirtNumber}
+      // TODO: create validation alert
       validationAlert={<></>}
     />
   );

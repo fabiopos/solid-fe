@@ -36,6 +36,7 @@ function StepTwoController() {
     />
   );
 
+  // TODO: add props: numbersAllowed - numbersTaken
   const numberOnShirtInput = (
     <NumberOnShirtInputView
       numberOnShirt={newPlayer?.shirtNumber}
