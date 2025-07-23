@@ -1,3 +1,4 @@
+import { InviteDataSchemaType } from "@/features/players/domain/invite-data.schema";
 import { Store } from "@/types/store";
 import { RequestStatus } from "@/types/types.common";
 import { StateCreator } from "zustand";
@@ -30,6 +31,7 @@ export type PlayerInviteState = {
   step: number;
   newPlayer: NewPlayer | undefined;
   createNewPlayerStatus: RequestStatus;
+  inviteData?: InviteDataSchemaType;
 };
 export type PlayerInviteActions = {
   setNextStep: () => void;
@@ -41,6 +43,7 @@ export type PlayerInviteActions = {
 export type PlayerInviteSlice = PlayerInviteState & PlayerInviteActions;
 
 const defaultState: PlayerInviteState = {
+  inviteData: undefined,
   newPlayer: {
     avatarUrl: "",
     city: "",

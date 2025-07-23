@@ -25,6 +25,7 @@ const defaultState: StoreState = {
   newPlayer: {},
   step: 1,
   createNewPlayerStatus: "IDLE",
+  inviteData: undefined,
 };
 
 export const createSolidStore = (

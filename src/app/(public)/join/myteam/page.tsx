@@ -177,8 +177,9 @@ function MyTeam() {
   );
 }
 
+// TODO: refactor to service
 async function post2fa(phone: string, email: string, teamId: string) {
-  const res = await fetch("http://localhost:3000/auth/2fa", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/2fa`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -197,17 +198,21 @@ async function post2fa(phone: string, email: string, teamId: string) {
   return data;
 }
 
+// TODO: refactor to service
 async function verify2fa(code: string, phone: string) {
-  const res = await fetch("http://localhost:3000/auth/2fa/verify", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      phone,
-      code,
-    }),
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_API}/auth/2fa/verify`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phone,
+        code,
+      }),
+    }
+  );
 
   if (!res.ok) {
     throw new Error("Failed to verify 2FA data");

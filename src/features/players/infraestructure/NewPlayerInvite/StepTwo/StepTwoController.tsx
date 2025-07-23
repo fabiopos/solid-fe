@@ -1,7 +1,10 @@
 import { useSolidStore } from "@/providers/store.provider";
 import FavPositionSelectView from "../../NewPlayer/Inputs/FavPositionSelect/FavPositionSelectView";
 import StepTwoView from "../../NewPlayer/Steps/StepTwo/StepTwoView";
-import { selectNewPlayerInvite } from "@/stores/selectors";
+import {
+  selectInviteNumbersTaken,
+  selectNewPlayerInvite,
+} from "@/stores/selectors";
 import HeightInputView from "../../NewPlayer/Inputs/HeightInput/HeightInputView";
 import NameShirtInputView from "../../NewPlayer/Inputs/NameOnShirtInput/NameShirtView";
 import NumberOnShirtInputView from "../../NewPlayer/Inputs/NumberOnShirtInput/NumberOnShirtInputView";
@@ -9,10 +12,12 @@ import HealthProviderInputView from "../../NewPlayer/Inputs/HealthProviderInput/
 import RiskInsuranceInputView from "../../NewPlayer/Inputs/RiskInsuranceInput/RiskInsuranceInputView";
 import ShirtSizeView from "../../NewPlayer/Inputs/ShirtSizeInput/ShirtSizeInputView";
 import WeightInputView from "../../NewPlayer/Inputs/WeightInput/WeightInputView";
+import * as R from "rambdax";
 
 function StepTwoController() {
   const setNewPlayer = useSolidStore((state) => state.setNewPlayer);
   const newPlayer = useSolidStore(selectNewPlayerInvite);
+  const numbersTaken = useSolidStore(selectInviteNumbersTaken);
 
   const favPositionSelect = (
     <FavPositionSelectView
@@ -36,12 +41,11 @@ function StepTwoController() {
     />
   );
 
-  // TODO: add props: numbersAllowed - numbersTaken
   const numberOnShirtInput = (
     <NumberOnShirtInputView
       numberOnShirt={newPlayer?.shirtNumber}
-      numbersAllowed={[1, 2, 3, 4, 5, 6]}
-      numbersTaken={[1, 2, 3]}
+      numbersAllowed={R.range(1, 99)}
+      numbersTaken={numbersTaken.map((x) => x.shirtNumber!)}
       setNumberOnShirt={(shirtNumber) => setNewPlayer({ shirtNumber })}
     />
   );
