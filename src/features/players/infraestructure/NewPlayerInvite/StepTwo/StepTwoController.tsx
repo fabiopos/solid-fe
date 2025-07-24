@@ -13,6 +13,7 @@ import RiskInsuranceInputView from "../../NewPlayer/Inputs/RiskInsuranceInput/Ri
 import ShirtSizeView from "../../NewPlayer/Inputs/ShirtSizeInput/ShirtSizeInputView";
 import WeightInputView from "../../NewPlayer/Inputs/WeightInput/WeightInputView";
 import * as R from "rambdax";
+import { ShirtSize } from "@/types/types.common";
 
 function StepTwoController() {
   const setNewPlayer = useSolidStore((state) => state.setNewPlayer);
@@ -28,8 +29,8 @@ function StepTwoController() {
 
   const heightProviderInput = (
     <HeightInputView
-      height={newPlayer?.height ?? ""}
-      setHeight={(height) => setNewPlayer({ height })}
+      height={newPlayer?.height ? String(newPlayer.height) : ""}
+      setHeight={(height) => setNewPlayer({ height: Number(height) })}
       isValidHeight={true}
     />
   );
@@ -43,10 +44,12 @@ function StepTwoController() {
 
   const numberOnShirtInput = (
     <NumberOnShirtInputView
-      numberOnShirt={newPlayer?.shirtNumber}
+      numberOnShirt={newPlayer?.shirtNumber?.toString() ?? ""}
       numbersAllowed={R.range(1, 99)}
       numbersTaken={numbersTaken.map((x) => x.shirtNumber!)}
-      setNumberOnShirt={(shirtNumber) => setNewPlayer({ shirtNumber })}
+      setNumberOnShirt={(shirtNumber) =>
+        setNewPlayer({ shirtNumber: Number(shirtNumber) })
+      }
     />
   );
 
@@ -66,7 +69,9 @@ function StepTwoController() {
 
   const shirtSizeInput = (
     <ShirtSizeView
-      setShirtSize={(shirtSize) => setNewPlayer({ shirtSize })}
+      setShirtSize={(shirtSize) =>
+        setNewPlayer({ shirtSize: shirtSize as ShirtSize })
+      }
       shirtSize={newPlayer?.shirtSize ?? ""}
     />
   );
@@ -74,8 +79,8 @@ function StepTwoController() {
   const weightInput = (
     <WeightInputView
       isValidWeight={true}
-      setWeight={(weight) => setNewPlayer({ weight })}
-      weight={newPlayer?.weight ?? ""}
+      setWeight={(weight) => setNewPlayer({ weight: Number(weight) })}
+      weight={newPlayer?.weight?.toString() ?? ""}
     />
   );
   return (

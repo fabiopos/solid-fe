@@ -58,7 +58,6 @@ async function getInitialData({ sid, tid }: { sid: string; tid: string }) {
   if (!response.ok) return null;
   const fieldPositions = await Effect.runPromise(getFieldPositions(""));
 
-  console.log(fieldPositions);
   const json = await response.json();
   const data = decodeInviteData(json);
   return { inviteData: data as InviteDataSchemaType, fieldPositions };

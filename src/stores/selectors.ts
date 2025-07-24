@@ -12,6 +12,7 @@ export const selectPlayers = (state: StoreState) => state.players;
 export const selectFieldPositions = (state: StoreState) => state.fieldPositions;
 export const selectSelectedPlayer = (state: StoreState) => state.selectedPlayer;
 export const selectNewPlayerInvite = (state: StoreState) => state.newPlayer;
+export const selectInviteData = (state: StoreState) => state.inviteData;
 export const selectInviteNumbersTaken = (state: StoreState) =>
   state.inviteData?.numbersTaken ?? [];
 

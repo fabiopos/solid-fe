@@ -1,9 +1,9 @@
 import { InviteDataSchemaType } from "@/features/players/domain/invite-data.schema";
 import { Store } from "@/types/store";
-import { RequestStatus } from "@/types/types.common";
+import { RequestStatus, ShirtSize } from "@/types/types.common";
 import { StateCreator } from "zustand";
 
-interface NewPlayer {
+export interface NewPlayer {
   firstName?: string;
   lastName?: string;
   email?: string;
@@ -14,11 +14,11 @@ interface NewPlayer {
   teamId?: string;
   avatarUrl?: string;
   avatarFile?: File;
-  shirtNumber?: string;
-  shirtSize?: string;
+  shirtNumber?: number;
+  shirtSize?: ShirtSize;
   nameOnShirt?: string;
-  height?: string;
-  weight?: string;
+  height?: number;
+  weight?: number;
   country?: string;
   city?: string;
   documentType?: string;
@@ -37,7 +37,9 @@ export type PlayerInviteActions = {
   setNextStep: () => void;
   setPrevStep: () => void;
   setNewPlayer: (newPlayer: NewPlayer) => void;
+  setCreateNewPlayerStatus: (status: RequestStatus) => void;
   reset: () => void;
+  resetPlayer: () => void;
 };
 
 export type PlayerInviteSlice = PlayerInviteState & PlayerInviteActions;
@@ -55,13 +57,13 @@ const defaultState: PlayerInviteState = {
     firstName: "",
     lastName: "",
     phone: "",
-    height: "",
+    height: undefined,
     riskInsurance: "",
     email: "",
     nameOnShirt: "",
-    shirtNumber: "",
-    shirtSize: "",
-    weight: "",
+    shirtNumber: undefined,
+    shirtSize: ShirtSize.M,
+    weight: undefined,
   },
   step: 1,
   createNewPlayerStatus: "IDLE",
@@ -79,4 +81,12 @@ export const createPlayerInviteSlice: StateCreator<
   setNextStep: () => set((state) => ({ step: state.step + 1 })),
   setPrevStep: () => set((state) => ({ step: state.step - 1 })),
   reset: () => set(() => defaultState),
+  setCreateNewPlayerStatus: (createNewPlayerStatus) =>
+    set(() => ({ createNewPlayerStatus })),
+  resetPlayer: () =>
+    set(() => ({
+      newPlayer: defaultState.newPlayer,
+      createNewPlayerStatus: "IDLE",
+      step: 1,
+    })),
 });
