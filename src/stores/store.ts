@@ -7,6 +7,7 @@ import { createSessionSlice } from "./session/session-slice";
 import { createTeamSlice } from "./team/team-slice";
 import { createSeasonSlice } from "./season/season-slice";
 import { createPlayerSlice } from "./player/player-slice";
+import { createPlayerInviteSlice } from "./player/playerInvite-slice";
 
 //import { createCartSlice } from "./cart-slice";
 
@@ -21,6 +22,10 @@ const defaultState: StoreState = {
   onlyActive: true,
   selectedPlayer: null,
   tab: "all",
+  newPlayer: {},
+  step: 1,
+  createNewPlayerStatus: "IDLE",
+  inviteData: undefined,
 };
 
 export const createSolidStore = (
@@ -35,6 +40,7 @@ export const createSolidStore = (
             ...createTeamSlice(...a),
             ...createSeasonSlice(...a),
             ...createPlayerSlice(...a),
+            ...createPlayerInviteSlice(...a),
             ...initialState,
           }))
         ),

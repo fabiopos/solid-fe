@@ -7,4 +7,5 @@ export const fieldPositionsQueryOptions = (access_token: string | undefined) =>
     queryKey: ["field-positions"],
     queryFn: () => Effect.runPromise(getFieldPositions(access_token!)),
     enabled: !!access_token,
+    initialData: [],
   });

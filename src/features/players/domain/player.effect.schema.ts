@@ -223,4 +223,6 @@ export class FulfilledPlayerWithStats extends S.TaggedClass<FulfilledPlayerWithS
 export const decodePWS = S.decodeUnknown(FulfilledPlayerWithStats);
 
 export const encodePWS = S.encodeUnknown(FulfilledPlayerWithStats);
+
+export const decodeFulfilledPlayer = S.decodeUnknown(FulfilledPlayer);
 //const p = Effect.runPromise( decodePWS({}).pipe(p => p.))

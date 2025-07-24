@@ -6,7 +6,7 @@ import { FieldPositionGet } from "@/features/fieldPosition/application/FieldPosi
 import { FulfilledFieldPosition } from "@/features/fieldPosition/domain/field-position.schema";
 import { PlayerGet } from "@/features/players/application/PlayerGet";
 import { FulfilledPlayerWithStats } from "@/features/players/domain/player.effect.schema";
-import NewPlayer from "@/features/players/infraestructure/NewPlayer/NewPlayer";
+import NewPlayerController from "@/features/players/infraestructure/NewPlayer/NewPlayerController";
 import { ApiClient } from "@/lib/ApiClient";
 
 async function NewPlayerPage() {
@@ -18,7 +18,7 @@ async function NewPlayerPage() {
       teamId={teamId}
     >
       <NewPlayerStoreProvider>
-        <NewPlayer />
+        <NewPlayerController />
       </NewPlayerStoreProvider>
     </PlayersStoreProvider>
   );
