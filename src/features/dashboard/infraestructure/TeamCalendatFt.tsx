@@ -1,7 +1,6 @@
 import { getCookieTeamId } from "@/app/actions";
 import { auth } from "@/auth";
 import { ApiClient } from "@/lib/ApiClient";
-import { DashboardGet } from "../application/DashboardGet";
 import { add, max, min, toDate } from "date-fns";
 import { CompetitionGet } from "@/features/competition/application/CompetitionGet";
 import TeamCalendarComp from "@/components/Team/TeamCalendarComp";
@@ -12,6 +11,7 @@ import {
   modifiersClassNames,
   variantSelector,
 } from "../domain/modifiers.helper";
+import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 
 async function TeamCalendatFt() {
   const { minDate, range, modifiers, modifiersClassNames, competitions } =
@@ -61,9 +61,8 @@ async function getData() {
   if (!teamId) return emptyState;
 
   const apiClient = new ApiClient();
-  const client = new DashboardGet(apiClient);
   const competitionGet = new CompetitionGet(apiClient);
-  const matches = await client.getCalendar(teamId, session.user.access_token);
+  const matches = await DashboardFacade.getCalendar();
 
   const dates = matches
     .filter((x) => !!x.matchDay)

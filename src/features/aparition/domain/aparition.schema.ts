@@ -40,6 +40,14 @@ export class FulfilledMatchAparition extends S.TaggedClass<FulfilledMatchApariti
   }
 ) {}
 
+export const FulfilledMatchAparitionArray = S.Array(FulfilledMatchAparition);
+
+export const decodeFFMAArray = S.decodeUnknown(FulfilledMatchAparitionArray);
+export const encodeFFMAArray = S.encodeUnknown(FulfilledMatchAparitionArray);
+
+export const decodeFFMA = S.decodeUnknown(FulfilledMatchAparition);
+export const encodeFFMA = S.encodeUnknown(FulfilledMatchAparition);
+
 export class EmptyMatchAparition extends S.TaggedClass<EmptyMatchAparition>()(
   "EmptyMatchAparition",
   {
@@ -58,3 +66,10 @@ export class FulfilledScorer extends S.TaggedClass<FulfilledScorer>()(
     shirtNumber: S.optional(S.Number),
   }
 ) {}
+export const FulfilledScorerArray = S.Array(FulfilledScorer);
+
+export const decodeTSCOArray = S.decodeUnknown(FulfilledScorerArray);
+export const encodeTSCOArray = S.encodeUnknown(FulfilledScorerArray);
+
+export const decodeTSCO = S.decodeUnknown(FulfilledScorer);
+export const encodeTSCO = S.encodeUnknown(FulfilledScorer);

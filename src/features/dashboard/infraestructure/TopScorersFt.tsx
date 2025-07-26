@@ -1,8 +1,5 @@
-import { getCookieTeamId } from "@/app/actions";
-import { auth } from "@/auth";
 import TopScorers from "@/components/Dashboard/TopScorers/TopScorers";
-import { ApiClient } from "@/lib/ApiClient";
-import { DashboardGet } from "../application/DashboardGet";
+import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 
 const LIMIT = 5;
 async function TopScorersFt() {
@@ -22,21 +19,8 @@ async function TopScorersFt() {
 }
 
 async function getData() {
-  const session = await auth();
-
-  const teamId = await getCookieTeamId();
-
-  if (!session) return { players: [] };
-  if (!teamId) return { players: [] };
-
-  const client = new DashboardGet(new ApiClient());
   try {
-    const players = await client.getTopScorers({
-      teamId,
-      token: session.user.access_token,
-      limit: LIMIT,
-    });
-
+    const players = await DashboardFacade.getTopScorers();
     return { players };
   } catch (error) {
     console.log(error);

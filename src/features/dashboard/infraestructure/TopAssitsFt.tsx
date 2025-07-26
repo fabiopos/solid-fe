@@ -1,12 +1,9 @@
-import { getCookieTeamId } from "@/app/actions";
-import { auth } from "@/auth";
-import { ApiClient } from "@/lib/ApiClient";
-import { DashboardGet } from "../application/DashboardGet";
 import TopAssists from "@/components/Dashboard/TopAsists/TopAsists";
+import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 
 const LIMIT = 5;
 async function TopAssistsFt() {
-    const { players } = await getData()
+  const { players } = await getData();
   return (
     <div className="p-2">
       <div className="px-5 my-2">
@@ -22,19 +19,7 @@ async function TopAssistsFt() {
 }
 
 async function getData() {
-  const session = await auth();
-
-  const teamId = await getCookieTeamId();
-
-  if (!session) return { players: [] };
-  if (!teamId) return { players: [] };
-
-  const client = new DashboardGet(new ApiClient());
-  const players = await client.getTopAssists(
-    teamId,
-    session.user.access_token,
-    LIMIT
-  );
+  const players = await DashboardFacade.getTopAsists();
   return { players };
 }
 

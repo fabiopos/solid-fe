@@ -1,6 +1,5 @@
-import { getLastMatches } from "@/actions/dashboard.actions";
+import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 import LastMatchesFt from "@/features/dashboard/infraestructure/LastMatchesFt";
-import { Effect } from "effect";
 
 async function LastMatchesSection() {
   const { lastMatches } = await getData();
@@ -9,19 +8,7 @@ async function LastMatchesSection() {
 
 async function getData() {
   try {
-    const program = getLastMatches()();
-    const lastMatches = await Effect.runPromise(
-      program.pipe(
-        Effect.catchTags({
-          NoAuthError: (e) => {
-            return Effect.fail(e);
-          },
-          NoTokenError: (e) => {
-            return Effect.fail(e);
-          },
-        })
-      )
-    );
+    const lastMatches = await DashboardFacade.getLastMatches();
     return { lastMatches };
   } catch (error) {
     console.log("Error =>", error);

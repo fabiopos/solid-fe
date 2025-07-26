@@ -1,9 +1,10 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { SolidAuth } from "./features/auth/application/SolidAuth";
 import { jwtVerify, decodeJwt } from "jose";
 import { CustomJWT } from "./types/types.common";
 import { toDate } from "date-fns";
+import { AuthFacade } from "./facade/auth/auth.facade";
+import { TokenSchemaType } from "./entities/auth/Auth.entity";
 
 declare module "next-auth" {
   /**
@@ -15,6 +16,7 @@ declare module "next-auth" {
     image?: string | null;
     subscriptionId?: string | null;
     access_token: string;
+    tid?: string | null;
   }
   interface Session {
     user: {
@@ -44,18 +46,19 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: {},
       },
       authorize: async (credentials) => {
-        let user = null;
+        let user: TokenSchemaType | null = null;
 
         try {
           if (!credentials?.email || !credentials?.password)
             throw new Error("Invalid credentials.");
           // logic to salt and hash password
 
-          const response = await SolidAuth.login({
+          const response = await AuthFacade.login({
             email: credentials?.email as string,
             password: credentials?.password as string,
           });
 
+          //console.log("login", response);
           user = response.user;
 
           if (!user) throw new Error("User not found.");
@@ -66,7 +69,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             subscriptionId: user.subscriptionId,
             email: user.email,
             name: user.name,
-            access_token: response.token as string,
+            access_token: response.token,
+            tid: user.tid,
           };
         } catch (error) {
           console.error(error, "authorize");
@@ -90,7 +94,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
 
       if (account?.provider === "credentials" && user) {
-        return { ...token, access_token: user.access_token, user };
+        return {
+          ...token,
+          tid: user.tid,
+          access_token: user.access_token,
+          user,
+        };
       }
 
       return token;
@@ -99,8 +108,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (session && session.user) {
         session.user.subscriptionId = token.id as string;
         session.user.access_token = token?.access_token as string;
-
         const decodedToken = decodeJwt(token?.access_token as string);
+        const jwtDecoded = await verifyToken(token?.access_token as string);
+        session.user.tid = jwtDecoded?.tid;
         session.expires = toDate((decodedToken.exp as number) * 1000);
       }
 
@@ -114,9 +124,9 @@ async function verifyToken(token: string): Promise<CustomJWT | null> {
     const secret = new TextEncoder().encode(
       process.env.NEXT_JWT_AUTH_SECRET ?? ""
     );
-    const decoded = (await jwtVerify(token, secret)) as unknown as CustomJWT; // Verifica el token
+    const decoded = await jwtVerify(token, secret); // Verifica el token
 
-    return decoded; // Devuelve el payload si es válido
+    return decoded?.payload as unknown as CustomJWT; // Devuelve el payload si es válido
   } catch (error) {
     if (error instanceof Error)
       console.log("Error al verificar el token:", error.message);

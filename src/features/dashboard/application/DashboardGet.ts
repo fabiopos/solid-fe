@@ -26,8 +26,8 @@ export class DashboardGet {
       `/dashboard/team-stats/${teamId}`,
       token
     );
-    
-    if(stats.ok) return (await stats.json()) as FulfilledTeamStats;
+
+    if (stats.ok) return (await stats.json()) as FulfilledTeamStats;
 
     return null;
   }

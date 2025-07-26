@@ -7,17 +7,53 @@
     },
     "player": {
         "add": "/player",
-        "update": "/player/:id",
-        "delete": "/player/:id",
+        "update": "/player/:pid",
+        "delete": "/player/:pid",
         "find": "/player/:pid/details",
-        "getAll": "/player/:teamId/with-stats",
-        "searchByName": "/player/:teamId/search"
+        "getAll": "/player/:tid/with-stats",
+        "searchByName": "/player/:tid/search"
     },
     "user": {
         "add": "/user",
-        "update": "/user/:id",
-        "delete": "/user/:id",
+        "update": "/user/:uid",
+        "delete": "/user/:uid",
         "getAll": "/user",
         "validate": "/user/validate"
+    },
+    "team": {
+        "getAll": "/team",
+        "add": "/team",
+        "getById": "/team/:tid",
+        "delete": "/team/:tid",
+        "update": "/team/:tid",
+        "validate": "/team/validate",
+        "searchByName": "/team/search",
+        "inviteValidate": "/team/invite-validate"
+    },
+    "subscription": {
+        "getAll": "/subscription",
+        "findById": "/subscription/:sid",
+        "createFull": "/subscription"
+    },
+    "season": {
+        "getAll": "/season",
+        "find": "/season/:ssid/details",
+        "getSeasonTree": "/season/:ssid/tree",
+        "getAllSeasonBySubscription": "/season/:sid/subscription",
+        "create": "/season/:tid",
+        "update": "/season/:ssid",
+        "delete": "/season/:ssid"
+    },
+    "fieldPosition": {
+        "getAll": "/field-position"
+    },
+    "dashboard": {
+        "getTeamStats": "/dashboard/team-stats/:tid",
+        "getLastPlayersAdded": "/dashboard/last-players-added/:tid",
+        "getLastMatches": "/dashboard/last-matches/:tid",
+        "getNextMatches": "/dashboard/next-matches/:tid",
+        "getTopScorers": "/dashboard/top-scorers/:tid",
+        "getAsists": "/dashboard/top-asists/:tid",
+        "getCalendar": "/dashboard/calendar/:tid"
     }
 }

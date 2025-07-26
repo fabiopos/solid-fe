@@ -1,9 +1,5 @@
-import { getCookieTeamId } from "@/app/actions";
-import { auth } from "@/auth";
-import { DashboardGet } from "@/features/dashboard/application/DashboardGet";
-import { ApiClient } from "@/lib/ApiClient";
+import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 import { format, formatDistanceToNowStrict } from "date-fns";
-import React from "react";
 
 const LIMIT = 1;
 async function NextMatch() {
@@ -44,19 +40,7 @@ async function NextMatch() {
 }
 
 async function getData() {
-  const session = await auth();
-
-  const teamId = await getCookieTeamId();
-
-  if (!session) return { nextMatches: [] };
-  if (!teamId) return { nextMatches: [] };
-
-  const client = new DashboardGet(new ApiClient());
-  const nextMatches = await client.getNextMatches(
-    teamId,
-    session.user.access_token,
-    LIMIT
-  );
+  const nextMatches = await DashboardFacade.getNextMatches(LIMIT);
   return { nextMatches };
 }
 

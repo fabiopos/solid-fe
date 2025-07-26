@@ -84,6 +84,14 @@ export class FulfilledMatch extends S.TaggedClass<FulfilledMatch>()(
   }
 ) {}
 
+export const FulfilledMatchArray = S.Array(FulfilledMatch);
+
+export const decodeFFMArray = S.decodeUnknown(FulfilledMatchArray);
+export const encodeFFMArray = S.encodeUnknown(FulfilledMatchArray);
+
+export const decodeFFM = S.decodeUnknown(FulfilledMatch);
+export const encodeFFM = S.encodeUnknown(FulfilledMatch);
+
 export class FulfilledMatchExtended extends FulfilledMatch.extend<FulfilledMatchExtended>(
   "FulfilledMatchExtended"
 )({}) {
