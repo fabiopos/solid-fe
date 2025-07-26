@@ -1,0 +1,23 @@
+{
+    "auth": {
+        "login": "/auth/login",
+        "2fa": "/auth/2fa",
+        "2faverify": "/auth/2fa/verify",
+        "invite": "/auth/invite"
+    },
+    "player": {
+        "add": "/player",
+        "update": "/player/:id",
+        "delete": "/player/:id",
+        "find": "/player/:pid/details",
+        "getAll": "/player/:teamId/with-stats",
+        "searchByName": "/player/:teamId/search"
+    },
+    "user": {
+        "add": "/user",
+        "update": "/user/:id",
+        "delete": "/user/:id",
+        "getAll": "/user",
+        "validate": "/user/validate"
+    }
+}
