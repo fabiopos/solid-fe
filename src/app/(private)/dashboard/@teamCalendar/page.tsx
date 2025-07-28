@@ -7,13 +7,23 @@ import {
   variantSelector,
 } from "@/features/dashboard/domain/modifiers.helper";
 import TeamCalendatFt from "@/features/dashboard/infraestructure/TeamCalendatFt";
+import { FulfilledMatch } from "@/features/match/domain/match.schema";
 import { ApiClient } from "@/lib/ApiClient";
 import { formatRawDate } from "@/lib/date.util";
 import { add, max, min, toDate } from "date-fns";
+import { tryCatchAsync } from "rambdax";
 
 async function TeamCalendarSection() {
-  const { competitions, minDate, modifiers, modifiersClassNames, range } =
-    await getData();
+  const {
+    competitions,
+    minDate,
+    modifiers,
+    modifiersClassNames,
+    range,
+    error,
+  } = await getData();
+
+  if (error) return null;
   return (
     <TeamCalendatFt
       competitions={competitions}
@@ -26,10 +36,6 @@ async function TeamCalendarSection() {
 }
 
 async function getData() {
-  const session = await auth();
-
-  const teamId = await getCookieTeamId();
-
   const emptyState = {
     matches: [],
     minDate: new Date(),
@@ -41,82 +47,100 @@ async function getData() {
     modifiers: {},
     modifiersClassNames: undefined,
     competitions: [],
+    error: null,
   };
+  try {
+    const session = await auth();
 
-  if (!session) return emptyState;
-  if (!teamId) return emptyState;
+    const teamId = await getCookieTeamId();
 
-  const apiClient = new ApiClient();
-  const competitionGet = new CompetitionGet(apiClient);
-  const matches = await DashboardFacade.getCalendar();
+    if (!session) return emptyState;
+    if (!teamId) return emptyState;
 
-  const dates = matches
-    .filter((x) => !!x.matchDay)
-    .map((x) => toDate(x.matchDay!));
+    const apiClient = new ApiClient();
+    const competitionGet = new CompetitionGet(apiClient);
 
-  const minDate: Date = min(dates);
-  const maxDate: Date = max(dates);
+    const res = tryCatchAsync(
+      DashboardFacade.getCalendar,
+      [] as FulfilledMatch[]
+    );
+    const matches = await res("");
 
-  const allCompetitions = await competitionGet.getAllByTeam(
-    teamId,
-    session.user.access_token
-  );
+    const dates = matches
+      .filter((x) => !!x.matchDay)
+      .map((x) => toDate(x.matchDay!));
 
-  const competitions = allCompetitions
-    .filter((x) => !!x.id)
-    .filter((x) => (x.matches ?? []).length > 0);
+    const minDate: Date = min(dates);
+    const maxDate: Date = max(dates);
 
-  const competitionIds = competitions.map((x) => x.id!);
+    const allCompetitions = await competitionGet.getAllByTeam(
+      teamId,
+      session.user.access_token
+    );
 
-  const range = {
-    from: minDate,
-    to: maxDate,
-  };
+    const competitions = allCompetitions
+      .filter((x) => !!x.id)
+      .filter((x) => (x.matches ?? []).length > 0);
 
-  const matchEvents = matches
-    .filter((x) => !!x.matchDay)
-    .map((x) => ({
-      day: formatRawDate(x.matchDay!),
-      title: x.title,
-      competitionId: x.competition?.id,
-      awayTeamName: x.awayTeam?.name,
-      location: x.location,
-      matchHour: x.matchHour,
-      awayScore: x.awayScore,
-      homeScore: x.homeScore,
-      homeName: x.homeTeam?.name,
-    }));
+    const competitionIds = competitions.map((x) => x.id!);
 
-  const modifiers = competitionIds.reduce(
-    (prev, curr) => ({
-      ...prev,
-      [curr]: matchEvents
-        .filter((x) => x.competitionId === curr)
-        .map((x) => x.day),
-    }),
-    {}
-  );
+    const range = {
+      from: minDate,
+      to: maxDate,
+    };
 
-  const buildModifierClassNames = () => {
-    return competitionIds.map((c, i) => ({
-      key: c,
-      variant: variantSelector[i % 4],
-      name: competitions[i].name,
-    }));
-  };
+    const matchEvents = matches
+      .filter((x) => !!x.matchDay)
+      .map((x) => ({
+        day: formatRawDate(x.matchDay!),
+        title: x.title,
+        competitionId: x.competition?.id,
+        awayTeamName: x.awayTeam?.name,
+        location: x.location,
+        matchHour: x.matchHour,
+        awayScore: x.awayScore,
+        homeScore: x.homeScore,
+        homeName: x.homeTeam?.name,
+      }));
 
-  const competitionsWithVariants = buildModifierClassNames();
+    const modifiers = competitionIds.reduce(
+      (prev, curr) => ({
+        ...prev,
+        [curr]: matchEvents
+          .filter((x) => x.competitionId === curr)
+          .map((x) => x.day),
+      }),
+      {}
+    );
 
-  return {
-    matches,
-    minDate,
-    maxDate,
-    range,
-    matchEvents,
-    modifiers,
-    modifiersClassNames: modifiersClassNames(competitionsWithVariants),
-    competitions: competitionsWithVariants,
-  };
+    const buildModifierClassNames = () => {
+      return competitionIds.map((c, i) => ({
+        key: c,
+        variant: variantSelector[i % 4],
+        name: competitions[i].name,
+      }));
+    };
+
+    const competitionsWithVariants = buildModifierClassNames();
+
+    return {
+      matches,
+      minDate,
+      maxDate,
+      range,
+      matchEvents,
+      modifiers,
+      modifiersClassNames: modifiersClassNames(competitionsWithVariants),
+      competitions: competitionsWithVariants,
+      error: null,
+    };
+  } catch (_error) {
+    console.log(_error);
+    return {
+      ...emptyState,
+      error: _error,
+    };
+  }
 }
 
 export default TeamCalendarSection;

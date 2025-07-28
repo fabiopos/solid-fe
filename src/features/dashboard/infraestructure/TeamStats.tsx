@@ -2,24 +2,9 @@ import { PieChartWinRate } from "@/components/Dashboard/TeamStats/PieChartWinRat
 import TeamStatBoxes from "@/components/Dashboard/TeamStats/TeamStatBoxes";
 import { Separator } from "@/components/ui/separator";
 import React from "react";
-import { DashboardGet } from "../application/DashboardGet";
-import { ApiClient } from "@/lib/ApiClient";
-import { getCookieTeamId } from "@/app/actions";
-import { auth } from "@/auth";
+import { FulfilledTeamStats } from "../domain/teamStats.schema";
 
-async function TeamStats() {
-  const session = await auth();
-  const client = new DashboardGet(new ApiClient());
-  const teamId = await getCookieTeamId();
-
-  if (!teamId) return null;
-  if (!session) return null;
-
-  const stats = await client.getTeamStats(
-    teamId,
-    session?.user.access_token ?? ""
-  );
-
+function TeamStats({ stats }: { stats: FulfilledTeamStats }) {
   return (
     <div className="">
       <div className="px-5 my-2">

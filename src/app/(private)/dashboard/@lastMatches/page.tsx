@@ -1,5 +1,7 @@
 import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 import LastMatchesFt from "@/features/dashboard/infraestructure/LastMatchesFt";
+import { FulfilledMatch } from "@/features/match/domain/match.schema";
+import { tryCatchAsync } from "rambdax";
 
 async function LastMatchesSection() {
   const { lastMatches } = await getData();
@@ -7,13 +9,13 @@ async function LastMatchesSection() {
 }
 
 async function getData() {
-  try {
-    const lastMatches = await DashboardFacade.getLastMatches(undefined);
-    return { lastMatches };
-  } catch (error) {
-    console.log("Error =>", error);
-    return { lastMatches: [] };
-  }
+  const res = tryCatchAsync(
+    DashboardFacade.getLastMatches,
+    [] as FulfilledMatch[]
+  );
+
+  const lastMatches = await res(undefined);
+  return { lastMatches };
 }
 
 export default LastMatchesSection;

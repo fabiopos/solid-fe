@@ -1,5 +1,7 @@
 import NextMatch from "@/components/Dashboard/NextMatch/NextMatch";
 import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
+import { FulfilledMatch } from "@/features/match/domain/match.schema";
+import { tryCatchAsync } from "rambdax";
 import React from "react";
 
 const LIMIT = 1;
@@ -10,7 +12,11 @@ async function NextMatchSection() {
 }
 
 async function getData() {
-  const nextMatches = await DashboardFacade.getNextMatches(LIMIT);
+  const res = tryCatchAsync(
+    DashboardFacade.getNextMatches,
+    [] as FulfilledMatch[]
+  );
+  const nextMatches = await res(LIMIT);
   return { nextMatches };
 }
 
