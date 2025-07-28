@@ -9,7 +9,7 @@ function PlayersPage() {
   useFetchFieldPositions();
   const { error, isLoading } = useFetchPlayers();
   if (isLoading) return <>Loading...</>;
-  if (error) return <>Error</>;
+  if (error) return <>Error {JSON.stringify(error)}</>;
   return <PlayersFt />;
   //return <>{players?.length}</>;
 }

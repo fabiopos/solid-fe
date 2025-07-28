@@ -4,22 +4,20 @@ import {
   PATCHPlayerParams,
   UpdateFieldPositionsParams,
 } from "@/services/player/program/players/player.api";
-import { getPWSByTeamId } from "@/services/player/program/players/player.get.service";
 import { deletePlayer } from "@/services/player/program/players/player.delete.service";
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
 import {
   updatePlayer,
   updatePlayerPositions,
 } from "@/services/player/program/players/player.update.service";
+import { PlayerFacade } from "@/facade/player/PlayerFacade";
 
 export const playerWithStatsQueryOptions = (
-  selectedTeamId: string | undefined,
-  token: string | undefined
+  selectedTeamId: string | undefined
 ) =>
   queryOptions({
     queryKey: ["players", selectedTeamId],
-    queryFn: () =>
-      Effect.runPromise(getPWSByTeamId({ teamId: selectedTeamId!, token })),
+    queryFn: () => PlayerFacade.getPlayers(),
     enabled: !!selectedTeamId,
   });
 

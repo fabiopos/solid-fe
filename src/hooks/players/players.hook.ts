@@ -6,11 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 export function useFetchPlayers() {
-  const access_token = useSolidStore(selectAccessToken);
   const selectedTeamId = useSolidStore(selectSelectedTeamId);
   const setPlayers = useSolidStore((state) => state.setPlayers);
   const { data, isLoading, error } = useQuery(
-    playerWithStatsQueryOptions(selectedTeamId, access_token)
+    playerWithStatsQueryOptions(selectedTeamId)
   );
 
   useEffect(() => {

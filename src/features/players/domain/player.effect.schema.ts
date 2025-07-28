@@ -220,6 +220,11 @@ export class FulfilledPlayerWithStats extends S.TaggedClass<FulfilledPlayerWithS
   }
 ) {}
 
+export const fulfilledPlayerWitStatsArray = S.Array(FulfilledPlayerWithStats);
+
+export const decodePWSArray = S.decodeUnknown(fulfilledPlayerWitStatsArray);
+export const encodePWSArray = S.encodeUnknown(fulfilledPlayerWitStatsArray);
+
 export const decodePWS = S.decodeUnknown(FulfilledPlayerWithStats);
 
 export const encodePWS = S.encodeUnknown(FulfilledPlayerWithStats);
