@@ -1,9 +1,8 @@
 import TopScorers from "@/components/Dashboard/TopScorers/TopScorers";
-import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
+import { FulfilledScorer } from "@/features/aparition/domain/aparition.schema";
 
 const LIMIT = 5;
-async function TopScorersFt() {
-  const { players } = await getData();
+async function TopScorersFt({ players }: { players: FulfilledScorer[] }) {
   return (
     <div className="">
       <div className="px-5 my-2">
@@ -16,16 +15,6 @@ async function TopScorersFt() {
       </div>
     </div>
   );
-}
-
-async function getData() {
-  try {
-    const players = await DashboardFacade.getTopScorers();
-    return { players };
-  } catch (error) {
-    console.log(error);
-    return { players: [] };
-  }
 }
 
 export default TopScorersFt;

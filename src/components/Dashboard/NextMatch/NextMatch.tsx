@@ -1,9 +1,7 @@
-import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
+import { FulfilledMatch } from "@/features/match/domain/match.schema";
 import { format, formatDistanceToNowStrict } from "date-fns";
 
-const LIMIT = 1;
-async function NextMatch() {
-  const { nextMatches } = await getData();
+function NextMatch({ nextMatches }: { nextMatches: FulfilledMatch[] }) {
   if (nextMatches.length === 0)
     return (
       <div className="p-5">
@@ -37,11 +35,6 @@ async function NextMatch() {
       </div>
     </div>
   );
-}
-
-async function getData() {
-  const nextMatches = await DashboardFacade.getNextMatches(LIMIT);
-  return { nextMatches };
 }
 
 export default NextMatch;

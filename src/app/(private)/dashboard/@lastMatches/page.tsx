@@ -8,7 +8,7 @@ async function LastMatchesSection() {
 
 async function getData() {
   try {
-    const lastMatches = await DashboardFacade.getLastMatches();
+    const lastMatches = await DashboardFacade.getLastMatches(undefined);
     return { lastMatches };
   } catch (error) {
     console.log("Error =>", error);

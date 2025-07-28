@@ -10,8 +10,14 @@ import {
   selectPlayersByStatus,
   selectPlayersInCategoryByStatus,
 } from "@/stores/selectors";
+import {
+  useFetchFieldPositions,
+  useFetchPlayers,
+} from "@/hooks/players/players.hook";
 
 function PlayersFt() {
+  useFetchPlayers();
+  useFetchFieldPositions();
   const setTab = useSolidStore((state) => state.setTab);
   const tab = useSolidStore(selectActiveTab);
   const playersByStatus = useSolidStore(selectPlayersByStatus);

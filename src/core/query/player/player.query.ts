@@ -13,7 +13,7 @@ import {
 import { PlayerFacade } from "@/facade/player/PlayerFacade";
 
 export const playerWithStatsQueryOptions = (
-  selectedTeamId: string | undefined
+  selectedTeamId: string | undefined | null
 ) =>
   queryOptions({
     queryKey: ["players", selectedTeamId],
