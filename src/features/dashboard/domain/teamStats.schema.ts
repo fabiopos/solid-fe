@@ -17,3 +17,6 @@ export class FulfilledTeamStats extends S.TaggedClass<FulfilledTeamStats>()(
     ...teamStatsSchema.fields,
   }
 ) {}
+
+export const decodeTSTATS = S.decodeUnknown(FulfilledTeamStats);
+export const encodeTSTATS = S.encodeUnknown(FulfilledTeamStats);

@@ -10,6 +10,7 @@ export interface CustomJWT {
   email: string;
   name: string;
   subscriptionId: string;
+  tid: string;
   iat: number;
   exp: number;
 }

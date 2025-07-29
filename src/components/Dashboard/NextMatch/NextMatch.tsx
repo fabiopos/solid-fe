@@ -1,13 +1,7 @@
-import { getCookieTeamId } from "@/app/actions";
-import { auth } from "@/auth";
-import { DashboardGet } from "@/features/dashboard/application/DashboardGet";
-import { ApiClient } from "@/lib/ApiClient";
+import { FulfilledMatch } from "@/features/match/domain/match.schema";
 import { format, formatDistanceToNowStrict } from "date-fns";
-import React from "react";
 
-const LIMIT = 1;
-async function NextMatch() {
-  const { nextMatches } = await getData();
+function NextMatch({ nextMatches }: { nextMatches: FulfilledMatch[] }) {
   if (nextMatches.length === 0)
     return (
       <div className="p-5">
@@ -41,23 +35,6 @@ async function NextMatch() {
       </div>
     </div>
   );
-}
-
-async function getData() {
-  const session = await auth();
-
-  const teamId = await getCookieTeamId();
-
-  if (!session) return { nextMatches: [] };
-  if (!teamId) return { nextMatches: [] };
-
-  const client = new DashboardGet(new ApiClient());
-  const nextMatches = await client.getNextMatches(
-    teamId,
-    session.user.access_token,
-    LIMIT
-  );
-  return { nextMatches };
 }
 
 export default NextMatch;

@@ -14,16 +14,16 @@ function StepThreeController() {
       documentType={newPlayer?.documentType ?? ""}
       email={newPlayer?.email ?? ""}
       firstName={newPlayer?.firstName ?? ""}
-      height={newPlayer?.height ?? ""}
+      height={`${newPlayer?.height ?? ""}`}
       lastName={newPlayer?.lastName ?? ""}
       nameOnShirt={newPlayer?.nameOnShirt ?? ""}
       phone={newPlayer?.phone ?? ""}
       shirtSize={newPlayer?.shirtSize ?? ""}
-      weight={newPlayer?.weight ?? ""}
+      weight={`${newPlayer?.weight ?? ""}`}
       healthProvider={newPlayer?.healthProvider ?? ""}
       riskInsurance={newPlayer?.riskInsurance ?? ""}
       favPosition={newPlayer?.favPositionId ?? ""}
-      numberOnShirt={newPlayer?.shirtNumber}
+      numberOnShirt={`${newPlayer?.shirtNumber ?? ""}`}
       // TODO: create validation alert
       validationAlert={<></>}
     />

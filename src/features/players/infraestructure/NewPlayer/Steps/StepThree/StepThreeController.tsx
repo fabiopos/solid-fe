@@ -40,6 +40,7 @@ function StepThreeController() {
       weight={weight}
       healthProvider={healthProvider}
       riskInsurance={riskInsurance}
+      validationAlert={<></>}
     />
   );
 }

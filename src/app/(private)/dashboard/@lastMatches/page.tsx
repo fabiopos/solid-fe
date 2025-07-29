@@ -1,6 +1,6 @@
-import { getLastMatches } from "@/actions/dashboard.actions";
+import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 import LastMatchesFt from "@/features/dashboard/infraestructure/LastMatchesFt";
-import { Effect } from "effect";
+import { tryCatchAsync } from "rambdax";
 
 async function LastMatchesSection() {
   const { lastMatches } = await getData();
@@ -8,25 +8,10 @@ async function LastMatchesSection() {
 }
 
 async function getData() {
-  try {
-    const program = getLastMatches()();
-    const lastMatches = await Effect.runPromise(
-      program.pipe(
-        Effect.catchTags({
-          NoAuthError: (e) => {
-            return Effect.fail(e);
-          },
-          NoTokenError: (e) => {
-            return Effect.fail(e);
-          },
-        })
-      )
-    );
-    return { lastMatches };
-  } catch (error) {
-    console.log("Error =>", error);
-    return { lastMatches: [] };
-  }
+  const res = tryCatchAsync(DashboardFacade.getLastMatches, []);
+
+  const lastMatches = await res(undefined);
+  return { lastMatches };
 }
 
 export default LastMatchesSection;

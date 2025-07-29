@@ -1,4 +1,3 @@
-import React from "react";
 import TeamStatsSection from "./@teamStats/page";
 import LastMatchesSection from "./@lastMatches/page";
 import NextMatchSection from "./@nextMatch/page";
@@ -7,8 +6,11 @@ import { Separator } from "@radix-ui/react-separator";
 import TopAssistsSection from "./@topAssists/page";
 import TeamCalendarSection from "./@teamCalendar/page";
 import DashboardTitle from "@/features/dashboard/infraestructure/DashboardTitle";
+import { auth } from "@/auth";
 
-function DashboardLayout() {
+async function DashboardLayout() {
+  const session = await auth();
+  if (!session) return null;
   return (
     <>
       <div className="py-14 sm:py-14">

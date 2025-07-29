@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import { tryCatchAsync } from "rambdax";
 
 export async function setCookieTeamId(teamId: string) {
   const cookieStore = await cookies();
@@ -12,6 +13,8 @@ export async function deleteCookieTeamId() {
 }
 
 export async function getCookieTeamId() {
-  const cookieStore = await cookies();
-  return cookieStore.get("selectedTeamId")?.value;
+  const cookieStore = tryCatchAsync(cookies, null);
+  const res = await cookieStore("");
+  if (res) return res.get("selectedTeamId")?.value;
+  return null;
 }

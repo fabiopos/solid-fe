@@ -32,7 +32,7 @@ const defaultState: PlayerState = {
   fieldPositions: [],
   players: [],
   tab: "all",
-  onlyActive: false,
+  onlyActive: true,
   selectedPlayer: null,
 };
 
