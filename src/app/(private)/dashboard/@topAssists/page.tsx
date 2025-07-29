@@ -1,5 +1,4 @@
 import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
-import { FulfilledMatchAparition } from "@/features/aparition/domain/aparition.schema";
 import TopAssistsFt from "@/features/dashboard/infraestructure/TopAssitsFt";
 import { tryCatchAsync } from "rambdax";
 import React from "react";
@@ -10,11 +9,8 @@ async function TopAssistsSection() {
 }
 
 async function getData() {
-  const res = tryCatchAsync(
-    DashboardFacade.getTopAsists,
-    [] as FulfilledMatchAparition[]
-  );
-  const players = await res("");
+  const res = tryCatchAsync(DashboardFacade.getTopAsists, []);
+  const players = await res(undefined);
   return { players };
 }
 

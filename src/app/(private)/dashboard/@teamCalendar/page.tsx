@@ -7,7 +7,6 @@ import {
   variantSelector,
 } from "@/features/dashboard/domain/modifiers.helper";
 import TeamCalendatFt from "@/features/dashboard/infraestructure/TeamCalendatFt";
-import { FulfilledMatch } from "@/features/match/domain/match.schema";
 import { ApiClient } from "@/lib/ApiClient";
 import { formatRawDate } from "@/lib/date.util";
 import { add, max, min, toDate } from "date-fns";
@@ -57,14 +56,13 @@ async function getData() {
     if (!session) return emptyState;
     if (!teamId) return emptyState;
 
-    const apiClient = new ApiClient();
-    const competitionGet = new CompetitionGet(apiClient);
+    const res = tryCatchAsync(() => DashboardFacade.getCalendar(), []);
+    const matches = await res(undefined);
 
-    const res = tryCatchAsync(
-      DashboardFacade.getCalendar,
-      [] as FulfilledMatch[]
+    const competitions = await getCompetitions(
+      teamId,
+      session.user.access_token
     );
-    const matches = await res("");
 
     const dates = matches
       .filter((x) => !!x.matchDay)
@@ -72,15 +70,6 @@ async function getData() {
 
     const minDate: Date = min(dates);
     const maxDate: Date = max(dates);
-
-    const allCompetitions = await competitionGet.getAllByTeam(
-      teamId,
-      session.user.access_token
-    );
-
-    const competitions = allCompetitions
-      .filter((x) => !!x.id)
-      .filter((x) => (x.matches ?? []).length > 0);
 
     const competitionIds = competitions.map((x) => x.id!);
 
@@ -142,5 +131,22 @@ async function getData() {
     };
   }
 }
+
+const getCompetitions = async (teamId: string, token: string) => {
+  const apiClient = new ApiClient();
+  const competitionGet = new CompetitionGet(apiClient);
+
+  const res = tryCatchAsync(
+    () => competitionGet.getAllByTeam(teamId, token),
+    []
+  );
+  const allCompetitions = await res(undefined);
+
+  const competitions = allCompetitions
+    .filter((x) => !!x.id)
+    .filter((x) => (x.matches ?? []).length > 0);
+
+  return competitions;
+};
 
 export default TeamCalendarSection;

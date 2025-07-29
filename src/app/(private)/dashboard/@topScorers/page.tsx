@@ -1,5 +1,6 @@
 import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 import TopScorersFt from "@/features/dashboard/infraestructure/TopScorersFt";
+import { tryCatchAsync } from "rambdax";
 import React from "react";
 
 async function TopScorersSection() {
@@ -8,12 +9,8 @@ async function TopScorersSection() {
 }
 
 async function getData() {
-  try {
-    const players = await DashboardFacade.getTopScorers();
-    return { players };
-  } catch (error) {
-    console.log(error);
-    return { players: [] };
-  }
+  const res = tryCatchAsync(DashboardFacade.getTopScorers, []);
+  const players = await res(undefined);
+  return { players };
 }
 export default TopScorersSection;
