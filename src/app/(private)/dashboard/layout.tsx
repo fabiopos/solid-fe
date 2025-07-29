@@ -1,4 +1,3 @@
-import React from "react";
 import TeamStatsSection from "./@teamStats/page";
 import LastMatchesSection from "./@lastMatches/page";
 import NextMatchSection from "./@nextMatch/page";

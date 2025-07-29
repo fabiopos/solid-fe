@@ -1,8 +1,6 @@
-import { getCookieTeamId } from "@/app/actions";
-import { auth } from "@/auth";
-import { DashboardGet } from "@/features/dashboard/application/DashboardGet";
+import { DashboardFacade } from "@/facade/dashboard/DashboardFacade";
 import TeamStats from "@/features/dashboard/infraestructure/TeamStats";
-import { ApiClient } from "@/lib/ApiClient";
+import { tryCatchAsync } from "rambdax";
 
 async function TeamStatsSection() {
   const { stats } = await getData();
@@ -11,22 +9,8 @@ async function TeamStatsSection() {
 }
 
 async function getData() {
-  try {
-    const session = await auth();
-    const client = new DashboardGet(new ApiClient());
-    const teamId = await getCookieTeamId();
-
-    if (!teamId) return { stats: null };
-    if (!session) return { stats: null };
-
-    const stats = await client.getTeamStats(
-      teamId,
-      session?.user.access_token ?? ""
-    );
-    return { stats };
-  } catch (error) {
-    console.log(error);
-    return { stats: null };
-  }
+  const res = tryCatchAsync(DashboardFacade.getTeamStats, null);
+  const stats = await res(undefined);
+  return { stats };
 }
 export default TeamStatsSection;

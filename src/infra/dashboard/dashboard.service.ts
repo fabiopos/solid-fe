@@ -21,6 +21,11 @@ import {
   FulfilledMatchAparition,
   FulfilledScorer,
 } from "@/features/aparition/domain/aparition.schema";
+import {
+  decodeTSTATS,
+  encodeTSTATS,
+  FulfilledTeamStats,
+} from "@/features/dashboard/domain/teamStats.schema";
 
 export class DashboardService extends Context.Tag("DashboardService")<
   DashboardService,
@@ -54,6 +59,12 @@ export class DashboardService extends Context.Tag("DashboardService")<
 
     readonly getCalendar: () => Effect.Effect<
       FulfilledMatch[],
+      FetchError | JsonError | NoSessionError | NoTeamIdError | ParseError,
+      ConfigService | FetchService | SessionService
+    >;
+
+    readonly getTeamStats: () => Effect.Effect<
+      FulfilledTeamStats,
       FetchError | JsonError | NoSessionError | NoTeamIdError | ParseError,
       ConfigService | FetchService | SessionService
     >;
@@ -209,5 +220,36 @@ export const dashboardService = DashboardService.of({
       const result = yield* decodeFFMArray(json as unknown[]);
 
       return result as FulfilledMatch[];
+    }),
+
+  getTeamStats: () =>
+    Effect.gen(function* () {
+      const configService = yield* ConfigService;
+      const { dashboard } = yield* configService.getConfig;
+
+      const sessionService = yield* SessionService;
+
+      const tid = yield* sessionService.getTid();
+
+      const { endpoint, method } = dashboard.getTeamStats(tid);
+
+      const fetchService = yield* FetchService;
+      const headers = yield* fetchService.getHeaders();
+
+      const response = yield* fetchService.fetch({
+        url: `${endpoint}`,
+        init: { method, headers },
+      });
+
+      if (!response.ok)
+        yield* Effect.fail(new FetchError({ message: response.statusText }));
+
+      const json = yield* fetchService.getJson(response);
+
+      const result = yield* decodeTSTATS(json);
+
+      const encoded = yield* encodeTSTATS(result);
+
+      return encoded;
     }),
 });

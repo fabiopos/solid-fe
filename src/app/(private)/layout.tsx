@@ -14,6 +14,8 @@ import { getInitialData } from "@/actions/init.action";
 import { StoreProvider } from "@/providers/store.provider";
 import { auth } from "@/auth";
 import { Store } from "@/types/store";
+import { tryCatchAsync } from "rambdax";
+import { PrivateLayoutData } from "@/types/layout.types";
 
 export default async function RootLayout({
   children,
@@ -21,8 +23,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const initialData = await getData();
-  const { teams } = initialData;
-  if (!teams) return redirect("/");
+  const { teams, isSignedIn } = initialData;
+  if (!teams || !isSignedIn) return redirect("/");
+
   return (
     <StoreProvider
       initialState={{
@@ -51,19 +54,23 @@ export default async function RootLayout({
 }
 
 async function getData(): Promise<Partial<Store>> {
-  try {
-    const res = await auth();
+  const resSession = tryCatchAsync(() => auth(), null);
+  const session = await resSession(undefined);
 
-    const data = await Effect.runPromise(getInitialData());
-    return {
-      teams: data.teams,
-      isSignedIn: !!res?.user.access_token,
-      user: res?.user,
-      tree: data.tree as never,
-      selectedTeamId: data.selectedTeamId,
-    };
-  } catch (error) {
-    console.log("Failed to initialize data:", error);
-    return {};
-  }
+  const resInitialData = tryCatchAsync(
+    () => Effect.runPromise(getInitialData()),
+    {
+      teams: [],
+      tree: [],
+    } as PrivateLayoutData
+  );
+  const data = await resInitialData(undefined);
+
+  return {
+    teams: data.teams,
+    isSignedIn: !!session?.user.access_token,
+    user: session?.user,
+    tree: data.tree as never,
+    selectedTeamId: data.selectedTeamId,
+  };
 }

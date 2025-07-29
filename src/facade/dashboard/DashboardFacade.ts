@@ -66,4 +66,16 @@ export class DashboardFacade {
 
     return Effect.runPromise(program);
   };
+
+  static getTeamStats = () => {
+    const program = dashboardService
+      .getTeamStats()
+      .pipe(
+        Effect.provideService(ConfigService, configService),
+        Effect.provideService(FetchService, fetchService),
+        Effect.provideService(SessionService, sessionService)
+      );
+
+    return Effect.runPromise(program);
+  };
 }
