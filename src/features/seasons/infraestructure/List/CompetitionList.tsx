@@ -3,7 +3,7 @@ import CompetitionStatusBadge from "@/components/Competition/CompetitionStatusBa
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { format } from "date-fns";
-import { ChevronRight, Link2Icon } from "lucide-react";
+import { CheckCheckIcon, ChevronRight, ClockIcon } from "lucide-react";
 import Link from "next/link";
 import CompetitionTriggerIcon from "../Details/CompetitionTriggerIcon";
 import { useCompetitionStore } from "@/context/CompetitionCtx";
@@ -61,9 +61,9 @@ function CompetitionList() {
         title: deletingStatus.status === "ERROR" ? "Error" : "Success",
         variant: deletingStatus.status === "ERROR" ? "destructive" : "default",
         description: deletingStatus.message,
-        duration: 3000
+        duration: 3000,
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deletingStatus.message]);
 
   return (
@@ -152,15 +152,25 @@ function CompetitionList() {
               >
                 <Link
                   href={`/seasons/competitions/matches/${m.id}`}
-                  className="hover:text-cyan-400 flex gap-2 items-center justify-between"
+                  className="hover:text-cyan-400 flex gap-3 items-center justify-between"
                 >
-                  <Link2Icon size={15} /> <strong>{m.title}</strong>
-                  <div>
-                    <small>({m.completed ? "Complete" : "Incomplete"})</small>
-                  </div>
-                  <div>
+                  {m.completed ? (
+                    <CheckCheckIcon className="text-green-500" size={15} />
+                  ) : (
+                    <ClockIcon size={15} />
+                  )}
+                  <div className="flex flex-col">
+                    <div className="flex items-center justify-between">
+                      <strong>
+                        {m.homeTeam?.name} vs {m.awayTeam?.name}
+                      </strong>
+                    </div>
+                    <span>{m.title}</span>
+
                     <small>{m.matchDay && format(m.matchDay, "PPP")}</small>
                   </div>
+                  <div></div>
+                  <div></div>
                   <div></div>
                 </Link>
                 <MatchTriggerIcon
