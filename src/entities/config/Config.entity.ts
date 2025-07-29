@@ -1,5 +1,5 @@
 import { Schema as S } from "effect";
-import configJson from "../../infra/config/config.json";
+import configJson from "../../data/config/config.json";
 
 export const MethodType = S.Union(
   S.Literal("GET"),

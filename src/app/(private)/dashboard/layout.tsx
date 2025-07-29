@@ -7,6 +7,7 @@ import TopAssistsSection from "./@topAssists/page";
 import TeamCalendarSection from "./@teamCalendar/page";
 import DashboardTitle from "@/features/dashboard/infraestructure/DashboardTitle";
 import { auth } from "@/auth";
+import { Suspense } from "react";
 
 async function DashboardLayout() {
   const session = await auth();
@@ -19,19 +20,27 @@ async function DashboardLayout() {
 
           <div className="mt-10 grid gap-2 sm:mt-16 grid-cols-1 lg:grid-rows-4 lg:grid-cols-[repeat(auto-fit,_minmax(350px,_1fr))] ">
             <div className="dark:bg-slate-800/40 col-span-4 lg:col-span-1 border rounded-lg p-2 flex justify-center bg-background">
-              <TeamStatsSection />
+              <Suspense fallback={<>Loading...</>}>
+                <TeamStatsSection />
+              </Suspense>
             </div>
             <div className="dark:bg-slate-800/40 border col-span-4 lg:col-span-1 rounded-lg p-2 bg-background">
-              <LastMatchesSection />
-              <NextMatchSection />
+              <Suspense fallback={<>Loading...</>}>
+                <LastMatchesSection />
+                <NextMatchSection />
+              </Suspense>
             </div>
             <div className="dark:dark:bg-slate-800/40 border col-span-4 lg:col-span-1 rounded-lg p-2 bg-background">
-              <TopScorersSection />
-              <Separator className="my-2" />
-              <TopAssistsSection />
+              <Suspense fallback={<>Loading...</>}>
+                <TopScorersSection />
+                <Separator className="my-2" />
+                <TopAssistsSection />
+              </Suspense>
             </div>
             <div className="dark:bg-slate-800/40 col-span-4 lg:col-span-4 row-span-3 border rounded-lg bg-background overflow-hidden">
-              <TeamCalendarSection />
+              <Suspense fallback={<>Loading...</>}>
+                <TeamCalendarSection />
+              </Suspense>
             </div>
           </div>
         </div>

@@ -1,10 +1,7 @@
-import { configService, ConfigService } from "@/infra/config/config.service";
-import { fetchService, FetchService } from "@/infra/fetch/fetch.service";
-import { playerService } from "@/infra/player/player.service";
-import {
-  sessionService,
-  SessionService,
-} from "@/infra/session/session.service";
+import { configService, ConfigService } from "@/data/config/config.service";
+import { fetchService, FetchService } from "@/data/fetch/fetch.service";
+import { playerService } from "@/data/player/player.service";
+import { sessionService, SessionService } from "@/data/session/session.service";
 import { Effect } from "effect";
 
 export class PlayerFacade {

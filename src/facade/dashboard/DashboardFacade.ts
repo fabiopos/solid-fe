@@ -1,10 +1,7 @@
-import { configService, ConfigService } from "@/infra/config/config.service";
-import { dashboardService } from "@/infra/dashboard/dashboard.service";
-import { fetchService, FetchService } from "@/infra/fetch/fetch.service";
-import {
-  sessionService,
-  SessionService,
-} from "@/infra/session/session.service";
+import { configService, ConfigService } from "@/data/config/config.service";
+import { dashboardService } from "@/data/dashboard/dashboard.service";
+import { fetchService, FetchService } from "@/data/fetch/fetch.service";
+import { sessionService, SessionService } from "@/data/session/session.service";
 import { Effect } from "effect";
 
 export class DashboardFacade {

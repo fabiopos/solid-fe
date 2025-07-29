@@ -2,9 +2,9 @@ import {
   AuthSchemaType,
   CredentialsSchemaType,
 } from "@/entities/auth/Auth.entity";
-import { authService } from "@/infra/auth/auth.service";
-import { configService, ConfigService } from "@/infra/config/config.service";
-import { fetchService, FetchService } from "@/infra/fetch/fetch.service";
+import { authService } from "@/data/auth/auth.service";
+import { configService, ConfigService } from "@/data/config/config.service";
+import { fetchService, FetchService } from "@/data/fetch/fetch.service";
 import { Console, Effect } from "effect";
 
 // auth facade
